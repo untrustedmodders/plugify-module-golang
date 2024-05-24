@@ -26,7 +26,13 @@ set(GOLM_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/src/module.cpp")
 add_library(${PROJECT_NAME} SHARED ${GOLM_SOURCES})
 
-target_link_libraries(${PROJECT_NAME} PRIVATE plugify::plugify)
+set(GOLM_LINK_LIBRARIES plugify::plugify)
+
+if(NOT COMPILER_SUPPORTS_FORMAT)
+    set(GOLM_LINK_LIBRARIES ${GOLM_LINK_LIBRARIES} fmt::fmt-header-only)
+endif()
+
+target_link_libraries(${PROJECT_NAME} PRIVATE ${GOLM_LINK_LIBRARIES})
 
 include(GenerateExportHeader)
 generate_export_header(${PROJECT_NAME} EXPORT_MACRO_NAME GOLM_EXPORT EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/exports/module_export.h)
