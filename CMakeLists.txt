@@ -23,7 +23,9 @@ add_subdirectory(external/plugify)
 #
 set(GOLM_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/src/module.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/module.cpp")
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/module.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/assembly.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/assembly.cpp")
 add_library(${PROJECT_NAME} SHARED ${GOLM_SOURCES})
 
 set(GOLM_LINK_LIBRARIES plugify::plugify)
@@ -43,3 +45,10 @@ if(APPLE)
 elseif(UNIX)
 	target_link_options(${PROJECT_NAME} PRIVATE "-Wl,--version-script,${CMAKE_CURRENT_SOURCE_DIR}/sym/version_script.lds")
 endif()
+
+target_compile_definitions(${PROJECT_NAME} PRIVATE
+        GOLM_PLATFORM_WINDOWS=$<BOOL:${WIN32}>
+        GOLM_PLATFORM_APPLE=$<BOOL:${APPLE}>
+        GOLM_PLATFORM_LINUX=$<BOOL:${UNIX}>
+        BINARY_MODULE_SUFFIX="${CMAKE_SHARED_LIBRARY_SUFFIX}"
+        BINARY_MODULE_PREFIX="${CMAKE_SHARED_LIBRARY_PREFIX}")
