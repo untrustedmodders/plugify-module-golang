@@ -1,7 +1,7 @@
 package plugify
 
 /*
-#include <stdlib.h>
+#cgo LDFLAGS: -L${SRCDIR}/libplugify.a
 #include <plugify.h>
 */
 import "C"
@@ -27,7 +27,7 @@ func Plugify_Init(api []uintptr, version int32) int32 {
 	if version < kApiVersion {
 		return kApiVersion
 	}
-	C.SetMethodPtr(unsafe.Pointer(api[0]));
+	C.Plugify_SetMethodPtr(unsafe.Pointer(api[0]));
 	return 0
 }
 
