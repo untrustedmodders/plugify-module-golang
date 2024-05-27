@@ -10,7 +10,7 @@ VAL_TYPES_MAP = {
     'void': 'void',
     'bool': 'bool',
     'char8': 'char',
-    'char16': 'int16_t',
+    'char16': 'uint16_t',
     'int8': 'int8_t',
     'int16': 'int16_t',
     'int32': 'int32_t',
@@ -49,7 +49,7 @@ REF_TYPES_MAP = {
     'void': 'void',
     'bool': 'bool*',
     'char8': 'char*',
-    'char16': 'int16_t*',
+    'char16': 'uint16_t*',
     'int8': 'int8_t*',
     'int16': 'int16_t*',
     'int32': 'int32_t*',
@@ -88,7 +88,7 @@ RET_TYPES_MAP = {
     'void': 'void',
     'bool': 'bool',
     'char8': 'char',
-    'char16': 'int16_t',
+    'char16': 'uint16_t',
     'int8': 'int8_t',
     'int16': 'int16_t',
     'int32': 'int32_t',
@@ -127,7 +127,7 @@ VAL_GOTYPES_MAP = {
     'void': '',
     'bool': 'bool',
     'char8': 'int8',
-    'char16': 'int16',
+    'char16': 'uint16',
     'int8': 'int8',
     'int16': 'int16',
     'int32': 'int32',
@@ -143,7 +143,7 @@ VAL_GOTYPES_MAP = {
     'string': 'string',
     'bool*': '[]bool',
     'char8*': '[]int8',
-    'char16*': '[]int16',
+    'char16*': '[]uint16',
     'int8*': '[]int8',
     'int16*': '[]int16',
     'int32*': '[]int32',
@@ -166,7 +166,7 @@ REF_GOTYPES_MAP = {
     'void': '',
     'bool': '*bool',
     'char8': '*int8',
-    'char16': '*int16',
+    'char16': '*uint16',
     'int8': '*int8',
     'int16': '*int16',
     'int32': '*int32',
@@ -182,7 +182,7 @@ REF_GOTYPES_MAP = {
     'string': '*string',
     'bool*': '*[]bool',
     'char8*': '*[]int8',
-    'char16*': '*[]int16',
+    'char16*': '*[]uint16',
     'int8*': '*[]int8',
     'int16*': '*[]int16',
     'int32*': '*[]int32',
@@ -205,7 +205,7 @@ RET_GOTYPES_MAP = {
     'void': '',
     'bool': 'bool',
     'char8': 'int8',
-    'char16': 'int16',
+    'char16': 'uint16',
     'int8': 'int8',
     'int16': 'int16',
     'int32': 'int32',
@@ -221,7 +221,7 @@ RET_GOTYPES_MAP = {
     'string': 'string',
     'bool*': '[]bool',
     'char8*': '[]int8',
-    'char16*': '[]int16',
+    'char16*': '[]uint16',
     'int8*': '[]int8',
     'int16*': '[]int16',
     'int32*': '[]int32',
@@ -244,7 +244,7 @@ VAL_GOTYPESCAST_MAP = {
     'void': '',
     'bool': 'C.bool',
     'char8': 'C.char',
-    'char16': 'C.int16_t',
+    'char16': 'C.uint16_t',
     'int8': 'C.int8_t',
     'int16': 'C.int16_t',
     'int32': 'C.int32_t',
@@ -322,7 +322,7 @@ ASS_GOTYPESCAST_MAP = {
     'void': '',
     'bool': 'bool',
     'char8': 'byte',
-    'char16': 'int16',
+    'char16': 'uint16',
     'int8': 'int8',
     'int16': 'int16',
     'int32': 'int32',
@@ -338,7 +338,7 @@ ASS_GOTYPESCAST_MAP = {
     'string': 'C.GoString',
     'bool*': 'C.bool',
     'char8*': 'C.char',
-    'char16*': 'C.int16_t',
+    'char16*': 'C.uint16_t',
     'int8*': 'C.int8_t',
     'int16*': 'C.int16_t',
     'int32*': 'C.int32_t',
@@ -350,7 +350,7 @@ ASS_GOTYPESCAST_MAP = {
     'ptr64*': 'C.uintptr_t',
     'float*': 'C.float',
     'double*': 'C.double',
-    'string*': '*string',
+    'string*': 'string',
     'vec2': 'C.Vector2',
     'vec3': 'C.Vector3',
     'vec4': 'C.Vector4',
@@ -374,22 +374,22 @@ REF_GOTYPESCAST_MAP = {
     'float': '',
     'double': '',
     'function': '',
-    'string': 'unsafe.Pointer',
-    'bool*': 'unsafe.Pointer',
-    'char8*': 'unsafe.Pointer',
-    'char16*': 'unsafe.Pointer',
-    'int8*': 'unsafe.Pointer',
-    'int16*': 'unsafe.Pointer',
-    'int32*': 'unsafe.Pointer',
-    'int64*': 'unsafe.Pointer',
-    'uint8*': 'unsafe.Pointer',
-    'uint16*': 'unsafe.Pointer',
-    'uint32*': 'unsafe.Pointer',
-    'uint64*': 'unsafe.Pointer',
-    'ptr64*': 'unsafe.Pointer',
-    'float*': 'unsafe.Pointer',
-    'double*': 'unsafe.Pointer',
-    'string*': 'unsafe.Pointer',
+    'string': '',
+    'bool*': '',
+    'char8*': '',
+    'char16*': '',
+    'int8*': '',
+    'int16*': '',
+    'int32*': '',
+    'int64*': '',
+    'uint8*': '',
+    'uint16*': '',
+    'uint32*': '',
+    'uint64*': '',
+    'ptr64*': '',
+    'float*': '',
+    'double*': '',
+    'string*': '',
     'vec2': '&',
     'vec3': '&',
     'vec4': '&',
@@ -479,11 +479,11 @@ def gen_goparams_string(method, param_gen: ParamGen):
         if param_gen == ParamGen.Types:
             return type
         if param_gen == ParamGen.Names:
-            rtype = REF_GOTYPESCAST_MAP.get(param['type'], 'int')
-            if rtype == '&':
+            ref_type = REF_GOTYPESCAST_MAP.get(param['type'], 'int')
+            if ref_type == '&':
                 return f'&C_{param['name']}'
-            elif rtype != '':
-                return f'{rtype}(C_{param['name']})'
+            elif ref_type != '':
+                return f'{ref_type}(C_{param['name']})'
             else:
                 return f'C_{param['name']}'
         return f'{param['name']} {type}'
@@ -493,11 +493,11 @@ def gen_goparams_string(method, param_gen: ParamGen):
         if param_gen == ParamGen.Types:
             return type
         if param_gen == ParamGen.Names:
-            rtype = REF_GOTYPESCAST_MAP.get(param['type'], 'int')
-            if rtype == '&':
+            ref_type = REF_GOTYPESCAST_MAP.get(param['type'], 'int')
+            if ref_type == '&':
                 return '&C_output'
-            elif rtype != '':
-                return f'{rtype}(C_output)'
+            elif ref_type != '':
+                return f'{ref_type}(C_output)'
             else:
                 return 'C_output'
         return ''
@@ -519,17 +519,17 @@ def gen_goparamscast_string(method):
     def gen_param(param):
         type = VAL_GOTYPESCAST_MAP.get(param['type'], 'int')
         if 'CreateVector' in type:
-            rtype = ASS_GOTYPESCAST_MAP.get(param['type'], 'int')
-            if rtype == 'C.uintptr_t' or rtype == '*string':
+            ref_type = ASS_GOTYPESCAST_MAP.get(param['type'], 'int')
+            if ref_type == 'C.uintptr_t' or ref_type == 'string':
                 if 'ref' in param and param['ref'] is True:
-                    return f'C_{param['name']} := {type}((*{rtype})(unsafe.Pointer(&(*{param['name']})[0])), C.ptrdiff_t(len(*{param['name']})))'
+                    return f'C_{param['name']} := {type}((*{ref_type})(unsafe.Pointer(&(*{param['name']})[0])), C.ptrdiff_t(len(*{param['name']})))'
                 else:
-                    return f'C_{param['name']} := {type}((*{rtype})(unsafe.Pointer(&{param['name']}[0])), C.ptrdiff_t(len({param['name']})))'
+                    return f'C_{param['name']} := {type}((*{ref_type})(unsafe.Pointer(&{param['name']}[0])), C.ptrdiff_t(len({param['name']})))'
             else:
                 if 'ref' in param and param['ref'] is True:
-                    return f'C_{param['name']} := {type}((*{rtype})(&(*{param['name']})[0]), C.ptrdiff_t(len(*{param['name']})))'
+                    return f'C_{param['name']} := {type}((*{ref_type})(&(*{param['name']})[0]), C.ptrdiff_t(len(*{param['name']})))'
                 else:
-                    return f'C_{param['name']} := {type}((*{rtype})(&{param['name']}[0]), C.ptrdiff_t(len({param['name']})))'
+                    return f'C_{param['name']} := {type}((*{ref_type})(&{param['name']}[0]), C.ptrdiff_t(len({param['name']})))'
         elif 'CreateString' in type:
             if 'ref' in param and param['ref'] is True:
                 return f'C_{param['name']} := {type}(*{param['name']})'
@@ -576,27 +576,32 @@ def gen_goparamscast_assign_string(method):
         if 'ref' in param and param['ref'] is True:
             type = ASS_GOTYPESCAST_MAP.get(param['type'], 'int')
             if type == 'C.GoString':
-                output = f'P_{param['name']} := C.Plugify_GetString(unsafe.Pointer(C_{param['name']}))\n'
+                output = f'P_{param['name']} := C.Plugify_GetString(C_{param['name']})\n'
                 output += f'\t*{param['name']} = {type}(P_{param['name']})'
                 return output
             elif 'C.Vector' in type or 'C.Matrix' in type:
-                stype = type[2:]
-                return f'*{param['name']} = *(*{stype})(unsafe.Pointer(&C_{param['name']}))'
-            elif 'C.' in type or type[0] == '*':
-                name = f'unsafe.Pointer(C_{param['name']})'
+                return f'*{param['name']} = *(*{type[2:]})(unsafe.Pointer(&C_{param['name']}))'
+            elif 'C.' in type or type[0] == '*' or type == 'string':
+                name = f'C_{param['name']}'
                 mode = ''
                 if param['type'] == 'bool*':
                     mode = 'B'
                 elif param['type'] == 'string*':
                     mode = 'S'
-                gotype = VAL_GOTYPES_MAP.get(param['type'], 'int')[2:]
-                output = f'L_{param['name']} := C.Plugify_GetVectorSize{mode}({name})\n'
+                go_type = VAL_GOTYPES_MAP.get(param['type'], 'int')[2:]
+                pref_type = VAL_GOTYPESCAST_MAP.get(param['type'], 'int')[22:]
+                output = f'L_{param['name']} := C.Plugify_GetVectorSize{pref_type}({name})\n'
                 output += f'\tP_{param['name']} := C.Plugify_GetVectorData{mode}({name})\n'
-                output += f'\t*{param['name']} = unsafe.Slice((*{gotype})(unsafe.Pointer(P_{param['name']})), L_{param['name']})'
-                if mode == 'B':
-                    output += f'\n\tC.Plugify_DeleteVectorDataB(unsafe.Pointer(P_{param['name']}))'
-                elif mode == 'S':
-                    output += f'\n\tC.Plugify_DeleteVectorDataS(unsafe.Pointer(P_{param['name']}), L_{param['name']})'
+                #output += f'\t*{param['name']} = unsafe.Slice((*{go_type})(P_{param['name']}), L_{param['name']})'
+                output += f'\t*{param['name']} = make([]{go_type}, L_{param['name']})\n'
+                output += f'\tfor i := range (*{param['name']})' + " {\n"
+                if mode == 'S':
+                    output += f'\t\t(*{param['name']})[i] = C.GoString(*(**C.char)(unsafe.Pointer(uintptr(P_{param['name']}) + uintptr(i * C.sizeof_uintptr_t))))\n'
+                else:
+                    output += f'\t\t(*{param['name']})[i] = *(*{go_type})(unsafe.Pointer(uintptr(P_{param['name']}) + uintptr(i * C.sizeof_{type[2:]})))\n'
+                output += "\t}"
+                if mode == 'B' or mode == 'S':
+                    output += f'\n\tC.Plugify_DeleteVectorData{mode}(P_{param['name']})'
                 return output
             else:
                 return ''#f'*{param['name']} = {type}(C_{param['name']})'
@@ -606,27 +611,32 @@ def gen_goparamscast_assign_string(method):
     def gen_return(param):
         type = ASS_GOTYPESCAST_MAP.get(param['type'], 'int')
         if type == 'C.GoString':
-            output = f'P_output := C.Plugify_GetString(unsafe.Pointer(C_output))\n'
+            output = f'P_output := C.Plugify_GetString(C_output)\n'
             output += f'\toutput := {type}(P_output)'
             return output
         elif 'C.Vector' in type or 'C.Matrix' in type:
-            stype = type[2:]
-            return f'output := *(*{stype})(unsafe.Pointer(&C_output))'
-        elif 'C.' in type or type[0] == '*':
-            name = f'unsafe.Pointer(C_output)'
+            return f'output := *(*{type[2:]})(unsafe.Pointer(&C_output))'
+        elif 'C.' in type or type[0] == '*' or type == 'string':
+            name = f'C_output'
             mode = ''
             if param['type'] == 'bool*':
                 mode = 'B'
             elif param['type'] == 'string*':
                 mode = 'S'
-            gotype = VAL_GOTYPES_MAP.get(param['type'], 'int')[2:]
-            output = f'L_output := C.Plugify_GetVectorSize{mode}({name})\n'
+            go_type = VAL_GOTYPES_MAP.get(param['type'], 'int')[2:]
+            pref_type = VAL_GOTYPESCAST_MAP.get(param['type'], 'int')[22:]
+            output = f'L_output := C.Plugify_GetVectorSize{pref_type}({name})\n'
             output += f'\tP_output := C.Plugify_GetVectorData{mode}({name})\n'
-            output += f'\toutput := unsafe.Slice((*{gotype})(unsafe.Pointer(P_output)), L_output)'
-            if mode == 'B':
-                output += '\n\tC.Plugify_DeleteVectorDataB(unsafe.Pointer(P_output))'
-            elif mode == 'S':
-                output += '\n\tC.Plugify_DeleteVectorDataS(unsafe.Pointer(P_output), L_output)'
+            #output += f'\toutput := unsafe.Slice((*{go_type})(P_output), L_output)'
+            output += f'\toutput := make([]{go_type}, L_output)\n'
+            output += f'\tfor i := range output' + " {\n"
+            if mode == 'S':
+                output += f'\t\toutput[i] = C.GoString(*(**C.char)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_uintptr_t))))\n'
+            else:
+                output += f'\t\toutput[i] = *(*{go_type})(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_{type[2:]})))\n'
+            output += "\t}\n"
+            if mode == 'B' or mode == 'S':
+                output += f'\n\tC.Plugify_DeleteVectorData{mode}(P_output)'
             return output
         else:
             return f'output := {type}(C_output)'
@@ -654,14 +664,14 @@ def gen_goparamscast_cleanup_string(method):
         if type == '':
             return type
         else:
-            return f'{type}(unsafe.Pointer(C_{param['name']}))'
+            return f'{type}(C_{param['name']}, false)'
 
     def gen_return(param):
         type = DEL_GOTYPESCAST_MAP.get(param['type'], 'int')
         if type == '':
             return type
         else:
-            return f'{type}(unsafe.Pointer(C_output))'
+            return f'{type}(C_output, true)'
 
     output_string = ''
     ret_type = method['retType']
@@ -688,7 +698,8 @@ def main(manifest_path, output_dir, override):
         print(f'Output folder not exists {output_dir}')
         return 1
 
-    plugin_name = os.path.splitext(os.path.basename(manifest_path))[0]
+    #plugin_name = os.path.splitext(os.path.basename(manifest_path))[0]
+    plugin_name = "cpptest"
 
     header_dir = os.path.join(output_dir, plugin_name)
     if not os.path.exists(header_dir):
@@ -716,10 +727,10 @@ def main(manifest_path, output_dir, override):
     content += 'extern void* Plugify_CreateStringE();\n'
     content += 'extern void* Plugify_CreateString(_GoString_ source);\n'
     content += 'extern const char* Plugify_GetString(void* ptr);\n'
-    content += 'extern void Plugify_DeleteString(void* ptr);\n'
+    content += 'extern void Plugify_DeleteString(void* ptr, bool output);\n'
     content += 'extern void* Plugify_CreateVectorBool(bool* arr, ptrdiff_t len);\n'
     content += 'extern void* Plugify_CreateVectorChar8(char* arr, ptrdiff_t len);\n'
-    content += 'extern void* Plugify_CreateVectorChar16(int16_t* arr, ptrdiff_t len);\n'
+    content += 'extern void* Plugify_CreateVectorChar16(uint16_t* arr, ptrdiff_t len);\n'
     content += 'extern void* Plugify_CreateVectorInt8(int8_t* arr, ptrdiff_t len);\n'
     content += 'extern void* Plugify_CreateVectorInt16(int16_t* arr, ptrdiff_t len);\n'
     content += 'extern void* Plugify_CreateVectorInt32(int32_t* arr, ptrdiff_t len);\n'
@@ -731,7 +742,7 @@ def main(manifest_path, output_dir, override):
     content += 'extern void* Plugify_CreateVectorUIntPtr(uintptr_t* arr, ptrdiff_t len);\n'
     content += 'extern void* Plugify_CreateVectorFloat(float* arr, ptrdiff_t len);\n'
     content += 'extern void* Plugify_CreateVectorDouble(double* arr, ptrdiff_t len);\n'
-    content += 'extern void* Plugify_CreateVectorString(_GoString_** arr, ptrdiff_t len);\n'
+    content += 'extern void* Plugify_CreateVectorString(_GoString_* arr, ptrdiff_t len);\n'
     content += 'extern void* Plugify_CreateVectorBoolE();\n'
     content += 'extern void* Plugify_CreateVectorChar8E();\n'
     content += 'extern void* Plugify_CreateVectorChar16E();\n'
@@ -747,29 +758,41 @@ def main(manifest_path, output_dir, override):
     content += 'extern void* Plugify_CreateVectorFloatE();\n'
     content += 'extern void* Plugify_CreateVectorDoubleE();\n'
     content += 'extern void* Plugify_CreateVectorStringE();\n'
-    content += 'extern void Plugify_DeleteVectorBool(void* ptr);\n'
-    content += 'extern void Plugify_DeleteVectorChar8(void* ptr);\n'
-    content += 'extern void Plugify_DeleteVectorChar16(void* ptr);\n'
-    content += 'extern void Plugify_DeleteVectorInt8(void* ptr);\n'
-    content += 'extern void Plugify_DeleteVectorInt16(void* ptr);\n'
-    content += 'extern void Plugify_DeleteVectorInt32(void* ptr);\n'
-    content += 'extern void Plugify_DeleteVectorInt64(void* ptr);\n'
-    content += 'extern void Plugify_DeleteVectorUInt8(void* ptr);\n'
-    content += 'extern void Plugify_DeleteVectorUInt16(void* ptr);\n'
-    content += 'extern void Plugify_DeleteVectorUInt32(void* ptr);\n'
-    content += 'extern void Plugify_DeleteVectorUInt64(void* ptr);\n'
-    content += 'extern void Plugify_DeleteVectorUIntPtr(void* ptr);\n'
-    content += 'extern void Plugify_DeleteVectorFloat(void* ptr);\n'
-    content += 'extern void Plugify_DeleteVectorDouble(void* ptr);\n'
-    content += 'extern void Plugify_DeleteVectorString(void* ptr);\n'
-    content += 'extern ptrdiff_t Plugify_GetVectorSize(void* ptr);\n'
+    content += 'extern void Plugify_DeleteVectorBool(void* ptr, bool output);\n'
+    content += 'extern void Plugify_DeleteVectorChar8(void* ptr, bool output);\n'
+    content += 'extern void Plugify_DeleteVectorChar16(void* ptr, bool output);\n'
+    content += 'extern void Plugify_DeleteVectorInt8(void* ptr, bool output);\n'
+    content += 'extern void Plugify_DeleteVectorInt16(void* ptr, bool output);\n'
+    content += 'extern void Plugify_DeleteVectorInt32(void* ptr, bool output);\n'
+    content += 'extern void Plugify_DeleteVectorInt64(void* ptr, bool output);\n'
+    content += 'extern void Plugify_DeleteVectorUInt8(void* ptr, bool output);\n'
+    content += 'extern void Plugify_DeleteVectorUInt16(void* ptr, bool output);\n'
+    content += 'extern void Plugify_DeleteVectorUInt32(void* ptr, bool output);\n'
+    content += 'extern void Plugify_DeleteVectorUInt64(void* ptr, bool output);\n'
+    content += 'extern void Plugify_DeleteVectorUIntPtr(void* ptr, bool output);\n'
+    content += 'extern void Plugify_DeleteVectorFloat(void* ptr, bool output);\n'
+    content += 'extern void Plugify_DeleteVectorDouble(void* ptr, bool output);\n'
+    content += 'extern void Plugify_DeleteVectorString(void* ptr, bool output);\n'
+    content += 'extern ptrdiff_t Plugify_GetVectorSizeBool(void* ptr);\n'
+    content += 'extern ptrdiff_t Plugify_GetVectorSizeChar8(void* ptr);\n'
+    content += 'extern ptrdiff_t Plugify_GetVectorSizeChar16(void* ptr);\n'
+    content += 'extern ptrdiff_t Plugify_GetVectorSizeInt8(void* ptr);\n'
+    content += 'extern ptrdiff_t Plugify_GetVectorSizeInt16(void* ptr);\n'
+    content += 'extern ptrdiff_t Plugify_GetVectorSizeInt32(void* ptr);\n'
+    content += 'extern ptrdiff_t Plugify_GetVectorSizeInt64(void* ptr);\n'
+    content += 'extern ptrdiff_t Plugify_GetVectorSizeUInt8(void* ptr);\n'
+    content += 'extern ptrdiff_t Plugify_GetVectorSizeUInt16(void* ptr);\n'
+    content += 'extern ptrdiff_t Plugify_GetVectorSizeUInt32(void* ptr);\n'
+    content += 'extern ptrdiff_t Plugify_GetVectorSizeUInt64(void* ptr);\n'
+    content += 'extern ptrdiff_t Plugify_GetVectorSizeUIntPtr(void* ptr);\n'
+    content += 'extern ptrdiff_t Plugify_GetVectorSizeFloat(void* ptr);\n'
+    content += 'extern ptrdiff_t Plugify_GetVectorSizeDouble(void* ptr);\n'
+    content += 'extern ptrdiff_t Plugify_GetVectorSizeString(void* ptr);\n'
     content += 'extern void* Plugify_GetVectorData(void* ptr);\n'
-    content += 'extern ptrdiff_t Plugify_GetVectorSizeB(void* ptr);\n'
     content += 'extern void* Plugify_GetVectorDataB(void* ptr);\n'
     content += 'extern void Plugify_DeleteVectorDataB(void* ptr);\n'
-    content += 'extern ptrdiff_t Plugify_GetVectorSizeS(void* ptr);\n'
     content += 'extern void* Plugify_GetVectorDataS(void* ptr);\n'
-    content += 'extern void Plugify_DeleteVectorDataS(void* ptr, ptrdiff_t len);\n'
+    content += 'extern void Plugify_DeleteVectorDataS(void* ptr);\n'
     content += '//typedef struct { const char *p; ptrdiff_t n; } _GoString_;\n'
     content += 'typedef struct { void *data; ptrdiff_t len; ptrdiff_t cap; } _GoSlice_;\n'
     content += 'typedef struct { float x, y; } Vector2;\n'
@@ -811,10 +834,10 @@ def main(manifest_path, output_dir, override):
     content += 'import "C"\n'
     content += 'import "unsafe"\n'
     content += '\n'
-    content += 'type Vector2 struct {\n\tVector2 C.Vector2\n}\n'
-    content += 'type Vector3 struct {\n\tVector3 C.Vector3\n}\n'
-    content += 'type Vector4 struct {\n\tVector4 C.Vector4\n}\n'
-    content += 'type Matrix4x4 struct {\n\tMatrix4x4 C.Matrix4x4\n}\n'
+    content += 'type Vector2 struct {\n\tX float32\n\tY float32\n}\n'
+    content += 'type Vector3 struct {\n\tX float32\n\tY float32\n\tZ float32\n}\n'
+    content += 'type Vector4 struct {\n\tX float32\n\tY float32\n\tZ float32\n\tW float32\n}\n'
+    content += 'type Matrix4x4 struct {\n\tM [4][4]float32\n}\n'
     content += '\n'
 
     for method in pplugin['exportedMethods']:
