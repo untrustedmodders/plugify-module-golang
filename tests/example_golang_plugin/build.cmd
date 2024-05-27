@@ -1,6 +1,6 @@
 cd plugify/
-gcc -x c++ -c plugify.cc -D_GLIBCXX_USE_CXX11_ABI=0
+gcc -c plugify.c
 ar rc libplugify.a plugify.o
 cd ../
-go build -buildmode=c-shared -o  awesome.dll main.go
+go build -buildmode=c-shared -o awesome.dll -ldflags=-w main.go
 pause
