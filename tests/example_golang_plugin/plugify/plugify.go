@@ -48,3 +48,19 @@ func Plugify_PluginEnd() {
 func OnPluginEnd(fn PluginEndCallback) {
 	plugify.fnPluginEndCallback = fn
 }
+
+type Vector2 struct {
+    x float32
+    y float32
+}
+type Vector3 struct {
+    x float32
+    y float32
+    z float32
+}
+type Vector4 struct {
+    x float32
+    y float32
+    z float32
+    w float32
+}

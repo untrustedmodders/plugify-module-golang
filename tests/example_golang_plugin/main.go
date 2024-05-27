@@ -3,8 +3,8 @@ package main
 import "C"
 import (
 	"fmt"
-	"plugify-plugin/plugify"
 	"plugify-plugin/cpptest"
+	"plugify-plugin/plugify"
 )
 
 func init() {
