@@ -48,7 +48,7 @@ namespace golm::utils {
 		return dest;
 	}
 
-	void* CreateGoSliceString(const std::vector<std::string>& source, ArgumentList& args, StringStorage& storage) {
+	GoSlice* CreateGoSliceString(const std::vector<std::string>& source, ArgumentList& args, StringStorage& storage) {
 		auto& [arrays, strings] = storage;
 		auto& strArray = arrays.emplace_back(std::make_unique<GoString*[]>(source.size()));
 		for (size_t i = 0; i < source.size(); ++i) {
@@ -70,7 +70,7 @@ namespace golm::utils {
 	}
 
 	template<typename T>
-	void* CreateGoSlice(const std::vector<T>& source, ArgumentList& args) {
+	GoSlice* CreateGoSlice(const std::vector<T>& source, ArgumentList& args) {
 		auto size = static_cast<GoInt>(source.size());
 		auto* dest = new GoSlice((void*)source.data(), size, size);
 		args.push_back(dest);
@@ -82,7 +82,7 @@ namespace golm::utils {
 		delete reinterpret_cast<GoSlice*>(ptr);
 	}
 
-	void* CreateGoString(const std::string& source, ArgumentList& args) {
+	GoString* CreateGoString(const std::string& source, ArgumentList& args) {
 		auto size = static_cast<GoInt>(source.size());
 		auto* dest = new GoString(source.c_str(), size);
 		args.push_back(dest);
@@ -114,6 +114,8 @@ InitResult GoLanguageModule::Initialize(std::weak_ptr<IPlugifyProvider> provider
 
 	_provider->Log("[GOLM] Inited!", Severity::Debug);
 
+	_rt = std::make_shared<asmjit::JitRuntime>();
+
 	DCCallVM* vm = dcNewCallVM(4096);
 	dcMode(vm, DC_CALL_C_DEFAULT);
 	_callVirtMachine = std::unique_ptr<DCCallVM, VMDeleter>(vm);
@@ -124,7 +126,7 @@ InitResult GoLanguageModule::Initialize(std::weak_ptr<IPlugifyProvider> provider
 void GoLanguageModule::Shutdown() {
 	_callVirtMachine.reset();
 	_functions.clear();
-	_importMethods.clear();
+	_nativesMap.clear();
 	_assemblies.clear();
 	_provider.reset();
 	_rt.reset();
@@ -133,37 +135,12 @@ void GoLanguageModule::Shutdown() {
 void GoLanguageModule::OnMethodExport(const IPlugin& plugin) {
 	const auto& pluginName = plugin.GetName();
 	for (const auto& [name, addr] : plugin.GetMethods()) {
-		auto funcName = std::format("{}.{}", pluginName, name);
-
-		if (_importMethods.contains(funcName)) {
-			_provider->Log(std::format(LOG_PREFIX "Method name duplicate: {}", funcName), Severity::Error);
-			continue;
-		}
-
-		for (const auto& method : plugin.GetDescriptor().exportedMethods) {
-			if (name == method.name) {
-				void* funcAddr;
-				if (utils::IsMethodPrimitive(method)) {
-					funcAddr = addr;
-				} else {
-					Function function(_rt);
-					funcAddr = function.GetJitFunc(method, &ExternalCall, addr); //// TODO: Implement
-					if (!funcAddr) {
-						_provider->Log(std::format(LOG_PREFIX "{}: {}", method.funcName, function.GetError()), Severity::Error);
-						continue;
-					}
-					_functions.emplace(funcAddr, std::move(function));
-				}
-
-				_importMethods.emplace(std::move(funcName), ImportMethod{method, funcAddr});
-				break;
-			}
-		}
+		_nativesMap.try_emplace(std::format("{}.{}", pluginName, name), addr);
 	}
 }
 
 LoadResult GoLanguageModule::OnPluginLoad(const IPlugin& plugin) {
-	fs::path assemblyPath = plugin.GetBaseDir() / std::format(BINARY_MODULE_PREFIX "{}" BINARY_MODULE_SUFFIX, plugin.GetDescriptor().entryPoint);
+	fs::path assemblyPath = plugin.GetBaseDir() / std::format("{}" BINARY_MODULE_SUFFIX, plugin.GetDescriptor().entryPoint);
 
 	auto assembly = Assembly::LoadFromPath(assemblyPath);
 	if (!assembly) {
@@ -228,7 +205,8 @@ LoadResult GoLanguageModule::OnPluginLoad(const IPlugin& plugin) {
 		return ErrorData{ std::format("Not found {} method function(s)", funcs) };
 	}
 
-	const int resultVersion = initFunc(const_cast<void**>(_pluginApi.data()), kApiVersion);
+	GoSlice api { const_cast<void**>(_pluginApi.data()), _pluginApi.size(), _pluginApi.size() };
+	const int resultVersion = initFunc(api, kApiVersion);
 	if (resultVersion != 0) {
 		return ErrorData{ std::format("Not supported plugin api {}, max supported {}", resultVersion, kApiVersion) };
 	}
@@ -256,16 +234,11 @@ void GoLanguageModule::OnPluginEnd(const IPlugin& plugin) {
 }
 
 void* GoLanguageModule::GetNativeMethod(const std::string& methodName) const {
-	if (const auto it = _importMethods.find(methodName); it != _importMethods.end()) {
-		return std::get<ImportMethod>(*it).addr;
+	if (const auto it = _nativesMap.find(methodName); it != _nativesMap.end()) {
+		return std::get<void*>(*it);
 	}
 	_provider->Log(std::format("[GOLM] GetNativeMethod failed to find: '{}'", methodName), Severity::Fatal);
 	return nullptr;
-}
-
-// Call from Go to C++
-void GoLanguageModule::ExternalCall(const plugify::Method* , void* , const plugify::Parameters* , uint8_t , const plugify::ReturnValue* ) {
-	// TODO: Finish
 }
 
 // C++ to Go
@@ -390,46 +363,46 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 					dcArgPointer(vm, utils::CreateGoSlice<bool>(*p->GetArgument<std::vector<bool>*>(i), args));
 					break;*/
 				case ValueType::ArrayChar8:
-					dcArgPointer(vm, utils::CreateGoSlice<char>(*p->GetArgument<std::vector<char>*>(i), args));
+					dcArgPointer(vm, { utils::CreateGoSlice<char>(*p->GetArgument<std::vector<char>*>(i), args) });
 					break;
 				case ValueType::ArrayChar16:
-					dcArgPointer(vm, utils::CreateGoSlice<char16_t>(*p->GetArgument<std::vector<char16_t>*>(i), args));
+					dcArgPointer(vm, { utils::CreateGoSlice<char16_t>(*p->GetArgument<std::vector<char16_t>*>(i), args) });
 					break;
 				case ValueType::ArrayInt8:
-					dcArgPointer(vm, utils::CreateGoSlice<int8_t>(*p->GetArgument<std::vector<int8_t>*>(i), args));
+					dcArgPointer(vm, { utils::CreateGoSlice<int8_t>(*p->GetArgument<std::vector<int8_t>*>(i), args) });
 					break;
 				case ValueType::ArrayInt16:
-					dcArgPointer(vm, utils::CreateGoSlice<int16_t>(*p->GetArgument<std::vector<int16_t>*>(i), args));
+					dcArgPointer(vm, { utils::CreateGoSlice<int16_t>(*p->GetArgument<std::vector<int16_t>*>(i), args) });
 					break;
 				case ValueType::ArrayInt32:
-					dcArgPointer(vm, utils::CreateGoSlice<int32_t>(*p->GetArgument<std::vector<int32_t>*>(i), args));
+					dcArgPointer(vm, { utils::CreateGoSlice<int32_t>(*p->GetArgument<std::vector<int32_t>*>(i), args) });
 					break;
 				case ValueType::ArrayInt64:
-					dcArgPointer(vm, utils::CreateGoSlice<int64_t>(*p->GetArgument<std::vector<int64_t>*>(i), args));
+					dcArgPointer(vm, { utils::CreateGoSlice<int64_t>(*p->GetArgument<std::vector<int64_t>*>(i), args) });
 					break;
 				case ValueType::ArrayUInt8:
-					dcArgPointer(vm, utils::CreateGoSlice<uint8_t>(*p->GetArgument<std::vector<uint8_t>*>(i), args));
+					dcArgPointer(vm, { utils::CreateGoSlice<uint8_t>(*p->GetArgument<std::vector<uint8_t>*>(i), args) });
 					break;
 				case ValueType::ArrayUInt16:
-					dcArgPointer(vm, utils::CreateGoSlice<uint16_t>(*p->GetArgument<std::vector<uint16_t>*>(i), args));
+					dcArgPointer(vm, { utils::CreateGoSlice<uint16_t>(*p->GetArgument<std::vector<uint16_t>*>(i), args) });
 					break;
 				case ValueType::ArrayUInt32:
-					dcArgPointer(vm, utils::CreateGoSlice<uint32_t>(*p->GetArgument<std::vector<uint32_t>*>(i), args));
+					dcArgPointer(vm, { utils::CreateGoSlice<uint32_t>(*p->GetArgument<std::vector<uint32_t>*>(i), args) });
 					break;
 				case ValueType::ArrayUInt64:
-					dcArgPointer(vm, utils::CreateGoSlice<uint64_t>(*p->GetArgument<std::vector<uint64_t>*>(i), args));
+					dcArgPointer(vm, { utils::CreateGoSlice<uint64_t>(*p->GetArgument<std::vector<uint64_t>*>(i), args) });
 					break;
 				case ValueType::ArrayPointer:
-					dcArgPointer(vm, utils::CreateGoSlice<uintptr_t>(*p->GetArgument<std::vector<uintptr_t>*>(i), args));
+					dcArgPointer(vm, { utils::CreateGoSlice<uintptr_t>(*p->GetArgument<std::vector<uintptr_t>*>(i), args) });
 					break;
 				case ValueType::ArrayFloat:
-					dcArgPointer(vm, utils::CreateGoSlice<float>(*p->GetArgument<std::vector<float>*>(i), args));
+					dcArgPointer(vm, { utils::CreateGoSlice<float>(*p->GetArgument<std::vector<float>*>(i), args) });
 					break;
 				case ValueType::ArrayDouble:
-					dcArgPointer(vm, utils::CreateGoSlice<double>(*p->GetArgument<std::vector<double>*>(i), args));
+					dcArgPointer(vm, { utils::CreateGoSlice<double>(*p->GetArgument<std::vector<double>*>(i), args) });
 					break;
 				case ValueType::ArrayString:
-					dcArgPointer(vm, utils::CreateGoSliceString(*p->GetArgument<std::vector<std::string>*>(i), args, storage));
+					dcArgPointer(vm, { utils::CreateGoSliceString(*p->GetArgument<std::vector<std::string>*>(i), args, storage) });
 					break;
 				default:
 					std::puts("Unsupported types!\n");
@@ -813,7 +786,7 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 }
 
 void* GetNativeMethodImpl(GoString methodName) {
-	return g_golm.GetNativeMethod(std::string(methodName.p, static_cast<size_t>(methodName.n)));
+	return g_golm.GetNativeMethod(std::string(methodName.p, methodName.n));
 }
 
 const std::array<void*, 1> GoLanguageModule::_pluginApi = {

@@ -6,7 +6,12 @@
 #include <module_export.h>
 #include <plugify/function.h>
 #include <plugify/language_module.h>
+typedef void* (*GetMethodFn)(const char*);
 
+void* GetMethod(const char* str, void* getMethodPtr) {
+	GetMethodFn func = (GetMethodFn)getMethodPtr;
+	return func(str);
+}
 typedef signed char GoInt8;
 typedef unsigned char GoUint8;
 typedef short GoInt16;
@@ -31,7 +36,7 @@ namespace golm {
 
 	constexpr int kApiVersion = 1;
 
-	using InitFunc = int (*)(void**, int);
+	using InitFunc = int (*)(GoSlice, int);
 	using StartFunc = void (*)();
 	using EndFunc = void (*)();
 
@@ -51,11 +56,6 @@ namespace golm {
 	using MethodRef = std::reference_wrapper<const plugify::Method>;
 	using ArgumentList = std::vector<void*>;
 	using StringStorage = std::pair<std::vector<std::unique_ptr<GoString*[]>>, std::vector<std::unique_ptr<GoString>>>;
-
-	struct ImportMethod {
-		MethodRef method;
-		void* addr{ nullptr };
-	};
 
 	struct VMDeleter {
 		void operator()(DCCallVM* vm) const {
@@ -79,7 +79,6 @@ namespace golm {
 		void* GetNativeMethod(const std::string& methodName) const;
 		
 	private:
-		static void ExternalCall(const plugify::Method* method, void* addr, const plugify::Parameters* params, uint8_t count, const plugify::ReturnValue* ret);
 		static void InternalCall(const plugify::Method* method, void* data, const plugify::Parameters* params, uint8_t count, const plugify::ReturnValue* ret);
 
 	private:
@@ -87,7 +86,7 @@ namespace golm {
 		std::shared_ptr<plugify::IPlugifyProvider> _provider;
 
 		std::unordered_map<std::string, AssemblyHolder> _assemblies;
-		std::unordered_map<std::string, ImportMethod> _importMethods;
+		std::unordered_map<std::string, void*> _nativesMap;
 		std::unordered_map<void*, plugify::Function> _functions;
 
 		std::unique_ptr<DCCallVM, VMDeleter> _callVirtMachine;
