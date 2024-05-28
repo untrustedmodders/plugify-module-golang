@@ -26,14 +26,15 @@ namespace golm::utils {
 	}
 
 	GoSlice* CreateGoSliceString(const std::vector<std::string>& source, ArgumentList& args, StringStorage& storage) {
-		auto& [arrays, strings] = storage;
-		auto& strArray = arrays.emplace_back(std::make_unique<GoString*[]>(source.size()));
-		for (size_t i = 0; i < source.size(); ++i) {
+		size_t N = source.size();
+		auto& strArray = storage.emplace_back(std::make_unique<GoString[]>(N));
+		for (size_t i = 0; i < N; ++i) {
 			const auto& str = source[i];
-			auto& it = strings.emplace_back(std::make_unique<GoString>(str.c_str(), static_cast<GoInt>(str.size())));
-			strArray[i] = it.get();
+			auto& dest = strArray[i];
+			dest.p = str.c_str();
+			dest.n = static_cast<GoInt>(str.size());
 		}
-		auto size = static_cast<GoInt>(source.size());
+		auto size = static_cast<GoInt>(N);
 		auto* dest = new GoSlice(strArray.get(), size, size);
 		args.push_back(dest);
 		return dest;
@@ -47,9 +48,20 @@ namespace golm::utils {
 		return dest;
 	}
 
-	template<typename T>
+	GoSlice* CreateGoSlice(ArgumentList& args) {
+		auto* dest = new GoSlice(nullptr, 0, 0);
+		args.push_back(dest);
+		return dest;
+	}
+
 	void DeleteGoSlice(void* ptr) {
 		delete reinterpret_cast<GoSlice*>(ptr);
+	}
+
+	GoString* CreateGoString(ArgumentList& args) {
+		auto* dest = new GoString("", 0);
+		args.push_back(dest);
+		return dest;
 	}
 
 	GoString* CreateGoString(const std::string& source, ArgumentList& args) {
@@ -64,25 +76,12 @@ namespace golm::utils {
 	}
 
 	template<typename T>
-	void* AllocateMemory(ArgumentList& args) {
-		void* ptr = malloc(sizeof(T));
-		args.push_back(ptr);
-		return ptr;
-	}
-
-	template<typename T>
-	void FreeMemory(void* ptr) {
-		reinterpret_cast<T*>(ptr)->~T();
-		free(ptr);
-	}
-
-	template<typename T>
 	void CopyGoSliceToVector(GoSlice* source, std::vector<T>& dest) {
 		if constexpr (std::same_as<T, std::string>) {
 			dest.resize(static_cast<size_t>(source->len));
 			for (size_t k = 0; k < dest.size(); ++k) {
-				auto str = reinterpret_cast<GoString**>(source->data)[k];
-				dest[k].assign(str->p, static_cast<size_t>(str->n));
+				const auto& str = reinterpret_cast<GoString*>(source->data)[k];
+				dest[k].assign(str.p, static_cast<size_t>(str.n));
 			}
 		} else {
 			if (source->data == nullptr || source->len == 0)
@@ -252,7 +251,7 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 		switch (method->retType.type) {
 			// GoString*
 			case ValueType::String:
-				dcArgPointer(vm, utils::AllocateMemory<GoString>(args));
+				dcArgPointer(vm, utils::CreateGoString(args));
 				break;
 			// GoSlice*
 			//case ValueType::ArrayBool:
@@ -270,7 +269,7 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 			case ValueType::ArrayFloat:
 			case ValueType::ArrayDouble:
 			case ValueType::ArrayString:
-				dcArgPointer(vm, utils::AllocateMemory<GoSlice>(args));
+				dcArgPointer(vm, utils::CreateGoSlice(args));
 				break;
 			default:
 				// Should not require storage
@@ -407,7 +406,7 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 					dcArgChar(vm, p->GetArgument<char>(i));
 					break;
 				case ValueType::Char16:
-					dcArgShort(vm, static_cast<short>(p->GetArgument<char16_t>(i)));
+					dcArgShort(vm, p->GetArgument<short>(i));
 					break;
 				case ValueType::Int8:
 				case ValueType::UInt8:
@@ -448,118 +447,64 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 					dcArgPointer(vm, p->GetArgument<Matrix4x4*>(i));
 					break;
 				// GoString
-				case ValueType::String: {
+				case ValueType::String:
+#if GOLM_PLATFORM_WINDOWS
+					dcArgPointer(vm, utils::CreateGoString(*p->GetArgument<std::string*>(i), args));
+					break;
+#else
+				{
 					GoString* string = utils::CreateGoString(*p->GetArgument<std::string*>(i), args);
 					dcArgPointer(vm, const_cast<char*>(string->p));
 					dcArgLongLong(vm, string->n);
 					break;
 				}
-				// GoSlice
-				/*case ValueType::ArrayBool: {
-				 	GoSlice* array = utils::CreateGoSlice<bool>(*p->GetArgument<std::vector<bool>*>(i), args);
-					dcArgPointer(vm, array->data);
-					dcArgLongLong(vm, array->len);
-					dcArgLongLong(vm, array->cap);
+#endif
+				// GoSlice*
+				/*case ValueType::ArrayBool:
+					dcArgPointer(vm, utils::CreateGoSlice<bool>(*p->GetArgument<std::vector<bool>*>(i), args));
+					break;*/
+				case ValueType::ArrayChar8:
+					dcArgPointer(vm, utils::CreateGoSlice<char>(*p->GetArgument<std::vector<char>*>(i), args));
 					break;
-				}*/
-				case ValueType::ArrayChar8: {
-					GoSlice* array = utils::CreateGoSlice<char>(*p->GetArgument<std::vector<char>*>(i), args);
-					dcArgPointer(vm, array->data);
-					dcArgLongLong(vm, array->len);
-					dcArgLongLong(vm, array->cap);
+				case ValueType::ArrayChar16:
+					dcArgPointer(vm, utils::CreateGoSlice<char16_t>(*p->GetArgument<std::vector<char16_t>*>(i), args));
 					break;
-				}
-				case ValueType::ArrayChar16: {
-					GoSlice* array = utils::CreateGoSlice<char16_t>(*p->GetArgument<std::vector<char16_t>*>(i), args);
-					dcArgPointer(vm, array->data);
-					dcArgLongLong(vm, array->len);
-					dcArgLongLong(vm, array->cap);
+				case ValueType::ArrayInt8:
+					dcArgPointer(vm, utils::CreateGoSlice<int8_t>(*p->GetArgument<std::vector<int8_t>*>(i), args));
 					break;
-				}
-				case ValueType::ArrayInt8: {
-					GoSlice* array = utils::CreateGoSlice<int8_t>(*p->GetArgument<std::vector<int8_t>*>(i), args);
-					dcArgPointer(vm, array->data);
-					dcArgLongLong(vm, array->len);
-					dcArgLongLong(vm, array->cap);
+				case ValueType::ArrayInt16:
+					dcArgPointer(vm, utils::CreateGoSlice<int16_t>(*p->GetArgument<std::vector<int16_t>*>(i), args));
 					break;
-				}
-				case ValueType::ArrayInt16: {
-					GoSlice* array = utils::CreateGoSlice<int16_t>(*p->GetArgument<std::vector<int16_t>*>(i), args);
-					dcArgPointer(vm, array->data);
-					dcArgLongLong(vm, array->len);
-					dcArgLongLong(vm, array->cap);
+				case ValueType::ArrayInt32:
+					dcArgPointer(vm, utils::CreateGoSlice<int32_t>(*p->GetArgument<std::vector<int32_t>*>(i), args));
 					break;
-				}
-				case ValueType::ArrayInt32: {
-					GoSlice* array = utils::CreateGoSlice<int32_t>(*p->GetArgument<std::vector<int32_t>*>(i), args);
-					dcArgPointer(vm, array->data);
-					dcArgLongLong(vm, array->len);
-					dcArgLongLong(vm, array->cap);
+				case ValueType::ArrayInt64:
+					dcArgPointer(vm, utils::CreateGoSlice<int64_t>(*p->GetArgument<std::vector<int64_t>*>(i), args));
 					break;
-				}
-				case ValueType::ArrayInt64: {
-					GoSlice* array = utils::CreateGoSlice<int64_t>(*p->GetArgument<std::vector<int64_t>*>(i), args);
-					dcArgPointer(vm, array->data);
-					dcArgLongLong(vm, array->len);
-					dcArgLongLong(vm, array->cap);
+				case ValueType::ArrayUInt8:
+					dcArgPointer(vm, utils::CreateGoSlice<uint8_t>(*p->GetArgument<std::vector<uint8_t>*>(i), args));
 					break;
-				}
-				case ValueType::ArrayUInt8: {
-					GoSlice* array = utils::CreateGoSlice<uint8_t>(*p->GetArgument<std::vector<uint8_t>*>(i), args);
-					dcArgPointer(vm, array->data);
-					dcArgLongLong(vm, array->len);
-					dcArgLongLong(vm, array->cap);
+				case ValueType::ArrayUInt16:
+					dcArgPointer(vm, utils::CreateGoSlice<uint16_t>(*p->GetArgument<std::vector<uint16_t>*>(i), args));
 					break;
-				}
-				case ValueType::ArrayUInt16: {
-					GoSlice* array = utils::CreateGoSlice<uint16_t>(*p->GetArgument<std::vector<uint16_t>*>(i), args);
-					dcArgPointer(vm, array->data);
-					dcArgLongLong(vm, array->len);
-					dcArgLongLong(vm, array->cap);
+				case ValueType::ArrayUInt32:
+					dcArgPointer(vm, utils::CreateGoSlice<uint32_t>(*p->GetArgument<std::vector<uint32_t>*>(i), args));
 					break;
-				}
-				case ValueType::ArrayUInt32: {
-					GoSlice* array = utils::CreateGoSlice<uint32_t>(*p->GetArgument<std::vector<uint32_t>*>(i), args);
-					dcArgPointer(vm, array->data);
-					dcArgLongLong(vm, array->len);
-					dcArgLongLong(vm, array->cap);
+				case ValueType::ArrayUInt64:
+					dcArgPointer(vm, utils::CreateGoSlice<uint64_t>(*p->GetArgument<std::vector<uint64_t>*>(i), args));
 					break;
-				}
-				case ValueType::ArrayUInt64: {
-					GoSlice* array = utils::CreateGoSlice<uint64_t>(*p->GetArgument<std::vector<uint64_t>*>(i), args);
-					dcArgPointer(vm, array->data);
-					dcArgLongLong(vm, array->len);
-					dcArgLongLong(vm, array->cap);
+				case ValueType::ArrayPointer:
+					dcArgPointer(vm, utils::CreateGoSlice<uintptr_t>(*p->GetArgument<std::vector<uintptr_t>*>(i), args));
 					break;
-				}
-				case ValueType::ArrayPointer: {
-					GoSlice* array = utils::CreateGoSlice<uintptr_t>(*p->GetArgument<std::vector<uintptr_t>*>(i), args);
-					dcArgPointer(vm, array->data);
-					dcArgLongLong(vm, array->len);
-					dcArgLongLong(vm, array->cap);
+				case ValueType::ArrayFloat:
+					dcArgPointer(vm, utils::CreateGoSlice<float>(*p->GetArgument<std::vector<float>*>(i), args));
 					break;
-				}
-				case ValueType::ArrayFloat: {
-					GoSlice* array = utils::CreateGoSlice<float>(*p->GetArgument<std::vector<float>*>(i), args);
-					dcArgPointer(vm, array->data);
-					dcArgLongLong(vm, array->len);
-					dcArgLongLong(vm, array->cap);
+				case ValueType::ArrayDouble:
+					dcArgPointer(vm, utils::CreateGoSlice<double>(*p->GetArgument<std::vector<double>*>(i), args));
 					break;
-				}
-				case ValueType::ArrayDouble: {
-					GoSlice* array = utils::CreateGoSlice<double>(*p->GetArgument<std::vector<double>*>(i), args);
-					dcArgPointer(vm, array->data);
-					dcArgLongLong(vm, array->len);
-					dcArgLongLong(vm, array->cap);
+				case ValueType::ArrayString:
+					dcArgPointer(vm, utils::CreateGoSliceString(*p->GetArgument<std::vector<std::string>*>(i), args, storage));
 					break;
-				}
-				case ValueType::ArrayString: {
-					GoSlice* array = utils::CreateGoSliceString(*p->GetArgument<std::vector<std::string>*>(i), args, storage);
-					dcArgPointer(vm, array->data);
-					dcArgLongLong(vm, array->len);
-					dcArgLongLong(vm, array->cap);
-					break;
-				}
 				default:
 					std::puts("Unsupported types!\n");
 					std::terminate();
@@ -819,7 +764,7 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 		if (hasRet) {
 			switch (method->retType.type) {
 				case ValueType::String:
-					utils::FreeMemory<GoString>(args[j++]);
+					utils::DeleteGoString(args[j++]);
 					break;
 				//case ValueType::ArrayBool:
 				case ValueType::ArrayChar8:
@@ -836,7 +781,7 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 				case ValueType::ArrayFloat:
 				case ValueType::ArrayDouble:
 				case ValueType::ArrayString:
-					utils::FreeMemory<GoSlice>(args[j++]);
+					utils::DeleteGoSlice(args[j++]);
 					break;
 				default:
 					break;
@@ -849,50 +794,22 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 					case ValueType::String:
 						utils::DeleteGoString(args[j++]);
 						break;
-                    /*case ValueType::ArrayBool:
-                        utils::DeleteGoSlice<bool>(args[j++]);
-                        break;*/
+					//case ValueType::ArrayBool:
 					case ValueType::ArrayChar8:
-						utils::DeleteGoSlice<char>(args[j++]);
-						break;
 					case ValueType::ArrayChar16:
-						utils::DeleteGoSlice<char16_t>(args[j++]);
-						break;
 					case ValueType::ArrayInt8:
-						utils::DeleteGoSlice<int16_t>(args[j++]);
-						break;
 					case ValueType::ArrayInt16:
-						utils::DeleteGoSlice<int16_t>(args[j++]);
-						break;
 					case ValueType::ArrayInt32:
-						utils::DeleteGoSlice<int32_t>(args[j++]);
-						break;
 					case ValueType::ArrayInt64:
-						utils::DeleteGoSlice<int64_t>(args[j++]);
-						break;
 					case ValueType::ArrayUInt8:
-						utils::DeleteGoSlice<uint8_t>(args[j++]);
-						break;
 					case ValueType::ArrayUInt16:
-						utils::DeleteGoSlice<uint16_t>(args[j++]);
-						break;
 					case ValueType::ArrayUInt32:
-						utils::DeleteGoSlice<uint32_t>(args[j++]);
-						break;
 					case ValueType::ArrayUInt64:
-						utils::DeleteGoSlice<uint64_t>(args[j++]);
-						break;
 					case ValueType::ArrayPointer:
-						utils::DeleteGoSlice<uintptr_t>(args[j++]);
-						break;
 					case ValueType::ArrayFloat:
-						utils::DeleteGoSlice<float>(args[j++]);
-						break;
 					case ValueType::ArrayDouble:
-						utils::DeleteGoSlice<double>(args[j++]);
-						break;
 					case ValueType::ArrayString:
-						utils::DeleteGoSlice<GoString>(args[j++]);
+						utils::DeleteGoSlice(args[j++]);
 						break;
 					default:
 						break;
