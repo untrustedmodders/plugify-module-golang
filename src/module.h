@@ -6,12 +6,7 @@
 #include <module_export.h>
 #include <plugify/function.h>
 #include <plugify/language_module.h>
-typedef void* (*GetMethodFn)(const char*);
 
-void* GetMethod(const char* str, void* getMethodPtr) {
-	GetMethodFn func = (GetMethodFn)getMethodPtr;
-	return func(str);
-}
 typedef signed char GoInt8;
 typedef unsigned char GoUint8;
 typedef short GoInt16;
@@ -92,7 +87,7 @@ namespace golm {
 		std::unique_ptr<DCCallVM, VMDeleter> _callVirtMachine;
 		std::mutex _mutex;
 
-		static const std::array<void*, 70> _pluginApi;
+		static const std::array<void*, 17> _pluginApi;
 	};
 
 	extern GoLanguageModule g_golm;

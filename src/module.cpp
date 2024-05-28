@@ -908,381 +908,495 @@ void* GetMethodPtr(const char* methodName) {
 	return g_golm.GetNativeMethod(methodName);
 }
 
-void* CreateStringE() {
+void* AllocateString() {
 	return malloc(sizeof(std::string));
 }
 void* CreateString(GoString source) {
-	return new std::string(source.p, source.n);
+	return source.n == 0 ? new std::string() : new std::string(source.p, source.n);
 }
-const char* GetString(void* ptr) {
+const char* GetStringData(void* ptr) {
 	return reinterpret_cast<std::string*>(ptr)->c_str();
 }
-void DeleteString(void* ptr, bool output) {
-	if (output) {
-		reinterpret_cast<std::string*>(ptr)->~basic_string();
-		free(ptr);
-	} else
-		delete reinterpret_cast<std::string*>(ptr);
+ptrdiff_t GetStringSize(void* ptr) {
+	return static_cast<ptrdiff_t>(reinterpret_cast<std::string*>(ptr)->size());
+}
+void AssignString(void* ptr, GoString source) {
+	auto str = reinterpret_cast<std::string*>(ptr);
+	if (source.p == nullptr || source.n == 0)
+		str->clear();
+	else
+		str->assign(source.p, static_cast<size_t>(source.n));
+}
+void FreeString(void* ptr) {
+	reinterpret_cast<std::string*>(ptr)->~basic_string();
+	free(ptr);
 }
 
-void* CreateVectorBool(bool* arr, ptrdiff_t len) {
-	return new std::vector<bool>(arr, arr + len);
+void DeleteString(void* ptr) {
+	delete reinterpret_cast<std::string*>(ptr);
 }
-void* CreateVectorChar8(char* arr, ptrdiff_t len) {
-	return new std::vector<char>(arr, arr + len);
-}
-void* CreateVectorChar16(uint16_t* arr, ptrdiff_t len) {
-	return new std::vector<uint16_t>(arr, arr + len);
-}
-void* CreateVectorInt8(int8_t* arr, ptrdiff_t len) {
-	return new std::vector<int8_t>(arr, arr + len);
-}
-void* CreateVectorInt16(int16_t* arr, ptrdiff_t len) {
-	return new std::vector<int16_t>(arr, arr + len);
-}
-void* CreateVectorInt32(int32_t* arr, ptrdiff_t len) {
-	return new std::vector<int32_t>(arr, arr + len);
-}
-void* CreateVectorInt64(int64_t* arr, ptrdiff_t len) {
-	return new std::vector<int64_t>(arr, arr + len);
-}
-void* CreateVectorUInt8(uint8_t* arr, ptrdiff_t len) {
-	return new std::vector<uint8_t>(arr, arr + len);
-}
-void* CreateVectorUInt16(uint16_t* arr, ptrdiff_t len) {
-	return new std::vector<uint16_t>(arr, arr + len);
-}
-void* CreateVectorUInt32(uint32_t* arr, ptrdiff_t len) {
-	return new std::vector<uint32_t>(arr, arr + len);
-}
-void* CreateVectorUInt64(uint64_t* arr, ptrdiff_t len) {
-	return new std::vector<uint64_t>(arr, arr + len);
-}
-void* CreateVectorUIntPtr(uintptr_t* arr, ptrdiff_t len) {
-	return new std::vector<uintptr_t>(arr, arr + len);
-}
-void* CreateVectorFloat(float* arr, ptrdiff_t len) {
-	return new std::vector<float>(arr, arr + len);
-}
-void* CreateVectorDouble(double* arr, ptrdiff_t len) {
-	return new std::vector<double>(arr, arr + len);
-}
-void* CreateVectorString(GoString* arr, ptrdiff_t len) {
-	auto* vector = new std::vector<std::string>();
-	vector->reserve(len);
-	for (ptrdiff_t i = 0; i < len; ++i) {
-		const auto& element = arr[i];
-		vector->emplace_back(element.p, element.n);
+
+enum DataType {
+	BOOL,
+	CHAR8,
+	CHAR16,
+	INT8,
+	INT16,
+	INT32,
+	INT64,
+	UINT8,
+	UINT16,
+	UINT32,
+	UINT64,
+	UINTPTR,
+	FLOAT,
+	DOUBLE,
+	STRING
+};
+
+void* CreateVector(void* arr, ptrdiff_t len, DataType type) {
+	switch (type) {
+		case BOOL:
+			return len == 0 ? new std::vector<bool>() : new std::vector<bool>(static_cast<bool*>(arr), static_cast<bool*>(arr) + len);
+		case CHAR8:
+			return len == 0 ? new std::vector<char>() : new std::vector<char>(static_cast<char*>(arr), static_cast<char*>(arr) + len);
+		case CHAR16:
+			return len == 0 ? new std::vector<uint16_t>() : new std::vector<uint16_t>(static_cast<uint16_t*>(arr), static_cast<uint16_t*>(arr) + len);
+		case INT8:
+			return len == 0 ? new std::vector<int8_t>() : new std::vector<int8_t>(static_cast<int8_t*>(arr), static_cast<int8_t*>(arr) + len);
+		case INT16:
+			return len == 0 ? new std::vector<int16_t>() : new std::vector<int16_t>(static_cast<int16_t*>(arr), static_cast<int16_t*>(arr) + len);
+		case INT32:
+			return len == 0 ? new std::vector<int32_t>() : new std::vector<int32_t>(static_cast<int32_t*>(arr), static_cast<int32_t*>(arr) + len);
+		case INT64:
+			return len == 0 ? new std::vector<int64_t>() : new std::vector<int64_t>(static_cast<int64_t*>(arr), static_cast<int64_t*>(arr) + len);
+		case UINT8:
+			return len == 0 ? new std::vector<uint8_t>() : new std::vector<uint8_t>(static_cast<uint8_t*>(arr), static_cast<uint8_t*>(arr) + len);
+		case UINT16:
+			return len == 0 ? new std::vector<uint16_t>() : new std::vector<uint16_t>(static_cast<uint16_t*>(arr), static_cast<uint16_t*>(arr) + len);
+		case UINT32:
+			return len == 0 ? new std::vector<uint32_t>() : new std::vector<uint32_t>(static_cast<uint32_t*>(arr), static_cast<uint32_t*>(arr) + len);
+		case UINT64:
+			return len == 0 ? new std::vector<uint64_t>() : new std::vector<uint64_t>(static_cast<uint64_t*>(arr), static_cast<uint64_t*>(arr) + len);
+		case UINTPTR:
+			return len == 0 ? new std::vector<uintptr_t>() : new std::vector<uintptr_t>(static_cast<uintptr_t*>(arr), static_cast<uintptr_t*>(arr) + len);
+		case FLOAT:
+			return len == 0 ? new std::vector<float>() : new std::vector<float>(static_cast<float*>(arr), static_cast<float*>(arr) + len);
+		case DOUBLE:
+			return len == 0 ? new std::vector<double>() : new std::vector<double>(static_cast<double*>(arr), static_cast<double*>(arr) + len);
+		case STRING:
+		{
+			auto* vector = new std::vector<std::string>();
+			if (len != 0) {
+				vector->reserve(len);
+				for (ptrdiff_t i = 0; i < len; ++i) {
+					const auto& str = static_cast<GoString*>(arr)[i];
+					vector->emplace_back(str.p, str.n);
+				}
+			}
+			return vector;
+		}
+		default:
+			return nullptr;
 	}
-	return vector;
 }
 
-void* CreateVectorBoolE() {
-	return malloc(sizeof(std::vector<bool>));
-}
-void* CreateVectorChar8E() {
-	return malloc(sizeof(std::vector<char>));
-}
-void* CreateVectorChar16E() {
-	return malloc(sizeof(std::vector<uint16_t>));
-}
-void* CreateVectorInt8E() {
-	return malloc(sizeof(std::vector<int8_t>));
-}
-void* CreateVectorInt16E() {
-	return malloc(sizeof(std::vector<int16_t>));
-}
-void* CreateVectorInt32E() {
-	return malloc(sizeof(std::vector<int32_t>));
-}
-void* CreateVectorInt64E() {
-	return malloc(sizeof(std::vector<int64_t>));
-}
-void* CreateVectorUInt8E() {
-	return malloc(sizeof(std::vector<uint8_t>));
-}
-void* CreateVectorUInt16E() {
-	return malloc(sizeof(std::vector<uint16_t>));
-}
-void* CreateVectorUInt32E() {
-	return malloc(sizeof(std::vector<uint32_t>));
-}
-void* CreateVectorUInt64E() {
-	return malloc(sizeof(std::vector<uint64_t>));
-}
-void* CreateVectorUIntPtrE() {
-	return malloc(sizeof(std::vector<uintptr_t>));
-}
-void* CreateVectorFloatE() {
-	return malloc(sizeof(std::vector<float>));
-}
-void* CreateVectorDoubleE() {
-	return malloc(sizeof(std::vector<double>));
-}
-void* CreateVectorStringE() {
-	return malloc(sizeof(std::vector<std::string>));
-}
-
-void DeleteVectorBool(void* ptr, bool output) {
-	if (output) {
-		reinterpret_cast<std::vector<bool>*>(ptr)->~vector();
-		free(ptr);
-	} else
-		delete reinterpret_cast<std::vector<bool>*>(ptr);
-}
-void DeleteVectorChar8(void* ptr, bool output) {
-	if (output) {
-		reinterpret_cast<std::vector<char>*>(ptr)->~vector();
-		free(ptr);
-	} else
-		delete reinterpret_cast<std::vector<char>*>(ptr);
-}
-void DeleteVectorChar16(void* ptr, bool output) {
-	if (output) {
-		reinterpret_cast<std::vector<uint16_t>*>(ptr)->~vector();
-		free(ptr);
-	} else
-		delete reinterpret_cast<std::vector<uint16_t>*>(ptr);
-}
-void DeleteVectorInt8(void* ptr, bool output) {
-	if (output) {
-		reinterpret_cast<std::vector<int8_t>*>(ptr)->~vector();
-		free(ptr);
-	} else
-		delete reinterpret_cast<std::vector<int8_t>*>(ptr);
-}
-void DeleteVectorInt16(void* ptr, bool output) {
-	if (output) {
-		reinterpret_cast<std::vector<int16_t>*>(ptr)->~vector();
-		free(ptr);
-	} else
-		delete reinterpret_cast<std::vector<int16_t>*>(ptr);
-}
-void DeleteVectorInt32(void* ptr, bool output) {
-	if (output) {
-		reinterpret_cast<std::vector<int32_t>*>(ptr)->~vector();
-		free(ptr);
-	} else
-		delete reinterpret_cast<std::vector<int32_t>*>(ptr);
-}
-void DeleteVectorInt64(void* ptr, bool output) {
-	if (output) {
-		reinterpret_cast<std::vector<int64_t>*>(ptr)->~vector();
-		free(ptr);
-	} else
-		delete reinterpret_cast<std::vector<int64_t>*>(ptr);
-}
-void DeleteVectorUInt8(void* ptr, bool output) {
-	if (output) {
-		reinterpret_cast<std::vector<uint8_t>*>(ptr)->~vector();
-		free(ptr);
-	} else
-		delete reinterpret_cast<std::vector<uint8_t>*>(ptr);
-}
-void DeleteVectorUInt16(void* ptr, bool output) {
-	if (output) {
-		reinterpret_cast<std::vector<uint16_t>*>(ptr)->~vector();
-		free(ptr);
-	} else
-		delete reinterpret_cast<std::vector<uint16_t>*>(ptr);
-}
-void DeleteVectorUInt32(void* ptr, bool output) {
-	if (output) {
-		reinterpret_cast<std::vector<uint32_t>*>(ptr)->~vector();
-		free(ptr);
-	} else
-		delete reinterpret_cast<std::vector<uint32_t>*>(ptr);
-}
-void DeleteVectorUInt64(void* ptr, bool output) {
-	if (output) {
-		reinterpret_cast<std::vector<uint64_t>*>(ptr)->~vector();
-		free(ptr);
-	} else
-		delete reinterpret_cast<std::vector<uint64_t>*>(ptr);
-}
-void DeleteVectorUIntPtr(void* ptr, bool output) {
-	if (output) {
-		reinterpret_cast<std::vector<uintptr_t>*>(ptr)->~vector();
-		free(ptr);
-	} else
-		delete reinterpret_cast<std::vector<uintptr_t>*>(ptr);
-}
-void DeleteVectorFloat(void* ptr, bool output) {
-	if (output) {
-		reinterpret_cast<std::vector<float>*>(ptr)->~vector();
-		free(ptr);
-	} else
-		delete reinterpret_cast<std::vector<float>*>(ptr);
-}
-void DeleteVectorDouble(void* ptr, bool output) {
-	if (output) {
-		reinterpret_cast<std::vector<double>*>(ptr)->~vector();
-		free(ptr);
-	} else
-		delete reinterpret_cast<std::vector<double>*>(ptr);
-}
-void DeleteVectorString(void* ptr, bool output) {
-	if (output) {
-		reinterpret_cast<std::vector<std::string>*>(ptr)->~vector();
-		free(ptr);
-	} else
-		delete reinterpret_cast<std::vector<std::string>*>(ptr);
-}
-
-ptrdiff_t GetVectorSizeBool(void* ptr) {
-	return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<bool>*>(ptr)->size());
-}
-ptrdiff_t GetVectorSizeChar8(void* ptr) {
-	return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<char>*>(ptr)->size());
-}
-ptrdiff_t GetVectorSizeChar16(void* ptr) {
-	return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<char16_t>*>(ptr)->size());
-}
-ptrdiff_t GetVectorSizeInt8(void* ptr) {
-	return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<int8_t>*>(ptr)->size());
-}
-ptrdiff_t GetVectorSizeInt16(void* ptr) {
-	return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<int16_t>*>(ptr)->size());
-}
-ptrdiff_t GetVectorSizeInt32(void* ptr) {
-	return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<int32_t>*>(ptr)->size());
-}
-ptrdiff_t GetVectorSizeInt64(void* ptr) {
-	return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<int64_t>*>(ptr)->size());
-}
-ptrdiff_t GetVectorSizeUInt8(void* ptr) {
-	return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<uint8_t>*>(ptr)->size());
-}
-ptrdiff_t GetVectorSizeUInt16(void* ptr) {
-	return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<uint16_t>*>(ptr)->size());
-}
-ptrdiff_t GetVectorSizeUInt32(void* ptr) {
-	return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<uint32_t>*>(ptr)->size());
-}
-ptrdiff_t GetVectorSizeUInt64(void* ptr) {
-	return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<uint64_t>*>(ptr)->size());
-}
-ptrdiff_t GetVectorSizeUIntPtr(void* ptr) {
-	return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<uintptr_t>*>(ptr)->size());
-}
-ptrdiff_t GetVectorSizeFloat(void* ptr) {
-	return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<float>*>(ptr)->size());
-}
-ptrdiff_t GetVectorSizeDouble(void* ptr) {
-	return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<double>*>(ptr)->size());
-}
-ptrdiff_t GetVectorSizeString(void* ptr) {
-	return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<std::string>*>(ptr)->size());
-}
-
-void* GetVectorData(void* ptr) {
-	return reinterpret_cast<std::vector<int>*>(ptr)->data();
-}
-
-void* GetVectorDataB(void* ptr) {
-	auto& vec = *reinterpret_cast<std::vector<bool>*>(ptr);
-
-	uint8_t* boolArray = new uint8_t[vec.size()];
-
-	// Manually copy values from std::vector<bool> to the bool array
-	for (size_t i = 0; i < vec.size(); ++i) {
-		boolArray[i] = vec[i];
+void* AllocateVector(DataType type) {
+	switch (type) {
+		case BOOL:
+			return malloc(sizeof(std::vector<bool>));
+		case CHAR8:
+			return malloc(sizeof(std::vector<char>));
+		case CHAR16:
+			return malloc(sizeof(std::vector<uint16_t>));
+		case INT8:
+			return malloc(sizeof(std::vector<int8_t>));
+		case INT16:
+			return malloc(sizeof(std::vector<int16_t>));
+		case INT32:
+			return malloc(sizeof(std::vector<int32_t>));
+		case INT64:
+			return malloc(sizeof(std::vector<int64_t>));
+		case UINT8:
+			return malloc(sizeof(std::vector<uint8_t>));
+		case UINT16:
+			return malloc(sizeof(std::vector<uint16_t>));
+		case UINT32:
+			return malloc(sizeof(std::vector<uint32_t>));
+		case UINT64:
+			return malloc(sizeof(std::vector<uint64_t>));
+		case UINTPTR:
+			return malloc(sizeof(std::vector<uintptr_t>));
+		case FLOAT:
+			return malloc(sizeof(std::vector<float>));
+		case DOUBLE:
+			return malloc(sizeof(std::vector<double>));
+		case STRING:
+			return malloc(sizeof(std::vector<std::string>));
+		default:
+			return nullptr;
 	}
-
-	return boolArray;
-}
-void DeleteVectorDataB(void* ptr) {
-	delete[] reinterpret_cast<bool*>(ptr);
 }
 
-void* GetVectorDataS(void* ptr) {
-	auto& vec = *reinterpret_cast<std::vector<std::string>*>(ptr);
-
-	char** strArray = new char*[vec.size()];
-
-	// Manually copy values from std::vector<bool> to the bool array
-	for (size_t i = 0; i < vec.size(); ++i) {
-		auto& element = vec[i];
-		strArray[i] = element.data();
+ptrdiff_t GetVectorSize(void* ptr, DataType type) {
+	switch (type) {
+		case BOOL:
+			return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<bool>*>(ptr)->size());
+		case CHAR8:
+			return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<char>*>(ptr)->size());
+		case CHAR16:
+			return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<uint16_t>*>(ptr)->size());
+		case INT8:
+			return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<int8_t>*>(ptr)->size());
+		case INT16:
+			return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<int16_t>*>(ptr)->size());
+		case INT32:
+			return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<int32_t>*>(ptr)->size());
+		case INT64:
+			return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<int64_t>*>(ptr)->size());
+		case UINT8:
+			return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<uint8_t>*>(ptr)->size());
+		case UINT16:
+			return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<uint16_t>*>(ptr)->size());
+		case UINT32:
+			return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<uint32_t>*>(ptr)->size());
+		case UINT64:
+			return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<uint64_t>*>(ptr)->size());
+		case UINTPTR:
+			return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<uintptr_t>*>(ptr)->size());
+		case FLOAT:
+			return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<float>*>(ptr)->size());
+		case DOUBLE:
+			return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<double>*>(ptr)->size());
+		case STRING:
+			return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<std::string>*>(ptr)->size());
+		default:
+			return -1; // Return -1 or some error code for invalid type
 	}
-
-	return strArray;
 }
-void DeleteVectorDataS(void* ptr) {
+
+void* GetVectorData(void* ptr, DataType type) {
+	switch (type) {
+		case CHAR8:
+			return reinterpret_cast<std::vector<char>*>(ptr)->data();
+		case CHAR16:
+			return reinterpret_cast<std::vector<uint16_t>*>(ptr)->data();
+		case INT8:
+			return reinterpret_cast<std::vector<int8_t>*>(ptr)->data();
+		case INT16:
+			return reinterpret_cast<std::vector<int16_t>*>(ptr)->data();
+		case INT32:
+			return reinterpret_cast<std::vector<int32_t>*>(ptr)->data();
+		case INT64:
+			return reinterpret_cast<std::vector<int64_t>*>(ptr)->data();
+		case UINT8:
+			return reinterpret_cast<std::vector<uint8_t>*>(ptr)->data();
+		case UINT16:
+			return reinterpret_cast<std::vector<uint16_t>*>(ptr)->data();
+		case UINT32:
+			return reinterpret_cast<std::vector<uint32_t>*>(ptr)->data();
+		case UINT64:
+			return reinterpret_cast<std::vector<uint64_t>*>(ptr)->data();
+		case UINTPTR:
+			return reinterpret_cast<std::vector<uintptr_t>*>(ptr)->data();
+		case FLOAT:
+			return reinterpret_cast<std::vector<float>*>(ptr)->data();
+		case DOUBLE:
+			return reinterpret_cast<std::vector<double>*>(ptr)->data();
+		case BOOL: {
+			auto& vector = *reinterpret_cast<std::vector<bool>*>(ptr);
+
+			uint8_t* boolArray = new uint8_t[vector.size()];
+
+			// Manually copy values from std::vector<bool> to the bool array
+			for (size_t i = 0; i < vector.size(); ++i) {
+				boolArray[i] = vector[i];
+			}
+
+			return boolArray;
+		}
+		case STRING: {
+			auto& vector = *reinterpret_cast<std::vector<std::string>*>(ptr);
+
+			char** strArray = new char*[vector.size()];
+
+			// Manually copy values from std::vector<std::string> to the char* array
+			for (size_t i = 0; i < vector.size(); ++i) {
+				strArray[i] = vector[i].data();
+			}
+
+			return strArray;
+		}
+		default:
+			return nullptr; // Return nullptr for invalid type
+	}
+}
+
+void AssignVector(void* ptr, void* arr, ptrdiff_t len, DataType type) {
+	switch (type) {
+		case BOOL: {
+			auto* vector = reinterpret_cast<std::vector<bool>*>(ptr);
+			if (arr == nullptr || len == 0)
+				vector->clear();
+			else
+				vector->assign(static_cast<bool*>(arr), static_cast<bool*>(arr) + len);
+			break;
+		}
+		case CHAR8: {
+			auto* vector = reinterpret_cast<std::vector<char>*>(ptr);
+			if (arr == nullptr || len == 0)
+				vector->clear();
+			else
+				vector->assign(static_cast<char*>(arr), static_cast<char*>(arr) + len);
+			break;
+		}
+		case CHAR16: {
+			auto* vector = reinterpret_cast<std::vector<uint16_t>*>(ptr);
+			if (arr == nullptr || len == 0)
+				vector->clear();
+			else
+				vector->assign(static_cast<uint16_t*>(arr), static_cast<uint16_t*>(arr) + len);
+			break;
+		}
+		case INT8: {
+			auto* vector = reinterpret_cast<std::vector<int8_t>*>(ptr);
+			if (arr == nullptr || len == 0)
+				vector->clear();
+			else
+				vector->assign(static_cast<int8_t*>(arr), static_cast<int8_t*>(arr) + len);
+			break;
+		}
+		case INT16: {
+			auto* vector = reinterpret_cast<std::vector<int16_t>*>(ptr);
+			if (arr == nullptr || len == 0)
+				vector->clear();
+			else
+				vector->assign(static_cast<int16_t*>(arr), static_cast<int16_t*>(arr) + len);
+			break;
+		}
+		case INT32: {
+			auto* vector = reinterpret_cast<std::vector<int32_t>*>(ptr);
+			if (arr == nullptr || len == 0)
+				vector->clear();
+			else
+				vector->assign(static_cast<int32_t*>(arr), static_cast<int32_t*>(arr) + len);
+			break;
+		}
+		case INT64: {
+			auto* vector = reinterpret_cast<std::vector<int64_t>*>(ptr);
+			if (arr == nullptr || len == 0)
+				vector->clear();
+			else
+				vector->assign(static_cast<int64_t*>(arr), static_cast<int64_t*>(arr) + len);
+			break;
+		}
+		case UINT8: {
+			auto* vector = reinterpret_cast<std::vector<uint8_t>*>(ptr);
+			if (arr == nullptr || len == 0)
+				vector->clear();
+			else
+				vector->assign(static_cast<uint8_t*>(arr), static_cast<uint8_t*>(arr) + len);
+			break;
+		}
+		case UINT16: {
+			auto* vector = reinterpret_cast<std::vector<uint16_t>*>(ptr);
+			if (arr == nullptr || len == 0)
+				vector->clear();
+			else
+				vector->assign(static_cast<uint16_t*>(arr), static_cast<uint16_t*>(arr) + len);
+			break;
+		}
+		case UINT32: {
+			auto* vector = reinterpret_cast<std::vector<uint32_t>*>(ptr);
+			if (arr == nullptr || len == 0)
+				vector->clear();
+			else
+				vector->assign(static_cast<uint32_t*>(arr), static_cast<uint32_t*>(arr) + len);
+			break;
+		}
+		case UINT64: {
+			auto* vector = reinterpret_cast<std::vector<uint64_t>*>(ptr);
+			if (arr == nullptr || len == 0)
+				vector->clear();
+			else
+				vector->assign(static_cast<uint64_t*>(arr), static_cast<uint64_t*>(arr) + len);
+			break;
+		}
+		case UINTPTR: {
+			auto* vector = reinterpret_cast<std::vector<uintptr_t>*>(ptr);
+			if (arr == nullptr || len == 0)
+				vector->clear();
+			else
+				vector->assign(static_cast<uintptr_t*>(arr), static_cast<uintptr_t*>(arr) + len);
+			break;
+		}
+		case FLOAT: {
+			auto* vector = reinterpret_cast<std::vector<float>*>(ptr);
+			if (arr == nullptr || len == 0)
+				vector->clear();
+			else
+				vector->assign(static_cast<float*>(arr), static_cast<float*>(arr) + len);
+			break;
+		}
+		case DOUBLE: {
+			auto* vector = reinterpret_cast<std::vector<double>*>(ptr);
+			if (arr == nullptr || len == 0)
+				vector->clear();
+			else
+				vector->assign(static_cast<double*>(arr), static_cast<double*>(arr) + len);
+			break;
+		}
+		case STRING: {
+			auto* vector = reinterpret_cast<std::vector<std::string>*>(ptr);
+			if (arr == nullptr || len == 0)
+				vector->clear();
+			else {
+				vector->resize(static_cast<size_t>(len));
+				for (ptrdiff_t i = 0; i < len; ++i) {
+					const auto& str = static_cast<GoString*>(arr)[i];
+					vector->at(static_cast<size_t>(i)).assign(str.p, static_cast<size_t>(str.n));
+				}
+			}
+			break;
+		}
+		default:
+			break;
+	}
+}
+
+void DeleteVector(void* ptr, DataType type) {
+	switch (type) {
+		case BOOL:
+			delete reinterpret_cast<std::vector<bool>*>(ptr);
+			break;
+		case CHAR8:
+			delete reinterpret_cast<std::vector<char>*>(ptr);
+			break;
+		case CHAR16:
+			delete reinterpret_cast<std::vector<uint16_t>*>(ptr);
+			break;
+		case INT8:
+			delete reinterpret_cast<std::vector<int8_t>*>(ptr);
+			break;
+		case INT16:
+			delete reinterpret_cast<std::vector<int16_t>*>(ptr);
+			break;
+		case INT32:
+			delete reinterpret_cast<std::vector<int32_t>*>(ptr);
+			break;
+		case INT64:
+			delete reinterpret_cast<std::vector<int64_t>*>(ptr);
+			break;
+		case UINT8:
+			delete reinterpret_cast<std::vector<uint8_t>*>(ptr);
+			break;
+		case UINT16:
+			delete reinterpret_cast<std::vector<uint16_t>*>(ptr);
+			break;
+		case UINT32:
+			delete reinterpret_cast<std::vector<uint32_t>*>(ptr);
+			break;
+		case UINT64:
+			delete reinterpret_cast<std::vector<uint64_t>*>(ptr);
+			break;
+		case UINTPTR:
+			delete reinterpret_cast<std::vector<uintptr_t>*>(ptr);
+			break;
+		case FLOAT:
+			delete reinterpret_cast<std::vector<float>*>(ptr);
+			break;
+		case DOUBLE:
+			delete reinterpret_cast<std::vector<double>*>(ptr);
+			break;
+		case STRING:
+			delete reinterpret_cast<std::vector<std::string>*>(ptr);
+			break;
+		default:
+			// Invalid type, do nothing or handle error if needed
+			break;
+	}
+}
+
+void FreeVector(void* ptr, DataType type) {
+	switch (type) {
+		case BOOL:
+			reinterpret_cast<std::vector<bool>*>(ptr)->~vector();
+			break;
+		case CHAR8:
+			reinterpret_cast<std::vector<char>*>(ptr)->~vector();
+			break;
+		case CHAR16:
+			reinterpret_cast<std::vector<uint16_t>*>(ptr)->~vector();
+			break;
+		case INT8:
+			reinterpret_cast<std::vector<int8_t>*>(ptr)->~vector();
+			break;
+		case INT16:
+			reinterpret_cast<std::vector<int16_t>*>(ptr)->~vector();
+			break;
+		case INT32:
+			reinterpret_cast<std::vector<int32_t>*>(ptr)->~vector();
+			break;
+		case INT64:
+			reinterpret_cast<std::vector<int64_t>*>(ptr)->~vector();
+			break;
+		case UINT8:
+			reinterpret_cast<std::vector<uint8_t>*>(ptr)->~vector();
+			break;
+		case UINT16:
+			reinterpret_cast<std::vector<uint16_t>*>(ptr)->~vector();
+			break;
+		case UINT32:
+			reinterpret_cast<std::vector<uint32_t>*>(ptr)->~vector();
+			break;
+		case UINT64:
+			reinterpret_cast<std::vector<uint64_t>*>(ptr)->~vector();
+			break;
+		case UINTPTR:
+			reinterpret_cast<std::vector<uintptr_t>*>(ptr)->~vector();
+			break;
+		case FLOAT:
+			reinterpret_cast<std::vector<float>*>(ptr)->~vector();
+			break;
+		case DOUBLE:
+			reinterpret_cast<std::vector<double>*>(ptr)->~vector();
+			break;
+		case STRING:
+			reinterpret_cast<std::vector<std::string>*>(ptr)->~vector();
+			break;
+		default:
+			// Invalid type, do nothing or handle error if needed
+			return;
+	}
+	free(ptr);
+}
+
+void DeleteVectorDataBool(void* ptr) {
+	delete[] reinterpret_cast<uint8_t*>(ptr);
+}
+
+void DeleteVectorDataCStr(void* ptr) {
 	delete[] reinterpret_cast<char**>(ptr);
 }
 
-const std::array<void*, 70> GoLanguageModule::_pluginApi = {
+const std::array<void*, 17> GoLanguageModule::_pluginApi = {
 		reinterpret_cast<void*>(&GetMethodPtr),
-		reinterpret_cast<void*>(&CreateStringE),
+		reinterpret_cast<void*>(&AllocateString),
 		reinterpret_cast<void*>(&CreateString),
-		reinterpret_cast<void*>(&GetString),
+		reinterpret_cast<void*>(&GetStringData),
+		reinterpret_cast<void*>(&GetStringSize),
+		reinterpret_cast<void*>(&AssignString),
+		reinterpret_cast<void*>(&FreeString),
 		reinterpret_cast<void*>(&DeleteString),
-		reinterpret_cast<void*>(&CreateVectorBool),
-		reinterpret_cast<void*>(&CreateVectorChar8),
-		reinterpret_cast<void*>(&CreateVectorChar16),
-		reinterpret_cast<void*>(&CreateVectorInt8),
-		reinterpret_cast<void*>(&CreateVectorInt16),
-		reinterpret_cast<void*>(&CreateVectorInt32),
-		reinterpret_cast<void*>(&CreateVectorInt64),
-		reinterpret_cast<void*>(&CreateVectorUInt8),
-		reinterpret_cast<void*>(&CreateVectorUInt16),
-		reinterpret_cast<void*>(&CreateVectorUInt32),
-		reinterpret_cast<void*>(&CreateVectorUInt64),
-		reinterpret_cast<void*>(&CreateVectorUIntPtr),
-		reinterpret_cast<void*>(&CreateVectorFloat),
-		reinterpret_cast<void*>(&CreateVectorDouble),
-		reinterpret_cast<void*>(&CreateVectorString),
-		reinterpret_cast<void*>(&CreateVectorBoolE),
-		reinterpret_cast<void*>(&CreateVectorChar8E),
-		reinterpret_cast<void*>(&CreateVectorChar16E),
-		reinterpret_cast<void*>(&CreateVectorInt8E),
-		reinterpret_cast<void*>(&CreateVectorInt16E),
-		reinterpret_cast<void*>(&CreateVectorInt32E),
-		reinterpret_cast<void*>(&CreateVectorInt64E),
-		reinterpret_cast<void*>(&CreateVectorUInt8E),
-		reinterpret_cast<void*>(&CreateVectorUInt16E),
-		reinterpret_cast<void*>(&CreateVectorUInt32E),
-		reinterpret_cast<void*>(&CreateVectorUInt64E),
-		reinterpret_cast<void*>(&CreateVectorUIntPtrE),
-		reinterpret_cast<void*>(&CreateVectorFloatE),
-		reinterpret_cast<void*>(&CreateVectorDoubleE),
-		reinterpret_cast<void*>(&CreateVectorStringE),
-		reinterpret_cast<void*>(&DeleteVectorBool),
-		reinterpret_cast<void*>(&DeleteVectorChar8),
-		reinterpret_cast<void*>(&DeleteVectorChar16),
-		reinterpret_cast<void*>(&DeleteVectorInt8),
-		reinterpret_cast<void*>(&DeleteVectorInt16),
-		reinterpret_cast<void*>(&DeleteVectorInt32),
-		reinterpret_cast<void*>(&DeleteVectorInt64),
-		reinterpret_cast<void*>(&DeleteVectorUInt8),
-		reinterpret_cast<void*>(&DeleteVectorUInt16),
-		reinterpret_cast<void*>(&DeleteVectorUInt32),
-		reinterpret_cast<void*>(&DeleteVectorUInt64),
-		reinterpret_cast<void*>(&DeleteVectorUIntPtr),
-		reinterpret_cast<void*>(&DeleteVectorFloat),
-		reinterpret_cast<void*>(&DeleteVectorDouble),
-		reinterpret_cast<void*>(&DeleteVectorString),
-		reinterpret_cast<void*>(&GetVectorSizeBool),
-		reinterpret_cast<void*>(&GetVectorSizeChar8),
-		reinterpret_cast<void*>(&GetVectorSizeChar16),
-		reinterpret_cast<void*>(&GetVectorSizeInt8),
-		reinterpret_cast<void*>(&GetVectorSizeInt16),
-		reinterpret_cast<void*>(&GetVectorSizeInt32),
-		reinterpret_cast<void*>(&GetVectorSizeInt64),
-		reinterpret_cast<void*>(&GetVectorSizeUInt8),
-		reinterpret_cast<void*>(&GetVectorSizeUInt16),
-		reinterpret_cast<void*>(&GetVectorSizeUInt32),
-		reinterpret_cast<void*>(&GetVectorSizeUInt64),
-		reinterpret_cast<void*>(&GetVectorSizeUIntPtr),
-		reinterpret_cast<void*>(&GetVectorSizeFloat),
-		reinterpret_cast<void*>(&GetVectorSizeDouble),
-		reinterpret_cast<void*>(&GetVectorSizeString),
+		reinterpret_cast<void*>(&CreateVector),
+		reinterpret_cast<void*>(&AllocateVector),
+		reinterpret_cast<void*>(&GetVectorSize),
 		reinterpret_cast<void*>(&GetVectorData),
-		reinterpret_cast<void*>(&GetVectorDataB),
-		reinterpret_cast<void*>(&DeleteVectorDataB),
-		reinterpret_cast<void*>(&GetVectorDataS),
-		reinterpret_cast<void*>(&DeleteVectorDataS)
+		reinterpret_cast<void*>(&AssignVector),
+		reinterpret_cast<void*>(&DeleteVector),
+		reinterpret_cast<void*>(&FreeVector),
+		reinterpret_cast<void*>(&DeleteVectorDataBool),
+		reinterpret_cast<void*>(&DeleteVectorDataCStr)
 };
 
 namespace golm {
