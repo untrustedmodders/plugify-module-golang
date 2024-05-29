@@ -774,8 +774,7 @@ def main(manifest_path, output_dir, override):
         print(f'Output folder not exists {output_dir}')
         return 1
 
-    #plugin_name = os.path.splitext(os.path.basename(manifest_path))[0]
-    plugin_name = "cpptest"
+    plugin_name = os.path.splitext(os.path.basename(manifest_path))[0]
 
     header_dir = os.path.join(output_dir, plugin_name)
     if not os.path.exists(header_dir):
@@ -862,7 +861,7 @@ def main(manifest_path, output_dir, override):
     content += 'typedef struct { float x, y; } Vector2;\n'
     content += 'typedef struct { float x, y, z; } Vector3;\n'
     content += 'typedef struct { float x, y, z, w; } Vector4;\n'
-    content += 'typedef struct { float m[4][4]; } Matrix4x4;\n'
+    content += 'typedef struct { float m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33; } Matrix4x4;\n'
 
     content += '\n'
 
