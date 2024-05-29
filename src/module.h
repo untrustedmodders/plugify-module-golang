@@ -51,6 +51,7 @@ namespace golm {
 	using MethodRef = std::reference_wrapper<const plugify::Method>;
 	using ArgumentList = std::vector<void*>;
 	using StringStorage = std::vector<std::unique_ptr<GoString[]>>;
+	using BoolStorage = std::vector<std::unique_ptr<bool[]>>;
 
 	struct VMDeleter {
 		void operator()(DCCallVM* vm) const {
