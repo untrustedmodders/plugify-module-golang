@@ -66,17 +66,17 @@ func OnPluginEnd(fn PluginEndCallback) {
 }
 
 type Vector2 struct {
-    x float32
-    y float32
+    X float32
+    Y float32
 }
 type Vector3 struct {
-    x float32
-    y float32
-    z float32
+    X float32
+    Y float32
+    Z float32
 }
 type Vector4 struct {
-    x float32
-    y float32
-    z float32
-    w float32
+    X float32
+    Y float32
+    Z float32
+    W float32
 }
