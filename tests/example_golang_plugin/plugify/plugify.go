@@ -27,7 +27,7 @@ func Plugify_Init(api []uintptr, version int32) int32 {
 	if version < kApiVersion {
 		return kApiVersion
 	}
-	C.Plugify_SetGetMethodPtr(unsafe.Pointer(api[0]));
+    C.Plugify_SetGetMethodPtr(unsafe.Pointer(api[0]));
     C.Plugify_SetAllocateString(unsafe.Pointer(api[1]));
     C.Plugify_SetCreateString(unsafe.Pointer(api[2]));
     C.Plugify_SetGetStringData(unsafe.Pointer(api[3]));
