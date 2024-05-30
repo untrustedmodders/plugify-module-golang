@@ -64,7 +64,7 @@ import (
 
 func init() {
 	plugify.OnPluginStart(func() {
-        fmt.Println("OnPluginStart")
+		fmt.Println("OnPluginStart")
 	})
 
 	plugify.OnPluginEnd(func() {
