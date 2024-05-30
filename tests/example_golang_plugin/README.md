@@ -6,8 +6,7 @@ This repository contains a simple example of a Golang plugin that can be built a
 
 To build the plugin as a shared library, use the following command:
 
-```
-sh
+```sh
 go build -buildmode=c-shared -o example_golang_plugin.dll main.go
 ```
 
