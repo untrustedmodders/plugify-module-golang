@@ -54,23 +54,25 @@ The Go Language Module for Plugify enables developers to write plugins in Go for
 
 ## Example
 
-```c++
-#include <plugify/cpp_plugin.h>
-#include <plugin_export.h>
-#include <iostream>
+```go
+package main
 
-class ExamplePlugin : public plugify::IPluginEntry {
-public:
-	void OnPluginStart() override {
-		std::cout << "Example Start!" << std::endl;
-	}
+import (
+	"fmt"
+	"plugify-plugin/plugify"
+)
 
-	void OnPluginEnd() override {
-		std::cout << "Example End!" << std::endl;
-	}
-} g_examplePlugin;
+func init() {
+	plugify.OnPluginStart(func() {
+        fmt.Println("OnPluginStart")
+	})
 
-EXPOSE_PLUGIN(PLUGIN_API, &g_examplePlugin)
+	plugify.OnPluginEnd(func() {
+		fmt.Println("OnPluginEnd")
+	})
+}
+
+func main() {}
 ```
 
 ## Documentation
