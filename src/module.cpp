@@ -157,7 +157,7 @@ InitResult GoLanguageModule::Initialize(std::weak_ptr<IPlugifyProvider> provider
 		return ErrorData{ "Provider not exposed" };
 	}
 
-	_provider->Log("[GOLM] Inited!", Severity::Debug);
+	_provider->Log(LOG_PREFIX "Inited!", Severity::Debug);
 
 	_rt = std::make_shared<asmjit::JitRuntime>();
 
@@ -282,7 +282,7 @@ void* GoLanguageModule::GetNativeMethod(const std::string& methodName) const {
 	if (const auto it = _nativesMap.find(methodName); it != _nativesMap.end()) {
 		return std::get<void*>(*it);
 	}
-	_provider->Log(std::format("[GOLM] GetNativeMethod failed to find: '{}'", methodName), Severity::Fatal);
+	_provider->Log(std::format(LOG_PREFIX "GetNativeMethod failed to find: '{}'", methodName), Severity::Fatal);
 	return nullptr;
 }
 
