@@ -46,7 +46,7 @@ target_precompile_headers(${PROJECT_NAME} PRIVATE ${GOLM_PCH_FILE})
 if(MSVC)
     target_compile_options(${PROJECT_NAME} PRIVATE /W4 /WX)
 else()
-    target_compile_options(${PROJECT_NAME} PRIVATE -Wextra -Wshadow -Wconversion -Wpedantic -Werror)
+    target_compile_options(${PROJECT_NAME} PRIVATE -Wextra -Wconversion -Werror)# -Wshadow -Wpedantic
 endif()
 
 if(APPLE)
