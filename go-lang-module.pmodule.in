@@ -1,7 +1,7 @@
 {
 	"fileVersion": 1,
-	"version": 1,
-	"versionName": "${GOLM_VERSION}",
+	"version": ${GOLM_VERSION},
+	"versionName": "v${GOLM_VERSION}",
 	"friendlyName": "Go language module",
 	"language": "golang",
 	"description": "Adds support for Go plugins",
