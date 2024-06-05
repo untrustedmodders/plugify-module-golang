@@ -1,15 +1,15 @@
 {
 	"fileVersion": 1,
 	"version": 1,
-	"versionName": "1.0",
+	"versionName": "${GOLM_VERSION}",
 	"friendlyName": "Go language module",
 	"language": "golang",
 	"description": "Adds support for Go plugins",
 	"createdBy": "untrustedmodders",
 	"createdByURL": "https://github.com/untrustedmodders/",
 	"docsURL": "https://github.com/untrustedmodders/go-lang-module/README.md",
-	"downloadURL": "https://github.com/untrustedmodders/go-lang-module/releases/download/v1.0/go-lang-module.zip",
-	"updateURL": "https://raw.githubusercontent.com/untrustedmodders/go-lang-module/main/go-lang-module.json",
+	"downloadURL": "https://github.com/untrustedmodders/go-lang-module/releases/download/v${GOLM_VERSION}/${GOLM_PACKAGE}.zip",
+	"updateURL": "https://untrustedmodders.github.com/go-lang-module/go-lang-module.json",
 	"supportedPlatforms": [],
 	"forceLoad": false
 }
