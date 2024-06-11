@@ -169,12 +169,12 @@ InitResult GoLanguageModule::Initialize(std::weak_ptr<IPlugifyProvider> provider
 }
 
 void GoLanguageModule::Shutdown() {
-	_callVirtMachine.reset();
-	_functions.clear();
 	_nativesMap.clear();
+	_functions.clear();
 	_assemblies.clear();
-	_provider.reset();
+	_callVirtMachine.reset();
 	_rt.reset();
+	_provider.reset();
 }
 
 void GoLanguageModule::OnMethodExport(const IPlugin& plugin) {
@@ -185,7 +185,7 @@ void GoLanguageModule::OnMethodExport(const IPlugin& plugin) {
 }
 
 LoadResult GoLanguageModule::OnPluginLoad(const IPlugin& plugin) {
-	fs::path assemblyPath = plugin.GetBaseDir() / std::format("{}" BINARY_MODULE_SUFFIX, plugin.GetDescriptor().entryPoint);
+	fs::path assemblyPath(plugin.GetBaseDir() / std::format("{}" BINARY_MODULE_SUFFIX, plugin.GetDescriptor().entryPoint));
 
 	auto assembly = Assembly::LoadFromPath(assemblyPath);
 	if (!assembly) {
@@ -771,7 +771,7 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 						case ValueType::String:
 							utils::CopyGoStringToString(reinterpret_cast<GoString*>(args[j++]), *p->GetArgument<std::string*>(i));
 							break;
-                        case ValueType::ArrayBool:
+						case ValueType::ArrayBool:
 							utils::CopyGoSliceToVector(reinterpret_cast<GoSlice*>(args[j++]), *p->GetArgument<std::vector<bool>*>(i));
 							break;
 						case ValueType::ArrayChar8:
@@ -1237,10 +1237,11 @@ void AssignVector(void* ptr, void* arr, ptrdiff_t len, DataType type) {
 			if (arr == nullptr || len == 0)
 				vector->clear();
 			else {
-				vector->resize(static_cast<size_t>(len));
-				for (ptrdiff_t i = 0; i < len; ++i) {
+				size_t N = static_cast<size_t>(len);
+				vector->resize(N);
+				for (size_t i = 0; i < N; ++i) {
 					const auto& str = static_cast<GoString*>(arr)[i];
-					vector->at(static_cast<size_t>(i)).assign(str.p, static_cast<size_t>(str.n));
+					(*vector)[i].assign(str.p, static_cast<size_t>(str.n));
 				}
 			}
 			break;
