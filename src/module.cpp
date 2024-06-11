@@ -903,8 +903,8 @@ void* CreateString(GoString source) {
 const char* GetStringData(void* ptr) {
 	return reinterpret_cast<std::string*>(ptr)->c_str();
 }
-ptrdiff_t GetStringSize(void* ptr) {
-	return static_cast<ptrdiff_t>(reinterpret_cast<std::string*>(ptr)->size());
+ptrdiff_t GetStringLength(void* ptr) {
+	return static_cast<ptrdiff_t>(reinterpret_cast<std::string*>(ptr)->length());
 }
 void AssignString(void* ptr, GoString source) {
 	auto str = reinterpret_cast<std::string*>(ptr);
@@ -1370,7 +1370,7 @@ const std::array<void*, 17> GoLanguageModule::_pluginApi = {
 		reinterpret_cast<void*>(&AllocateString),
 		reinterpret_cast<void*>(&CreateString),
 		reinterpret_cast<void*>(&GetStringData),
-		reinterpret_cast<void*>(&GetStringSize),
+		reinterpret_cast<void*>(&GetStringLength),
 		reinterpret_cast<void*>(&AssignString),
 		reinterpret_cast<void*>(&FreeString),
 		reinterpret_cast<void*>(&DeleteString),

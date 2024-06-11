@@ -7,7 +7,7 @@ typedef void* (*GetMethodPtrFunc)(const char*);
 typedef void* (*AllocateStringFunc)();
 typedef void* (*CreateStringFunc)(_GoString_ source);
 typedef const char* (*GetStringDataFunc)(void* ptr);
-typedef ptrdiff_t (*GetStringSizeFunc)(void* ptr);
+typedef ptrdiff_t (*GetStringLengthFunc)(void* ptr);
 typedef void (*AssignStringFunc)(void* ptr, _GoString_ source);
 typedef void (*FreeStringFunc)(void* ptr);
 typedef void (*DeleteStringFunc)(void* ptr);
@@ -29,7 +29,7 @@ GetMethodPtrFunc getMethodPtr = NULL;
 AllocateStringFunc allocateString = NULL;
 CreateStringFunc createString = NULL;
 GetStringDataFunc getStringData = NULL;
-GetStringSizeFunc getStringSize = NULL;
+GetStringLengthFunc getStringLength = NULL;
 AssignStringFunc assignString = NULL;
 FreeStringFunc freeString = NULL;
 DeleteStringFunc deleteString = NULL;
@@ -60,8 +60,8 @@ void* Plugify_CreateString(_GoString_ source) {
 const char* Plugify_GetStringData(void* ptr) {
 	return getStringData(ptr);
 }
-ptrdiff_t Plugify_GetStringSize(void* ptr) {
-	return getStringSize(ptr);
+ptrdiff_t Plugify_GetStringLength(void* ptr) {
+	return getStringLength(ptr);
 }
 void Plugify_AssignString(void* ptr, _GoString_ source) {
 	assignString(ptr, source);
@@ -127,8 +127,8 @@ void Plugify_SetGetStringData(void* func) {
 	getStringData = (GetStringDataFunc)func;
 }
 
-void Plugify_SetGetStringSize(void* func) {
-	getStringSize = (GetStringSizeFunc)func;
+void Plugify_SetGetStringLength(void* func) {
+	getStringLength = (GetStringLengthFunc)func;
 }
 
 void Plugify_SetAssignString(void* func) {

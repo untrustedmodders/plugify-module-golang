@@ -31,7 +31,7 @@ func Plugify_Init(api []uintptr, version int32) int32 {
 	C.Plugify_SetAllocateString(unsafe.Pointer(api[1]));
 	C.Plugify_SetCreateString(unsafe.Pointer(api[2]));
 	C.Plugify_SetGetStringData(unsafe.Pointer(api[3]));
-	C.Plugify_SetGetStringSize(unsafe.Pointer(api[4]));
+	C.Plugify_SetGetStringLength(unsafe.Pointer(api[4]));
 	C.Plugify_SetAssignString(unsafe.Pointer(api[5]));
 	C.Plugify_SetFreeString(unsafe.Pointer(api[6]));
 	C.Plugify_SetDeleteString(unsafe.Pointer(api[7]));
