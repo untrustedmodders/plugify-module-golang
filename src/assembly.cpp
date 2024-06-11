@@ -14,14 +14,18 @@ namespace golm {
 	thread_local static std::string lastError;
 
 	std::unique_ptr<Assembly> Assembly::LoadFromPath(const std::filesystem::path& assemblyPath) {
+		// TODO: Keep eye on dynamic unload feature in future: https://github.com/golang/go/issues/11100
 #if GOLM_PLATFORM_WINDOWS
 		void* handle = static_cast<void*>(LoadLibraryW(assemblyPath.c_str()));
 #elif GOLM_PLATFORM_LINUX || GOLM_PLATFORM_APPLE
-		void* handle = dlopen(assemblyPath.string().c_str(), RTLD_LAZY);
+		void* handle = dlopen(assemblyPath.string().c_str(), RTLD_LAZY | RTLD_NODELETE);
 #else
 		void* handle = nullptr;
 #endif
 		if (handle) {
+#if GOLM_PLATFORM_WINDOWS
+			GetModuleHandleExW(GET_MODULE_HANDLE_EX_FLAG_PIN, assemblyPath.filename().c_str(), reinterpret_cast<HMODULE*>(&handle));
+#endif
 			return std::unique_ptr<Assembly>(new Assembly(handle));
 		}
 #if GOLM_PLATFORM_WINDOWS
