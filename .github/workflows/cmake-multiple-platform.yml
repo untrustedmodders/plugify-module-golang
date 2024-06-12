@@ -188,14 +188,12 @@ jobs:
             import os
             import sys
             
-            os.chdir(os.path.dirname(os.path.abspath(__file__)))
-            
             version_number = ${{ needs.setup.outputs.buildnumber }}
             package_name = 'golm-build-${{ needs.setup.outputs.buildnumber }}-{}-${{ env.GITHUB_SHA_SHORT }}'
             linux_checksum = '${{ needs.publish.outputs.linux_checksum }}'
             windows_checksum = '${{ needs.publish.outputs.windows_checksum }}'
             json_url = 'https://untrustedmodders.github.io/go-lang-module/go-lang-module.json'
-            local_json_file_path = 'build/repo/go-lang-module.json'
+            local_json_file_path = '/build/repo/go-lang-module.json'
             
             def load_json_from_url(url):
                 try:
