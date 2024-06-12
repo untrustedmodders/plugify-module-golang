@@ -188,12 +188,15 @@ jobs:
             import os
             import sys
             
+            directory = os.path.dirname(os.path.abspath(__file__))
+            os.chdir(directory)
+            
             version_number = ${{ needs.setup.outputs.buildnumber }}
             package_name = 'golm-build-${{ needs.setup.outputs.buildnumber }}-{}-${{ env.GITHUB_SHA_SHORT }}'
             linux_checksum = '${{ needs.publish.outputs.linux_checksum }}'
             windows_checksum = '${{ needs.publish.outputs.windows_checksum }}'
             json_url = 'https://untrustedmodders.github.io/go-lang-module/go-lang-module.json'
-            local_json_file_path = '/build/repo/go-lang-module.json'
+            local_json_file_path = os.path.join(directory, 'go-lang-module.json')
             
             def load_json_from_url(url):
                 try:
@@ -214,7 +217,6 @@ jobs:
                     }
             
             def save_json(file_path, data):
-                os.makedirs(os.path.dirname(file_path), exist_ok=True)
                 with open(file_path, 'w') as file:
                     json.dump(data, file, indent=4)
             
@@ -238,11 +240,12 @@ jobs:
             data = append_new_version(data, version_number, windows_checksum, package_name, "windows")
             data = append_new_version(data, version_number, linux_checksum, package_name, "linux")
             save_json(local_json_file_path, data)
+            set_env("FULL_PATH", directory)
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          path: build/repo
+          path: ${{ env.FULL_PATH }}
 
       - name: Deploy to GitHub Pages
         id: deployment
