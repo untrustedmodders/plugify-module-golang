@@ -156,7 +156,9 @@ jobs:
   repository:
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     permissions:
-      contents: write
+      contents: read
+      pages: write
+      id-token: write
     needs: ["setup", "publish"]
     runs-on: ubuntu-latest
     environment:
