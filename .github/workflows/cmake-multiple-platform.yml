@@ -23,10 +23,6 @@ jobs:
         uses: onyxmueller/build-tag-number@v1
         with:
           token: ${{secrets.github_token}}
-      - name: Fallback build number
-        if: ${{ github.event_name == 'pull_request' || github.ref != 'refs/heads/main' }}
-        id: buildnumber
-        run: echo "build_number=0" >> $GITHUB_OUTPUT
 
   build_windows:
     needs: setup
