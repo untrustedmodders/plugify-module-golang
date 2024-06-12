@@ -107,15 +107,12 @@ jobs:
     needs: ["setup", "build_linux", "build_windows"]
     runs-on: ubuntu-latest
     outputs:
-      linux_checksum: ${{ steps.linux.outputs.checksum }}
-      windows_checksum: ${{ steps.windows.outputs.checksum }}
+      checksum_linux: ${{ steps.linux.outputs.checksum }}
+      checksum_windows: ${{ steps.windows.outputs.checksum }}
     steps:
       - name: Prepare env
         shell: bash
         run: echo "GITHUB_SHA_SHORT=${GITHUB_SHA::7}" >> $GITHUB_ENV
-
-      - name: Main build number
-        run: echo "BUILD_NUMBER=${{ needs.setup.outputs.buildnumber }}" >> $GITHUB_ENV
 
       - uses: actions/download-artifact@v3
         with:
@@ -129,29 +126,29 @@ jobs:
 
       - name: Zip Builds
         run: |
-          (cd build/linux && zip -qq -r ../../golm-build-${{ env.BUILD_NUMBER }}-linux-${{ env.GITHUB_SHA_SHORT }}.zip *)
-          (cd build/windows && zip -qq -r ../../golm-build-${{ env.BUILD_NUMBER }}-windows-${{ env.GITHUB_SHA_SHORT }}.zip *)
+          (cd build/linux && zip -qq -r ../../golm-build-${{ needs.setup.outputs.buildnumber }}-linux-${{ env.GITHUB_SHA_SHORT }}.zip *)
+          (cd build/windows && zip -qq -r ../../golm-build-${{ needs.setup.outputs.buildnumber }}-windows-${{ env.GITHUB_SHA_SHORT }}.zip *)
 
       - id: linux
-        run: echo "checksum=$(sha256sum golm-build-${{ env.BUILD_NUMBER }}-linux-${{ env.GITHUB_SHA_SHORT }}.zip | cut -d' ' -f1)" >> $GITHUB_OUTPUT
+        run: echo "checksum=$(sha256sum golm-build-${{ needs.setup.outputs.buildnumber }}-linux-${{ env.GITHUB_SHA_SHORT }}.zip | cut -d' ' -f1)" >> $GITHUB_OUTPUT
       - id: windows
-        run: echo "checksum=$(sha256sum golm-build-${{ env.BUILD_NUMBER }}-windows-${{ env.GITHUB_SHA_SHORT }}.zip | cut -d' ' -f1)" >> $GITHUB_OUTPUT
+        run: echo "checksum=$(sha256sum golm-build-${{ needs.setup.outputs.buildnumber }}-windows-${{ env.GITHUB_SHA_SHORT }}.zip | cut -d' ' -f1)" >> $GITHUB_OUTPUT
 
       - name: Release
         id: release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v${{ env.BUILD_NUMBER }}
+          tag_name: v${{ needs.setup.outputs.buildnumber }}
           files: |
-            golm-build-${{ env.BUILD_NUMBER }}-windows-${{ env.GITHUB_SHA_SHORT }}.zip
-            golm-build-${{ env.BUILD_NUMBER }}-linux-${{ env.GITHUB_SHA_SHORT }}.zip
+            golm-build-${{ needs.setup.outputs.buildnumber }}-windows-${{ env.GITHUB_SHA_SHORT }}.zip
+            golm-build-${{ needs.setup.outputs.buildnumber }}-linux-${{ env.GITHUB_SHA_SHORT }}.zip
 
       - name: Send Notification to Discord
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@0.3.2
         with:
-          args: "A new release of Go Language Module has been tagged (v${{ env.BUILD_NUMBER }}) at ${{ steps.release.outputs.url }}"
+          args: "A new release of Go Language Module has been tagged (v${{ needs.setup.outputs.buildnumber }}) at ${{ steps.release.outputs.url }}"
 
   repository:
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
@@ -194,8 +191,8 @@ jobs:
             
             version_number = ${{ needs.setup.outputs.buildnumber }}
             package_name = 'golm-build-${{ needs.setup.outputs.buildnumber }}-{}-${{ env.GITHUB_SHA_SHORT }}'
-            linux_checksum = '${{ needs.publish.outputs.linux_checksum }}'
-            windows_checksum = '${{ needs.publish.outputs.windows_checksum }}'
+            checksum_linux = '${{ needs.publish.outputs.checksum_linux }}'
+            checksum_windows = '${{ needs.publish.outputs.checksum_windows }}'
             json_url = 'https://untrustedmodders.github.io/go-lang-module/go-lang-module.json'
             
             def load_json_from_url(url):
@@ -237,8 +234,8 @@ jobs:
                 return data
             
             data = load_json_from_url(json_url)
-            data = append_new_version(data, version_number, windows_checksum, package_name, "windows")
-            data = append_new_version(data, version_number, linux_checksum, package_name, "linux")
+            data = append_new_version(data, version_number, checksum_windows, package_name, "windows")
+            data = append_new_version(data, version_number, checksum_linux, package_name, "linux")
             save_json('build/repo/go-lang-module.json', data)
 
       - name: Upload artifact
