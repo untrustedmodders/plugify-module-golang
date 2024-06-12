@@ -9,8 +9,8 @@ typedef struct { float m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m2
 import "C"
 import (
 	"fmt"
-	"plugify-plugin/plugify"
 	"math"
+	"github.com/untrustedmodders/go-plugify"
 )
 
 func assert(condition bool, message string) {
@@ -21,11 +21,11 @@ func assert(condition bool, message string) {
 
 func init() {
 	plugify.OnPluginStart(func() {
-		fmt.Println("Go: Go:OnPluginStart")
+		fmt.Println("Go: OnPluginStart")
 	})
 
 	plugify.OnPluginEnd(func() {
-		fmt.Println("Go: Go:OnPluginEnd")
+		fmt.Println("Go: OnPluginEnd")
 	})
 }
 

@@ -21,8 +21,8 @@ The Go Language Module for Plugify enables developers to write plugins in Go for
 1. Clone this repository:
 
     ```bash
-    git clone https://github.com/untrustedmodders/cpp-lang-module.git
-    cd cpp-lang-module
+    git clone https://github.com/untrustedmodders/go-lang-module.git
+    cd go-lang-module
     git submodule update --init --recursive
     ```
 
@@ -42,7 +42,7 @@ The Go Language Module for Plugify enables developers to write plugins in Go for
 
 2. **Write Go Plugins**
 
-   Develop your plugins in Go using the Plugify Go API. Refer to the [Plugify Go Plugin Guide](https://docs.plugify.io/cpp-plugin-guide) for detailed instructions.
+   Develop your plugins in Go using the Plugify Go API. Refer to the [Plugify Go Plugin Guide](https://docs.plugify.io/go-plugin-guide) for detailed instructions.
 
 3. **Build and Install Plugins**
 
@@ -54,12 +54,26 @@ The Go Language Module for Plugify enables developers to write plugins in Go for
 
 ## Example
 
+### Initialize your module
+
+```sh
+go mod init example.com/my-go-plugin
+```
+
+### Get the go-plugify module
+
+Note that you need to include the v in the version tag.
+
+```sh
+go get github.com/untrustedmodders/go-plugify@v1.0.0
+```
+
 ```go
 package main
 
 import (
 	"fmt"
-	"plugify-plugin/plugify"
+	"github.com/untrustedmodders/go-plugify"
 )
 
 func init() {

@@ -9,10 +9,10 @@ typedef struct { float m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m2
 import "C"
 import (
 	"fmt"
-	"plugify-plugin/example_cpp_plugin"
-	"plugify-plugin/plugify"
 	"math"
 	"reflect"
+	"github.com/untrustedmodders/go-plugify"
+	"plugify-plugin/example_cpp_plugin"
 )
 
 func assert(condition bool, message string) {
@@ -23,7 +23,7 @@ func assert(condition bool, message string) {
 
 func init() {
 	plugify.OnPluginStart(func() {
-		fmt.Println("Go: Go:OnPluginStart")
+		fmt.Println("Go: OnPluginStart")
 
 		fmt.Println("=================================Go=======================================")
 
@@ -257,11 +257,11 @@ func init() {
 
 		assert(returnValue == 56, fmt.Sprintf("Expected return value to be 56, but got %d", returnValue))
 
-		fmt.Println("Go: Go:OnPluginStart - done")
+		fmt.Println("Go: OnPluginStart - done")
 	})
 
 	plugify.OnPluginEnd(func() {
-		fmt.Println("Go: Go:OnPluginEnd")
+		fmt.Println("Go: OnPluginEnd")
 	})
 }
 
