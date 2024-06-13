@@ -28,7 +28,6 @@ typedef struct { void *t; void *v; } GoInterface;
 typedef struct { void *data; GoInt len; GoInt cap; } GoSlice;
 
 namespace golm {
-
 	constexpr int kApiVersion = 1;
 
 	using InitFunc = int (*)(GoSlice, int);

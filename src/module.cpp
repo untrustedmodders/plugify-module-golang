@@ -185,7 +185,7 @@ void GoLanguageModule::OnMethodExport(const IPlugin& plugin) {
 }
 
 LoadResult GoLanguageModule::OnPluginLoad(const IPlugin& plugin) {
-	fs::path assemblyPath(plugin.GetBaseDir() / std::format("{}" BINARY_MODULE_SUFFIX, plugin.GetDescriptor().entryPoint));
+	fs::path assemblyPath(plugin.GetBaseDir() / std::format("{}" GOLM_LIBRARY_SUFFIX, plugin.GetDescriptor().entryPoint));
 
 	auto assembly = Assembly::LoadFromPath(assemblyPath);
 	if (!assembly) {
