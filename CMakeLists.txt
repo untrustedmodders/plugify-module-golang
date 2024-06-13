@@ -12,11 +12,22 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Debug)
+endif()
+
+if(UNIX AND NOT APPLE)
+    set(LINUX TRUE)
+endif()
+
 #
 # Plugify
 #
 set(PLUGIFY_BUILD_SHARED_LIB ON CACHE INTERNAL "")
 set(PLUGIFY_BUILD_FUNCTION ON CACHE INTERNAL "")
+if(LINUX)
+    set(PLUGIFY_USE_STATIC_STDLIB ON CACHE INTERNAL "")
+endif()
 add_subdirectory(external/plugify)
 
 #
@@ -51,9 +62,9 @@ else()
 endif()
 
 if(APPLE)
-	target_link_options(${PROJECT_NAME} PRIVATE "-Wl,-exported_symbols_list,${CMAKE_CURRENT_SOURCE_DIR}/sym/exported_symbols.lds")
+    target_link_options(${PROJECT_NAME} PRIVATE "-Wl,-exported_symbols_list,${CMAKE_CURRENT_SOURCE_DIR}/sym/exported_symbols.lds")
 elseif(UNIX)
-	target_link_options(${PROJECT_NAME} PRIVATE "-Wl,--version-script,${CMAKE_CURRENT_SOURCE_DIR}/sym/version_script.lds")
+    target_link_options(${PROJECT_NAME} PRIVATE "-Wl,--version-script,${CMAKE_CURRENT_SOURCE_DIR}/sym/version_script.lds")
 endif()
 
 include(GenerateExportHeader)
@@ -63,14 +74,14 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_BINARY_DIR}/exports)
 target_compile_definitions(${PROJECT_NAME} PRIVATE
         GOLM_PLATFORM_WINDOWS=$<BOOL:${WIN32}>
         GOLM_PLATFORM_APPLE=$<BOOL:${APPLE}>
-        GOLM_PLATFORM_LINUX=$<BOOL:${UNIX}>
-        BINARY_MODULE_SUFFIX="${CMAKE_SHARED_LIBRARY_SUFFIX}"
-        BINARY_MODULE_PREFIX="${CMAKE_SHARED_LIBRARY_PREFIX}")
+        GOLM_PLATFORM_LINUX=$<BOOL:${LINUX}>
+        GOLM_LIBRARY_SUFFIX="${CMAKE_SHARED_LIBRARY_SUFFIX}"
+        GOLM_LIBRARY_PREFIX="${CMAKE_SHARED_LIBRARY_PREFIX}")
 
 set(GOLM_VERSION "${CMAKE_PROJECT_VERSION}" CACHE STRING "Set version name")
 set(GOLM_PACKAGE "${PROJECT_NAME}" CACHE STRING "Set package name")
 
 configure_file(
-	${CMAKE_SOURCE_DIR}/${PROJECT_NAME}.pmodule.in
-	${CMAKE_BINARY_DIR}/${PROJECT_NAME}.pmodule
+    ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}.pmodule.in
+    ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.pmodule
 )
