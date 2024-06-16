@@ -898,6 +898,14 @@ void* GetMethodPtr(const char* methodName) {
 	return g_golm.GetNativeMethod(methodName);
 }
 
+const char* GetBaseDir() {
+	auto source = g_golm.GetProvider()->GetBaseDir().string();
+	size_t size = source.length() + 1;
+	char* dest = new char[size];
+	std::memcpy(dest, source.c_str(), size);
+	return dest;
+}
+
 bool IsModuleLoaded(const char* moduleName, int version, bool minimum) {
 	auto requiredVersion = version != INT_MAX ? std::make_optional(version) : std::nullopt;
 	return g_golm.GetProvider()->IsModuleLoaded(moduleName, requiredVersion, minimum);
@@ -1444,8 +1452,9 @@ void DeleteVectorDataCStr(void* ptr) {
 	delete[] reinterpret_cast<char**>(ptr);
 }
 
-const std::array<void*, 29> GoLanguageModule::_pluginApi = {
+const std::array<void*, 32> GoLanguageModule::_pluginApi = {
 		reinterpret_cast<void*>(&::GetMethodPtr),
+		reinterpret_cast<void*>(&::GetBaseDir),
 		reinterpret_cast<void*>(&::IsModuleLoaded),
 		reinterpret_cast<void*>(&::IsPluginLoaded),
 		reinterpret_cast<void*>(&::GetPluginId),

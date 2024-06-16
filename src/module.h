@@ -88,7 +88,7 @@ namespace golm {
 		std::unique_ptr<DCCallVM, VMDeleter> _callVirtMachine;
 		std::mutex _mutex;
 
-		static const std::array<void*, 29> _pluginApi;
+		static const std::array<void*, 32> _pluginApi;
 	};
 
 	extern GoLanguageModule g_golm;
