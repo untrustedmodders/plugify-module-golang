@@ -44,7 +44,7 @@ namespace golm::utils {
 			const auto& str = source[i];
 			auto& dest = strArray[i];
 			dest.p = str.c_str();
-			dest.n = static_cast<GoInt>(str.size());
+			dest.n = static_cast<GoInt>(str.length());
 		}
 		auto size = static_cast<GoInt>(N);
 		auto* dest = new GoSlice(strArray.get(), size, size);
@@ -77,7 +77,7 @@ namespace golm::utils {
 	}
 
 	GoString* CreateGoString(const std::string& source, ArgumentList& args) {
-		auto size = static_cast<GoInt>(source.size());
+		auto size = static_cast<GoInt>(source.length());
 		auto* dest = new GoString(source.c_str(), size);
 		args.push_back(dest);
 		return dest;
@@ -251,7 +251,7 @@ LoadResult GoLanguageModule::OnPluginLoad(const IPlugin& plugin) {
 	}
 
 	GoSlice api { const_cast<void**>(_pluginApi.data()), _pluginApi.size(), _pluginApi.size() };
-	const int resultVersion = initFunc(api, kApiVersion);
+	const int resultVersion = initFunc(api, kApiVersion, &plugin);
 	if (resultVersion != 0) {
 		return ErrorData{ std::format("Not supported plugin api {}, max supported {}", resultVersion, kApiVersion) };
 	}
@@ -890,8 +890,86 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 	}
 }
 
+namespace golm {
+	GoLanguageModule g_golm;
+}
+
 void* GetMethodPtr(const char* methodName) {
 	return g_golm.GetNativeMethod(methodName);
+}
+
+bool IsModuleLoaded(const char* moduleName, int version, bool minimum) {
+	auto requiredVersion = version != INT_MAX ? std::make_optional(version) : std::nullopt;
+	return g_golm.GetProvider()->IsModuleLoaded(moduleName, requiredVersion, minimum);
+}
+
+bool IsPluginLoaded(const char* pluginName, int version, bool minimum) {
+	auto requiredVersion = version != INT_MAX ? std::make_optional(version) : std::nullopt;
+	return g_golm.GetProvider()->IsPluginLoaded(pluginName, requiredVersion, minimum);
+}
+
+UniqueId GetPluginId(const plugify::IPlugin& plugin) {
+	return plugin.GetId();
+}
+
+const char* GetPluginName(const plugify::IPlugin& plugin) {
+	return plugin.GetName().c_str();
+}
+
+const char* GetPluginFullName(const plugify::IPlugin& plugin) {
+	return plugin.GetFriendlyName().c_str();
+}
+
+const char* GetPluginDescription(const plugify::IPlugin& plugin) {
+	return plugin.GetDescriptor().description.c_str();
+}
+
+const char* GetPluginVersion(const plugify::IPlugin& plugin) {
+	return plugin.GetDescriptor().versionName.c_str();
+}
+
+const char* GetPluginAuthor(const plugify::IPlugin& plugin) {
+	return plugin.GetDescriptor().createdBy.c_str();
+}
+
+const char* GetPluginWebsite(const plugify::IPlugin& plugin) {
+	return plugin.GetDescriptor().createdByURL.c_str();
+}
+
+const char* GetPluginBaseDir(const plugify::IPlugin& plugin) {
+	auto source = plugin.GetBaseDir().string();
+	size_t size = source.length() + 1;
+	char* dest = new char[size];
+	std::memcpy(dest, source.c_str(), size);
+	return dest;
+}
+
+const char** GetPluginDependencies(const plugify::IPlugin& plugin) {
+	auto& desc = plugin.GetDescriptor();
+	auto deps = new const char*[desc.dependencies.size()];
+	for (size_t i = 0; i < desc.dependencies.size(); ++i) {
+		deps[i] = desc.dependencies[i].name.c_str();
+	}
+	return deps;
+}
+
+ptrdiff_t GetPluginDependenciesSize(const plugify::IPlugin& plugin) {
+	return static_cast<ptrdiff_t>(plugin.GetDescriptor().dependencies.size());
+}
+
+const char* FindPluginResource(const plugify::IPlugin& plugin, const char* path) {
+	auto resource = plugin.FindResource(path);
+	if (resource.has_value()) {
+		auto source= resource->string();
+		size_t size = source.length() + 1;
+		char* dest = new char[size];
+		std::memcpy(dest, source.c_str(), size);
+		return dest;
+	}
+	return "";
+}
+void DeleteCStr(const char* path) {
+	delete path;
 }
 
 void* AllocateString() {
@@ -1366,29 +1444,39 @@ void DeleteVectorDataCStr(void* ptr) {
 	delete[] reinterpret_cast<char**>(ptr);
 }
 
-const std::array<void*, 17> GoLanguageModule::_pluginApi = {
-		reinterpret_cast<void*>(&GetMethodPtr),
-		reinterpret_cast<void*>(&AllocateString),
-		reinterpret_cast<void*>(&CreateString),
-		reinterpret_cast<void*>(&GetStringData),
-		reinterpret_cast<void*>(&GetStringLength),
-		reinterpret_cast<void*>(&AssignString),
-		reinterpret_cast<void*>(&FreeString),
-		reinterpret_cast<void*>(&DeleteString),
-		reinterpret_cast<void*>(&CreateVector),
-		reinterpret_cast<void*>(&AllocateVector),
-		reinterpret_cast<void*>(&GetVectorSize),
-		reinterpret_cast<void*>(&GetVectorData),
-		reinterpret_cast<void*>(&AssignVector),
-		reinterpret_cast<void*>(&DeleteVector),
-		reinterpret_cast<void*>(&FreeVector),
-		reinterpret_cast<void*>(&DeleteVectorDataBool),
-		reinterpret_cast<void*>(&DeleteVectorDataCStr)
+const std::array<void*, 29> GoLanguageModule::_pluginApi = {
+		reinterpret_cast<void*>(&::GetMethodPtr),
+		reinterpret_cast<void*>(&::IsModuleLoaded),
+		reinterpret_cast<void*>(&::IsPluginLoaded),
+		reinterpret_cast<void*>(&::GetPluginId),
+		reinterpret_cast<void*>(&::GetPluginName),
+		reinterpret_cast<void*>(&::GetPluginFullName),
+		reinterpret_cast<void*>(&::GetPluginDescription),
+		reinterpret_cast<void*>(&::GetPluginVersion),
+		reinterpret_cast<void*>(&::GetPluginAuthor),
+		reinterpret_cast<void*>(&::GetPluginWebsite),
+		reinterpret_cast<void*>(&::GetPluginBaseDir),
+		reinterpret_cast<void*>(&::GetPluginDependencies),
+		reinterpret_cast<void*>(&::GetPluginDependenciesSize),
+		reinterpret_cast<void*>(&::FindPluginResource),
+		reinterpret_cast<void*>(&::DeleteCStr),
+		reinterpret_cast<void*>(&::AllocateString),
+		reinterpret_cast<void*>(&::CreateString),
+		reinterpret_cast<void*>(&::GetStringData),
+		reinterpret_cast<void*>(&::GetStringLength),
+		reinterpret_cast<void*>(&::AssignString),
+		reinterpret_cast<void*>(&::FreeString),
+		reinterpret_cast<void*>(&::DeleteString),
+		reinterpret_cast<void*>(&::CreateVector),
+		reinterpret_cast<void*>(&::AllocateVector),
+		reinterpret_cast<void*>(&::GetVectorSize),
+		reinterpret_cast<void*>(&::GetVectorData),
+		reinterpret_cast<void*>(&::AssignVector),
+		reinterpret_cast<void*>(&::DeleteVector),
+		reinterpret_cast<void*>(&::FreeVector),
+		reinterpret_cast<void*>(&::DeleteVectorDataBool),
+		reinterpret_cast<void*>(&::DeleteVectorDataCStr)
 };
-
-namespace golm {
-	GoLanguageModule g_golm;
-}
 
 plugify::ILanguageModule* GetLanguageModule() {
 	return &golm::g_golm;

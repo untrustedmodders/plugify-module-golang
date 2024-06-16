@@ -30,7 +30,7 @@ typedef struct { void *data; GoInt len; GoInt cap; } GoSlice;
 namespace golm {
 	constexpr int kApiVersion = 1;
 
-	using InitFunc = int (*)(GoSlice, int);
+	using InitFunc = int (*)(GoSlice, int, const void*);
 	using StartFunc = void (*)();
 	using EndFunc = void (*)();
 
@@ -71,6 +71,7 @@ namespace golm {
 		void OnPluginEnd(const plugify::IPlugin& plugin) override;
 		void OnMethodExport(const plugify::IPlugin& plugin) override;
 
+		const std::shared_ptr<plugify::IPlugifyProvider>& GetProvider() { return _provider; }
 		void* GetNativeMethod(const std::string& methodName) const;
 		
 	private:
@@ -87,7 +88,7 @@ namespace golm {
 		std::unique_ptr<DCCallVM, VMDeleter> _callVirtMachine;
 		std::mutex _mutex;
 
-		static const std::array<void*, 17> _pluginApi;
+		static const std::array<void*, 29> _pluginApi;
 	};
 
 	extern GoLanguageModule g_golm;
