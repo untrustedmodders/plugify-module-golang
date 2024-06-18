@@ -42,10 +42,10 @@ public:
             assert((example_golang_plugin::NoParamReturnArrayFloat() == std::vector<float>{-12.34f, 0.0f, 12.34f}));
             assert((example_golang_plugin::NoParamReturnArrayDouble() == std::vector<double>{-12.345, 0.0, 12.345}));
             assert((example_golang_plugin::NoParamReturnArrayString() == std::vector<std::string>{"1st string", "2nd string", "3rd element string (Should be big enough to avoid small string optimization)"}));
-            assert((example_golang_plugin::NoParamReturnVector2() == Vector2(1, 2)));
-            assert((example_golang_plugin::NoParamReturnVector3() == Vector3(1, 2, 3)));
-            assert((example_golang_plugin::NoParamReturnVector4() == Vector4(1, 2, 3, 4)));
-            assert((example_golang_plugin::NoParamReturnMatrix4x4() == Matrix4x4(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)));
+            assert((example_golang_plugin::NoParamReturnVector2() == plugify::Vector2(1, 2)));
+            assert((example_golang_plugin::NoParamReturnVector3() == plugify::Vector3(1, 2, 3)));
+            assert((example_golang_plugin::NoParamReturnVector4() == plugify::Vector4(1, 2, 3, 4)));
+            assert((example_golang_plugin::NoParamReturnMatrix4x4() == plugify::Matrix4x4(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)));
         }
 
         int32_t intValue = 42;

@@ -11,6 +11,7 @@ import (
 	"fmt"
 	"math"
 	"reflect"
+	"unsafe"
 	"github.com/untrustedmodders/go-plugify"
 	"plugify-plugin/example_cpp_plugin"
 )
@@ -95,13 +96,23 @@ func init() {
 
 		expectedStringSlice := []string{"1st string", "2nd string", "3rd element string (Should be big enough to avoid small string optimization)"}
 		assert(reflect.DeepEqual(example_cpp_plugin.NoParamReturnArrayString(), expectedStringSlice), fmt.Sprintf("Expected NoParamReturnArrayString() to return %v, but got %v", expectedStringSlice, example_cpp_plugin.NoParamReturnArrayString()))
-
-		//Assertion for vector and matrix types could be added once the appropriate types are defined or imported.
-		//assert(example_cpp_plugin.NoParamReturnVector2() == new Vector2(1, 2), "NoParamReturnVector2() failed.");
-		//assert(example_cpp_plugin.NoParamReturnVector3() == new Vector3(1, 2, 3), "NoParamReturnVector3() failed.");
-		//assert(example_cpp_plugin.NoParamReturnVector4() == new Vector4(1, 2, 3, 4), "NoParamReturnVector4() failed.");
-		//assert(example_cpp_plugin.NoParamReturnMatrix4x4() == new Matrix4x4(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16), "NoParamReturnMatrix4x4() failed.");
-		// Vector tests are not included as there is no equivalent in Go
+		
+		v2 := example_cpp_plugin.NoParamReturnVector2()
+		currentVector2 := plugify.Vector2{X: v2.X, Y: v2.Y}
+		expectedVector2 := plugify.Vector2{X: 1, Y: 2}
+		assert(currentVector2 == expectedVector2, fmt.Sprintf("Expected NoParamReturnVector2() to return %s, but got %s", expectedVector2, currentVector2));
+		v3 := example_cpp_plugin.NoParamReturnVector3()
+		currentVector3 := plugify.Vector3{X: v3.X, Y: v3.Y, Z: v3.Z}
+		expectedVector3 := plugify.Vector3{X: 1, Y: 2, Z: 3}
+		assert(currentVector3 == expectedVector3, fmt.Sprintf("Expected NoParamReturnVector3() to return %s, but got %s", expectedVector3, currentVector3));
+		v4 := example_cpp_plugin.NoParamReturnVector4()
+		currentVector4 := plugify.Vector4{X: v4.X, Y: v4.Y, Z: v4.Z, W: v4.W}
+		expectedVector4 := plugify.Vector4{X: 1, Y: 2, Z: 3, W: 4}
+		assert(currentVector4 == expectedVector4, fmt.Sprintf("Expected NoParamReturnVector4() to return %s, but got %s", expectedVector4, currentVector4));
+		m := example_cpp_plugin.NoParamReturnMatrix4x4()
+		currentMatrix4x4 := plugify.Matrix4x4{M00: m.M00, M01: m.M01, M02: m.M02, M03: m.M03, M10: m.M10, M11: m.M11, M12: m.M12, M13: m.M13, M20: m.M20, M21: m.M21, M22: m.M22, M23: m.M23, M30: m.M30, M31: m.M31, M32: m.M32, M33: m.M33}
+		expectedMatrix4x4 := plugify.NewMatrix4x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0)
+		assert(currentMatrix4x4 == expectedMatrix4x4, fmt.Sprintf("Expected NoParamReturnMatrix4x4() to return %s, but got %s", expectedMatrix4x4, currentMatrix4x4));
 
 		intValue := int32(42)
 		floatValue := float32(3.14)
@@ -494,11 +505,8 @@ func NoParamReturnVector4() C.Vector4 {
 //export NoParamReturnMatrix4x4
 func NoParamReturnMatrix4x4() C.Matrix4x4 {
 	fmt.Println("Go: NoParamReturnMatrix4x4")
-	return C.Matrix4x4{
-		1, 2, 3, 4,
-		5, 6, 7, 8,
-		9, 10, 11, 12,
-		13, 14, 15, 16};
+	ret := plugify.NewMatrix4x4(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0)
+	return *(*C.Matrix4x4)(unsafe.Pointer(&ret))
 }
 
 //export Param1

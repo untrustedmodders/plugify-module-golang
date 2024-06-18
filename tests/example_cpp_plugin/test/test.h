@@ -5,20 +5,45 @@
 #include <format>
 
 struct Vector2 {
-      float x, y;
+    float x, y;
+
+    bool operator==(const Vector2&) const = default;
 };
 
 struct Vector3 {
-      float x, y, z;
+    float x, y, z;
+
+    bool operator==(const Vector3&) const = default;
 };
 
 struct Vector4 {
-      float x, y, z, w;
+    float x, y, z, w;
+
+    bool operator==(const Vector4&) const = default;
 };
 
 struct Matrix4x4 {
-    Vector4 a, b, c, d;
+    float m00, m10, m20, m30;
+    float m01, m11, m21, m31;
+    float m02, m12, m22, m32;
+    float m03, m13, m23, m33;
+
+    bool operator==(const Matrix4x4&) const = default;
 };
+
+static Matrix4x4 CreateMatrix4x4(
+        float m00, float m01, float m02, float m03,
+        float m10, float m11, float m12, float m13,
+        float m20, float m21, float m22, float m23,
+        float m30, float m31, float m32, float m33)
+{
+    Matrix4x4 m;
+    m.m00 = m00; m.m01 = m01; m.m02 = m02; m.m03 = m03;
+    m.m10 = m10; m.m11 = m11; m.m12 = m12; m.m13 = m13;
+    m.m20 = m20; m.m21 = m21; m.m22 = m22; m.m23 = m23;
+    m.m30 = m30; m.m31 = m31; m.m32 = m32; m.m33 = m33;
+    return m;
+}
 
 // C++ exported
 
@@ -202,27 +227,27 @@ extern "C" PLUGIN_API void NoParamReturnArrayString(std::vector<std::string>& ou
 }
 
 // glm:vec
-extern "C" PLUGIN_API void NoParamReturnVector2(Vector2& output)
+extern "C" PLUGIN_API Vector2 NoParamReturnVector2()
 {
     std::cout << "NoParamReturnVector2" << std::endl;
-    std::construct_at<>(&output, Vector2(1, 2));
+    return Vector2(1, 2);
 }
-extern "C" PLUGIN_API void NoParamReturnVector3(Vector3& output)
+extern "C" PLUGIN_API Vector3 NoParamReturnVector3()
 {
     std::cout << "NoParamReturnVector3" << std::endl;
-    std::construct_at<>(&output, Vector3(1, 2, 3));
+    return Vector3(1, 2, 3);
 }
-extern "C" PLUGIN_API void NoParamReturnVector4(Vector4& output)
+extern "C" PLUGIN_API Vector4 NoParamReturnVector4()
 {
     std::cout << "NoParamReturnVector4" << std::endl;
-    std::construct_at<>(&output, Vector4(1, 2, 3, 4));
+    return Vector4(1, 2, 3, 4);
 }
 
 //glm::mat
-extern "C" PLUGIN_API void NoParamReturnMatrix4x4(Matrix4x4& output)
+extern "C" PLUGIN_API Matrix4x4 NoParamReturnMatrix4x4()
 {
     std::cout << "NoParamReturnMatrix4x4" << std::endl;
-    std::construct_at<>(&output, Matrix4x4({1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, 16}));
+    return CreateMatrix4x4(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
 }
 
 // Params (no refs)

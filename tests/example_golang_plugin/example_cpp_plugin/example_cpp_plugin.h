@@ -67,7 +67,7 @@ typedef struct { void *data; ptrdiff_t len; ptrdiff_t cap; } _GoSlice_;
 typedef struct { float x, y; } Vector2;
 typedef struct { float x, y, z; } Vector3;
 typedef struct { float x, y, z, w; } Vector4;
-typedef struct { float m[4][4]; } Matrix4x4;
+typedef struct { float m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33; } Matrix4x4;
 
 typedef void (*NoParamReturnVoidFn)();
 static void NoParamReturnVoid() {
@@ -261,29 +261,29 @@ static void NoParamReturnArrayString(void* output) {
 	if (func == NULL) func = (NoParamReturnArrayStringFn)Plugify_GetMethodPtr("example_cpp_plugin.NoParamReturnArrayString");
 	return func(output);
 }
-typedef void (*NoParamReturnVector2Fn)(Vector2*);
-static void NoParamReturnVector2(Vector2* output) {
+typedef Vector2 (*NoParamReturnVector2Fn)();
+static Vector2 NoParamReturnVector2() {
 	static NoParamReturnVector2Fn func = NULL;
 	if (func == NULL) func = (NoParamReturnVector2Fn)Plugify_GetMethodPtr("example_cpp_plugin.NoParamReturnVector2");
-	return func(output);
+	return func();
 }
-typedef void (*NoParamReturnVector3Fn)(Vector3*);
-static void NoParamReturnVector3(Vector3* output) {
+typedef Vector3 (*NoParamReturnVector3Fn)();
+static Vector3 NoParamReturnVector3() {
 	static NoParamReturnVector3Fn func = NULL;
 	if (func == NULL) func = (NoParamReturnVector3Fn)Plugify_GetMethodPtr("example_cpp_plugin.NoParamReturnVector3");
-	return func(output);
+	return func();
 }
-typedef void (*NoParamReturnVector4Fn)(Vector4*);
-static void NoParamReturnVector4(Vector4* output) {
+typedef Vector4 (*NoParamReturnVector4Fn)();
+static Vector4 NoParamReturnVector4() {
 	static NoParamReturnVector4Fn func = NULL;
 	if (func == NULL) func = (NoParamReturnVector4Fn)Plugify_GetMethodPtr("example_cpp_plugin.NoParamReturnVector4");
-	return func(output);
+	return func();
 }
-typedef void (*NoParamReturnMatrix4x4Fn)(Matrix4x4*);
-static void NoParamReturnMatrix4x4(Matrix4x4* output) {
+typedef Matrix4x4 (*NoParamReturnMatrix4x4Fn)();
+static Matrix4x4 NoParamReturnMatrix4x4() {
 	static NoParamReturnMatrix4x4Fn func = NULL;
 	if (func == NULL) func = (NoParamReturnMatrix4x4Fn)Plugify_GetMethodPtr("example_cpp_plugin.NoParamReturnMatrix4x4");
-	return func(output);
+	return func();
 }
 typedef void (*Param1Fn)(int32_t);
 static void Param1(int32_t a) {

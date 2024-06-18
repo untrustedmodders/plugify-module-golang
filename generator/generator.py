@@ -117,10 +117,10 @@ RET_TYPES_MAP = {
     'float*': 'void',
     'double*': 'void',
     'string*': 'void',
-    'vec2': 'void',
-    'vec3': 'void',
-    'vec4': 'void',
-    'mat4x4': 'void'
+    'vec2': 'Vector2',
+    'vec3': 'Vector3',
+    'vec4': 'Vector4',
+    'mat4x4': 'Matrix4x4'
 }
 
 VAL_GOTYPES_MAP = {
@@ -508,7 +508,11 @@ def convert_gotype(type_name, is_ref: False, is_ret: False):
 
 
 def is_obj_return(type_name):
-    return '*' in type_name or type_name == 'string' or 'vec' in type_name or 'mat' in type_name       
+    return '*' in type_name or type_name == 'string'      
+
+
+def is_pod_return(type_name):
+    return 'vec' in type_name or 'mat' in type_name       
 
 
 class ParamGen(Enum):
@@ -885,8 +889,6 @@ def main(manifest_path, output_dir, override):
 
     content = ''
 
-    # TODO: Make POD structures pass as fist argument for return types
-
     link = 'https://github.com/untrustedmodders/cpp-lang-module/blob/main/generator/generator.py'
 
     content += f'package {plugin_name}\n'
@@ -900,24 +902,25 @@ def main(manifest_path, output_dir, override):
     content += 'type Vector2 struct {\n\tX float32\n\tY float32\n}\n'
     content += 'type Vector3 struct {\n\tX float32\n\tY float32\n\tZ float32\n}\n'
     content += 'type Vector4 struct {\n\tX float32\n\tY float32\n\tZ float32\n\tW float32\n}\n'
-    content += 'type Matrix4x4 struct {\n\tM [4][4]float32\n}\n'
+    content += 'type Matrix4x4 struct {\n\tM00 float32\n\tM10 float32\n\tM20 float32\n\tM30 float32\n\n\tM01 float32\n\tM11 float32\n\tM21 float32\n\tM31 float32\n\n\tM02 float32\n\tM12 float32\n\tM22 float32\n\tM32 float32\n\n\tM03 float32\n\tM13 float32\n\tM23 float32\n\tM33 float32\n}\n'
     content += '\n'
 
     for method in pplugin['exportedMethods']:
         ret_type = method['retType']
         return_type = convert_gotype(ret_type["type"], "ref" in ret_type, True)
-        if return_type != '':
-            return_type += ' '
 
         content += (f'func '
-                    f'{method['name']}({gen_goparams_string(method, ParamGen.TypesNames)}) {return_type}{{\n')
+                    f'{method['name']}({gen_goparams_string(method, ParamGen.TypesNames)}) {return_type} {{\n')
 
         params = gen_goparamscast_string(method)
         if params != '':
             content += f'\t{params}\n'
 
         is_obj_ret = is_obj_return(ret_type["type"])
-        if not is_obj_ret and ret_type['type'] != 'void':
+        is_pod_ret = is_pod_return(ret_type["type"])
+        if is_pod_ret:
+            content += f'\tC_result := C.{method['name']}({gen_goparams_string(method, ParamGen.Names)})\n'
+        elif not is_obj_ret and ret_type['type'] != 'void':
             content += f'\tresult := {return_type}(C.{method['name']}({gen_goparams_string(method, ParamGen.Names)}))\n'
         else:
             content += f'\tC.{method['name']}({gen_goparams_string(method, ParamGen.Names)})\n'
@@ -930,7 +933,9 @@ def main(manifest_path, output_dir, override):
         if params != '':
             content += f'\n{params}\n'
 
-        if is_obj_ret:
+        if is_pod_ret:
+            content += f'\treturn *(*{return_type})(unsafe.Pointer(&C_result))\n'
+        elif is_obj_ret:
             content += '\treturn output\n'
         elif ret_type['type'] != 'void':
             content += '\treturn result\n'

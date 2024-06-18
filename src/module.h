@@ -47,8 +47,9 @@ namespace golm {
 		EndFunc _endFunc{ nullptr };
 	};
 
-	using MethodRef = std::reference_wrapper<const plugify::Method>;
+	//using MethodRef = std::reference_wrapper<const plugify::Method>;
 	using ArgumentList = std::vector<void*>;
+	using AggrList = std::vector<DCaggr*>;
 	using StringStorage = std::vector<std::unique_ptr<GoString[]>>;
 	using BoolStorage = std::vector<std::unique_ptr<bool[]>>;
 

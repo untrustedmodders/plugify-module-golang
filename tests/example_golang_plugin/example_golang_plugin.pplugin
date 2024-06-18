@@ -274,6 +274,38 @@
 			}
 		},
 		{
+			"name": "NoParamReturnVector2",
+			"funcName": "NoParamReturnVector2",
+			"paramTypes": [],
+			"retType": {
+				"type": "vec2"
+			}
+		},
+		{
+			"name": "NoParamReturnVector3",
+			"funcName": "NoParamReturnVector3",
+			"paramTypes": [],
+			"retType": {
+				"type": "vec3"
+			}
+		},
+		{
+			"name": "NoParamReturnVector4",
+			"funcName": "NoParamReturnVector4",
+			"paramTypes": [],
+			"retType": {
+				"type": "vec4"
+			}
+		},
+		{
+			"name": "NoParamReturnMatrix4x4",
+			"funcName": "NoParamReturnMatrix4x4",
+			"paramTypes": [],
+			"retType": {
+				"type": "mat4x4"
+			}
+		},
+		{
 			"name": "Param1",
 			"funcName": "Param1",
 			"paramTypes": [

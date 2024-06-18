@@ -22,85 +22,103 @@ type Vector4 struct {
 	W float32
 }
 type Matrix4x4 struct {
-	M [4][4]float32
+	M00 float32
+	M10 float32
+	M20 float32
+	M30 float32
+
+	M01 float32
+	M11 float32
+	M21 float32
+	M31 float32
+
+	M02 float32
+	M12 float32
+	M22 float32
+	M32 float32
+
+	M03 float32
+	M13 float32
+	M23 float32
+	M33 float32
 }
 
-func NoParamReturnVoid() {
+func NoParamReturnVoid()  {
 	C.NoParamReturnVoid()
 }
 
 func NoParamReturnBool() bool {
-	result := bool (C.NoParamReturnBool())
+	result := bool(C.NoParamReturnBool())
 	return result
 }
 
 func NoParamReturnChar8() int8 {
-	result := int8 (C.NoParamReturnChar8())
+	result := int8(C.NoParamReturnChar8())
 	return result
 }
 
 func NoParamReturnChar16() uint16 {
-	result := uint16 (C.NoParamReturnChar16())
+	result := uint16(C.NoParamReturnChar16())
 	return result
 }
 
 func NoParamReturnInt8() int8 {
-	result := int8 (C.NoParamReturnInt8())
+	result := int8(C.NoParamReturnInt8())
 	return result
 }
 
 func NoParamReturnInt16() int16 {
-	result := int16 (C.NoParamReturnInt16())
+	result := int16(C.NoParamReturnInt16())
 	return result
 }
 
 func NoParamReturnInt32() int32 {
-	result := int32 (C.NoParamReturnInt32())
+	result := int32(C.NoParamReturnInt32())
 	return result
 }
 
 func NoParamReturnInt64() int64 {
-	result := int64 (C.NoParamReturnInt64())
+	result := int64(C.NoParamReturnInt64())
 	return result
 }
 
 func NoParamReturnUInt8() uint8 {
-	result := uint8 (C.NoParamReturnUInt8())
+	result := uint8(C.NoParamReturnUInt8())
 	return result
 }
 
 func NoParamReturnUInt16() uint16 {
-	result := uint16 (C.NoParamReturnUInt16())
+	result := uint16(C.NoParamReturnUInt16())
 	return result
 }
 
 func NoParamReturnUInt32() uint32 {
-	result := uint32 (C.NoParamReturnUInt32())
+	result := uint32(C.NoParamReturnUInt32())
 	return result
 }
 
 func NoParamReturnUInt64() uint64 {
-	result := uint64 (C.NoParamReturnUInt64())
+	result := uint64(C.NoParamReturnUInt64())
 	return result
 }
 
 func NoParamReturnPtr64() uintptr {
-	result := uintptr (C.NoParamReturnPtr64())
+	result := uintptr(C.NoParamReturnPtr64())
 	return result
 }
 
 func NoParamReturnFloat() float32 {
-	result := float32 (C.NoParamReturnFloat())
+	result := float32(C.NoParamReturnFloat())
 	return result
 }
 
 func NoParamReturnDouble() float64 {
-	result := float64 (C.NoParamReturnDouble())
+	result := float64(C.NoParamReturnDouble())
 	return result
 }
 
 func NoParamReturnFunction() uintptr {
-	result := uintptr (C.NoParamReturnFunction())
+	result := uintptr(C.NoParamReturnFunction())
 	return result
 }
 
@@ -342,55 +360,39 @@ func NoParamReturnArrayString() []string {
 }
 
 func NoParamReturnVector2() Vector2 {
-	C_output := C.Vector2{}
-	C.NoParamReturnVector2(&C_output)
-
-	output := *(*Vector2)(unsafe.Pointer(&C_output))
-	
-	return output
+	C_result := C.NoParamReturnVector2()
+	return *(*Vector2)(unsafe.Pointer(&C_result))
 }
 
 func NoParamReturnVector3() Vector3 {
-	C_output := C.Vector3{}
-	C.NoParamReturnVector3(&C_output)
-
-	output := *(*Vector3)(unsafe.Pointer(&C_output))
-	
-	return output
+	C_result := C.NoParamReturnVector3()
+	return *(*Vector3)(unsafe.Pointer(&C_result))
 }
 
 func NoParamReturnVector4() Vector4 {
-	C_output := C.Vector4{}
-	C.NoParamReturnVector4(&C_output)
-
-	output := *(*Vector4)(unsafe.Pointer(&C_output))
-	
-	return output
+	C_result := C.NoParamReturnVector4()
+	return *(*Vector4)(unsafe.Pointer(&C_result))
 }
 
 func NoParamReturnMatrix4x4() Matrix4x4 {
-	C_output := C.Matrix4x4{}
-	C.NoParamReturnMatrix4x4(&C_output)
-
-	output := *(*Matrix4x4)(unsafe.Pointer(&C_output))
-	
-	return output
+	C_result := C.NoParamReturnMatrix4x4()
+	return *(*Matrix4x4)(unsafe.Pointer(&C_result))
 }
 
-func Param1(a int32) {
+func Param1(a int32)  {
 	C_a := C.int32_t(a)
 
 	C.Param1(C_a)
 }
 
-func Param2(a int32, b float32) {
+func Param2(a int32, b float32)  {
 	C_a := C.int32_t(a)
 	C_b := C.float(b)
 
 	C.Param2(C_a, C_b)
 }
 
-func Param3(a int32, b float32, c float64) {
+func Param3(a int32, b float32, c float64)  {
 	C_a := C.int32_t(a)
 	C_b := C.float(b)
 	C_c := C.double(c)
@@ -398,7 +400,7 @@ func Param3(a int32, b float32, c float64) {
 	C.Param3(C_a, C_b, C_c)
 }
 
-func Param4(a int32, b float32, c float64, d Vector4) {
+func Param4(a int32, b float32, c float64, d Vector4)  {
 	C_a := C.int32_t(a)
 	C_b := C.float(b)
 	C_c := C.double(c)
@@ -407,7 +409,7 @@ func Param4(a int32, b float32, c float64, d Vector4) {
 	C.Param4(C_a, C_b, C_c, &C_d)
 }
 
-func Param5(a int32, b float32, c float64, d Vector4, e []int64) {
+func Param5(a int32, b float32, c float64, d Vector4, e []int64)  {
 	C_a := C.int32_t(a)
 	C_b := C.float(b)
 	C_c := C.double(c)
@@ -420,7 +422,7 @@ func Param5(a int32, b float32, c float64, d Vector4, e []int64) {
 
 }
 
-func Param6(a int32, b float32, c float64, d Vector4, e []int64, f int8) {
+func Param6(a int32, b float32, c float64, d Vector4, e []int64, f int8)  {
 	C_a := C.int32_t(a)
 	C_b := C.float(b)
 	C_c := C.double(c)
@@ -434,7 +436,7 @@ func Param6(a int32, b float32, c float64, d Vector4, e []int64, f int8) {
 
 }
 
-func Param7(a int32, b float32, c float64, d Vector4, e []int64, f int8, g string) {
+func Param7(a int32, b float32, c float64, d Vector4, e []int64, f int8, g string)  {
 	C_a := C.int32_t(a)
 	C_b := C.float(b)
 	C_c := C.double(c)
@@ -450,7 +452,7 @@ func Param7(a int32, b float32, c float64, d Vector4, e []int64, f int8, g strin
 
 }
 
-func Param8(a int32, b float32, c float64, d Vector4, e []int64, f int8, g string, h float32) {
+func Param8(a int32, b float32, c float64, d Vector4, e []int64, f int8, g string, h float32)  {
 	C_a := C.int32_t(a)
 	C_b := C.float(b)
 	C_c := C.double(c)
@@ -467,7 +469,7 @@ func Param8(a int32, b float32, c float64, d Vector4, e []int64, f int8, g strin
 
 }
 
-func Param9(a int32, b float32, c float64, d Vector4, e []int64, f int8, g string, h float32, k int16) {
+func Param9(a int32, b float32, c float64, d Vector4, e []int64, f int8, g string, h float32, k int16)  {
 	C_a := C.int32_t(a)
 	C_b := C.float(b)
 	C_c := C.double(c)
@@ -485,7 +487,7 @@ func Param9(a int32, b float32, c float64, d Vector4, e []int64, f int8, g strin
 
 }
 
-func Param10(a int32, b float32, c float64, d Vector4, e []int64, f int8, g string, h float32, k int16, l uintptr) {
+func Param10(a int32, b float32, c float64, d Vector4, e []int64, f int8, g string, h float32, k int16, l uintptr)  {
 	C_a := C.int32_t(a)
 	C_b := C.float(b)
 	C_c := C.double(c)
@@ -504,20 +506,20 @@ func Param10(a int32, b float32, c float64, d Vector4, e []int64, f int8, g stri
 
 }
 
-func ParamRef1(a *int32) {
+func ParamRef1(a *int32)  {
 	C_a := (*C.int32_t)(a)
 
 	C.ParamRef1(C_a)
 }
 
-func ParamRef2(a *int32, b *float32) {
+func ParamRef2(a *int32, b *float32)  {
 	C_a := (*C.int32_t)(a)
 	C_b := (*C.float)(b)
 
 	C.ParamRef2(C_a, C_b)
 }
 
-func ParamRef3(a *int32, b *float32, c *float64) {
+func ParamRef3(a *int32, b *float32, c *float64)  {
 	C_a := (*C.int32_t)(a)
 	C_b := (*C.float)(b)
 	C_c := (*C.double)(c)
@@ -525,7 +527,7 @@ func ParamRef3(a *int32, b *float32, c *float64) {
 	C.ParamRef3(C_a, C_b, C_c)
 }
 
-func ParamRef4(a *int32, b *float32, c *float64, d *Vector4) {
+func ParamRef4(a *int32, b *float32, c *float64, d *Vector4)  {
 	C_a := (*C.int32_t)(a)
 	C_b := (*C.float)(b)
 	C_c := (*C.double)(c)
@@ -536,7 +538,7 @@ func ParamRef4(a *int32, b *float32, c *float64, d *Vector4) {
 	*d = *(*Vector4)(unsafe.Pointer(&C_d))
 }
 
-func ParamRef5(a *int32, b *float32, c *float64, d *Vector4, e *[]int64) {
+func ParamRef5(a *int32, b *float32, c *float64, d *Vector4, e *[]int64)  {
 	C_a := (*C.int32_t)(a)
 	C_b := (*C.float)(b)
 	C_c := (*C.double)(c)
@@ -557,7 +559,7 @@ func ParamRef5(a *int32, b *float32, c *float64, d *Vector4, e *[]int64) {
 
 }
 
-func ParamRef6(a *int32, b *float32, c *float64, d *Vector4, e *[]int64, f *int8) {
+func ParamRef6(a *int32, b *float32, c *float64, d *Vector4, e *[]int64, f *int8)  {
 	C_a := (*C.int32_t)(a)
 	C_b := (*C.float)(b)
 	C_c := (*C.double)(c)
@@ -579,7 +581,7 @@ func ParamRef6(a *int32, b *float32, c *float64, d *Vector4, e *[]int64, f *int8
 
 }
 
-func ParamRef7(a *int32, b *float32, c *float64, d *Vector4, e *[]int64, f *int8, g *string) {
+func ParamRef7(a *int32, b *float32, c *float64, d *Vector4, e *[]int64, f *int8, g *string)  {
 	C_a := (*C.int32_t)(a)
 	C_b := (*C.float)(b)
 	C_c := (*C.double)(c)
@@ -605,7 +607,7 @@ func ParamRef7(a *int32, b *float32, c *float64, d *Vector4, e *[]int64, f *int8
 
 }
 
-func ParamRef8(a *int32, b *float32, c *float64, d *Vector4, e *[]int64, f *int8, g *string, h *float32) {
+func ParamRef8(a *int32, b *float32, c *float64, d *Vector4, e *[]int64, f *int8, g *string, h *float32)  {
 	C_a := (*C.int32_t)(a)
 	C_b := (*C.float)(b)
 	C_c := (*C.double)(c)
@@ -632,7 +634,7 @@ func ParamRef8(a *int32, b *float32, c *float64, d *Vector4, e *[]int64, f *int8
 
 }
 
-func ParamRef9(a *int32, b *float32, c *float64, d *Vector4, e *[]int64, f *int8, g *string, h *float32, k *int16) {
+func ParamRef9(a *int32, b *float32, c *float64, d *Vector4, e *[]int64, f *int8, g *string, h *float32, k *int16)  {
 	C_a := (*C.int32_t)(a)
 	C_b := (*C.float)(b)
 	C_c := (*C.double)(c)
@@ -660,7 +662,7 @@ func ParamRef9(a *int32, b *float32, c *float64, d *Vector4, e *[]int64, f *int8
 
 }
 
-func ParamRef10(a *int32, b *float32, c *float64, d *Vector4, e *[]int64, f *int8, g *string, h *float32, k *int16, l *uintptr) {
+func ParamRef10(a *int32, b *float32, c *float64, d *Vector4, e *[]int64, f *int8, g *string, h *float32, k *int16, l *uintptr)  {
 	C_a := (*C.int32_t)(a)
 	C_b := (*C.float)(b)
 	C_c := (*C.double)(c)
@@ -689,7 +691,7 @@ func ParamRef10(a *int32, b *float32, c *float64, d *Vector4, e *[]int64, f *int
 
 }
 
-func ParamRefVectors(p1 *[]bool, p2 *[]int8, p3 *[]uint16, p4 *[]int8, p5 *[]int16, p6 *[]int32, p7 *[]int64, p8 *[]uint8, p9 *[]uint16, p10 *[]uint32, p11 *[]uint64, p12 *[]uintptr, p13 *[]float32, p14 *[]float64, p15 *[]string) {
+func ParamRefVectors(p1 *[]bool, p2 *[]int8, p3 *[]uint16, p4 *[]int8, p5 *[]int16, p6 *[]int32, p7 *[]int64, p8 *[]uint8, p9 *[]uint16, p10 *[]uint32, p11 *[]uint64, p12 *[]uintptr, p13 *[]float32, p14 *[]float64, p15 *[]string)  {
 	C_p1 := C.Plugify_CreateVector(unsafe.Pointer(&(*p1)[0]), C.ptrdiff_t(len(*p1)), C.BOOL)
 	C_p2 := C.Plugify_CreateVector(unsafe.Pointer(&(*p2)[0]), C.ptrdiff_t(len(*p2)), C.CHAR8)
 	C_p3 := C.Plugify_CreateVector(unsafe.Pointer(&(*p3)[0]), C.ptrdiff_t(len(*p3)), C.CHAR16)
@@ -834,7 +836,7 @@ func ParamAllPrimitives(p1 bool, p2 uint16, p3 int8, p4 int16, p5 int32, p6 int6
 	C_p12 := C.float(p12)
 	C_p13 := C.double(p13)
 
-	result := int64 (C.ParamAllPrimitives(C_p1, C_p2, C_p3, C_p4, C_p5, C_p6, C_p7, C_p8, C_p9, C_p10, C_p11, C_p12, C_p13))
+	result := int64(C.ParamAllPrimitives(C_p1, C_p2, C_p3, C_p4, C_p5, C_p6, C_p7, C_p8, C_p9, C_p10, C_p11, C_p12, C_p13))
 	return result
 }
 
