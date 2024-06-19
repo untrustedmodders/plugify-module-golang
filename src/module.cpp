@@ -733,13 +733,13 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 #else
 		case ValueType::Vector3: {
 			Vector3 source;
-			dcCallAggr(vm, addr, CreateDcAggr<Vector3>(structs), &source);
+			dcCallAggr(vm, addr, CreateDcAggr<Vector3>(aggrs), &source);
 			ret->SetReturnPtr(source);
 			break;
 		}
 		case ValueType::Vector4: {
 			Vector4 source;
-			dcCallAggr(vm, addr, CreateDcAggr<Vector4>(structs), &source);
+			dcCallAggr(vm, addr, CreateDcAggr<Vector4>(aggrs), &source);
 			ret->SetReturnPtr(source);
 			break;
 		}
