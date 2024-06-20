@@ -156,6 +156,7 @@ void CopyGoStringToStringReturn(const GoString& source, std::string& dest) {
 template<typename T>
 DCaggr* CreateDcAggr(AggrList& aggrs) {
 	static_assert(always_false_v<T>, "CreateDcAggr specialization required");
+	return nullptr;
 }
 
 template<>
