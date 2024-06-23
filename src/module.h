@@ -36,7 +36,7 @@ namespace golm {
 
 	class AssemblyHolder {
 	public:
-		AssemblyHolder(std::unique_ptr<Assembly> assembly, StartFunc startFunc, EndFunc endFunc) : _assembly{ std::move(assembly) }, _startFunc{ startFunc }, _endFunc{ endFunc } {}
+		AssemblyHolder(std::unique_ptr<Assembly> assembly, StartFunc startFunc, EndFunc endFunc) : _assembly{std::move(assembly)}, _startFunc{startFunc}, _endFunc{endFunc} {}
 
 		StartFunc GetStartFunc() const { return _startFunc; }
 		EndFunc GetEndFunc() const { return _endFunc; }
@@ -50,14 +50,8 @@ namespace golm {
 	//using MethodRef = std::reference_wrapper<const plugify::Method>;
 	using ArgumentList = std::vector<void*>;
 	using AggrList = std::vector<DCaggr*>;
-	using StringStorage = std::vector<std::unique_ptr<GoString[]>>;
-	using BoolStorage = std::vector<std::unique_ptr<bool[]>>;
-
-	struct VMDeleter {
-		void operator()(DCCallVM* vm) const {
-			dcFree(vm);
-		}
-	};
+	using StringHolder = std::vector<std::unique_ptr<GoString[]>>;
+	using BoolHolder = std::vector<std::unique_ptr<bool[]>>;
 
 	class GoLanguageModule final : public plugify::ILanguageModule {
 	public:
@@ -86,7 +80,7 @@ namespace golm {
 		std::unordered_map<std::string, void*> _nativesMap;
 		std::unordered_map<void*, plugify::Function> _functions;
 
-		std::unique_ptr<DCCallVM, VMDeleter> _callVirtMachine;
+		std::deleted_unique_ptr<DCCallVM> _callVirtMachine;
 		std::mutex _mutex;
 
 		static const std::array<void*, 32> _pluginApi;

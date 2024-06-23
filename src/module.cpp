@@ -27,9 +27,9 @@ bool IsMethodPrimitive(const plugify::Method& method) {
 	return true;
 }
 
-GoSlice* CreateGoSliceBool(const std::vector<bool>& source, ArgumentList& args, BoolStorage& storage) {
+GoSlice* CreateGoSliceBool(const std::vector<bool>& source, ArgumentList& args, BoolHolder& holder) {
 	size_t N = source.size();
-	auto& boolArray = storage.emplace_back(std::make_unique<bool[]>(N));
+	auto& boolArray = holder.emplace_back(std::make_unique<bool[]>(N));
 	for (size_t i = 0; i < N; ++i) {
 		boolArray[i] = source[i];
 	}
@@ -39,9 +39,9 @@ GoSlice* CreateGoSliceBool(const std::vector<bool>& source, ArgumentList& args, 
 	return dest;
 }
 
-GoSlice* CreateGoSliceString(const std::vector<std::string>& source, ArgumentList& args, StringStorage& storage) {
+GoSlice* CreateGoSliceString(const std::vector<std::string>& source, ArgumentList& args, StringHolder& holder) {
 	size_t N = source.size();
-	auto& strArray = storage.emplace_back(std::make_unique<GoString[]>(N));
+	auto& strArray = holder.emplace_back(std::make_unique<GoString[]>(N));
 	for (size_t i = 0; i < N; ++i) {
 		const auto& str = source[i];
 		auto& dest = strArray[i];
@@ -231,7 +231,7 @@ InitResult GoLanguageModule::Initialize(std::weak_ptr<IPlugifyProvider> provider
 
 	DCCallVM* vm = dcNewCallVM(4096);
 	dcMode(vm, DC_CALL_C_DEFAULT);
-	_callVirtMachine = std::unique_ptr<DCCallVM, VMDeleter>(vm);
+	_callVirtMachine = std::deleted_unique_ptr<DCCallVM>(vm, dcFree);
 
 	return InitResultData{};
 }
@@ -305,8 +305,7 @@ LoadResult GoLanguageModule::OnPluginLoad(const IPlugin& plugin) {
 			}
 
 			methods.emplace_back(method.name, funcAddr);
-		}
-		else {
+		} else {
 			funcErrors.emplace_back(method.name);
 		}
 	}
@@ -363,8 +362,8 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 	AggrList aggrs;
 	ArgumentList args;
 
-	StringStorage stringStorage;
-	BoolStorage boolStorage;
+	StringHolder stringHolder;
+	BoolHolder boolHolder;
 
 	DCCallVM* vm = g_golm._callVirtMachine.get();
 	dcReset(vm);
@@ -469,7 +468,7 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 					break;
 				// GoSlice*
 				case ValueType::ArrayBool:
-					dcArgPointer(vm, CreateGoSliceBool(*p->GetArgument<std::vector<bool>*>(i), args, boolStorage));
+					dcArgPointer(vm, CreateGoSliceBool(*p->GetArgument<std::vector<bool>*>(i), args, boolHolder));
 					break;
 				case ValueType::ArrayChar8:
 					dcArgPointer(vm, CreateGoSlice<char>(*p->GetArgument<std::vector<char>*>(i), args));
@@ -511,7 +510,7 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 					dcArgPointer(vm, CreateGoSlice<double>(*p->GetArgument<std::vector<double>*>(i), args));
 					break;
 				case ValueType::ArrayString:
-					dcArgPointer(vm, CreateGoSliceString(*p->GetArgument<std::vector<std::string>*>(i), args, stringStorage));
+					dcArgPointer(vm, CreateGoSliceString(*p->GetArgument<std::vector<std::string>*>(i), args, stringHolder));
 					break;
 				default:
 					std::puts("Unsupported types!\n");
@@ -576,7 +575,7 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 					break;
 				// GoSlice
 				case ValueType::ArrayBool:
-					dcArgAggr(vm, CreateDcAggr<GoSlice>(aggrs), CreateGoSliceBool(*p->GetArgument<std::vector<bool>*>(i), args, boolStorage));
+					dcArgAggr(vm, CreateDcAggr<GoSlice>(aggrs), CreateGoSliceBool(*p->GetArgument<std::vector<bool>*>(i), args, boolHolder));
 					break;
 				case ValueType::ArrayChar8:
 					dcArgAggr(vm, CreateDcAggr<GoSlice>(aggrs), CreateGoSlice<char>(*p->GetArgument<std::vector<char>*>(i), args));
@@ -618,7 +617,7 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 					dcArgAggr(vm, CreateDcAggr<GoSlice>(aggrs), CreateGoSlice<double>(*p->GetArgument<std::vector<double>*>(i), args));
 					break;
 				case ValueType::ArrayString:
-					dcArgAggr(vm, CreateDcAggr<GoSlice>(aggrs), CreateGoSliceString(*p->GetArgument<std::vector<std::string>*>(i), args, stringStorage));
+					dcArgAggr(vm, CreateDcAggr<GoSlice>(aggrs), CreateGoSliceString(*p->GetArgument<std::vector<std::string>*>(i), args, stringHolder));
 					break;
 				default:
 					std::puts("Unsupported types!\n");
