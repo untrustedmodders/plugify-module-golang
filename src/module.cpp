@@ -355,8 +355,6 @@ void* GoLanguageModule::GetNativeMethod(const std::string& methodName) const {
 
 // C++ to Go
 void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, const plugify::Parameters* p, uint8_t count, const plugify::ReturnValue* ret) {
-	// TODO: Allocate all required memory at once
-
 	std::scoped_lock<std::mutex> lock(g_golm._mutex);
 
 	AggrList aggrs;
@@ -1130,26 +1128,28 @@ void* AllocateString() {
 void* CreateString(GoString source) {
 	return source.n == 0 ? new std::string() : new std::string(source.p, source.n);
 }
-const char* GetStringData(void* ptr) {
-	return reinterpret_cast<std::string*>(ptr)->c_str();
+const char* GetStringData(std::string* ptr) {
+	return ptr->c_str();
 }
-ptrdiff_t GetStringLength(void* ptr) {
-	return static_cast<ptrdiff_t>(reinterpret_cast<std::string*>(ptr)->length());
+ptrdiff_t GetStringLength(std::string* ptr) {
+	return static_cast<ptrdiff_t>(ptr->length());
 }
-void AssignString(void* ptr, GoString source) {
-	auto* str = reinterpret_cast<std::string*>(ptr);
+void ConstructString(std::string* ptr, GoString source) {
+	std::construct_at(ptr, std::string(source.p, source.n));
+}
+void AssignString(std::string* ptr, GoString source) {
 	if (source.p == nullptr || source.n == 0)
-		str->clear();
+		ptr->clear();
 	else
-		str->assign(source.p, static_cast<size_t>(source.n));
+		ptr->assign(source.p, static_cast<size_t>(source.n));
 }
-void FreeString(void* ptr) {
-	reinterpret_cast<std::string*>(ptr)->~basic_string();
+void FreeString(std::string* ptr) {
+	ptr->~basic_string();
 	free(ptr);
 }
 
-void DeleteString(void* ptr) {
-	delete reinterpret_cast<std::string*>(ptr);
+void DeleteString(std::string* ptr) {
+	delete ptr;
 }
 
 enum DataType {
@@ -1345,6 +1345,94 @@ void* GetVectorData(void* ptr, DataType type) {
 		}
 		default:
 			return nullptr; // Return nullptr for invalid type
+	}
+}
+
+void ConstructVector(void* ptr, void* arr, ptrdiff_t len, DataType type) {
+	switch (type) {
+		case BOOL: {
+			auto* vector = reinterpret_cast<std::vector<bool>*>(ptr);
+			std::construct_at(vector, len == 0 ? std::vector<bool>() : std::vector<bool>(static_cast<bool*>(arr), static_cast<bool*>(arr) + len));
+			break;
+		}
+		case CHAR8: {
+			auto* vector = reinterpret_cast<std::vector<char>*>(ptr);
+			std::construct_at(vector, len == 0 ? std::vector<char>() : std::vector<char>(static_cast<char*>(arr), static_cast<char*>(arr) + len));
+			break;
+		}
+		case CHAR16: {
+			auto* vector = reinterpret_cast<std::vector<uint16_t>*>(ptr);
+			std::construct_at(vector, len == 0 ? std::vector<uint16_t>() : std::vector<uint16_t>(static_cast<uint16_t*>(arr), static_cast<uint16_t*>(arr) + len));
+			break;
+		}
+		case INT8: {
+			auto* vector = reinterpret_cast<std::vector<int8_t>*>(ptr);
+			std::construct_at(vector, len == 0 ? std::vector<int8_t>() : std::vector<int8_t>(static_cast<int8_t*>(arr), static_cast<int8_t*>(arr) + len));
+			break;
+		}
+		case INT16: {
+			auto* vector = reinterpret_cast<std::vector<int16_t>*>(ptr);
+			std::construct_at(vector, len == 0 ? std::vector<int16_t>() : std::vector<int16_t>(static_cast<int16_t*>(arr), static_cast<int16_t*>(arr) + len));
+			break;
+		}
+		case INT32: {
+			auto* vector = reinterpret_cast<std::vector<int32_t>*>(ptr);
+			std::construct_at(vector, len == 0 ? std::vector<int32_t>() : std::vector<int32_t>(static_cast<int32_t*>(arr), static_cast<int32_t*>(arr) + len));
+			break;
+		}
+		case INT64: {
+			auto* vector = reinterpret_cast<std::vector<int64_t>*>(ptr);
+			std::construct_at(vector, len == 0 ? std::vector<int64_t>() : std::vector<int64_t>(static_cast<int64_t*>(arr), static_cast<int64_t*>(arr) + len));
+			break;
+		}
+		case UINT8: {
+			auto* vector = reinterpret_cast<std::vector<uint8_t>*>(ptr);
+			std::construct_at(vector, len == 0 ? std::vector<uint8_t>() : std::vector<uint8_t>(static_cast<uint8_t*>(arr), static_cast<uint8_t*>(arr) + len));
+			break;
+		}
+		case UINT16: {
+			auto* vector = reinterpret_cast<std::vector<uint16_t>*>(ptr);
+			std::construct_at(vector, len == 0 ? std::vector<uint16_t>() : std::vector<uint16_t>(static_cast<uint16_t*>(arr), static_cast<uint16_t*>(arr) + len));
+			break;
+		}
+		case UINT32: {
+			auto* vector = reinterpret_cast<std::vector<uint32_t>*>(ptr);
+			std::construct_at(vector, len == 0 ? std::vector<uint32_t>() : std::vector<uint32_t>(static_cast<uint32_t*>(arr), static_cast<uint32_t*>(arr) + len));
+			break;
+		}
+		case UINT64: {
+			auto* vector = reinterpret_cast<std::vector<uint64_t>*>(ptr);
+			std::construct_at(vector, len == 0 ? std::vector<uint64_t>() : std::vector<uint64_t>(static_cast<uint64_t*>(arr), static_cast<uint64_t*>(arr) + len));
+			break;
+		}
+		case UINTPTR: {
+			auto* vector = reinterpret_cast<std::vector<uintptr_t>*>(ptr);
+			std::construct_at(vector, len == 0 ? std::vector<uintptr_t>() : std::vector<uintptr_t>(static_cast<uintptr_t*>(arr), static_cast<uintptr_t*>(arr) + len));
+			break;
+		}
+		case FLOAT: {
+			auto* vector = reinterpret_cast<std::vector<float>*>(ptr);
+			std::construct_at(vector, len == 0 ? std::vector<float>() : std::vector<float>(static_cast<float*>(arr), static_cast<float*>(arr) + len));
+			break;
+		}
+		case DOUBLE: {
+			auto* vector = reinterpret_cast<std::vector<double>*>(ptr);
+			std::construct_at(vector, len == 0 ? std::vector<double>() : std::vector<double>(static_cast<double*>(arr), static_cast<double*>(arr) + len));
+			break;
+		}
+		case STRING: {
+			auto* vector = reinterpret_cast<std::vector<std::string>*>(ptr);
+			std::construct_at(vector, std::vector<std::string>());
+			size_t N = static_cast<size_t>(len);
+			vector->reserve(N);
+			for (size_t i = 0; i < N; ++i) {
+				const auto& str = static_cast<GoString*>(arr)[i];
+				vector->emplace_back(std::string(str.p, static_cast<size_t>(str.n)));
+			}
+			break;
+		}
+		default:
+			break;
 	}
 }
 
@@ -1596,7 +1684,7 @@ void DeleteVectorDataCStr(void* ptr) {
 	delete[] reinterpret_cast<char**>(ptr);
 }
 
-const std::array<void*, 32> GoLanguageModule::_pluginApi = {
+const std::array<void*, 34> GoLanguageModule::_pluginApi = {
 		reinterpret_cast<void*>(&::GetMethodPtr),
 		reinterpret_cast<void*>(&::GetBaseDir),
 		reinterpret_cast<void*>(&::IsModuleLoaded),
@@ -1617,6 +1705,7 @@ const std::array<void*, 32> GoLanguageModule::_pluginApi = {
 		reinterpret_cast<void*>(&::CreateString),
 		reinterpret_cast<void*>(&::GetStringData),
 		reinterpret_cast<void*>(&::GetStringLength),
+		reinterpret_cast<void*>(&::ConstructString),
 		reinterpret_cast<void*>(&::AssignString),
 		reinterpret_cast<void*>(&::FreeString),
 		reinterpret_cast<void*>(&::DeleteString),
@@ -1624,6 +1713,7 @@ const std::array<void*, 32> GoLanguageModule::_pluginApi = {
 		reinterpret_cast<void*>(&::AllocateVector),
 		reinterpret_cast<void*>(&::GetVectorSize),
 		reinterpret_cast<void*>(&::GetVectorData),
+		reinterpret_cast<void*>(&::ConstructVector),
 		reinterpret_cast<void*>(&::AssignVector),
 		reinterpret_cast<void*>(&::DeleteVector),
 		reinterpret_cast<void*>(&::FreeVector),
