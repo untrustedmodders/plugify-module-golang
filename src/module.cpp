@@ -239,7 +239,7 @@ InitResult GoLanguageModule::Initialize(std::weak_ptr<IPlugifyProvider> provider
 void GoLanguageModule::Shutdown() {
 	_nativesMap.clear();
 	_functions.clear();
-	_assemblies.clear();
+	_assemblyMap.clear();
 	_callVirtMachine.reset();
 	_rt.reset();
 	_provider.reset();
@@ -323,7 +323,7 @@ LoadResult GoLanguageModule::OnPluginLoad(const IPlugin& plugin) {
 		return ErrorData{ std::format("Not supported plugin api {}, max supported {}", resultVersion, kApiVersion) };
 	}
 
-	const auto [_, result] = _assemblies.try_emplace(plugin.GetName(), std::move(assembly), startFunc, endFunc);
+	const auto [_, result] = _assemblyMap.try_emplace(plugin.GetName(), std::move(assembly), startFunc, endFunc);
 	if (!result) {
 		return ErrorData{ std::format("Plugin name duplicate") };
 	}
@@ -332,14 +332,14 @@ LoadResult GoLanguageModule::OnPluginLoad(const IPlugin& plugin) {
 }
 
 void GoLanguageModule::OnPluginStart(const IPlugin& plugin) {
-	if (const auto it = _assemblies.find(plugin.GetName()); it != _assemblies.end()) {
+	if (const auto it = _assemblyMap.find(plugin.GetName()); it != _assemblyMap.end()) {
 		const auto& assemblyHolder = std::get<AssemblyHolder>(*it);
 		assemblyHolder.GetStartFunc()();
 	}
 }
 
 void GoLanguageModule::OnPluginEnd(const IPlugin& plugin) {
-	if (const auto it = _assemblies.find(plugin.GetName()); it != _assemblies.end()) {
+	if (const auto it = _assemblyMap.find(plugin.GetName()); it != _assemblyMap.end()) {
 		const auto& assemblyHolder = std::get<AssemblyHolder>(*it);
 		assemblyHolder.GetEndFunc()();
 	}
@@ -402,9 +402,6 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 		const auto& param = method->paramTypes[j++];
 		if (param.ref) {
 			switch (param.type) {
-				case ValueType::Invalid:
-				case ValueType::Void:
-					break;
 				case ValueType::Bool:
 					dcArgPointer(vm, p->GetArgument<bool*>(i));
 					break;
@@ -517,9 +514,6 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 			}
 		} else {
 			switch (param.type) {
-				case ValueType::Invalid:
-				case ValueType::Void:
-					break;
 				case ValueType::Bool:
 					dcArgBool(vm, p->GetArgument<bool>(i));
 					break;
@@ -627,9 +621,6 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 	}
 
 	switch (method->retType.type) {
-		case ValueType::Invalid:
-			break;
-
 		case ValueType::Void: {
 			dcCallVoid(vm, addr);
 			break;

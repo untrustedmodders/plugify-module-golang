@@ -76,7 +76,7 @@ namespace golm {
 		std::shared_ptr<asmjit::JitRuntime> _rt;
 		std::shared_ptr<plugify::IPlugifyProvider> _provider;
 
-		std::unordered_map<std::string, AssemblyHolder> _assemblies;
+		std::unordered_map<std::string, AssemblyHolder> _assemblyMap;
 		std::unordered_map<std::string, void*> _nativesMap;
 		std::unordered_map<void*, plugify::Function> _functions;
 
