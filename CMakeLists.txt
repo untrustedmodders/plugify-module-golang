@@ -50,7 +50,7 @@ if(NOT COMPILER_SUPPORTS_FORMAT)
     set(GOLM_LINK_LIBRARIES ${GOLM_LINK_LIBRARIES} fmt::fmt-header-only)
 endif()
 
-include_directories(${CMAKE_BINARY_DIR}/_deps/dyncall-src/)
+include_directories(${dyncall_SOURCE_DIR})
 
 target_link_libraries(${PROJECT_NAME} PRIVATE ${GOLM_LINK_LIBRARIES})
 target_precompile_headers(${PROJECT_NAME} PRIVATE ${GOLM_PCH_FILE})
