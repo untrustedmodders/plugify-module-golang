@@ -522,7 +522,7 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 					dcArgPointer(vm, CreateGoSliceString(*p->GetArgument<std::vector<std::string>*>(i), args, stringHolder));
 					break;
 				default:
-					std::puts("Unsupported types!\n");
+					std::puts(LOG_PREFIX "Unsupported types!\n");
 					std::terminate();
 					break;
 			}
@@ -626,7 +626,7 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 					dcArgAggr(vm, CreateDcAggr<GoSlice>(aggrs), CreateGoSliceString(*p->GetArgument<std::vector<std::string>*>(i), args, stringHolder));
 					break;
 				default:
-					std::puts("Unsupported types!\n");
+					std::puts(LOG_PREFIX "Unsupported types!\n");
 					std::terminate();
 					break;
 			}
@@ -882,7 +882,7 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 			break;
 		}
 		default:
-			std::puts("Unsupported types!\n");
+			std::puts(LOG_PREFIX "Unsupported types!\n");
 			std::terminate();
 			break;
 	}
