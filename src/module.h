@@ -27,6 +27,16 @@ typedef void *GoChan;
 typedef struct { void *t; void *v; } GoInterface;
 typedef struct { void *data; GoInt len; GoInt cap; } GoSlice;
 
+template <>
+struct std::default_delete<DCaggr> {
+	void operator()(DCaggr* p) const noexcept { dcFreeAggr(p); }
+};
+
+template <>
+struct std::default_delete<DCCallVM> {
+	void operator()(DCCallVM* p) const noexcept { dcFree(p); }
+};
+
 namespace golm {
 	constexpr int kApiVersion = 1;
 
@@ -48,8 +58,8 @@ namespace golm {
 	};
 
 	//using MethodRef = std::reference_wrapper<const plugify::Method>;
-	using ArgumentList = std::vector<void*>;
-	using AggrList = std::vector<DCaggr*>;
+	using ArgumentList = std::vector<GoSlice>;
+	using AggrList = std::vector<std::unique_ptr<DCaggr>>;
 	using StringHolder = std::vector<std::unique_ptr<GoString[]>>;
 	using BoolHolder = std::vector<std::unique_ptr<bool[]>>;
 
@@ -78,9 +88,9 @@ namespace golm {
 
 		std::unordered_map<std::string, AssemblyHolder> _assemblyMap;
 		std::unordered_map<std::string, void*> _nativesMap;
-		std::unordered_map<void*, plugify::Function> _functions;
+		std::vector<std::unique_ptr<plugify::Function>> _functions;
 
-		std::deleted_unique_ptr<DCCallVM> _callVirtMachine;
+		std::unique_ptr<DCCallVM> _callVirtMachine;
 		std::mutex _mutex;
 
 		static const std::array<void*, 34> _pluginApi;

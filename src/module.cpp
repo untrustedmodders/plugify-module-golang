@@ -28,18 +28,19 @@ bool IsMethodPrimitive(const plugify::Method& method) {
 }
 
 GoSlice* CreateGoSliceBool(const std::vector<bool>& source, ArgumentList& args, BoolHolder& holder) {
+	assert(args.size() != args.capacity() && "Resizing list will invalidate pointers!");
 	size_t N = source.size();
 	auto& boolArray = holder.emplace_back(std::make_unique<bool[]>(N));
 	for (size_t i = 0; i < N; ++i) {
 		boolArray[i] = source[i];
 	}
 	auto size = static_cast<GoInt>(N);
-	auto* dest = new GoSlice(boolArray.get(), size, size);
-	args.push_back(dest);
-	return dest;
+	auto& slice = args.emplace_back(boolArray.get(), size, size);
+	return &slice;
 }
 
 GoSlice* CreateGoSliceString(const std::vector<std::string>& source, ArgumentList& args, StringHolder& holder) {
+	assert(args.size() != args.capacity() && "Resizing list will invalidate pointers!");
 	size_t N = source.size();
 	auto& strArray = holder.emplace_back(std::make_unique<GoString[]>(N));
 	for (size_t i = 0; i < N; ++i) {
@@ -49,44 +50,35 @@ GoSlice* CreateGoSliceString(const std::vector<std::string>& source, ArgumentLis
 		dest.n = static_cast<GoInt>(str.length());
 	}
 	auto size = static_cast<GoInt>(N);
-	auto* dest = new GoSlice(strArray.get(), size, size);
-	args.push_back(dest);
-	return dest;
+	auto& slice = args.emplace_back(strArray.get(), size, size);
+	return &slice;
 }
 
 template<typename T>
 GoSlice* CreateGoSlice(const std::vector<T>& source, ArgumentList& args) {
+	assert(args.size() != args.capacity() && "Resizing list will invalidate pointers!");
 	auto size = static_cast<GoInt>(source.size());
-	auto* dest = new GoSlice((void*)source.data(), size, size);
-	args.push_back(dest);
-	return dest;
+	auto& slice = args.emplace_back((void*)source.data(), size, size);
+	return &slice;
 }
 
 GoSlice* CreateGoSlice(ArgumentList& args) {
-	auto* dest = new GoSlice(nullptr, 0, 0);
-	args.push_back(dest);
-	return dest;
-}
-
-void DeleteGoSlice(void* ptr) {
-	delete reinterpret_cast<GoSlice*>(ptr);
-}
-
-GoString* CreateGoString(ArgumentList& args) {
-	auto* dest = new GoString("", 0);
-	args.push_back(dest);
-	return dest;
+	assert(args.size() != args.capacity() && "Resizing list will invalidate pointers!");
+	auto& slice = args.emplace_back(nullptr, 0, 0);
+	return &slice;
 }
 
 GoString* CreateGoString(const std::string& source, ArgumentList& args) {
+	assert(args.size() != args.capacity() && "Resizing list will invalidate pointers!");
 	auto size = static_cast<GoInt>(source.length());
-	auto* dest = new GoString(source.c_str(), size);
-	args.push_back(dest);
-	return dest;
+	auto& slice = args.emplace_back((void*)source.c_str(), size, 0);
+	return reinterpret_cast<GoString*>(&slice);
 }
 
-void DeleteGoString(void* ptr) {
-	delete reinterpret_cast<GoString*>(ptr);
+GoString* CreateGoString(ArgumentList& args) {
+	assert(args.size() != args.capacity() && "Resizing list will invalidate pointers!");
+	auto& slice = args.emplace_back((void*)"", 0, 0);
+	return reinterpret_cast<GoString*>(&slice);
 }
 
 template<typename T>
@@ -162,40 +154,40 @@ DCaggr* CreateDcAggr(AggrList& aggrs) {
 template<>
 DCaggr* CreateDcAggr<Vector2>(AggrList& aggrs) {
 	DCaggr* ag = dcNewAggr(2, sizeof(Vector2));
-	for (int i = 0; i < 2; ++i)
+	for (size_t i = 0; i < 2; ++i)
 		dcAggrField(ag, DC_SIGCHAR_FLOAT, static_cast<int>(sizeof(float) * i), 1);
 	dcCloseAggr(ag);
-	aggrs.push_back(ag);
+	aggrs.emplace_back(std::unique_ptr<DCaggr>(ag));
 	return ag;
 }
 
 template<>
 DCaggr* CreateDcAggr<Vector3>(AggrList& aggrs) {
-	DCaggr* s = dcNewAggr(3, sizeof(Vector3));
-	for (int i = 0; i < 3; ++i)
-		dcAggrField(s, DC_SIGCHAR_FLOAT, static_cast<int>(sizeof(float) * i), 1);
-	dcCloseAggr(s);
-	aggrs.push_back(s);
-	return s;
+	DCaggr* ag = dcNewAggr(3, sizeof(Vector3));
+	for (size_t i = 0; i < 3; ++i)
+		dcAggrField(ag, DC_SIGCHAR_FLOAT, static_cast<int>(sizeof(float) * i), 1);
+	dcCloseAggr(ag);
+	aggrs.emplace_back(std::unique_ptr<DCaggr>(ag));
+	return ag;
 }
 
 template<>
 DCaggr* CreateDcAggr<Vector4>(AggrList& aggrs) {
 	DCaggr* ag = dcNewAggr(4, sizeof(Vector4));
-	for (int i = 0; i < 4; ++i)
+	for (size_t i = 0; i < 4; ++i)
 		dcAggrField(ag, DC_SIGCHAR_FLOAT, static_cast<int>(sizeof(float) * i), 1);
 	dcCloseAggr(ag);
-	aggrs.push_back(ag);
+	aggrs.emplace_back(std::unique_ptr<DCaggr>(ag));
 	return ag;
 }
 
 template<>
 DCaggr* CreateDcAggr<Matrix4x4>(AggrList& aggrs) {
 	DCaggr* ag = dcNewAggr(16, sizeof(Matrix4x4));
-	for (int i = 0; i < 16; ++i)
+	for (size_t i = 0; i < 16; ++i)
 		dcAggrField(ag, DC_SIGCHAR_FLOAT, static_cast<int>(sizeof(float) * i), 1);
 	dcCloseAggr(ag);
-	aggrs.push_back(ag);
+	aggrs.emplace_back(std::unique_ptr<DCaggr>(ag));
 	return ag;
 }
 
@@ -205,7 +197,7 @@ DCaggr* CreateDcAggr<GoString>(AggrList& aggrs) {
 	dcAggrField(ag, DC_SIGCHAR_STRING, 0, 1);
 	dcAggrField(ag, DC_SIGCHAR_LONGLONG, sizeof(const char*), 1);
 	dcCloseAggr(ag);
-	aggrs.push_back(ag);
+	aggrs.emplace_back(std::unique_ptr<DCaggr>(ag));
 	return ag;
 }
 
@@ -216,7 +208,7 @@ DCaggr* CreateDcAggr<GoSlice>(AggrList& aggrs) {
 	dcAggrField(ag, DC_SIGCHAR_LONGLONG, sizeof(void*), 1);
 	dcAggrField(ag, DC_SIGCHAR_LONGLONG, sizeof(void*) * 2, 1);
 	dcCloseAggr(ag);
-	aggrs.push_back(ag);
+	aggrs.emplace_back(std::unique_ptr<DCaggr>(ag));
 	return ag;
 }
 
@@ -231,7 +223,7 @@ InitResult GoLanguageModule::Initialize(std::weak_ptr<IPlugifyProvider> provider
 
 	DCCallVM* vm = dcNewCallVM(4096);
 	dcMode(vm, DC_CALL_C_DEFAULT);
-	_callVirtMachine = std::deleted_unique_ptr<DCCallVM>(vm, dcFree);
+	_callVirtMachine = std::unique_ptr<DCCallVM>(vm);
 
 	return InitResultData{};
 }
@@ -295,13 +287,13 @@ LoadResult GoLanguageModule::OnPluginLoad(const IPlugin& plugin) {
 			if (IsMethodPrimitive(method)) {
 				funcAddr = func;
 			} else {
-				Function function(_rt);
-				funcAddr = function.GetJitFunc(method, &InternalCall, func);
+				auto function = std::make_unique<Function>(_rt);
+				funcAddr = function->GetJitFunc(method, &InternalCall, func);
 				if (!funcAddr) {
 					funcErrors.emplace_back(method.name);
 					continue;
 				}
-				_functions.emplace(funcAddr, std::move(function));
+				_functions.emplace_back(std::move(function));
 			}
 
 			methods.emplace_back(method.name, funcAddr);
@@ -357,8 +349,13 @@ void* GoLanguageModule::GetNativeMethod(const std::string& methodName) const {
 void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, const plugify::Parameters* p, uint8_t count, const plugify::ReturnValue* ret) {
 	std::scoped_lock<std::mutex> lock(g_golm._mutex);
 
+	size_t argsCount = std::count_if(method->paramTypes.begin(), method->paramTypes.end(), [](const Property& param) {
+		return param.type > ValueType::LastPrimitive && param.type < ValueType::FirstPOD;
+	});
+
 	AggrList aggrs;
 	ArgumentList args;
+	args.reserve(argsCount);
 
 	StringHolder stringHolder;
 	BoolHolder boolHolder;
@@ -369,12 +366,12 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 	bool hasRet = ValueTypeIsHiddenObjectParam(method->retType.type);
 	bool hasRefs = false;
 
-	DCaggr* ag = nullptr;
+	DCaggr* retAg = nullptr;
 
 	switch (method->retType.type) {
 		case ValueType::String:
-			ag = CreateDcAggr<GoString>(aggrs);
-			dcBeginCallAggr(vm, ag);
+			retAg = CreateDcAggr<GoString>(aggrs);
+			dcBeginCallAggr(vm, retAg);
 			break;
 		case ValueType::ArrayBool:
 		case ValueType::ArrayChar8:
@@ -391,24 +388,24 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 		case ValueType::ArrayFloat:
 		case ValueType::ArrayDouble:
 		case ValueType::ArrayString:
-			ag = CreateDcAggr<GoSlice>(aggrs);
-			dcBeginCallAggr(vm, ag);
+			retAg = CreateDcAggr<GoSlice>(aggrs);
+			dcBeginCallAggr(vm, retAg);
 			break;
 		case ValueType::Vector2:
-			ag = CreateDcAggr<Vector2>(aggrs);
-			dcBeginCallAggr(vm, ag);
+			retAg = CreateDcAggr<Vector2>(aggrs);
+			dcBeginCallAggr(vm, retAg);
 			break;
 		case ValueType::Vector3:
-			ag = CreateDcAggr<Vector3>(aggrs);
-			dcBeginCallAggr(vm, ag);
+			retAg = CreateDcAggr<Vector3>(aggrs);
+			dcBeginCallAggr(vm, retAg);
 			break;
 		case ValueType::Vector4:
-			ag = CreateDcAggr<Vector4>(aggrs);
-			dcBeginCallAggr(vm, ag);
+			retAg = CreateDcAggr<Vector4>(aggrs);
+			dcBeginCallAggr(vm, retAg);
 			break;
 		case ValueType::Matrix4x4:
-			ag = CreateDcAggr<Matrix4x4>(aggrs);
-			dcBeginCallAggr(vm, ag);
+			retAg = CreateDcAggr<Matrix4x4>(aggrs);
+			dcBeginCallAggr(vm, retAg);
 			break;
 		default:
 			// Should not require storage
@@ -719,20 +716,20 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 		}
 		case ValueType::Vector2: {
 			Vector2 source;
-			dcCallAggr(vm, addr, ag, &source);
+			dcCallAggr(vm, addr, retAg, &source);
 			ret->SetReturnPtr(source);
 			break;
 		}
 #if GOLM_PLATFORM_WINDOWS
 		case ValueType::Vector3: {
 			auto* dest = p->GetArgument<Vector3*>(0);
-			dcCallAggr(vm, addr, ag, dest);
+			dcCallAggr(vm, addr, retAg, dest);
 			ret->SetReturnPtr(dest);
 			break;
 		}
 		case ValueType::Vector4: {
 			auto* dest = p->GetArgument<Vector4*>(0);
-			dcCallAggr(vm, addr, ag, dest);
+			dcCallAggr(vm, addr, retAg, dest);
 			ret->SetReturnPtr(dest);
 			break;
 		}
@@ -752,14 +749,14 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 #endif
 		case ValueType::Matrix4x4: {
 			auto* dest = p->GetArgument<Matrix4x4*>(0);
-			dcCallAggr(vm, addr, ag, dest);
+			dcCallAggr(vm, addr, retAg, dest);
 			ret->SetReturnPtr(dest);
 			break;
 		}
 		case ValueType::String: {
 			auto* dest = p->GetArgument<std::string*>(0);
 			GoString source;
-			dcCallAggr(vm, addr, ag, &source);
+			dcCallAggr(vm, addr, retAg, &source);
 			CopyGoStringToStringReturn(source, *dest);
 			ret->SetReturnPtr(dest);
 			break;
@@ -767,7 +764,7 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 		case ValueType::ArrayBool: {
 			auto* dest = p->GetArgument<std::vector<bool>*>(0);
 			GoSlice source;
-			dcCallAggr(vm, addr, ag, &source);
+			dcCallAggr(vm, addr, retAg, &source);
 			CopyGoSliceToVectorReturn(source, *dest);
 			ret->SetReturnPtr(dest);
 			break;
@@ -775,7 +772,7 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 		case ValueType::ArrayChar8: {
 			auto* dest = p->GetArgument<std::vector<char>*>(0);
 			GoSlice source;
-			dcCallAggr(vm, addr, ag, &source);
+			dcCallAggr(vm, addr, retAg, &source);
 			CopyGoSliceToVectorReturn(source, *dest);
 			ret->SetReturnPtr(dest);
 			break;
@@ -783,7 +780,7 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 		case ValueType::ArrayChar16: {
 			auto* dest = p->GetArgument<std::vector<char16_t>*>(0);
 			GoSlice source;
-			dcCallAggr(vm, addr, ag, &source);
+			dcCallAggr(vm, addr, retAg, &source);
 			CopyGoSliceToVectorReturn(source, *dest);
 			ret->SetReturnPtr(dest);
 			break;
@@ -791,7 +788,7 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 		case ValueType::ArrayInt8: {
 			auto* dest = p->GetArgument<std::vector<int8_t>*>(0);
 			GoSlice source;
-			dcCallAggr(vm, addr, ag, &source);
+			dcCallAggr(vm, addr, retAg, &source);
 			CopyGoSliceToVectorReturn(source, *dest);
 			ret->SetReturnPtr(dest);
 			break;
@@ -799,7 +796,7 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 		case ValueType::ArrayInt16: {
 			auto* dest = p->GetArgument<std::vector<int16_t>*>(0);
 			GoSlice source;
-			dcCallAggr(vm, addr, ag, &source);
+			dcCallAggr(vm, addr, retAg, &source);
 			CopyGoSliceToVectorReturn(source, *dest);
 			ret->SetReturnPtr(dest);
 			break;
@@ -807,7 +804,7 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 		case ValueType::ArrayInt32: {
 			auto* dest = p->GetArgument<std::vector<int32_t>*>(0);
 			GoSlice source;
-			dcCallAggr(vm, addr, ag, &source);
+			dcCallAggr(vm, addr, retAg, &source);
 			CopyGoSliceToVectorReturn(source, *dest);
 			ret->SetReturnPtr(dest);
 			break;
@@ -815,7 +812,7 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 		case ValueType::ArrayInt64: {
 			auto* dest = p->GetArgument<std::vector<int64_t>*>(0);
 			GoSlice source;
-			dcCallAggr(vm, addr, ag, &source);
+			dcCallAggr(vm, addr, retAg, &source);
 			CopyGoSliceToVectorReturn(source, *dest);
 			ret->SetReturnPtr(dest);
 			break;
@@ -823,7 +820,7 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 		case ValueType::ArrayUInt8: {
 			auto* dest = p->GetArgument<std::vector<uint8_t>*>(0);
 			GoSlice source;
-			dcCallAggr(vm, addr, ag, &source);
+			dcCallAggr(vm, addr, retAg, &source);
 			CopyGoSliceToVectorReturn(source, *dest);
 			ret->SetReturnPtr(dest);
 			break;
@@ -831,7 +828,7 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 		case ValueType::ArrayUInt16: {
 			auto* dest = p->GetArgument<std::vector<uint16_t>*>(0);
 			GoSlice source;
-			dcCallAggr(vm, addr, ag, &source);
+			dcCallAggr(vm, addr, retAg, &source);
 			CopyGoSliceToVectorReturn(source, *dest);
 			ret->SetReturnPtr(dest);
 			break;
@@ -839,7 +836,7 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 		case ValueType::ArrayUInt32: {
 			auto* dest = p->GetArgument<std::vector<uint32_t>*>(0);
 			GoSlice source;
-			dcCallAggr(vm, addr, ag, &source);
+			dcCallAggr(vm, addr, retAg, &source);
 			CopyGoSliceToVectorReturn(source, *dest);
 			ret->SetReturnPtr(dest);
 			break;
@@ -847,7 +844,7 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 		case ValueType::ArrayUInt64: {
 			auto* dest = p->GetArgument<std::vector<uint64_t>*>(0);
 			GoSlice source;
-			dcCallAggr(vm, addr, ag, &source);
+			dcCallAggr(vm, addr, retAg, &source);
 			CopyGoSliceToVectorReturn(source, *dest);
 			ret->SetReturnPtr(dest);
 			break;
@@ -855,7 +852,7 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 		case ValueType::ArrayPointer: {
 			auto* dest = p->GetArgument<std::vector<uintptr_t>*>(0);
 			GoSlice source;
-			dcCallAggr(vm, addr, ag, &source);
+			dcCallAggr(vm, addr, retAg, &source);
 			CopyGoSliceToVectorReturn(source, *dest);
 			ret->SetReturnPtr(dest);
 			break;
@@ -863,7 +860,7 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 		case ValueType::ArrayFloat: {
 			auto* dest = p->GetArgument<std::vector<float>*>(0);
 			GoSlice source;
-			dcCallAggr(vm, addr, ag, &source);
+			dcCallAggr(vm, addr, retAg, &source);
 			CopyGoSliceToVectorReturn(source, *dest);
 			ret->SetReturnPtr(dest);
 			break;
@@ -871,7 +868,7 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 		case ValueType::ArrayDouble: {
 			auto* dest = p->GetArgument<std::vector<double>*>(0);
 			GoSlice source;
-			dcCallAggr(vm, addr, ag, &source);
+			dcCallAggr(vm, addr, retAg, &source);
 			CopyGoSliceToVectorReturn(source, *dest);
 			ret->SetReturnPtr(dest);
 			break;
@@ -879,7 +876,7 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 		case ValueType::ArrayString: {
 			auto* dest = p->GetArgument<std::vector<std::string>*>(0);
 			GoSlice source;
-			dcCallAggr(vm, addr, ag, &source);
+			dcCallAggr(vm, addr, retAg, &source);
 			CopyGoSliceToVectorReturn(source, *dest);
 			ret->SetReturnPtr(dest);
 			break;
@@ -890,104 +887,70 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 			break;
 	}
 
-	if (!args.empty()) {
+	if (argsCount != 0) {
 		if (hasRefs) {
-			uint8_t k = 0;
+			size_t k = 0;
 			for (uint8_t i = hasRet, j = 0; i < count; ++i, ++j) {
 				const auto& param = method->paramTypes[j];
 				if (param.ref) {
 					switch (param.type) {
 						case ValueType::String:
-							CopyGoStringToString(*reinterpret_cast<GoString*>(args[k++]), *p->GetArgument<std::string*>(i));
+							CopyGoStringToString(*reinterpret_cast<GoString*>(&args[k++]), *p->GetArgument<std::string*>(i));
 							break;
 						case ValueType::ArrayBool:
-							CopyGoSliceToVector(*reinterpret_cast<GoSlice*>(args[k++]), *p->GetArgument<std::vector<bool>*>(i));
+							CopyGoSliceToVector(args[k++], *p->GetArgument<std::vector<bool>*>(i));
 							break;
 						case ValueType::ArrayChar8:
-							CopyGoSliceToVector(*reinterpret_cast<GoSlice*>(args[k++]), *p->GetArgument<std::vector<char>*>(i));
+							CopyGoSliceToVector(args[k++], *p->GetArgument<std::vector<char>*>(i));
 							break;
 						case ValueType::ArrayChar16:
-							CopyGoSliceToVector(*reinterpret_cast<GoSlice*>(args[k++]), *p->GetArgument<std::vector<char16_t>*>(i));
+							CopyGoSliceToVector(args[k++], *p->GetArgument<std::vector<char16_t>*>(i));
 							break;
 						case ValueType::ArrayInt8:
-							CopyGoSliceToVector(*reinterpret_cast<GoSlice*>(args[k++]), *p->GetArgument<std::vector<int8_t>*>(i));
+							CopyGoSliceToVector(args[k++], *p->GetArgument<std::vector<int8_t>*>(i));
 							break;
 						case ValueType::ArrayInt16:
-							CopyGoSliceToVector(*reinterpret_cast<GoSlice*>(args[k++]), *p->GetArgument<std::vector<int16_t>*>(i));
+							CopyGoSliceToVector(args[k++], *p->GetArgument<std::vector<int16_t>*>(i));
 							break;
 						case ValueType::ArrayInt32:
-							CopyGoSliceToVector(*reinterpret_cast<GoSlice*>(args[k++]), *p->GetArgument<std::vector<int32_t>*>(i));
+							CopyGoSliceToVector(args[k++], *p->GetArgument<std::vector<int32_t>*>(i));
 							break;
 						case ValueType::ArrayInt64:
-							CopyGoSliceToVector(*reinterpret_cast<GoSlice*>(args[k++]), *p->GetArgument<std::vector<int64_t>*>(i));
+							CopyGoSliceToVector(args[k++], *p->GetArgument<std::vector<int64_t>*>(i));
 							break;
 						case ValueType::ArrayUInt8:
-							CopyGoSliceToVector(*reinterpret_cast<GoSlice*>(args[k++]), *p->GetArgument<std::vector<uint8_t>*>(i));
+							CopyGoSliceToVector(args[k++], *p->GetArgument<std::vector<uint8_t>*>(i));
 							break;
 						case ValueType::ArrayUInt16:
-							CopyGoSliceToVector(*reinterpret_cast<GoSlice*>(args[k++]), *p->GetArgument<std::vector<uint16_t>*>(i));
+							CopyGoSliceToVector(args[k++], *p->GetArgument<std::vector<uint16_t>*>(i));
 							break;
 						case ValueType::ArrayUInt32:
-							CopyGoSliceToVector(*reinterpret_cast<GoSlice*>(args[k++]), *p->GetArgument<std::vector<uint32_t>*>(i));
+							CopyGoSliceToVector(args[k++], *p->GetArgument<std::vector<uint32_t>*>(i));
 							break;
 						case ValueType::ArrayUInt64:
-							CopyGoSliceToVector(*reinterpret_cast<GoSlice*>(args[k++]), *p->GetArgument<std::vector<uint64_t>*>(i));
+							CopyGoSliceToVector(args[k++], *p->GetArgument<std::vector<uint64_t>*>(i));
 							break;
 						case ValueType::ArrayPointer:
-							CopyGoSliceToVector(*reinterpret_cast<GoSlice*>(args[k++]), *p->GetArgument<std::vector<uintptr_t>*>(i));
+							CopyGoSliceToVector(args[k++], *p->GetArgument<std::vector<uintptr_t>*>(i));
 							break;
 						case ValueType::ArrayFloat:
-							CopyGoSliceToVector(*reinterpret_cast<GoSlice*>(args[k++]), *p->GetArgument<std::vector<float>*>(i));
+							CopyGoSliceToVector(args[k++], *p->GetArgument<std::vector<float>*>(i));
 							break;
 						case ValueType::ArrayDouble:
-							CopyGoSliceToVector(*reinterpret_cast<GoSlice*>(args[k++]), *p->GetArgument<std::vector<double>*>(i));
+							CopyGoSliceToVector(args[k++], *p->GetArgument<std::vector<double>*>(i));
 							break;
 						case ValueType::ArrayString: {
-							CopyGoSliceToVector(*reinterpret_cast<GoSlice*>(args[k++]), *p->GetArgument<std::vector<std::string>*>(i));
+							CopyGoSliceToVector(args[k++], *p->GetArgument<std::vector<std::string>*>(i));
 							break;
 						}
 						default:
 							break;
 					}
 				}
-				if (k == args.size())
+				if (k == argsCount)
 					break;
 			}
 		}
-
-		uint8_t k = 0;
-		for (const auto& param: method->paramTypes) {
-			switch (param.type) {
-				case ValueType::String:
-					DeleteGoString(args[k++]);
-					break;
-				case ValueType::ArrayBool:
-				case ValueType::ArrayChar8:
-				case ValueType::ArrayChar16:
-				case ValueType::ArrayInt8:
-				case ValueType::ArrayInt16:
-				case ValueType::ArrayInt32:
-				case ValueType::ArrayInt64:
-				case ValueType::ArrayUInt8:
-				case ValueType::ArrayUInt16:
-				case ValueType::ArrayUInt32:
-				case ValueType::ArrayUInt64:
-				case ValueType::ArrayPointer:
-				case ValueType::ArrayFloat:
-				case ValueType::ArrayDouble:
-				case ValueType::ArrayString:
-					DeleteGoSlice(args[k++]);
-					break;
-				default:
-					break;
-			}
-			if (k == args.size())
-				break;
-		}
-	}
-
-	for (DCaggr* s : aggrs) {
-		dcFreeAggr(s);
 	}
 }
 
@@ -1386,7 +1349,7 @@ void ConstructVector(void* ptr, void* arr, ptrdiff_t len, DataType type) {
 			vector->reserve(N);
 			for (size_t i = 0; i < N; ++i) {
 				const auto& str = static_cast<GoString*>(arr)[i];
-				vector->emplace_back(std::string(str.p, static_cast<size_t>(str.n)));
+				vector->emplace_back(str.p, static_cast<size_t>(str.n));
 			}
 			break;
 		}
