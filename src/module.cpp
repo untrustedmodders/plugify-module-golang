@@ -371,55 +371,52 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 
 	DCaggr* ag = nullptr;
 
-	if (hasRet) {
-		switch (method->retType.type) {
-			case ValueType::String:
-				ag = CreateDcAggr<GoString>(aggrs);
-				dcBeginCallAggr(vm, ag);
-				break;
-			// GoSlice*
-			case ValueType::ArrayBool:
-			case ValueType::ArrayChar8:
-			case ValueType::ArrayChar16:
-			case ValueType::ArrayInt8:
-			case ValueType::ArrayInt16:
-			case ValueType::ArrayInt32:
-			case ValueType::ArrayInt64:
-			case ValueType::ArrayUInt8:
-			case ValueType::ArrayUInt16:
-			case ValueType::ArrayUInt32:
-			case ValueType::ArrayUInt64:
-			case ValueType::ArrayPointer:
-			case ValueType::ArrayFloat:
-			case ValueType::ArrayDouble:
-			case ValueType::ArrayString:
-				ag = CreateDcAggr<GoSlice>(aggrs);
-				dcBeginCallAggr(vm, ag);
-				break;
-			case ValueType::Vector2:
-				ag = CreateDcAggr<Vector2>(aggrs);
-				dcBeginCallAggr(vm, ag);
-				break;
-			case ValueType::Vector3:
-				ag = CreateDcAggr<Vector3>(aggrs);
-				dcBeginCallAggr(vm, ag);
-				break;
-			case ValueType::Vector4:
-				ag = CreateDcAggr<Vector4>(aggrs);
-				dcBeginCallAggr(vm, ag);
-				break;
-			case ValueType::Matrix4x4:
-				ag = CreateDcAggr<Matrix4x4>(aggrs);
-				dcBeginCallAggr(vm, ag);
-				break;
-			default:
-				// Should not require storage
-				break;
-		}
+	switch (method->retType.type) {
+		case ValueType::String:
+			ag = CreateDcAggr<GoString>(aggrs);
+			dcBeginCallAggr(vm, ag);
+			break;
+		case ValueType::ArrayBool:
+		case ValueType::ArrayChar8:
+		case ValueType::ArrayChar16:
+		case ValueType::ArrayInt8:
+		case ValueType::ArrayInt16:
+		case ValueType::ArrayInt32:
+		case ValueType::ArrayInt64:
+		case ValueType::ArrayUInt8:
+		case ValueType::ArrayUInt16:
+		case ValueType::ArrayUInt32:
+		case ValueType::ArrayUInt64:
+		case ValueType::ArrayPointer:
+		case ValueType::ArrayFloat:
+		case ValueType::ArrayDouble:
+		case ValueType::ArrayString:
+			ag = CreateDcAggr<GoSlice>(aggrs);
+			dcBeginCallAggr(vm, ag);
+			break;
+		case ValueType::Vector2:
+			ag = CreateDcAggr<Vector2>(aggrs);
+			dcBeginCallAggr(vm, ag);
+			break;
+		case ValueType::Vector3:
+			ag = CreateDcAggr<Vector3>(aggrs);
+			dcBeginCallAggr(vm, ag);
+			break;
+		case ValueType::Vector4:
+			ag = CreateDcAggr<Vector4>(aggrs);
+			dcBeginCallAggr(vm, ag);
+			break;
+		case ValueType::Matrix4x4:
+			ag = CreateDcAggr<Matrix4x4>(aggrs);
+			dcBeginCallAggr(vm, ag);
+			break;
+		default:
+			// Should not require storage
+			break;
 	}
 
-	for (uint8_t i = hasRet, j = 0; i < count; ++i) {
-		const auto& param = method->paramTypes[j++];
+	for (uint8_t i = hasRet, j = 0; i < count; ++i, ++j) {
+		const auto& param = method->paramTypes[j];
 		if (param.ref) {
 			switch (param.type) {
 				case ValueType::Bool:
@@ -893,12 +890,11 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 			break;
 	}
 
-	if (hasRefs) {
-		uint8_t k = hasRet; // skip first param if has return
-
-		if (k < args.size()) {
-			for (uint8_t i = hasRet, j = 0; i < count; ++i) {
-				const auto& param = method->paramTypes[j++];
+	if (!args.empty()) {
+		if (hasRefs) {
+			uint8_t k = 0;
+			for (uint8_t i = hasRet, j = 0; i < count; ++i, ++j) {
+				const auto& param = method->paramTypes[j];
 				if (param.ref) {
 					switch (param.type) {
 						case ValueType::String:
@@ -958,13 +954,10 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 					break;
 			}
 		}
-	}
 
-	if (!args.empty()) {
 		uint8_t k = 0;
-
-		if (hasRet) {
-			switch (method->retType.type) {
+		for (const auto& param: method->paramTypes) {
+			switch (param.type) {
 				case ValueType::String:
 					DeleteGoString(args[k++]);
 					break;
@@ -988,37 +981,8 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 				default:
 					break;
 			}
-		}
-
-		if (k < args.size()) {
-			for (const auto& param: method->paramTypes) {
-				switch (param.type) {
-					case ValueType::String:
-						DeleteGoString(args[k++]);
-						break;
-					case ValueType::ArrayBool:
-					case ValueType::ArrayChar8:
-					case ValueType::ArrayChar16:
-					case ValueType::ArrayInt8:
-					case ValueType::ArrayInt16:
-					case ValueType::ArrayInt32:
-					case ValueType::ArrayInt64:
-					case ValueType::ArrayUInt8:
-					case ValueType::ArrayUInt16:
-					case ValueType::ArrayUInt32:
-					case ValueType::ArrayUInt64:
-					case ValueType::ArrayPointer:
-					case ValueType::ArrayFloat:
-					case ValueType::ArrayDouble:
-					case ValueType::ArrayString:
-						DeleteGoSlice(args[k++]);
-						break;
-					default:
-						break;
-				}
-				if (k == args.size())
-					break;
-			}
+			if (k == args.size())
+				break;
 		}
 	}
 
