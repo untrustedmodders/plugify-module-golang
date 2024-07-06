@@ -5,6 +5,7 @@
 #include <dyncall/dyncall.h>
 #include <module_export.h>
 #include <plugify/function.h>
+#include <plugify/module.h>
 #include <plugify/language_module.h>
 
 typedef signed char GoInt8;
@@ -86,7 +87,7 @@ namespace golm {
 		std::shared_ptr<asmjit::JitRuntime> _rt;
 		std::shared_ptr<plugify::IPlugifyProvider> _provider;
 
-		std::unordered_map<std::string, AssemblyHolder> _assemblyMap;
+		std::map<plugify::UniqueId, AssemblyHolder> _assemblyMap;
 		std::unordered_map<std::string, void*> _nativesMap;
 		std::vector<std::unique_ptr<plugify::Function>> _functions;
 

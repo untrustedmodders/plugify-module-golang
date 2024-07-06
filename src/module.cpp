@@ -315,23 +315,23 @@ LoadResult GoLanguageModule::OnPluginLoad(const IPlugin& plugin) {
 		return ErrorData{ std::format("Not supported plugin api {}, max supported {}", resultVersion, kApiVersion) };
 	}
 
-	const auto [_, result] = _assemblyMap.try_emplace(plugin.GetName(), std::move(assembly), startFunc, endFunc);
+	const auto [_, result] = _assemblyMap.try_emplace(plugin.GetId(), std::move(assembly), startFunc, endFunc);
 	if (!result) {
-		return ErrorData{ std::format("Plugin name duplicate") };
+		return ErrorData{ std::format("Plugin id duplicate") };
 	}
 
 	return LoadResultData{ std::move(methods) };
 }
 
 void GoLanguageModule::OnPluginStart(const IPlugin& plugin) {
-	if (const auto it = _assemblyMap.find(plugin.GetName()); it != _assemblyMap.end()) {
+	if (const auto it = _assemblyMap.find(plugin.GetId()); it != _assemblyMap.end()) {
 		const auto& assemblyHolder = std::get<AssemblyHolder>(*it);
 		assemblyHolder.GetStartFunc()();
 	}
 }
 
 void GoLanguageModule::OnPluginEnd(const IPlugin& plugin) {
-	if (const auto it = _assemblyMap.find(plugin.GetName()); it != _assemblyMap.end()) {
+	if (const auto it = _assemblyMap.find(plugin.GetId()); it != _assemblyMap.end()) {
 		const auto& assemblyHolder = std::get<AssemblyHolder>(*it);
 		assemblyHolder.GetEndFunc()();
 	}
@@ -363,7 +363,7 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 	DCCallVM* vm = g_golm._callVirtMachine.get();
 	dcReset(vm);
 
-	bool hasRet = ValueTypeIsHiddenObjectParam(method->retType.type);
+	bool hasRet = ValueUtils::IsHiddenParam(method->retType.type);
 	bool hasRefs = false;
 
 	DCaggr* ag = nullptr;
