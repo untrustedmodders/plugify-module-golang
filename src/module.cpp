@@ -16,11 +16,11 @@ template<class T>
 inline constexpr bool always_false_v = std::is_same_v<std::decay_t<T>, std::add_cv_t<std::decay_t<T>>>;
 
 bool IsMethodPrimitive(const plugify::Method& method) {
-	if (method.retType.type > ValueType::LastPrimitive && method.retType.type < ValueType::FirstPOD)
+	if (ValueUtils::IsObject(method.retType.type))
 		return false;
 
 	for (const auto& param : method.paramTypes) {
-		if (param.type > ValueType::LastPrimitive && param.type < ValueType::FirstPOD)
+		if (ValueUtils::IsObject(param.type))
 			return false;
 	}
 
@@ -350,7 +350,7 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, void* addr, c
 	std::scoped_lock<std::mutex> lock(g_golm._mutex);
 
 	size_t argsCount = std::count_if(method->paramTypes.begin(), method->paramTypes.end(), [](const Property& param) {
-		return param.type > ValueType::LastPrimitive && param.type < ValueType::FirstPOD;
+		return ValueUtils::IsObject(param.type);
 	});
 
 	AggrList aggrs;
