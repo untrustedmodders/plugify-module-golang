@@ -11,6 +11,10 @@ namespace golm {
         static std::unique_ptr<Assembly> LoadFromPath(const std::filesystem::path& assemblyPath);
         static std::string GetError();
 
+		Assembly(const Assembly&) = delete;
+		Assembly& operator=(const Assembly&) = delete;
+		Assembly(Assembly&&) noexcept = delete;
+		Assembly& operator=(Assembly&&) noexcept = delete;
         ~Assembly();
 
         void* GetFunction(const char* functionName) const;
