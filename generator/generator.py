@@ -269,7 +269,7 @@ VAL_GOTYPESCAST_MAP = {
     'uint16*': 'C.Plugify_CreateVectorC.UINT16',
     'uint32*': 'C.Plugify_CreateVectorC.UINT32',
     'uint64*': 'C.Plugify_CreateVectorC.UINT64',
-    'ptr64*': 'C.Plugify_CreateVectorC.UINTPTR',
+    'ptr64*': 'C.Plugify_CreateVectorC.POINTER',
     'float*': 'C.Plugify_CreateVectorC.FLOAT',
     'double*': 'C.Plugify_CreateVectorC.DOUBLE',
     'string*': 'C.Plugify_CreateVectorC.STRING',
@@ -308,7 +308,7 @@ RET_GOTYPESCAST_MAP = {
     'uint16*': 'C.Plugify_AllocateVectorC.UINT16',
     'uint32*': 'C.Plugify_AllocateVectorC.UINT32',
     'uint64*': 'C.Plugify_AllocateVectorC.UINT64',
-    'ptr64*': 'C.Plugify_AllocateVectorC.UINTPTR',
+    'ptr64*': 'C.Plugify_AllocateVectorC.POINTER',
     'float*': 'C.Plugify_AllocateVectorC.FLOAT',
     'double*': 'C.Plugify_AllocateVectorC.DOUBLE',
     'string*': 'C.Plugify_AllocateVectorC.STRING',
@@ -347,7 +347,7 @@ DEL_GOTYPESCAST_MAP = {
     'uint16*': 'C.Plugify_DeleteVectorC.UINT16',
     'uint32*': 'C.Plugify_DeleteVectorC.UINT32',
     'uint64*': 'C.Plugify_DeleteVectorC.UINT64',
-    'ptr64*': 'C.Plugify_DeleteVectorC.UINTPTR',
+    'ptr64*': 'C.Plugify_DeleteVectorC.POINTER',
     'float*': 'C.Plugify_DeleteVectorC.FLOAT',
     'double*': 'C.Plugify_DeleteVectorC.DOUBLE',
     'string*': 'C.Plugify_DeleteVectorC.STRING',
@@ -386,7 +386,7 @@ FRE_GOTYPESCAST_MAP = {
     'uint16*': 'C.Plugify_FreeVectorC.UINT16',
     'uint32*': 'C.Plugify_FreeVectorC.UINT32',
     'uint64*': 'C.Plugify_FreeVectorC.UINT64',
-    'ptr64*': 'C.Plugify_FreeVectorC.UINTPTR',
+    'ptr64*': 'C.Plugify_FreeVectorC.POINTER',
     'float*': 'C.Plugify_FreeVectorC.FLOAT',
     'double*': 'C.Plugify_FreeVectorC.DOUBLE',
     'string*': 'C.Plugify_FreeVectorC.STRING',
@@ -814,7 +814,7 @@ def main(manifest_path, output_dir, override):
     content += '\tUINT16,\n'
     content += '\tUINT32,\n'
     content += '\tUINT64,\n'
-    content += '\tUINTPTR,\n'
+    content += '\tPOINTER,\n'
     content += '\tFLOAT,\n'
     content += '\tDOUBLE,\n'
     content += '\tSTRING\n'

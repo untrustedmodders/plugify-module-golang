@@ -25,6 +25,7 @@ endif()
 #
 set(PLUGIFY_BUILD_SHARED_LIB ON CACHE INTERNAL "")
 set(PLUGIFY_BUILD_FUNCTION ON CACHE INTERNAL "")
+set(PLUGIFY_BUILD_ASSEMBLY ON CACHE INTERNAL "")
 if(LINUX)
     set(PLUGIFY_USE_STATIC_STDLIB ON CACHE INTERNAL "")
 endif()
@@ -44,7 +45,7 @@ set(GOLM_PCH_FILE "src/pch.h")
 add_library(${PROJECT_NAME} SHARED ${GOLM_SOURCES})
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-set(GOLM_LINK_LIBRARIES plugify::plugify plugify::plugify-function asmjit::asmjit dyncall_s)
+set(GOLM_LINK_LIBRARIES plugify::plugify plugify::plugify-function plugify::plugify-assembly plugify::plugify-assembly asmjit::asmjit dyncall_s)
 
 if(NOT COMPILER_SUPPORTS_FORMAT)
     set(GOLM_LINK_LIBRARIES ${GOLM_LINK_LIBRARIES} fmt::fmt-header-only)

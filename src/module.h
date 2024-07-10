@@ -1,12 +1,12 @@
 #pragma once
 
-#include "assembly.h"
 #include <asmjit/asmjit.h>
 #include <dyncall/dyncall.h>
 #include <module_export.h>
+#include <plugify/assembly.h>
 #include <plugify/function.h>
-#include <plugify/module.h>
 #include <plugify/language_module.h>
+#include <plugify/module.h>
 
 typedef signed char GoInt8;
 typedef unsigned char GoUint8;
@@ -22,11 +22,11 @@ typedef void* GoUintptr;
 typedef float GoFloat32;
 typedef double GoFloat64;
 
-typedef struct { const char *p; GoInt n; } GoString;
-typedef void *GoMap;
-typedef void *GoChan;
-typedef struct { void *t; void *v; } GoInterface;
-typedef struct { void *data; GoInt len; GoInt cap; } GoSlice;
+typedef struct { const char* p; GoInt n; } GoString;
+typedef void* GoMap;
+typedef void* GoChan;
+typedef struct { void* t; void* v; } GoInterface;
+typedef struct { void* data; GoInt len; GoInt cap; } GoSlice;
 
 template <>
 struct std::default_delete<DCaggr> {
@@ -47,13 +47,13 @@ namespace golm {
 
 	class AssemblyHolder {
 	public:
-		AssemblyHolder(std::unique_ptr<Assembly> assembly, StartFunc startFunc, EndFunc endFunc) : _assembly{std::move(assembly)}, _startFunc{startFunc}, _endFunc{endFunc} {}
+		AssemblyHolder(std::unique_ptr<plugify::Assembly> assembly, StartFunc startFunc, EndFunc endFunc) : _assembly{std::move(assembly)}, _startFunc{startFunc}, _endFunc{endFunc} {}
 
 		StartFunc GetStartFunc() const { return _startFunc; }
 		EndFunc GetEndFunc() const { return _endFunc; }
 
 	private:
-		std::unique_ptr<Assembly> _assembly;
+		std::unique_ptr<plugify::Assembly> _assembly;
 		StartFunc _startFunc{ nullptr };
 		EndFunc _endFunc{ nullptr };
 	};
@@ -78,17 +78,17 @@ namespace golm {
 		void OnMethodExport(const plugify::IPlugin& plugin) override;
 
 		const std::shared_ptr<plugify::IPlugifyProvider>& GetProvider() { return _provider; }
-		void* GetNativeMethod(const std::string& methodName) const;
+		plugify::MemAddr GetNativeMethod(const std::string& methodName) const;
 		
 	private:
-		static void InternalCall(const plugify::Method* method, void* data, const plugify::Parameters* params, uint8_t count, const plugify::ReturnValue* ret);
+		static void InternalCall(const plugify::Method* method, plugify::MemAddr data, const plugify::Parameters* params, uint8_t count, const plugify::ReturnValue* ret);
 
 	private:
 		std::shared_ptr<asmjit::JitRuntime> _rt;
 		std::shared_ptr<plugify::IPlugifyProvider> _provider;
 
 		std::map<plugify::UniqueId, AssemblyHolder> _assemblyMap;
-		std::unordered_map<std::string, void*> _nativesMap;
+		std::unordered_map<std::string, plugify::MemAddr> _nativesMap;
 		std::vector<std::unique_ptr<plugify::Function>> _functions;
 
 		std::unique_ptr<DCCallVM> _callVirtMachine;
