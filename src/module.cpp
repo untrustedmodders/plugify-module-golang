@@ -127,24 +127,24 @@ void CopyGoSliceToVectorReturn(const GoSlice& source, std::vector<T>& dest) {
 		std::construct_at(&dest, std::vector<T>(reinterpret_cast<T*>(source.data), reinterpret_cast<T*>(source.data) + static_cast<size_t>(source.len)));
 }
 
-template<typename T>
+template<>
 void CopyGoSliceToVectorReturn(const GoSlice& source, std::vector<bool>& dest) {
 	if (source.data == nullptr || source.len == 0)
-		std::construct_at(&dest, std::vector<T>());
+		std::construct_at(&dest, std::vector<bool>());
 	else {
-		std::construct_at(&dest, std::vector<T>(static_cast<size_t>(source.len)));
+		std::construct_at(&dest, std::vector<bool>(static_cast<size_t>(source.len)));
 		for (size_t i = 0; i < dest.size(); ++i) {
 			dest[i] = reinterpret_cast<bool*>(source.data)[i];
 		}
 	}
 }
 
-template<typename T>
+template<>
 void CopyGoSliceToVectorReturn(const GoSlice& source, std::vector<std::string>& dest) {
 	if (source.data == nullptr || source.len == 0)
-		std::construct_at(&dest, std::vector<T>());
+		std::construct_at(&dest, std::vector<std::string>());
 	else {
-		std::construct_at(&dest, std::vector<T>(static_cast<size_t>(source.len)));
+		std::construct_at(&dest, std::vector<std::string>(static_cast<size_t>(source.len)));
 		for (size_t i = 0; i < dest.size(); ++i) {
 			const auto& str = reinterpret_cast<GoString*>(source.data)[i];
 			dest[i].assign(str.p, static_cast<size_t>(str.n));
@@ -243,8 +243,12 @@ InitResult GoLanguageModule::Initialize(std::weak_ptr<IPlugifyProvider> provider
 }
 
 void GoLanguageModule::Shutdown() {
+	for (MemAddr* addr : _addresses) {
+		*addr = nullptr;
+	}
 	_nativesMap.clear();
 	_functions.clear();
+	_addresses.clear();
 	_assemblyMap.clear();
 	_callVirtMachine.reset();
 	_rt.reset();
@@ -361,6 +365,15 @@ MemAddr GoLanguageModule::GetNativeMethod(std::string_view methodName) const {
 	}
 	_provider->Log(std::format(LOG_PREFIX "GetNativeMethod failed to find: '{}'", methodName), Severity::Fatal);
 	return nullptr;
+}
+
+void GoLanguageModule::GetNativeMethod(std::string_view methodName, plugify::MemAddr* addressDest) {
+	if (const auto it = _nativesMap.find(methodName); it != _nativesMap.end()) {
+		*addressDest = std::get<MemAddr>(*it);
+		_addresses.emplace_back(addressDest);
+		return;
+	}
+	_provider->Log(std::format(LOG_PREFIX "GetNativeMethod failed to find: '{}'", methodName), Severity::Fatal);
 }
 
 // C++ to Go
@@ -982,8 +995,12 @@ namespace golm {
 
 // TODO: Detect leaks
 
-void* GetMethodPtr(const char* methodName) {
+MemAddr GetMethodPtr(const char* methodName) {
 	return g_golm.GetNativeMethod(methodName);
+}
+
+void GetMethodPtr2(const char* methodName, MemAddr* addressDest) {
+	g_golm.GetNativeMethod(methodName, addressDest);
 }
 
 const char* GetBaseDir() {
@@ -1630,8 +1647,9 @@ void DeleteVectorDataCStr(void* ptr) {
 	delete[] reinterpret_cast<char**>(ptr);
 }
 
-const std::array<void*, 34> GoLanguageModule::_pluginApi = {
+const std::array<void*, 35> GoLanguageModule::_pluginApi = {
 		reinterpret_cast<void*>(&::GetMethodPtr),
+		reinterpret_cast<void*>(&::GetMethodPtr2),
 		reinterpret_cast<void*>(&::GetBaseDir),
 		reinterpret_cast<void*>(&::IsModuleLoaded),
 		reinterpret_cast<void*>(&::IsPluginLoaded),

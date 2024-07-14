@@ -820,6 +820,7 @@ def main(manifest_path, output_dir, override):
     content += '\tSTRING\n'
     content += '};\n\n'
     content += 'extern void* Plugify_GetMethodPtr(const char* methodName);\n'
+    content += 'extern void Plugify_GetMethodPtr2(const char* methodName, void** addressDest);\n'
     content += '\n'
     content += 'extern void* Plugify_AllocateString();\n'
     content += 'extern void* Plugify_CreateString(_GoString_ source);\n'
@@ -877,10 +878,10 @@ def main(manifest_path, output_dir, override):
                     f'(*{method['name']}Fn)({gen_params_string(method, ParamGen.Types)});\n')
         content += (f'static {return_type} '
                     f'{method['name']}({gen_params_string(method, ParamGen.TypesNames)}) {{\n')
-        content += f'\tstatic {method['name']}Fn func = NULL;\n'
-        content += f'\tif (func == NULL) func = ({method['name']}Fn)Plugify_GetMethodPtr("{plugin_name}.{method['name']}");\n'
+        content += f'\tstatic {method['name']}Fn __func = NULL;\n'
+        content += f'\tif (__func == NULL) Plugify_GetMethodPtr2("{plugin_name}.{method['name']}", (void**)&__func);\n'
         content += (f'\t{"return " if ret_type['type'] != 'void' else ""}'
-                    f'func({gen_params_string(method, ParamGen.Names)});\n')
+                    f'__func({gen_params_string(method, ParamGen.Names)});\n')
         content += '}\n'
 
     header_cfile = os.path.join(header_dir, f'{plugin_name}.h')
@@ -954,7 +955,7 @@ def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('manifest')
     parser.add_argument('output')
-    parser.add_argument('--override')
+    parser.add_argument('--override', action='store_true')
     return parser.parse_args()
 
 

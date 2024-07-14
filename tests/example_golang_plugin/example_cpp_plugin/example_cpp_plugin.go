@@ -299,17 +299,17 @@ func NoParamReturnArrayUInt64() []uint64 {
 }
 
 func NoParamReturnArrayPtr64() []uintptr {
-	C_output := C.Plugify_AllocateVector(C.UINTPTR)
+	C_output := C.Plugify_AllocateVector(C.POINTER)
 	C.NoParamReturnArrayPtr64(C_output)
 
-	L_output := C.Plugify_GetVectorSize(C_output, C.UINTPTR)
-	P_output := C.Plugify_GetVectorData(C_output, C.UINTPTR)
+	L_output := C.Plugify_GetVectorSize(C_output, C.POINTER)
+	P_output := C.Plugify_GetVectorData(C_output, C.POINTER)
 	output := make([]uintptr, L_output)
 	for i := range output {
 		output[i] = *(*uintptr)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_uintptr_t)))
 	}
 
-	C.Plugify_FreeVector(C_output, C.UINTPTR)
+	C.Plugify_FreeVector(C_output, C.POINTER)
 	return output
 }
 
@@ -703,7 +703,7 @@ func ParamRefVectors(p1 *[]bool, p2 *[]int8, p3 *[]uint16, p4 *[]int8, p5 *[]int
 	C_p9 := C.Plugify_CreateVector(unsafe.Pointer(&(*p9)[0]), C.ptrdiff_t(len(*p9)), C.UINT16)
 	C_p10 := C.Plugify_CreateVector(unsafe.Pointer(&(*p10)[0]), C.ptrdiff_t(len(*p10)), C.UINT32)
 	C_p11 := C.Plugify_CreateVector(unsafe.Pointer(&(*p11)[0]), C.ptrdiff_t(len(*p11)), C.UINT64)
-	C_p12 := C.Plugify_CreateVector(unsafe.Pointer(&(*p12)[0]), C.ptrdiff_t(len(*p12)), C.UINTPTR)
+	C_p12 := C.Plugify_CreateVector(unsafe.Pointer(&(*p12)[0]), C.ptrdiff_t(len(*p12)), C.POINTER)
 	C_p13 := C.Plugify_CreateVector(unsafe.Pointer(&(*p13)[0]), C.ptrdiff_t(len(*p13)), C.FLOAT)
 	C_p14 := C.Plugify_CreateVector(unsafe.Pointer(&(*p14)[0]), C.ptrdiff_t(len(*p14)), C.DOUBLE)
 	C_p15 := C.Plugify_CreateVector(unsafe.Pointer(&(*p15)[0]), C.ptrdiff_t(len(*p15)), C.STRING)
@@ -777,8 +777,8 @@ func ParamRefVectors(p1 *[]bool, p2 *[]int8, p3 *[]uint16, p4 *[]int8, p5 *[]int
 	for i := range (*p11) {
 		(*p11)[i] = *(*uint64)(unsafe.Pointer(uintptr(P_p11) + uintptr(i * C.sizeof_uint64_t)))
 	}
-	L_p12 := C.Plugify_GetVectorSize(C_p12, C.UINTPTR)
-	P_p12 := C.Plugify_GetVectorData(C_p12, C.UINTPTR)
+	L_p12 := C.Plugify_GetVectorSize(C_p12, C.POINTER)
+	P_p12 := C.Plugify_GetVectorData(C_p12, C.POINTER)
 	*p12 = make([]uintptr, L_p12)
 	for i := range (*p12) {
 		(*p12)[i] = *(*uintptr)(unsafe.Pointer(uintptr(P_p12) + uintptr(i * C.sizeof_uintptr_t)))
@@ -814,7 +814,7 @@ func ParamRefVectors(p1 *[]bool, p2 *[]int8, p3 *[]uint16, p4 *[]int8, p5 *[]int
 	C.Plugify_DeleteVector(C_p9, C.UINT16)
 	C.Plugify_DeleteVector(C_p10, C.UINT32)
 	C.Plugify_DeleteVector(C_p11, C.UINT64)
-	C.Plugify_DeleteVector(C_p12, C.UINTPTR)
+	C.Plugify_DeleteVector(C_p12, C.POINTER)
 	C.Plugify_DeleteVector(C_p13, C.FLOAT)
 	C.Plugify_DeleteVector(C_p14, C.DOUBLE)
 	C.Plugify_DeleteVector(C_p15, C.STRING)
