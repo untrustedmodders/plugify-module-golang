@@ -21,7 +21,7 @@ using namespace plugify;
 template<class T>
 inline constexpr bool always_false_v = std::is_same_v<std::decay_t<T>, std::add_cv_t<std::decay_t<T>>>;
 
-bool IsMethodPrimitive(IMethod method) {
+bool IsMethodPrimitive(MethodRef method) {
 	if (ValueUtils::IsObject(method.GetReturnType().GetType()))
 		return false;
 
@@ -226,7 +226,7 @@ DCaggr* CreateDcAggr<GoSlice>(AggrList& aggrs) {
 	return ag;
 }
 
-InitResult GoLanguageModule::Initialize(std::weak_ptr<IPlugifyProvider> provider, IModule /*module*/) {
+InitResult GoLanguageModule::Initialize(std::weak_ptr<IPlugifyProvider> provider, ModuleRef /*module*/) {
 	if (!(_provider = provider.lock())) {
 		return ErrorData{ "Provider not exposed" };
 	}
@@ -255,14 +255,14 @@ void GoLanguageModule::Shutdown() {
 	_provider.reset();
 }
 
-void GoLanguageModule::OnMethodExport(IPlugin plugin) {
+void GoLanguageModule::OnMethodExport(PluginRef plugin) {
 	auto pluginName = plugin.GetName();
 	for (const auto& [name, addr] : plugin.GetMethods()) {
 		_nativesMap.try_emplace(std::format("{}.{}", pluginName, name), addr);
 	}
 }
 
-LoadResult GoLanguageModule::OnPluginLoad(IPlugin plugin) {
+LoadResult GoLanguageModule::OnPluginLoad(PluginRef plugin) {
 	fs::path assemblyPath(plugin.GetBaseDir());
 	assemblyPath /= std::format("{}" GOLM_LIBRARY_SUFFIX, plugin.GetDescriptor().GetEntryPoint());
 
@@ -296,7 +296,7 @@ LoadResult GoLanguageModule::OnPluginLoad(IPlugin plugin) {
 		return ErrorData{ std::format("Not found {} function(s)", funcs) };
 	}
 
-	std::vector<IMethod> exportedMethods = plugin.GetDescriptor().GetExportedMethods();
+	std::vector<MethodRef> exportedMethods = plugin.GetDescriptor().GetExportedMethods();
 	std::vector<MethodData> methods;
 	methods.reserve(exportedMethods.size());
 
@@ -327,7 +327,7 @@ LoadResult GoLanguageModule::OnPluginLoad(IPlugin plugin) {
 	}
 
 	union {
-		IPlugin plugin;
+		PluginRef plugin;
 		void* ptr;
 	} cast{plugin};
 
@@ -345,14 +345,14 @@ LoadResult GoLanguageModule::OnPluginLoad(IPlugin plugin) {
 	return LoadResultData{ std::move(methods) };
 }
 
-void GoLanguageModule::OnPluginStart(IPlugin plugin) {
+void GoLanguageModule::OnPluginStart(PluginRef plugin) {
 	if (const auto it = _assemblyMap.find(plugin.GetId()); it != _assemblyMap.end()) {
 		const auto& assemblyHolder = std::get<AssemblyHolder>(*it);
 		assemblyHolder.GetStartFunc()();
 	}
 }
 
-void GoLanguageModule::OnPluginEnd(IPlugin plugin) {
+void GoLanguageModule::OnPluginEnd(PluginRef plugin) {
 	if (const auto it = _assemblyMap.find(plugin.GetId()); it != _assemblyMap.end()) {
 		const auto& assemblyHolder = std::get<AssemblyHolder>(*it);
 		assemblyHolder.GetEndFunc()();
@@ -377,14 +377,14 @@ void GoLanguageModule::GetNativeMethod(std::string_view methodName, plugify::Mem
 }
 
 // C++ to Go
-void GoLanguageModule::InternalCall(IMethod method, MemAddr addr, const Parameters* p, uint8_t count, const ReturnValue* ret) {
+void GoLanguageModule::InternalCall(MethodRef method, MemAddr addr, const Parameters* p, uint8_t count, const ReturnValue* ret) {
 	std::scoped_lock<std::mutex> lock(g_golm._mutex);
-	
-	IProperty retProp = method.GetReturnType();
+
+	PropertyRef retProp = method.GetReturnType();
 	ValueType retType = retProp.GetType();
-	std::vector<IProperty> paramProps = method.GetParamTypes();
-	
-	size_t argsCount = static_cast<size_t>(std::count_if(paramProps.begin(), paramProps.end(), [](const IProperty& param) {
+	std::vector<PropertyRef> paramProps = method.GetParamTypes();
+
+	size_t argsCount = static_cast<size_t>(std::count_if(paramProps.begin(), paramProps.end(), [](const PropertyRef& param) {
 		return ValueUtils::IsObject(param.GetType());
 	}));
 
@@ -1021,35 +1021,35 @@ bool IsPluginLoaded(const char* pluginName, int version, bool minimum) {
 	return g_golm.GetProvider()->IsPluginLoaded(pluginName, requiredVersion, minimum);
 }
 
-UniqueId GetPluginId(IPlugin plugin) {
+UniqueId GetPluginId(PluginRef plugin) {
 	return plugin.GetId();
 }
 
-const char* GetPluginName(IPlugin plugin) {
+const char* GetPluginName(PluginRef plugin) {
 	return plugin.GetName().data();
 }
 
-const char* GetPluginFullName(IPlugin plugin) {
+const char* GetPluginFullName(PluginRef plugin) {
 	return plugin.GetFriendlyName().data();
 }
 
-const char* GetPluginDescription(IPlugin plugin) {
+const char* GetPluginDescription(PluginRef plugin) {
 	return plugin.GetDescriptor().GetDescription().data();
 }
 
-const char* GetPluginVersion(IPlugin plugin) {
+const char* GetPluginVersion(PluginRef plugin) {
 	return plugin.GetDescriptor().GetVersionName().data();
 }
 
-const char* GetPluginAuthor(IPlugin plugin) {
+const char* GetPluginAuthor(PluginRef plugin) {
 	return plugin.GetDescriptor().GetCreatedBy().data();
 }
 
-const char* GetPluginWebsite(IPlugin plugin) {
+const char* GetPluginWebsite(PluginRef plugin) {
 	return plugin.GetDescriptor().GetCreatedByURL().data();
 }
 
-const char* GetPluginBaseDir(IPlugin plugin) {
+const char* GetPluginBaseDir(PluginRef plugin) {
 	auto source = plugin.GetBaseDir().string();
 	size_t size = source.length() + 1;
 	char* dest = new char[size];
@@ -1057,8 +1057,8 @@ const char* GetPluginBaseDir(IPlugin plugin) {
 	return dest;
 }
 
-const char** GetPluginDependencies(IPlugin plugin) {
-	std::vector<IPluginReferenceDescriptor> dependencies = plugin.GetDescriptor().GetDependencies();
+const char** GetPluginDependencies(PluginRef plugin) {
+	std::vector<PluginReferenceDescriptorRef> dependencies = plugin.GetDescriptor().GetDependencies();
 	auto* deps = new const char*[dependencies.size()];
 	for (size_t i = 0; i < dependencies.size(); ++i) {
 		deps[i] = dependencies[i].GetName().data();
@@ -1066,11 +1066,11 @@ const char** GetPluginDependencies(IPlugin plugin) {
 	return deps;
 }
 
-ptrdiff_t GetPluginDependenciesSize(IPlugin plugin) {
+ptrdiff_t GetPluginDependenciesSize(PluginRef plugin) {
 	return static_cast<ptrdiff_t>(plugin.GetDescriptor().GetDependencies().size());
 }
 
-const char* FindPluginResource(IPlugin plugin, const char* path) {
+const char* FindPluginResource(PluginRef plugin, const char* path) {
 	auto resource = plugin.FindResource(path);
 	if (resource.has_value()) {
 		auto source= resource->string();

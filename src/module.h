@@ -83,19 +83,19 @@ namespace golm {
 		~GoLanguageModule() = default;
 
 		// ILanguageModule
-		plugify::InitResult Initialize(std::weak_ptr<plugify::IPlugifyProvider> provider, plugify::IModule module) override;
+		plugify::InitResult Initialize(std::weak_ptr<plugify::IPlugifyProvider> provider, plugify::ModuleRef module) override;
 		void Shutdown() override;
-		plugify::LoadResult OnPluginLoad(plugify::IPlugin plugin) override;
-		void OnPluginStart(plugify::IPlugin plugin) override;
-		void OnPluginEnd(plugify::IPlugin plugin) override;
-		void OnMethodExport(plugify::IPlugin plugin) override;
+		plugify::LoadResult OnPluginLoad(plugify::PluginRef plugin) override;
+		void OnPluginStart(plugify::PluginRef plugin) override;
+		void OnPluginEnd(plugify::PluginRef plugin) override;
+		void OnMethodExport(plugify::PluginRef plugin) override;
 
 		const std::shared_ptr<plugify::IPlugifyProvider>& GetProvider() { return _provider; }
 		plugify::MemAddr GetNativeMethod(std::string_view methodName) const;
 		void GetNativeMethod(std::string_view methodName, plugify::MemAddr* addressDest);
 
 	private:
-		static void InternalCall(plugify::IMethod method, plugify::MemAddr data, const plugify::Parameters* params, uint8_t count, const plugify::ReturnValue* ret);
+		static void InternalCall(plugify::MethodRef method, plugify::MemAddr data, const plugify::Parameters* params, uint8_t count, const plugify::ReturnValue* ret);
 
 	private:
 		std::shared_ptr<asmjit::JitRuntime> _rt;
