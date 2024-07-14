@@ -296,7 +296,7 @@ LoadResult GoLanguageModule::OnPluginLoad(PluginRef plugin) {
 		return ErrorData{ std::format("Not found {} function(s)", funcs) };
 	}
 
-	std::vector<MethodRef> exportedMethods = plugin.GetDescriptor().GetExportedMethods();
+	std::span<const MethodRef> exportedMethods = plugin.GetDescriptor().GetExportedMethods();
 	std::vector<MethodData> methods;
 	methods.reserve(exportedMethods.size());
 
@@ -382,7 +382,7 @@ void GoLanguageModule::InternalCall(MethodRef method, MemAddr addr, const Parame
 
 	PropertyRef retProp = method.GetReturnType();
 	ValueType retType = retProp.GetType();
-	std::vector<PropertyRef> paramProps = method.GetParamTypes();
+	std::span<const PropertyRef> paramProps = method.GetParamTypes();
 
 	size_t argsCount = static_cast<size_t>(std::count_if(paramProps.begin(), paramProps.end(), [](const PropertyRef& param) {
 		return ValueUtils::IsObject(param.GetType());
@@ -1058,7 +1058,7 @@ const char* GetPluginBaseDir(PluginRef plugin) {
 }
 
 const char** GetPluginDependencies(PluginRef plugin) {
-	std::vector<PluginReferenceDescriptorRef> dependencies = plugin.GetDescriptor().GetDependencies();
+	std::span<const PluginReferenceDescriptorRef> dependencies = plugin.GetDescriptor().GetDependencies();
 	auto* deps = new const char*[dependencies.size()];
 	for (size_t i = 0; i < dependencies.size(); ++i) {
 		deps[i] = dependencies[i].GetName().data();
