@@ -39,6 +39,19 @@ struct std::default_delete<DCCallVM> {
 };
 
 namespace golm {
+	struct string_hash {
+		using is_transparent = void;
+		[[nodiscard]] size_t operator()(const char* txt) const {
+			return std::hash<std::string_view>{}(txt);
+		}
+		[[nodiscard]] size_t operator()(std::string_view txt) const {
+			return std::hash<std::string_view>{}(txt);
+		}
+		[[nodiscard]] size_t operator()(const std::string& txt) const {
+			return std::hash<std::string>{}(txt);
+		}
+	};
+
 	constexpr int kApiVersion = 1;
 
 	using InitFunc = int (*)(GoSlice, int, const void*);
@@ -70,25 +83,25 @@ namespace golm {
 		~GoLanguageModule() = default;
 
 		// ILanguageModule
-		plugify::InitResult Initialize(std::weak_ptr<plugify::IPlugifyProvider> provider, const plugify::IModule& module) override;
+		plugify::InitResult Initialize(std::weak_ptr<plugify::IPlugifyProvider> provider, plugify::IModule module) override;
 		void Shutdown() override;
-		plugify::LoadResult OnPluginLoad(const plugify::IPlugin& plugin) override;
-		void OnPluginStart(const plugify::IPlugin& plugin) override;
-		void OnPluginEnd(const plugify::IPlugin& plugin) override;
-		void OnMethodExport(const plugify::IPlugin& plugin) override;
+		plugify::LoadResult OnPluginLoad(plugify::IPlugin plugin) override;
+		void OnPluginStart(plugify::IPlugin plugin) override;
+		void OnPluginEnd(plugify::IPlugin plugin) override;
+		void OnMethodExport(plugify::IPlugin plugin) override;
 
 		const std::shared_ptr<plugify::IPlugifyProvider>& GetProvider() { return _provider; }
-		plugify::MemAddr GetNativeMethod(const std::string& methodName) const;
+		plugify::MemAddr GetNativeMethod(std::string_view methodName) const;
 		
 	private:
-		static void InternalCall(const plugify::Method* method, plugify::MemAddr data, const plugify::Parameters* params, uint8_t count, const plugify::ReturnValue* ret);
+		static void InternalCall(plugify::IMethod method, plugify::MemAddr data, const plugify::Parameters* params, uint8_t count, const plugify::ReturnValue* ret);
 
 	private:
 		std::shared_ptr<asmjit::JitRuntime> _rt;
 		std::shared_ptr<plugify::IPlugifyProvider> _provider;
 
 		std::map<plugify::UniqueId, AssemblyHolder> _assemblyMap;
-		std::unordered_map<std::string, plugify::MemAddr> _nativesMap;
+		std::unordered_map<std::string, plugify::MemAddr, string_hash, std::equal_to<>> _nativesMap;
 		std::vector<std::unique_ptr<plugify::Function>> _functions;
 
 		std::unique_ptr<DCCallVM> _callVirtMachine;

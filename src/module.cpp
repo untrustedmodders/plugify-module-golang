@@ -5,7 +5,13 @@
 #include <plugify/log.h>
 #include <plugify/math.h>
 #include <plugify/plugin_descriptor.h>
+#include <plugify/plugin_reference_descriptor.h>
 #include <plugify/plugify_provider.h>
+
+#if GOLM_PLATFORM_WINDOWS
+#include <Windows.h>
+#undef FindResource
+#endif
 
 #define LOG_PREFIX "[GOLM] "
 
@@ -15,12 +21,12 @@ using namespace plugify;
 template<class T>
 inline constexpr bool always_false_v = std::is_same_v<std::decay_t<T>, std::add_cv_t<std::decay_t<T>>>;
 
-bool IsMethodPrimitive(const plugify::Method& method) {
-	if (ValueUtils::IsObject(method.retType.type))
+bool IsMethodPrimitive(IMethod method) {
+	if (ValueUtils::IsObject(method.GetReturnType().GetType()))
 		return false;
 
-	for (const auto& param : method.paramTypes) {
-		if (ValueUtils::IsObject(param.type))
+	for (const auto& param : method.GetParamTypes()) {
+		if (ValueUtils::IsObject(param.GetType()))
 			return false;
 	}
 
@@ -83,22 +89,26 @@ GoString* CreateGoString(ArgumentList& args) {
 
 template<typename T>
 void CopyGoSliceToVector(const GoSlice& source, std::vector<T>& dest) {
-	if constexpr (std::same_as<T, bool>) {
-		dest.resize(static_cast<size_t>(source.len));
-		for (size_t i = 0; i < dest.size(); ++i) {
-			dest[i] = reinterpret_cast<bool*>(source.data)[i];
-		}
-	} else if constexpr (std::same_as<T, std::string>) {
-		dest.resize(static_cast<size_t>(source.len));
-		for (size_t i = 0; i < dest.size(); ++i) {
-			const auto& str = reinterpret_cast<GoString*>(source.data)[i];
-			dest[i].assign(str.p, static_cast<size_t>(str.n));
-		}
-	} else {
-		if (source.data == nullptr || source.len == 0)
-			dest.clear();
-		else if (dest.data() != source.data)
-			dest.assign(reinterpret_cast<T*>(source.data), reinterpret_cast<T*>(source.data) + static_cast<size_t>(source.len));
+	if (source.data == nullptr || source.len == 0)
+		dest.clear();
+	else if (dest.data() != source.data)
+		dest.assign(reinterpret_cast<T*>(source.data), reinterpret_cast<T*>(source.data) + static_cast<size_t>(source.len));
+}
+
+template<>
+void CopyGoSliceToVector(const GoSlice& source, std::vector<bool>& dest) {
+	dest.resize(static_cast<size_t>(source.len));
+	for (size_t i = 0; i < dest.size(); ++i) {
+		dest[i] = reinterpret_cast<bool*>(source.data)[i];
+	}
+}
+
+template<>
+void CopyGoSliceToVector(const GoSlice& source, std::vector<std::string>& dest) {
+	dest.resize(static_cast<size_t>(source.len));
+	for (size_t i = 0; i < dest.size(); ++i) {
+		const auto& str = reinterpret_cast<GoString*>(source.data)[i];
+		dest[i].assign(str.p, static_cast<size_t>(str.n));
 	}
 }
 
@@ -111,30 +121,34 @@ void CopyGoStringToString(const GoString& source, std::string& dest) {
 
 template<typename T>
 void CopyGoSliceToVectorReturn(const GoSlice& source, std::vector<T>& dest) {
-	if constexpr (std::same_as<T, bool>) {
-		if (source.data == nullptr || source.len == 0)
-			std::construct_at(&dest, std::vector<T>());
-		else {
-			std::construct_at(&dest, std::vector<T>(static_cast<size_t>(source.len)));
-			for (size_t i = 0; i < dest.size(); ++i) {
-				dest[i] = reinterpret_cast<bool*>(source.data)[i];
-			}
+	if (source.data == nullptr || source.len == 0)
+		std::construct_at(&dest, std::vector<T>());
+	else
+		std::construct_at(&dest, std::vector<T>(reinterpret_cast<T*>(source.data), reinterpret_cast<T*>(source.data) + static_cast<size_t>(source.len)));
+}
+
+template<typename T>
+void CopyGoSliceToVectorReturn(const GoSlice& source, std::vector<bool>& dest) {
+	if (source.data == nullptr || source.len == 0)
+		std::construct_at(&dest, std::vector<T>());
+	else {
+		std::construct_at(&dest, std::vector<T>(static_cast<size_t>(source.len)));
+		for (size_t i = 0; i < dest.size(); ++i) {
+			dest[i] = reinterpret_cast<bool*>(source.data)[i];
 		}
-	} else if constexpr (std::same_as<T, std::string>) {
-		if (source.data == nullptr || source.len == 0)
-			std::construct_at(&dest, std::vector<T>());
-		else {
-			std::construct_at(&dest, std::vector<T>(static_cast<size_t>(source.len)));
-			for (size_t i = 0; i < dest.size(); ++i) {
-				const auto& str = reinterpret_cast<GoString*>(source.data)[i];
-				dest[i].assign(str.p, static_cast<size_t>(str.n));
-			}
+	}
+}
+
+template<typename T>
+void CopyGoSliceToVectorReturn(const GoSlice& source, std::vector<std::string>& dest) {
+	if (source.data == nullptr || source.len == 0)
+		std::construct_at(&dest, std::vector<T>());
+	else {
+		std::construct_at(&dest, std::vector<T>(static_cast<size_t>(source.len)));
+		for (size_t i = 0; i < dest.size(); ++i) {
+			const auto& str = reinterpret_cast<GoString*>(source.data)[i];
+			dest[i].assign(str.p, static_cast<size_t>(str.n));
 		}
-	} else {
-		if (source.data == nullptr || source.len == 0)
-			std::construct_at(&dest, std::vector<T>());
-		else
-			std::construct_at(&dest, std::vector<T>(reinterpret_cast<T*>(source.data), reinterpret_cast<T*>(source.data) + static_cast<size_t>(source.len)));
 	}
 }
 
@@ -212,7 +226,7 @@ DCaggr* CreateDcAggr<GoSlice>(AggrList& aggrs) {
 	return ag;
 }
 
-InitResult GoLanguageModule::Initialize(std::weak_ptr<IPlugifyProvider> provider, const IModule& /*module*/) {
+InitResult GoLanguageModule::Initialize(std::weak_ptr<IPlugifyProvider> provider, IModule /*module*/) {
 	if (!(_provider = provider.lock())) {
 		return ErrorData{ "Provider not exposed" };
 	}
@@ -237,15 +251,16 @@ void GoLanguageModule::Shutdown() {
 	_provider.reset();
 }
 
-void GoLanguageModule::OnMethodExport(const IPlugin& plugin) {
-	const auto& pluginName = plugin.GetName();
+void GoLanguageModule::OnMethodExport(IPlugin plugin) {
+	auto pluginName = plugin.GetName();
 	for (const auto& [name, addr] : plugin.GetMethods()) {
 		_nativesMap.try_emplace(std::format("{}.{}", pluginName, name), addr);
 	}
 }
 
-LoadResult GoLanguageModule::OnPluginLoad(const IPlugin& plugin) {
-	fs::path assemblyPath(plugin.GetBaseDir() / std::format("{}" GOLM_LIBRARY_SUFFIX, plugin.GetDescriptor().entryPoint));
+LoadResult GoLanguageModule::OnPluginLoad(IPlugin plugin) {
+	fs::path assemblyPath(plugin.GetBaseDir());
+	assemblyPath /= std::format("{}" GOLM_LIBRARY_SUFFIX, plugin.GetDescriptor().GetEntryPoint());
 
 	auto assembly = std::make_unique<Assembly>(assemblyPath, LoadFlag::Lazy | LoadFlag::Nodelete | LoadFlag::PinInMemory);
 	if (!assembly) {
@@ -277,26 +292,26 @@ LoadResult GoLanguageModule::OnPluginLoad(const IPlugin& plugin) {
 		return ErrorData{ std::format("Not found {} function(s)", funcs) };
 	}
 
-	const auto& exportedMethods = plugin.GetDescriptor().exportedMethods;
+	std::vector<IMethod> exportedMethods = plugin.GetDescriptor().GetExportedMethods();
 	std::vector<MethodData> methods;
 	methods.reserve(exportedMethods.size());
 
 	for (const auto& method : exportedMethods) {
-		if (auto func = assembly->GetFunctionByName(method.funcName)) {
+		if (auto func = assembly->GetFunctionByName(method.GetFunctionName())) {
 			if (IsMethodPrimitive(method)) {
-				methods.emplace_back(method.name, func);
+				methods.emplace_back(method.GetName(), func);
 			} else {
 				auto function = std::make_unique<Function>(_rt);
 				func = function->GetJitFunc(method, &InternalCall, func);
 				if (!func) {
-					funcErrors.emplace_back(method.name);
+					funcErrors.emplace_back(method.GetName());
 					continue;
 				}
 				_functions.emplace_back(std::move(function));
-				methods.emplace_back(method.name, func);
+				methods.emplace_back(method.GetName(), func);
 			}
 		} else {
-			funcErrors.emplace_back(method.name);
+			funcErrors.emplace_back(method.GetName());
 		}
 	}
 	if (!funcErrors.empty()) {
@@ -307,8 +322,13 @@ LoadResult GoLanguageModule::OnPluginLoad(const IPlugin& plugin) {
 		return ErrorData{ std::format("Not found {} method function(s)", funcs) };
 	}
 
+	union {
+		IPlugin plugin;
+		void* ptr;
+	} cast{plugin};
+
 	GoSlice api { const_cast<void**>(_pluginApi.data()), _pluginApi.size(), _pluginApi.size() };
-	const int resultVersion = initFunc(api, kApiVersion, &plugin);
+	const int resultVersion = initFunc(api, kApiVersion, cast.ptr);
 	if (resultVersion != 0) {
 		return ErrorData{ std::format("Not supported plugin api {}, max supported {}", resultVersion, kApiVersion) };
 	}
@@ -321,21 +341,21 @@ LoadResult GoLanguageModule::OnPluginLoad(const IPlugin& plugin) {
 	return LoadResultData{ std::move(methods) };
 }
 
-void GoLanguageModule::OnPluginStart(const IPlugin& plugin) {
+void GoLanguageModule::OnPluginStart(IPlugin plugin) {
 	if (const auto it = _assemblyMap.find(plugin.GetId()); it != _assemblyMap.end()) {
 		const auto& assemblyHolder = std::get<AssemblyHolder>(*it);
 		assemblyHolder.GetStartFunc()();
 	}
 }
 
-void GoLanguageModule::OnPluginEnd(const IPlugin& plugin) {
+void GoLanguageModule::OnPluginEnd(IPlugin plugin) {
 	if (const auto it = _assemblyMap.find(plugin.GetId()); it != _assemblyMap.end()) {
 		const auto& assemblyHolder = std::get<AssemblyHolder>(*it);
 		assemblyHolder.GetEndFunc()();
 	}
 }
 
-MemAddr GoLanguageModule::GetNativeMethod(const std::string& methodName) const {
+MemAddr GoLanguageModule::GetNativeMethod(std::string_view methodName) const {
 	if (const auto it = _nativesMap.find(methodName); it != _nativesMap.end()) {
 		return std::get<MemAddr>(*it);
 	}
@@ -344,11 +364,15 @@ MemAddr GoLanguageModule::GetNativeMethod(const std::string& methodName) const {
 }
 
 // C++ to Go
-void GoLanguageModule::InternalCall(const plugify::Method* method, MemAddr addr, const plugify::Parameters* p, uint8_t count, const plugify::ReturnValue* ret) {
+void GoLanguageModule::InternalCall(IMethod method, MemAddr addr, const Parameters* p, uint8_t count, const ReturnValue* ret) {
 	std::scoped_lock<std::mutex> lock(g_golm._mutex);
-
-	size_t argsCount = static_cast<size_t>(std::count_if(method->paramTypes.begin(), method->paramTypes.end(), [](const Property& param) {
-		return ValueUtils::IsObject(param.type);
+	
+	IProperty retProp = method.GetReturnType();
+	ValueType retType = retProp.GetType();
+	std::vector<IProperty> paramProps = method.GetParamTypes();
+	
+	size_t argsCount = static_cast<size_t>(std::count_if(paramProps.begin(), paramProps.end(), [](const IProperty& param) {
+		return ValueUtils::IsObject(param.GetType());
 	}));
 
 	AggrList aggrs;
@@ -361,12 +385,12 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, MemAddr addr,
 	DCCallVM* vm = g_golm._callVirtMachine.get();
 	dcReset(vm);
 
-	bool hasRet = ValueUtils::IsHiddenParam(method->retType.type);
+	bool hasRet = ValueUtils::IsHiddenParam(retType);
 	bool hasRefs = false;
 
 	DCaggr* ag = nullptr;
 
-	switch (method->retType.type) {
+	switch (retType) {
 		case ValueType::String:
 			ag = CreateDcAggr<GoString>(aggrs);
 			dcBeginCallAggr(vm, ag);
@@ -411,9 +435,9 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, MemAddr addr,
 	}
 
 	for (uint8_t i = hasRet, j = 0; i < count; ++i, ++j) {
-		const auto& param = method->paramTypes[j];
-		if (param.ref) {
-			switch (param.type) {
+		const auto& param = paramProps[j];
+		if (param.IsReference()) {
+			switch (param.GetType()) {
 				case ValueType::Bool:
 					dcArgPointer(vm, p->GetArgument<bool*>(i));
 					break;
@@ -525,7 +549,7 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, MemAddr addr,
 					break;
 			}
 		} else {
-			switch (param.type) {
+			switch (param.GetType()) {
 				case ValueType::Bool:
 					dcArgBool(vm, p->GetArgument<bool>(i));
 					break;
@@ -629,10 +653,10 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, MemAddr addr,
 					break;
 			}
 		}
-		hasRefs |= param.ref;
+		hasRefs |= param.IsReference();
 	}
 
-	switch (method->retType.type) {
+	switch (retType) {
 		case ValueType::Void: {
 			dcCallVoid(vm, addr);
 			break;
@@ -889,9 +913,9 @@ void GoLanguageModule::InternalCall(const plugify::Method* method, MemAddr addr,
 		if (hasRefs) {
 			size_t k = 0;
 			for (uint8_t i = hasRet, j = 0; i < count; ++i, ++j) {
-				const auto& param = method->paramTypes[j];
-				if (param.ref) {
-					switch (param.type) {
+				const auto& param = paramProps[j];
+				if (param.IsReference()) {
+					switch (param.GetType()) {
 						case ValueType::String:
 							CopyGoStringToString(*reinterpret_cast<GoString*>(&args[k++]), *p->GetArgument<std::string*>(i));
 							break;
@@ -980,35 +1004,35 @@ bool IsPluginLoaded(const char* pluginName, int version, bool minimum) {
 	return g_golm.GetProvider()->IsPluginLoaded(pluginName, requiredVersion, minimum);
 }
 
-UniqueId GetPluginId(const plugify::IPlugin& plugin) {
+UniqueId GetPluginId(IPlugin plugin) {
 	return plugin.GetId();
 }
 
-const char* GetPluginName(const plugify::IPlugin& plugin) {
-	return plugin.GetName().c_str();
+const char* GetPluginName(IPlugin plugin) {
+	return plugin.GetName().data();
 }
 
-const char* GetPluginFullName(const plugify::IPlugin& plugin) {
-	return plugin.GetFriendlyName().c_str();
+const char* GetPluginFullName(IPlugin plugin) {
+	return plugin.GetFriendlyName().data();
 }
 
-const char* GetPluginDescription(const plugify::IPlugin& plugin) {
-	return plugin.GetDescriptor().description.c_str();
+const char* GetPluginDescription(IPlugin plugin) {
+	return plugin.GetDescriptor().GetDescription().data();
 }
 
-const char* GetPluginVersion(const plugify::IPlugin& plugin) {
-	return plugin.GetDescriptor().versionName.c_str();
+const char* GetPluginVersion(IPlugin plugin) {
+	return plugin.GetDescriptor().GetVersionName().data();
 }
 
-const char* GetPluginAuthor(const plugify::IPlugin& plugin) {
-	return plugin.GetDescriptor().createdBy.c_str();
+const char* GetPluginAuthor(IPlugin plugin) {
+	return plugin.GetDescriptor().GetCreatedBy().data();
 }
 
-const char* GetPluginWebsite(const plugify::IPlugin& plugin) {
-	return plugin.GetDescriptor().createdByURL.c_str();
+const char* GetPluginWebsite(IPlugin plugin) {
+	return plugin.GetDescriptor().GetCreatedByURL().data();
 }
 
-const char* GetPluginBaseDir(const plugify::IPlugin& plugin) {
+const char* GetPluginBaseDir(IPlugin plugin) {
 	auto source = plugin.GetBaseDir().string();
 	size_t size = source.length() + 1;
 	char* dest = new char[size];
@@ -1016,20 +1040,20 @@ const char* GetPluginBaseDir(const plugify::IPlugin& plugin) {
 	return dest;
 }
 
-const char** GetPluginDependencies(const plugify::IPlugin& plugin) {
-	auto& desc = plugin.GetDescriptor();
-	auto* deps = new const char*[desc.dependencies.size()];
-	for (size_t i = 0; i < desc.dependencies.size(); ++i) {
-		deps[i] = desc.dependencies[i].name.c_str();
+const char** GetPluginDependencies(IPlugin plugin) {
+	std::vector<IPluginReferenceDescriptor> dependencies = plugin.GetDescriptor().GetDependencies();
+	auto* deps = new const char*[dependencies.size()];
+	for (size_t i = 0; i < dependencies.size(); ++i) {
+		deps[i] = dependencies[i].GetName().data();
 	}
 	return deps;
 }
 
-ptrdiff_t GetPluginDependenciesSize(const plugify::IPlugin& plugin) {
-	return static_cast<ptrdiff_t>(plugin.GetDescriptor().dependencies.size());
+ptrdiff_t GetPluginDependenciesSize(IPlugin plugin) {
+	return static_cast<ptrdiff_t>(plugin.GetDescriptor().GetDependencies().size());
 }
 
-const char* FindPluginResource(const plugify::IPlugin& plugin, const char* path) {
+const char* FindPluginResource(IPlugin plugin, const char* path) {
 	auto resource = plugin.FindResource(path);
 	if (resource.has_value()) {
 		auto source= resource->string();
@@ -1643,6 +1667,6 @@ const std::array<void*, 34> GoLanguageModule::_pluginApi = {
 		reinterpret_cast<void*>(&::DeleteVectorDataCStr)
 };
 
-plugify::ILanguageModule* GetLanguageModule() {
+ILanguageModule* GetLanguageModule() {
 	return &golm::g_golm;
 }
