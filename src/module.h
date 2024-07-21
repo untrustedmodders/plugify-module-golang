@@ -30,12 +30,12 @@ typedef struct { void* data; GoInt len; GoInt cap; } GoSlice;
 
 template <>
 struct std::default_delete<DCaggr> {
-	void operator()(DCaggr* p) const noexcept { dcFreeAggr(p); }
+	void operator()(DCaggr* p) const { dcFreeAggr(p); }
 };
 
 template <>
 struct std::default_delete<DCCallVM> {
-	void operator()(DCCallVM* p) const noexcept { dcFree(p); }
+	void operator()(DCCallVM* p) const { dcFree(p); }
 };
 
 namespace golm {

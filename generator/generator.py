@@ -602,9 +602,25 @@ def gen_goparamscast_string(method):
         type = VAL_GOTYPESCAST_MAP.get(param['type'], 'int')
         if 'CreateVector' in type:
             if 'ref' in param and param['ref'] is True:
-                return f'C_{param['name']} := {type[:22]}(unsafe.Pointer(&(*{param['name']})[0]), C.ptrdiff_t(len(*{param['name']})), {type[22:]})'
+                output = f'var A_{param['name']} unsafe.Pointer\n'
+                output += f'\tS_{param['name']} := len(*{param['name']})\n'
+                output += f'\tif S_{param['name']} > 0 {{\n'
+                output += f'\t\tA_{param['name']} = unsafe.Pointer(&(*{param['name']})[0])\n'
+                output += '\t} else {\n'
+                output += f'\t\tA_{param['name']} = nil\n'
+                output += '\t}\n'
+                output += f'\tC_{param['name']} := {type[:22]}(A_{param['name']}, C.ptrdiff_t(S_{param['name']}), {type[22:]})'
+                return output;
             else:
-                return f'C_{param['name']} := {type[:22]}(unsafe.Pointer(&{param['name']}[0]), C.ptrdiff_t(len({param['name']})), {type[22:]})'
+                output = f'var A_{param['name']} unsafe.Pointer\n'
+                output += f'\tS_{param['name']} := len({param['name']})\n'
+                output += f'\tif S_{param['name']} > 0 {{\n'
+                output += f'\t\tA_{param['name']} = unsafe.Pointer(&{param['name']}[0])\n'
+                output += '\t} else {\n'
+                output += f'\t\tA_{param['name']} = nil\n'
+                output += '\t}\n'
+                output += f'\tC_{param['name']} := {type[:22]}(A_{param['name']}, C.ptrdiff_t(S_{param['name']}), {type[22:]})'
+                return output;
         elif 'CreateString' in type:
             if 'ref' in param and param['ref'] is True:
                 return f'C_{param['name']} := {type}(*{param['name']})'
@@ -866,7 +882,7 @@ def main(manifest_path, output_dir, override):
     content += 'typedef struct { float x, y; } Vector2;\n'
     content += 'typedef struct { float x, y, z; } Vector3;\n'
     content += 'typedef struct { float x, y, z, w; } Vector4;\n'
-    content += 'typedef struct { float m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33; } Matrix4x4;\n'
+    content += 'typedef struct { float m[4][4]; } Matrix4x4;\n'
 
     content += '\n'
 
@@ -903,7 +919,7 @@ def main(manifest_path, output_dir, override):
     content += 'type Vector2 struct {\n\tX float32\n\tY float32\n}\n'
     content += 'type Vector3 struct {\n\tX float32\n\tY float32\n\tZ float32\n}\n'
     content += 'type Vector4 struct {\n\tX float32\n\tY float32\n\tZ float32\n\tW float32\n}\n'
-    content += 'type Matrix4x4 struct {\n\tM00 float32\n\tM10 float32\n\tM20 float32\n\tM30 float32\n\n\tM01 float32\n\tM11 float32\n\tM21 float32\n\tM31 float32\n\n\tM02 float32\n\tM12 float32\n\tM22 float32\n\tM32 float32\n\n\tM03 float32\n\tM13 float32\n\tM23 float32\n\tM33 float32\n}\n'
+    content += 'type Matrix4x4 struct {\n\tM[4][4] float32\n}\n'
     content += '\n'
 
     for method in pplugin['exportedMethods']:
