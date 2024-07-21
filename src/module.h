@@ -96,6 +96,7 @@ namespace golm {
 
 	private:
 		static void InternalCall(plugify::MethodRef method, plugify::MemAddr data, const plugify::Parameters* params, uint8_t count, const plugify::ReturnValue* ret);
+		static void DetectLeaks();
 
 	private:
 		std::shared_ptr<asmjit::JitRuntime> _rt;

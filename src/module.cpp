@@ -251,6 +251,9 @@ void GoLanguageModule::Shutdown() {
 	_addresses.clear();
 	_assemblyMap.clear();
 	_callVirtMachine.reset();
+
+	DetectLeaks();
+
 	_rt.reset();
 	_provider.reset();
 }
@@ -993,7 +996,58 @@ namespace golm {
 	GoLanguageModule g_golm;
 }
 
-// TODO: Detect leaks
+using type_index = uint32_t;
+inline type_index type_id_seq = 0;
+template<typename T> inline const type_index type_id = type_id_seq++;
+
+std::map<type_index, int32_t> g_numberOfMalloc = { };
+std::map<type_index, int32_t> g_numberOfAllocs = { };
+
+std::string_view GetTypeName(type_index type) {
+	static std::map<type_index, std::string_view> typeNameMap = {
+			{type_id<std::string>, "String"},
+			{type_id<std::vector<bool>>, "VectorBool"},
+			{type_id<std::vector<char>>, "VectorChar8"},
+			{type_id<std::vector<char16_t>>, "VectorChar16"},
+			{type_id<std::vector<int8_t>>, "VectorInt8"},
+			{type_id<std::vector<int16_t>>, "VectorInt16"},
+			{type_id<std::vector<int32_t>>, "VectorInt32"},
+			{type_id<std::vector<int64_t>>, "VectorInt64"},
+			{type_id<std::vector<uint8_t>>, "VectorUInt8"},
+			{type_id<std::vector<uint16_t>>, "VectorUInt16"},
+			{type_id<std::vector<uint32_t>>, "VectorUInt32"},
+			{type_id<std::vector<uint64_t>>, "VectorUInt64"},
+			{type_id<std::vector<uintptr_t>>, "VectorUIntPtr"},
+			{type_id<std::vector<float>>, "VectorFloat"},
+			{type_id<std::vector<double>>, "VectorDouble"},
+			{type_id<std::vector<std::string>>, "VectorString"},
+			{type_id<bool*>, "BoolArray"},
+			{type_id<char*>, "CString"},
+			{type_id<char**>, "CStringArray"}
+	};
+	auto it = typeNameMap.find(type);
+	if (it != typeNameMap.end()) {
+		return std::get<std::string_view>(*it);
+	}
+	return "unknown";
+}
+
+void GoLanguageModule::DetectLeaks() {
+	for (const auto& [type, count] : g_numberOfMalloc) {
+		if (count > 0) {
+			g_golm._provider->Log(std::format(LOG_PREFIX "Memory leaks detected: {} allocations. Related to {}!", count, GetTypeName(type)), Severity::Error);
+		}
+	}
+
+	for (const auto& [type, count] : g_numberOfAllocs) {
+		if (count > 0) {
+			g_golm._provider->Log(std::format(LOG_PREFIX "Memory leaks detected: {} allocations. Related to {}!", count, GetTypeName(type)), Severity::Error);
+		}
+	}
+
+	g_numberOfMalloc.clear();
+	g_numberOfAllocs.clear();
+}
 
 MemAddr GetMethodPtr(const char* methodName) {
 	return g_golm.GetNativeMethod(methodName);
@@ -1008,6 +1062,7 @@ const char* GetBaseDir() {
 	size_t size = source.length() + 1;
 	char* dest = new char[size];
 	std::memcpy(dest, source.c_str(), size);
+	g_numberOfAllocs[type_id<char*>]++;
 	return dest;
 }
 
@@ -1054,6 +1109,7 @@ const char* GetPluginBaseDir(PluginRef plugin) {
 	size_t size = source.length() + 1;
 	char* dest = new char[size];
 	std::memcpy(dest, source.c_str(), size);
+	g_numberOfAllocs[type_id<char*>]++;
 	return dest;
 }
 
@@ -1063,6 +1119,7 @@ const char** GetPluginDependencies(PluginRef plugin) {
 	for (size_t i = 0; i < dependencies.size(); ++i) {
 		deps[i] = dependencies[i].GetName().data();
 	}
+	g_numberOfAllocs[type_id<char**>]++;
 	return deps;
 }
 
@@ -1077,42 +1134,55 @@ const char* FindPluginResource(PluginRef plugin, const char* path) {
 		size_t size = source.length() + 1;
 		char* dest = new char[size];
 		std::memcpy(dest, source.c_str(), size);
+		g_numberOfAllocs[type_id<char*>]++;
 		return dest;
 	}
 	return "";
 }
 void DeleteCStr(const char* path) {
 	delete path;
+	g_numberOfAllocs[type_id<char*>]--;
+	assert(g_numberOfAllocs[type_id<char*>] != -1);
 }
 
 void* AllocateString() {
-	return malloc(sizeof(std::string));
+	auto str = static_cast<std::string*>(malloc(sizeof(std::string)));
+	g_numberOfMalloc[type_id<std::string>]++;
+	return str;
 }
 void* CreateString(GoString source) {
-	return source.n == 0 ? new std::string() : new std::string(source.p, static_cast<size_t>(source.n));
+	auto str = source.n == 0 || source.p == nullptr ? new std::string() : new std::string(source.p, static_cast<size_t>(source.n));
+	g_numberOfAllocs[type_id<std::string>]++;
+	return str;
 }
-const char* GetStringData(std::string* ptr) {
-	return ptr->c_str();
+const char* GetStringData(std::string* string) {
+	return string->c_str();
 }
-ptrdiff_t GetStringLength(std::string* ptr) {
-	return static_cast<ptrdiff_t>(ptr->length());
+ptrdiff_t GetStringLength(std::string* string) {
+	return static_cast<ptrdiff_t>(string->length());
 }
-void ConstructString(std::string* ptr, GoString source) {
-	std::construct_at(ptr, std::string(source.p, static_cast<size_t>(source.n)));
-}
-void AssignString(std::string* ptr, GoString source) {
-	if (source.p == nullptr || source.n == 0)
-		ptr->clear();
+void ConstructString(std::string* string, GoString source) {
+	if (source.n == 0 || source.p == nullptr)
+		std::construct_at(string, std::string());
 	else
-		ptr->assign(source.p, static_cast<size_t>(source.n));
+		std::construct_at(string, std::string(source.p, static_cast<size_t>(source.n)));
 }
-void FreeString(std::string* ptr) {
-	ptr->~basic_string();
-	free(ptr);
+void AssignString(std::string* string, GoString source) {
+	if (source.p == nullptr || source.n == 0)
+		string->clear();
+	else
+		string->assign(source.p, static_cast<size_t>(source.n));
 }
-
-void DeleteString(std::string* ptr) {
-	delete ptr;
+void FreeString(std::string* string) {
+	string->~basic_string();
+	free(string);
+	g_numberOfMalloc[type_id<std::string>]--;
+	assert(g_numberOfMalloc[type_id<std::string>] != -1);
+}
+void DeleteString(std::string* string) {
+	delete string;
+	g_numberOfAllocs[type_id<std::string>]--;
+	assert(g_numberOfAllocs[type_id<std::string>] != -1);
 }
 
 enum DataType {
@@ -1133,48 +1203,171 @@ enum DataType {
 	String
 };
 
+namespace {
+	template<typename T, typename = std::enable_if_t<!std::is_same_v<T, GoString>>>
+	std::vector<T>* CreateVector(T* arr, ptrdiff_t len) {
+		auto vector = len == 0 ? new std::vector<T>() : new std::vector<T>(arr, arr + len);
+		assert(vector);
+		g_numberOfAllocs[type_id<std::vector<T>>]++;
+		return vector;
+	}
+
+	template<typename T, typename = std::enable_if_t<std::is_same_v<T, GoString>>>
+	std::vector<std::string>* CreateVector(T* arr, ptrdiff_t len) {
+		auto vector = new std::vector<std::string>();
+		if (len != 0) {
+			vector->reserve(static_cast<size_t>(len));
+			for (ptrdiff_t i = 0; i < len; ++i) {
+				const auto& str = arr[i];
+				vector->emplace_back(str.p, str.n);
+			}
+		}
+		assert(vector);
+		g_numberOfAllocs[type_id<std::vector<std::string>>]++;
+		return vector;
+	}
+
+	template<typename T, typename = std::enable_if_t<!std::is_same_v<T, GoString>>>
+	std::vector<T>* AllocateVector() {
+		auto vector = static_cast<std::vector<T>*>(malloc(sizeof(std::vector<T>)));
+		assert(vector);
+		g_numberOfMalloc[type_id<std::vector<T>>]++;
+		return vector;
+	}
+
+	template<typename T, typename = std::enable_if_t<std::is_same_v<T, GoString>>>
+	std::vector<std::string>* AllocateVector() {
+		auto vector = static_cast<std::vector<std::string>*>(malloc(sizeof(std::vector<std::string>)));
+		assert(vector);
+		g_numberOfMalloc[type_id<std::vector<std::string>>]++;
+		return vector;
+	}
+
+
+	template<typename T>
+	void DeleteVector(std::vector<T>* vector) {
+		delete vector;
+		g_numberOfAllocs[type_id<std::vector<T>>]--;
+		assert(g_numberOfAllocs[type_id<std::vector<T>>] != -1);
+	}
+
+	template<typename T>
+	void FreeVector(std::vector<T>* vector) {
+		vector->~vector();
+		free(vector);
+		g_numberOfMalloc[type_id<std::vector<T>>]--;
+		assert(g_numberOfMalloc[type_id<std::vector<T>>] != -1);
+	}
+
+	template<typename T>
+	ptrdiff_t GetVectorSize(std::vector<T>* vector) {
+		return static_cast<ptrdiff_t>(vector->size());
+	}
+
+	template<typename T, typename = std::enable_if_t<!std::is_same_v<T, GoString>>>
+	void AssignVector(std::vector<T>* vector, T* arr, ptrdiff_t len) {
+		if (arr == nullptr || len == 0)
+			vector->clear();
+		else
+			vector->assign(arr, arr + len);
+	}
+
+	template<typename T, typename = std::enable_if_t<std::is_same_v<T, GoString>>>
+	void AssignVector(std::vector<std::string>* vector, T* arr, ptrdiff_t len) {
+		if (arr == nullptr || len == 0)
+			vector->clear();
+		else {
+			size_t N = static_cast<size_t>(len);
+			vector->resize(N);
+			for (size_t i = 0; i < N; ++i) {
+				const auto& str = arr[i];
+				(*vector)[i].assign(str.p, static_cast<size_t>(str.n));
+			}
+		}
+	}
+
+	template<typename T, typename = std::enable_if_t<!std::is_same_v<T, GoString> and !std::is_same_v<T, bool>>>
+	T* GetVectorData(std::vector<T>* vector) {
+		return vector->data();
+	}
+
+	template<typename T, typename = std::enable_if_t<std::is_same_v<T, bool>>>
+	bool* GetVectorData(std::vector<T>* vector) {
+		bool* boolArray = new bool[vector->size()];
+
+		// Manually copy values from std::vector<bool> to the bool array
+		for (size_t i = 0; i < vector->size(); ++i) {
+			boolArray[i] = (*vector)[i];
+		}
+		
+		g_numberOfAllocs[type_id<bool*>]++;
+
+		return boolArray;
+	}
+
+	template<typename T, typename = std::enable_if_t<std::is_same_v<T, GoString>>>
+	char** GetVectorData(std::vector<std::string>* vector) {
+		char** strArray = new char*[vector->size()];
+
+		// Manually copy values from std::vector<std::string> to the char* array
+		for (size_t i = 0; i < vector->size(); ++i) {
+			strArray[i] = (*vector)[i].data();
+		}
+		
+		g_numberOfAllocs[type_id<char**>]++;
+
+		return strArray;
+	}
+
+	template<typename T, typename = std::enable_if_t<!std::is_same_v<T, GoString>>>
+	void ConstructVector(std::vector<T>* vector, T* arr, ptrdiff_t len) {
+		std::construct_at(vector, len == 0 ? std::vector<T>() : std::vector<T>(arr, arr + len));
+	}
+
+	template<typename T, typename = std::enable_if_t<std::is_same_v<T, GoString>>>
+	void ConstructVector(std::vector<std::string>* vector, T* arr, ptrdiff_t len) {
+		std::construct_at(vector, std::vector<std::string>());
+		size_t N = static_cast<size_t>(len);
+		vector->reserve(N);
+		for (size_t i = 0; i < N; ++i) {
+			const auto& str = arr[i];
+			vector->emplace_back(str.p, static_cast<size_t>(str.n));
+		}
+	}
+}
+
 void* CreateVector(void* arr, ptrdiff_t len, DataType type) {
 	switch (type) {
 		case Bool:
-			return len == 0 ? new std::vector<bool>() : new std::vector<bool>(static_cast<bool*>(arr), static_cast<bool*>(arr) + len);
+			return CreateVector(static_cast<bool*>(arr), len);
 		case Char8:
-			return len == 0 ? new std::vector<char>() : new std::vector<char>(static_cast<char*>(arr), static_cast<char*>(arr) + len);
+			return CreateVector(static_cast<char*>(arr), len);
 		case Char16:
-			return len == 0 ? new std::vector<uint16_t>() : new std::vector<uint16_t>(static_cast<uint16_t*>(arr), static_cast<uint16_t*>(arr) + len);
+			return CreateVector(static_cast<char16_t*>(arr), len);
 		case Int8:
-			return len == 0 ? new std::vector<int8_t>() : new std::vector<int8_t>(static_cast<int8_t*>(arr), static_cast<int8_t*>(arr) + len);
+			return CreateVector(static_cast<int8_t*>(arr), len);
 		case Int16:
-			return len == 0 ? new std::vector<int16_t>() : new std::vector<int16_t>(static_cast<int16_t*>(arr), static_cast<int16_t*>(arr) + len);
+			return CreateVector(static_cast<int16_t*>(arr), len);
 		case Int32:
-			return len == 0 ? new std::vector<int32_t>() : new std::vector<int32_t>(static_cast<int32_t*>(arr), static_cast<int32_t*>(arr) + len);
+			return CreateVector(static_cast<int32_t*>(arr), len);
 		case Int64:
-			return len == 0 ? new std::vector<int64_t>() : new std::vector<int64_t>(static_cast<int64_t*>(arr), static_cast<int64_t*>(arr) + len);
+			return CreateVector(static_cast<int64_t*>(arr), len);
 		case UInt8:
-			return len == 0 ? new std::vector<uint8_t>() : new std::vector<uint8_t>(static_cast<uint8_t*>(arr), static_cast<uint8_t*>(arr) + len);
+			return CreateVector(static_cast<uint8_t*>(arr), len);
 		case UInt16:
-			return len == 0 ? new std::vector<uint16_t>() : new std::vector<uint16_t>(static_cast<uint16_t*>(arr), static_cast<uint16_t*>(arr) + len);
+			return CreateVector(static_cast<uint16_t*>(arr), len);
 		case UInt32:
-			return len == 0 ? new std::vector<uint32_t>() : new std::vector<uint32_t>(static_cast<uint32_t*>(arr), static_cast<uint32_t*>(arr) + len);
+			return CreateVector(static_cast<uint32_t*>(arr), len);
 		case UInt64:
-			return len == 0 ? new std::vector<uint64_t>() : new std::vector<uint64_t>(static_cast<uint64_t*>(arr), static_cast<uint64_t*>(arr) + len);
+			return CreateVector(static_cast<uint64_t*>(arr), len);
 		case Pointer:
-			return len == 0 ? new std::vector<uintptr_t>() : new std::vector<uintptr_t>(static_cast<uintptr_t*>(arr), static_cast<uintptr_t*>(arr) + len);
+			return CreateVector(static_cast<uintptr_t*>(arr), len);
 		case Float:
-			return len == 0 ? new std::vector<float>() : new std::vector<float>(static_cast<float*>(arr), static_cast<float*>(arr) + len);
+			return CreateVector(static_cast<float*>(arr), len);
 		case Double:
-			return len == 0 ? new std::vector<double>() : new std::vector<double>(static_cast<double*>(arr), static_cast<double*>(arr) + len);
+			return CreateVector(static_cast<double*>(arr), len);
 		case String:
-		{
-			auto* vector = new std::vector<std::string>();
-			if (len != 0) {
-				vector->reserve(static_cast<size_t>(len));
-				for (ptrdiff_t i = 0; i < len; ++i) {
-					const auto& str = static_cast<GoString*>(arr)[i];
-					vector->emplace_back(str.p, str.n);
-				}
-			}
-			return vector;
-		}
+			return CreateVector(static_cast<GoString*>(arr), len);
 		default:
 			return nullptr;
 	}
@@ -1183,35 +1376,35 @@ void* CreateVector(void* arr, ptrdiff_t len, DataType type) {
 void* AllocateVector(DataType type) {
 	switch (type) {
 		case Bool:
-			return malloc(sizeof(std::vector<bool>));
+			return AllocateVector<bool>();
 		case Char8:
-			return malloc(sizeof(std::vector<char>));
+			return AllocateVector<char>();
 		case Char16:
-			return malloc(sizeof(std::vector<uint16_t>));
+			return AllocateVector<char16_t>();
 		case Int8:
-			return malloc(sizeof(std::vector<int8_t>));
+			return AllocateVector<int8_t>();
 		case Int16:
-			return malloc(sizeof(std::vector<int16_t>));
+			return AllocateVector<int16_t>();
 		case Int32:
-			return malloc(sizeof(std::vector<int32_t>));
+			return AllocateVector<int32_t>();
 		case Int64:
-			return malloc(sizeof(std::vector<int64_t>));
+			return AllocateVector<int64_t>();
 		case UInt8:
-			return malloc(sizeof(std::vector<uint8_t>));
+			return AllocateVector<uint8_t>();
 		case UInt16:
-			return malloc(sizeof(std::vector<uint16_t>));
+			return AllocateVector<uint16_t>();
 		case UInt32:
-			return malloc(sizeof(std::vector<uint32_t>));
+			return AllocateVector<uint32_t>();
 		case UInt64:
-			return malloc(sizeof(std::vector<uint64_t>));
+			return AllocateVector<uint64_t>();
 		case Pointer:
-			return malloc(sizeof(std::vector<uintptr_t>));
+			return AllocateVector<uintptr_t>();
 		case Float:
-			return malloc(sizeof(std::vector<float>));
+			return AllocateVector<float>();
 		case Double:
-			return malloc(sizeof(std::vector<double>));
+			return AllocateVector<double>();
 		case String:
-			return malloc(sizeof(std::vector<std::string>));
+			return AllocateVector<std::string>();
 		default:
 			return nullptr;
 	}
@@ -1219,36 +1412,36 @@ void* AllocateVector(DataType type) {
 
 ptrdiff_t GetVectorSize(void* ptr, DataType type) {
 	switch (type) {
-		case Bool:
-			return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<bool>*>(ptr)->size());
 		case Char8:
-			return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<char>*>(ptr)->size());
+			return GetVectorSize(reinterpret_cast<std::vector<char>*>(ptr));
 		case Char16:
-			return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<uint16_t>*>(ptr)->size());
+			return GetVectorSize(reinterpret_cast<std::vector<char16_t>*>(ptr));
 		case Int8:
-			return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<int8_t>*>(ptr)->size());
+			return GetVectorSize(reinterpret_cast<std::vector<int8_t>*>(ptr));
 		case Int16:
-			return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<int16_t>*>(ptr)->size());
+			return GetVectorSize(reinterpret_cast<std::vector<int16_t>*>(ptr));
 		case Int32:
-			return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<int32_t>*>(ptr)->size());
+			return GetVectorSize(reinterpret_cast<std::vector<int32_t>*>(ptr));
 		case Int64:
-			return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<int64_t>*>(ptr)->size());
+			return GetVectorSize(reinterpret_cast<std::vector<int64_t>*>(ptr));
 		case UInt8:
-			return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<uint8_t>*>(ptr)->size());
+			return GetVectorSize(reinterpret_cast<std::vector<uint8_t>*>(ptr));
 		case UInt16:
-			return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<uint16_t>*>(ptr)->size());
+			return GetVectorSize(reinterpret_cast<std::vector<uint16_t>*>(ptr));
 		case UInt32:
-			return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<uint32_t>*>(ptr)->size());
+			return GetVectorSize(reinterpret_cast<std::vector<uint32_t>*>(ptr));
 		case UInt64:
-			return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<uint64_t>*>(ptr)->size());
+			return GetVectorSize(reinterpret_cast<std::vector<uint64_t>*>(ptr));
 		case Pointer:
-			return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<uintptr_t>*>(ptr)->size());
+			return GetVectorSize(reinterpret_cast<std::vector<uintptr_t>*>(ptr));
 		case Float:
-			return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<float>*>(ptr)->size());
+			return GetVectorSize(reinterpret_cast<std::vector<float>*>(ptr));
 		case Double:
-			return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<double>*>(ptr)->size());
+			return GetVectorSize(reinterpret_cast<std::vector<double>*>(ptr));
+		case Bool:
+			return GetVectorSize(reinterpret_cast<std::vector<bool>*>(ptr));
 		case String:
-			return static_cast<ptrdiff_t>(reinterpret_cast<std::vector<std::string>*>(ptr)->size());
+			return GetVectorSize(reinterpret_cast<std::vector<std::string>*>(ptr));
 		default:
 			return -1; // Return -1 or some error code for invalid type
 	}
@@ -1256,56 +1449,36 @@ ptrdiff_t GetVectorSize(void* ptr, DataType type) {
 
 void* GetVectorData(void* ptr, DataType type) {
 	switch (type) {
+		case Bool:
+			return GetVectorData<bool>(reinterpret_cast<std::vector<bool>*>(ptr));
 		case Char8:
-			return reinterpret_cast<std::vector<char>*>(ptr)->data();
+			return GetVectorData<>(reinterpret_cast<std::vector<char>*>(ptr));
 		case Char16:
-			return reinterpret_cast<std::vector<uint16_t>*>(ptr)->data();
+			return GetVectorData<>(reinterpret_cast<std::vector<char16_t>*>(ptr));
 		case Int8:
-			return reinterpret_cast<std::vector<int8_t>*>(ptr)->data();
+			return GetVectorData<>(reinterpret_cast<std::vector<int8_t>*>(ptr));
 		case Int16:
-			return reinterpret_cast<std::vector<int16_t>*>(ptr)->data();
+			return GetVectorData<>(reinterpret_cast<std::vector<int16_t>*>(ptr));
 		case Int32:
-			return reinterpret_cast<std::vector<int32_t>*>(ptr)->data();
+			return GetVectorData<>(reinterpret_cast<std::vector<int32_t>*>(ptr));
 		case Int64:
-			return reinterpret_cast<std::vector<int64_t>*>(ptr)->data();
+			return GetVectorData<>(reinterpret_cast<std::vector<int64_t>*>(ptr));
 		case UInt8:
-			return reinterpret_cast<std::vector<uint8_t>*>(ptr)->data();
+			return GetVectorData<>(reinterpret_cast<std::vector<uint8_t>*>(ptr));
 		case UInt16:
-			return reinterpret_cast<std::vector<uint16_t>*>(ptr)->data();
+			return GetVectorData<>(reinterpret_cast<std::vector<uint16_t>*>(ptr));
 		case UInt32:
-			return reinterpret_cast<std::vector<uint32_t>*>(ptr)->data();
+			return GetVectorData<>(reinterpret_cast<std::vector<uint32_t>*>(ptr));
 		case UInt64:
-			return reinterpret_cast<std::vector<uint64_t>*>(ptr)->data();
+			return GetVectorData<>(reinterpret_cast<std::vector<uint64_t>*>(ptr));
 		case Pointer:
-			return reinterpret_cast<std::vector<uintptr_t>*>(ptr)->data();
+			return GetVectorData<>(reinterpret_cast<std::vector<uintptr_t>*>(ptr));
 		case Float:
-			return reinterpret_cast<std::vector<float>*>(ptr)->data();
+			return GetVectorData<>(reinterpret_cast<std::vector<float>*>(ptr));
 		case Double:
-			return reinterpret_cast<std::vector<double>*>(ptr)->data();
-		case Bool: {
-			auto& vector = *reinterpret_cast<std::vector<bool>*>(ptr);
-
-			bool* boolArray = new bool[vector.size()];
-
-			// Manually copy values from std::vector<bool> to the bool array
-			for (size_t i = 0; i < vector.size(); ++i) {
-				boolArray[i] = vector[i];
-			}
-
-			return boolArray;
-		}
-		case String: {
-			auto& vector = *reinterpret_cast<std::vector<std::string>*>(ptr);
-
-			char** strArray = new char*[vector.size()];
-
-			// Manually copy values from std::vector<std::string> to the char* array
-			for (size_t i = 0; i < vector.size(); ++i) {
-				strArray[i] = vector[i].data();
-			}
-
-			return strArray;
-		}
+			return GetVectorData<>(reinterpret_cast<std::vector<double>*>(ptr));
+		case String:
+			return GetVectorData<GoString>(reinterpret_cast<std::vector<std::string>*>(ptr));
 		default:
 			return nullptr; // Return nullptr for invalid type
 	}
@@ -1313,87 +1486,51 @@ void* GetVectorData(void* ptr, DataType type) {
 
 void ConstructVector(void* ptr, void* arr, ptrdiff_t len, DataType type) {
 	switch (type) {
-		case Bool: {
-			auto* vector = reinterpret_cast<std::vector<bool>*>(ptr);
-			std::construct_at(vector, len == 0 ? std::vector<bool>() : std::vector<bool>(static_cast<bool*>(arr), static_cast<bool*>(arr) + len));
+		case Bool:
+			ConstructVector(reinterpret_cast<std::vector<bool>*>(ptr), static_cast<bool*>(arr), len);
 			break;
-		}
-		case Char8: {
-			auto* vector = reinterpret_cast<std::vector<char>*>(ptr);
-			std::construct_at(vector, len == 0 ? std::vector<char>() : std::vector<char>(static_cast<char*>(arr), static_cast<char*>(arr) + len));
+		case Char8:
+			ConstructVector(reinterpret_cast<std::vector<char>*>(ptr), static_cast<char*>(arr), len);
 			break;
-		}
-		case Char16: {
-			auto* vector = reinterpret_cast<std::vector<uint16_t>*>(ptr);
-			std::construct_at(vector, len == 0 ? std::vector<uint16_t>() : std::vector<uint16_t>(static_cast<uint16_t*>(arr), static_cast<uint16_t*>(arr) + len));
+		case Char16:
+			ConstructVector(reinterpret_cast<std::vector<char16_t>*>(ptr), static_cast<char16_t*>(arr), len);
 			break;
-		}
-		case Int8: {
-			auto* vector = reinterpret_cast<std::vector<int8_t>*>(ptr);
-			std::construct_at(vector, len == 0 ? std::vector<int8_t>() : std::vector<int8_t>(static_cast<int8_t*>(arr), static_cast<int8_t*>(arr) + len));
+		case Int8:
+			ConstructVector(reinterpret_cast<std::vector<int8_t>*>(ptr), static_cast<int8_t*>(arr), len);
 			break;
-		}
-		case Int16: {
-			auto* vector = reinterpret_cast<std::vector<int16_t>*>(ptr);
-			std::construct_at(vector, len == 0 ? std::vector<int16_t>() : std::vector<int16_t>(static_cast<int16_t*>(arr), static_cast<int16_t*>(arr) + len));
+		case Int16:
+			ConstructVector(reinterpret_cast<std::vector<int16_t>*>(ptr), static_cast<int16_t*>(arr), len);
 			break;
-		}
-		case Int32: {
-			auto* vector = reinterpret_cast<std::vector<int32_t>*>(ptr);
-			std::construct_at(vector, len == 0 ? std::vector<int32_t>() : std::vector<int32_t>(static_cast<int32_t*>(arr), static_cast<int32_t*>(arr) + len));
+		case Int32:
+			ConstructVector(reinterpret_cast<std::vector<int32_t>*>(ptr), static_cast<int32_t*>(arr), len);
 			break;
-		}
-		case Int64: {
-			auto* vector = reinterpret_cast<std::vector<int64_t>*>(ptr);
-			std::construct_at(vector, len == 0 ? std::vector<int64_t>() : std::vector<int64_t>(static_cast<int64_t*>(arr), static_cast<int64_t*>(arr) + len));
+		case Int64:
+			ConstructVector(reinterpret_cast<std::vector<int64_t>*>(ptr), static_cast<int64_t*>(arr), len);
 			break;
-		}
-		case UInt8: {
-			auto* vector = reinterpret_cast<std::vector<uint8_t>*>(ptr);
-			std::construct_at(vector, len == 0 ? std::vector<uint8_t>() : std::vector<uint8_t>(static_cast<uint8_t*>(arr), static_cast<uint8_t*>(arr) + len));
+		case UInt8:
+			ConstructVector(reinterpret_cast<std::vector<uint8_t>*>(ptr), static_cast<uint8_t*>(arr), len);
 			break;
-		}
-		case UInt16: {
-			auto* vector = reinterpret_cast<std::vector<uint16_t>*>(ptr);
-			std::construct_at(vector, len == 0 ? std::vector<uint16_t>() : std::vector<uint16_t>(static_cast<uint16_t*>(arr), static_cast<uint16_t*>(arr) + len));
+		case UInt16:
+			ConstructVector(reinterpret_cast<std::vector<uint16_t>*>(ptr), static_cast<uint16_t*>(arr), len);
 			break;
-		}
-		case UInt32: {
-			auto* vector = reinterpret_cast<std::vector<uint32_t>*>(ptr);
-			std::construct_at(vector, len == 0 ? std::vector<uint32_t>() : std::vector<uint32_t>(static_cast<uint32_t*>(arr), static_cast<uint32_t*>(arr) + len));
+		case UInt32:
+			ConstructVector(reinterpret_cast<std::vector<uint32_t>*>(ptr), static_cast<uint32_t*>(arr), len);
 			break;
-		}
-		case UInt64: {
-			auto* vector = reinterpret_cast<std::vector<uint64_t>*>(ptr);
-			std::construct_at(vector, len == 0 ? std::vector<uint64_t>() : std::vector<uint64_t>(static_cast<uint64_t*>(arr), static_cast<uint64_t*>(arr) + len));
+		case UInt64:
+			ConstructVector(reinterpret_cast<std::vector<uint64_t>*>(ptr), static_cast<uint64_t*>(arr), len);
 			break;
-		}
-		case Pointer: {
-			auto* vector = reinterpret_cast<std::vector<uintptr_t>*>(ptr);
-			std::construct_at(vector, len == 0 ? std::vector<uintptr_t>() : std::vector<uintptr_t>(static_cast<uintptr_t*>(arr), static_cast<uintptr_t*>(arr) + len));
+		case Pointer:
+			ConstructVector(reinterpret_cast<std::vector<uintptr_t>*>(ptr), static_cast<uintptr_t*>(arr), len);
 			break;
-		}
-		case Float: {
-			auto* vector = reinterpret_cast<std::vector<float>*>(ptr);
-			std::construct_at(vector, len == 0 ? std::vector<float>() : std::vector<float>(static_cast<float*>(arr), static_cast<float*>(arr) + len));
+		case Float:
+			ConstructVector(reinterpret_cast<std::vector<float>*>(ptr), static_cast<float*>(arr), len);
 			break;
-		}
-		case Double: {
-			auto* vector = reinterpret_cast<std::vector<double>*>(ptr);
-			std::construct_at(vector, len == 0 ? std::vector<double>() : std::vector<double>(static_cast<double*>(arr), static_cast<double*>(arr) + len));
+		case Double:
+			ConstructVector(reinterpret_cast<std::vector<double>*>(ptr), static_cast<double*>(arr), len);
 			break;
-		}
-		case String: {
-			auto* vector = reinterpret_cast<std::vector<std::string>*>(ptr);
-			std::construct_at(vector, std::vector<std::string>());
-			size_t N = static_cast<size_t>(len);
-			vector->reserve(N);
-			for (size_t i = 0; i < N; ++i) {
-				const auto& str = static_cast<GoString*>(arr)[i];
-				vector->emplace_back(str.p, static_cast<size_t>(str.n));
-			}
+		case String:
+			ConstructVector(reinterpret_cast<std::vector<std::string>*>(ptr), static_cast<GoString*>(arr), len);
 			break;
-		}
 		default:
 			break;
 	}
@@ -1401,132 +1538,51 @@ void ConstructVector(void* ptr, void* arr, ptrdiff_t len, DataType type) {
 
 void AssignVector(void* ptr, void* arr, ptrdiff_t len, DataType type) {
 	switch (type) {
-		case Bool: {
-			auto* vector = reinterpret_cast<std::vector<bool>*>(ptr);
-			if (arr == nullptr || len == 0)
-				vector->clear();
-			else
-				vector->assign(static_cast<bool*>(arr), static_cast<bool*>(arr) + len);
+		case Bool:
+			AssignVector(reinterpret_cast<std::vector<bool>*>(ptr), static_cast<bool*>(arr), len);
 			break;
-		}
-		case Char8: {
-			auto* vector = reinterpret_cast<std::vector<char>*>(ptr);
-			if (arr == nullptr || len == 0)
-				vector->clear();
-			else
-				vector->assign(static_cast<char*>(arr), static_cast<char*>(arr) + len);
+		case Char8:
+			AssignVector(reinterpret_cast<std::vector<char>*>(ptr), static_cast<char*>(arr), len);
 			break;
-		}
-		case Char16: {
-			auto* vector = reinterpret_cast<std::vector<uint16_t>*>(ptr);
-			if (arr == nullptr || len == 0)
-				vector->clear();
-			else
-				vector->assign(static_cast<uint16_t*>(arr), static_cast<uint16_t*>(arr) + len);
+		case Char16:
+			AssignVector(reinterpret_cast<std::vector<char16_t>*>(ptr), static_cast<char16_t*>(arr), len);
 			break;
-		}
-		case Int8: {
-			auto* vector = reinterpret_cast<std::vector<int8_t>*>(ptr);
-			if (arr == nullptr || len == 0)
-				vector->clear();
-			else
-				vector->assign(static_cast<int8_t*>(arr), static_cast<int8_t*>(arr) + len);
+		case Int8:
+			AssignVector(reinterpret_cast<std::vector<int8_t>*>(ptr), static_cast<int8_t*>(arr), len);
 			break;
-		}
-		case Int16: {
-			auto* vector = reinterpret_cast<std::vector<int16_t>*>(ptr);
-			if (arr == nullptr || len == 0)
-				vector->clear();
-			else
-				vector->assign(static_cast<int16_t*>(arr), static_cast<int16_t*>(arr) + len);
+		case Int16:
+			AssignVector(reinterpret_cast<std::vector<int16_t>*>(ptr), static_cast<int16_t*>(arr), len);
 			break;
-		}
-		case Int32: {
-			auto* vector = reinterpret_cast<std::vector<int32_t>*>(ptr);
-			if (arr == nullptr || len == 0)
-				vector->clear();
-			else
-				vector->assign(static_cast<int32_t*>(arr), static_cast<int32_t*>(arr) + len);
+		case Int32:
+			AssignVector(reinterpret_cast<std::vector<int32_t>*>(ptr), static_cast<int32_t*>(arr), len);
 			break;
-		}
-		case Int64: {
-			auto* vector = reinterpret_cast<std::vector<int64_t>*>(ptr);
-			if (arr == nullptr || len == 0)
-				vector->clear();
-			else
-				vector->assign(static_cast<int64_t*>(arr), static_cast<int64_t*>(arr) + len);
+		case Int64:
+			AssignVector(reinterpret_cast<std::vector<int64_t>*>(ptr), static_cast<int64_t*>(arr), len);
 			break;
-		}
-		case UInt8: {
-			auto* vector = reinterpret_cast<std::vector<uint8_t>*>(ptr);
-			if (arr == nullptr || len == 0)
-				vector->clear();
-			else
-				vector->assign(static_cast<uint8_t*>(arr), static_cast<uint8_t*>(arr) + len);
+		case UInt8:
+			AssignVector(reinterpret_cast<std::vector<uint8_t>*>(ptr), static_cast<uint8_t*>(arr), len);
 			break;
-		}
-		case UInt16: {
-			auto* vector = reinterpret_cast<std::vector<uint16_t>*>(ptr);
-			if (arr == nullptr || len == 0)
-				vector->clear();
-			else
-				vector->assign(static_cast<uint16_t*>(arr), static_cast<uint16_t*>(arr) + len);
+		case UInt16:
+			AssignVector(reinterpret_cast<std::vector<uint16_t>*>(ptr), static_cast<uint16_t*>(arr), len);
 			break;
-		}
-		case UInt32: {
-			auto* vector = reinterpret_cast<std::vector<uint32_t>*>(ptr);
-			if (arr == nullptr || len == 0)
-				vector->clear();
-			else
-				vector->assign(static_cast<uint32_t*>(arr), static_cast<uint32_t*>(arr) + len);
+		case UInt32:
+			AssignVector(reinterpret_cast<std::vector<uint32_t>*>(ptr), static_cast<uint32_t*>(arr), len);
 			break;
-		}
-		case UInt64: {
-			auto* vector = reinterpret_cast<std::vector<uint64_t>*>(ptr);
-			if (arr == nullptr || len == 0)
-				vector->clear();
-			else
-				vector->assign(static_cast<uint64_t*>(arr), static_cast<uint64_t*>(arr) + len);
+		case UInt64:
+			AssignVector(reinterpret_cast<std::vector<uint64_t>*>(ptr), static_cast<uint64_t*>(arr), len);
 			break;
-		}
-		case Pointer: {
-			auto* vector = reinterpret_cast<std::vector<uintptr_t>*>(ptr);
-			if (arr == nullptr || len == 0)
-				vector->clear();
-			else
-				vector->assign(static_cast<uintptr_t*>(arr), static_cast<uintptr_t*>(arr) + len);
+		case Pointer:
+			AssignVector(reinterpret_cast<std::vector<uintptr_t>*>(ptr), static_cast<uintptr_t*>(arr), len);
 			break;
-		}
-		case Float: {
-			auto* vector = reinterpret_cast<std::vector<float>*>(ptr);
-			if (arr == nullptr || len == 0)
-				vector->clear();
-			else
-				vector->assign(static_cast<float*>(arr), static_cast<float*>(arr) + len);
+		case Float:
+			AssignVector(reinterpret_cast<std::vector<float>*>(ptr), static_cast<float*>(arr), len);
 			break;
-		}
-		case Double: {
-			auto* vector = reinterpret_cast<std::vector<double>*>(ptr);
-			if (arr == nullptr || len == 0)
-				vector->clear();
-			else
-				vector->assign(static_cast<double*>(arr), static_cast<double*>(arr) + len);
+		case Double:
+			AssignVector(reinterpret_cast<std::vector<double>*>(ptr), static_cast<double*>(arr), len);
 			break;
-		}
-		case String: {
-			auto* vector = reinterpret_cast<std::vector<std::string>*>(ptr);
-			if (arr == nullptr || len == 0)
-				vector->clear();
-			else {
-				size_t N = static_cast<size_t>(len);
-				vector->resize(N);
-				for (size_t i = 0; i < N; ++i) {
-					const auto& str = static_cast<GoString*>(arr)[i];
-					(*vector)[i].assign(str.p, static_cast<size_t>(str.n));
-				}
-			}
+		case String:
+			AssignVector(reinterpret_cast<std::vector<std::string>*>(ptr), static_cast<GoString*>(arr), len);
 			break;
-		}
 		default:
 			break;
 	}
@@ -1535,49 +1591,49 @@ void AssignVector(void* ptr, void* arr, ptrdiff_t len, DataType type) {
 void DeleteVector(void* ptr, DataType type) {
 	switch (type) {
 		case Bool:
-			delete reinterpret_cast<std::vector<bool>*>(ptr);
+			DeleteVector(reinterpret_cast<std::vector<bool>*>(ptr));
 			break;
 		case Char8:
-			delete reinterpret_cast<std::vector<char>*>(ptr);
+			DeleteVector(reinterpret_cast<std::vector<char>*>(ptr));
 			break;
 		case Char16:
-			delete reinterpret_cast<std::vector<uint16_t>*>(ptr);
+			DeleteVector(reinterpret_cast<std::vector<char16_t>*>(ptr));
 			break;
 		case Int8:
-			delete reinterpret_cast<std::vector<int8_t>*>(ptr);
+			DeleteVector(reinterpret_cast<std::vector<int8_t>*>(ptr));
 			break;
 		case Int16:
-			delete reinterpret_cast<std::vector<int16_t>*>(ptr);
+			DeleteVector(reinterpret_cast<std::vector<int16_t>*>(ptr));
 			break;
 		case Int32:
-			delete reinterpret_cast<std::vector<int32_t>*>(ptr);
+			DeleteVector(reinterpret_cast<std::vector<int32_t>*>(ptr));
 			break;
 		case Int64:
-			delete reinterpret_cast<std::vector<int64_t>*>(ptr);
+			DeleteVector(reinterpret_cast<std::vector<int64_t>*>(ptr));
 			break;
 		case UInt8:
-			delete reinterpret_cast<std::vector<uint8_t>*>(ptr);
+			DeleteVector(reinterpret_cast<std::vector<uint8_t>*>(ptr));
 			break;
 		case UInt16:
-			delete reinterpret_cast<std::vector<uint16_t>*>(ptr);
+			DeleteVector(reinterpret_cast<std::vector<uint16_t>*>(ptr));
 			break;
 		case UInt32:
-			delete reinterpret_cast<std::vector<uint32_t>*>(ptr);
+			DeleteVector(reinterpret_cast<std::vector<uint32_t>*>(ptr));
 			break;
 		case UInt64:
-			delete reinterpret_cast<std::vector<uint64_t>*>(ptr);
+			DeleteVector(reinterpret_cast<std::vector<uint64_t>*>(ptr));
 			break;
 		case Pointer:
-			delete reinterpret_cast<std::vector<uintptr_t>*>(ptr);
+			DeleteVector(reinterpret_cast<std::vector<uintptr_t>*>(ptr));
 			break;
 		case Float:
-			delete reinterpret_cast<std::vector<float>*>(ptr);
+			DeleteVector(reinterpret_cast<std::vector<float>*>(ptr));
 			break;
 		case Double:
-			delete reinterpret_cast<std::vector<double>*>(ptr);
+			DeleteVector(reinterpret_cast<std::vector<double>*>(ptr));
 			break;
 		case String:
-			delete reinterpret_cast<std::vector<std::string>*>(ptr);
+			DeleteVector(reinterpret_cast<std::vector<std::string>*>(ptr));
 			break;
 		default:
 			// Invalid type, do nothing or handle error if needed
@@ -1588,63 +1644,66 @@ void DeleteVector(void* ptr, DataType type) {
 void FreeVector(void* ptr, DataType type) {
 	switch (type) {
 		case Bool:
-			reinterpret_cast<std::vector<bool>*>(ptr)->~vector();
+			FreeVector(reinterpret_cast<std::vector<bool>*>(ptr));
 			break;
 		case Char8:
-			reinterpret_cast<std::vector<char>*>(ptr)->~vector();
+			FreeVector(reinterpret_cast<std::vector<char>*>(ptr));
 			break;
 		case Char16:
-			reinterpret_cast<std::vector<uint16_t>*>(ptr)->~vector();
+			FreeVector(reinterpret_cast<std::vector<char16_t>*>(ptr));
 			break;
 		case Int8:
-			reinterpret_cast<std::vector<int8_t>*>(ptr)->~vector();
+			FreeVector(reinterpret_cast<std::vector<int8_t>*>(ptr));
 			break;
 		case Int16:
-			reinterpret_cast<std::vector<int16_t>*>(ptr)->~vector();
+			FreeVector(reinterpret_cast<std::vector<int16_t>*>(ptr));
 			break;
 		case Int32:
-			reinterpret_cast<std::vector<int32_t>*>(ptr)->~vector();
+			FreeVector(reinterpret_cast<std::vector<int32_t>*>(ptr));
 			break;
 		case Int64:
-			reinterpret_cast<std::vector<int64_t>*>(ptr)->~vector();
+			FreeVector(reinterpret_cast<std::vector<int64_t>*>(ptr));
 			break;
 		case UInt8:
-			reinterpret_cast<std::vector<uint8_t>*>(ptr)->~vector();
+			FreeVector(reinterpret_cast<std::vector<uint8_t>*>(ptr));
 			break;
 		case UInt16:
-			reinterpret_cast<std::vector<uint16_t>*>(ptr)->~vector();
+			FreeVector(reinterpret_cast<std::vector<uint16_t>*>(ptr));
 			break;
 		case UInt32:
-			reinterpret_cast<std::vector<uint32_t>*>(ptr)->~vector();
+			FreeVector(reinterpret_cast<std::vector<uint32_t>*>(ptr));
 			break;
 		case UInt64:
-			reinterpret_cast<std::vector<uint64_t>*>(ptr)->~vector();
+			FreeVector(reinterpret_cast<std::vector<uint64_t>*>(ptr));
 			break;
 		case Pointer:
-			reinterpret_cast<std::vector<uintptr_t>*>(ptr)->~vector();
+			FreeVector(reinterpret_cast<std::vector<uintptr_t>*>(ptr));
 			break;
 		case Float:
-			reinterpret_cast<std::vector<float>*>(ptr)->~vector();
+			FreeVector(reinterpret_cast<std::vector<float>*>(ptr));
 			break;
 		case Double:
-			reinterpret_cast<std::vector<double>*>(ptr)->~vector();
+			FreeVector(reinterpret_cast<std::vector<double>*>(ptr));
 			break;
 		case String:
-			reinterpret_cast<std::vector<std::string>*>(ptr)->~vector();
+			FreeVector(reinterpret_cast<std::vector<std::string>*>(ptr));
 			break;
 		default:
 			// Invalid type, do nothing or handle error if needed
 			return;
 	}
-	free(ptr);
 }
 
 void DeleteVectorDataBool(void* ptr) {
 	delete[] reinterpret_cast<bool*>(ptr);
+	g_numberOfAllocs[type_id<bool*>]--;
+	assert(g_numberOfAllocs[type_id<bool*>] != -1);
 }
 
 void DeleteVectorDataCStr(void* ptr) {
 	delete[] reinterpret_cast<char**>(ptr);
+	g_numberOfAllocs[type_id<char**>]--;
+	assert(g_numberOfAllocs[type_id<char**>] != -1);
 }
 
 const std::array<void*, 35> GoLanguageModule::_pluginApi = {
