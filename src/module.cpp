@@ -260,8 +260,8 @@ void GoLanguageModule::Shutdown() {
 
 void GoLanguageModule::OnMethodExport(PluginRef plugin) {
 	auto pluginName = plugin.GetName();
-	for (const auto& [name, addr] : plugin.GetMethods()) {
-		_nativesMap.try_emplace(std::format("{}.{}", pluginName, name), addr);
+	for (const auto& [method, addr] : plugin.GetMethods()) {
+		_nativesMap.try_emplace(std::format("{}.{}", pluginName, method.GetName()), addr);
 	}
 }
 
@@ -306,7 +306,7 @@ LoadResult GoLanguageModule::OnPluginLoad(PluginRef plugin) {
 	for (const auto& method : exportedMethods) {
 		if (auto func = assembly->GetFunctionByName(method.GetFunctionName())) {
 			if (IsMethodPrimitive(method)) {
-				methods.emplace_back(method.GetName(), func);
+				methods.emplace_back(method, func);
 			} else {
 				auto function = std::make_unique<Function>(_rt);
 				func = function->GetJitFunc(method, &InternalCall, func);
@@ -315,7 +315,7 @@ LoadResult GoLanguageModule::OnPluginLoad(PluginRef plugin) {
 					continue;
 				}
 				_functions.emplace_back(std::move(function));
-				methods.emplace_back(method.GetName(), func);
+				methods.emplace_back(method, func);
 			}
 		} else {
 			funcErrors.emplace_back(method.GetName());
