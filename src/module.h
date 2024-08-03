@@ -89,7 +89,7 @@ namespace golm {
 		void OnPluginStart(plugify::PluginRef plugin) override;
 		void OnPluginEnd(plugify::PluginRef plugin) override;
 		void OnMethodExport(plugify::PluginRef plugin) override;
-		bool IsDebugBuild() override { return GOLM_IS_DEBUG; };
+		bool IsDebugBuild() override;
 
 		const std::shared_ptr<plugify::IPlugifyProvider>& GetProvider() { return _provider; }
 		plugify::MemAddr GetNativeMethod(std::string_view methodName) const;

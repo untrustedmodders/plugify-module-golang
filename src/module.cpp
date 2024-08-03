@@ -258,6 +258,10 @@ void GoLanguageModule::Shutdown() {
 	_provider.reset();
 }
 
+bool GoLanguageModule::IsDebugBuild() {
+	return GOLM_IS_DEBUG;
+}
+
 void GoLanguageModule::OnMethodExport(PluginRef plugin) {
 	for (const auto& [method, addr] : plugin.GetMethods()) {
 		_nativesMap.try_emplace(std::format("{}.{}", plugin.GetName(), method.GetName()), addr);

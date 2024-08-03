@@ -7,9 +7,9 @@
 	"description": "Adds support for Go plugins",
 	"createdBy": "untrustedmodders",
 	"createdByURL": "https://github.com/untrustedmodders/",
-	"docsURL": "https://github.com/untrustedmodders/go-lang-module/README.md",
+	"docsURL": "https://github.com/untrustedmodders/go-lang-module/blob/main/README.md",
 	"downloadURL": "https://github.com/untrustedmodders/go-lang-module/releases/download/v${GOLM_VERSION}/${GOLM_PACKAGE}.zip",
-	"updateURL": "https://untrustedmodders.github.com/go-lang-module/go-lang-module.json",
+	"updateURL": "https://untrustedmodders.github.io/go-lang-module/go-lang-module.json",
 	"supportedPlatforms": [],
 	"forceLoad": false
 }
