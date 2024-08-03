@@ -259,9 +259,8 @@ void GoLanguageModule::Shutdown() {
 }
 
 void GoLanguageModule::OnMethodExport(PluginRef plugin) {
-	auto pluginName = plugin.GetName();
 	for (const auto& [method, addr] : plugin.GetMethods()) {
-		_nativesMap.try_emplace(std::format("{}.{}", pluginName, method.GetName()), addr);
+		_nativesMap.try_emplace(std::format("{}.{}", plugin.GetName(), method.GetName()), addr);
 	}
 }
 
