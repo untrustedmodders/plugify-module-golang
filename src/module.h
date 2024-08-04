@@ -67,8 +67,8 @@ namespace golm {
 
 	private:
 		std::unique_ptr<plugify::Assembly> _assembly;
-		StartFunc _startFunc{ nullptr };
-		EndFunc _endFunc{ nullptr };
+		StartFunc _startFunc;
+		EndFunc _endFunc;
 	};
 
 	//using MethodRef = std::reference_wrapper<const plugify::Method>;
