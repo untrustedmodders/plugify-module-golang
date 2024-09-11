@@ -4,6 +4,7 @@
 #include <plugify/plugin.h>
 #include <plugify/log.h>
 #include <plugify/math.h>
+#include <plugify/string.h>
 #include <plugify/plugin_descriptor.h>
 #include <plugify/plugin_reference_descriptor.h>
 #include <plugify/plugify_provider.h>
@@ -45,7 +46,7 @@ GoSlice* CreateGoSliceBool(const std::vector<bool>& source, ArgumentList& args, 
 	return &slice;
 }
 
-GoSlice* CreateGoSliceString(const std::vector<std::string>& source, ArgumentList& args, StringHolder& holder) {
+GoSlice* CreateGoSliceString(const std::vector<plg::string>& source, ArgumentList& args, StringHolder& holder) {
 	assert(args.size() != args.capacity() && "Resizing list will invalidate pointers!");
 	size_t N = source.size();
 	auto& strArray = holder.emplace_back(std::make_unique<GoString[]>(N));
@@ -74,7 +75,7 @@ GoSlice* CreateGoSlice(ArgumentList& args) {
 	return &slice;
 }
 
-GoString* CreateGoString(const std::string& source, ArgumentList& args) {
+GoString* CreateGoString(const plg::string& source, ArgumentList& args) {
 	assert(args.size() != args.capacity() && "Resizing list will invalidate pointers!");
 	auto size = static_cast<GoInt>(source.length());
 	auto& slice = args.emplace_back((void*)source.c_str(), size, 0);
@@ -104,7 +105,7 @@ void CopyGoSliceToVector(const GoSlice& source, std::vector<bool>& dest) {
 }
 
 template<>
-void CopyGoSliceToVector(const GoSlice& source, std::vector<std::string>& dest) {
+void CopyGoSliceToVector(const GoSlice& source, std::vector<plg::string>& dest) {
 	dest.resize(static_cast<size_t>(source.len));
 	for (size_t i = 0; i < dest.size(); ++i) {
 		const auto& str = reinterpret_cast<GoString*>(source.data)[i];
@@ -112,7 +113,7 @@ void CopyGoSliceToVector(const GoSlice& source, std::vector<std::string>& dest) 
 	}
 }
 
-void CopyGoStringToString(const GoString& source, std::string& dest) {
+void CopyGoStringToString(const GoString& source, plg::string& dest) {
 	if (source.p == nullptr || source.n == 0)
 		dest.clear();
 	else if (dest.data() != source.p)
@@ -140,11 +141,11 @@ void CopyGoSliceToVectorReturn(const GoSlice& source, std::vector<bool>& dest) {
 }
 
 template<>
-void CopyGoSliceToVectorReturn(const GoSlice& source, std::vector<std::string>& dest) {
+void CopyGoSliceToVectorReturn(const GoSlice& source, std::vector<plg::string>& dest) {
 	if (source.data == nullptr || source.len == 0)
-		std::construct_at(&dest, std::vector<std::string>());
+		std::construct_at(&dest, std::vector<plg::string>());
 	else {
-		std::construct_at(&dest, std::vector<std::string>(static_cast<size_t>(source.len)));
+		std::construct_at(&dest, std::vector<plg::string>(static_cast<size_t>(source.len)));
 		for (size_t i = 0; i < dest.size(); ++i) {
 			const auto& str = reinterpret_cast<GoString*>(source.data)[i];
 			dest[i].assign(str.p, static_cast<size_t>(str.n));
@@ -152,11 +153,11 @@ void CopyGoSliceToVectorReturn(const GoSlice& source, std::vector<std::string>& 
 	}
 }
 
-void CopyGoStringToStringReturn(const GoString& source, std::string& dest) {
+void CopyGoStringToStringReturn(const GoString& source, plg::string& dest) {
 	if (source.p == nullptr || source.n == 0)
-		std::construct_at(&dest, std::string());
+		std::construct_at(&dest, plg::string());
 	else
-		std::construct_at(&dest, std::string(source.p, static_cast<size_t>(source.n)));
+		std::construct_at(&dest, plg::string(source.p, static_cast<size_t>(source.n)));
 }
 
 template<typename T>
@@ -514,7 +515,7 @@ void GoLanguageModule::InternalCall(MethodRef method, MemAddr addr, const Parame
 					break;
 				// GoString*
 				case ValueType::String:
-					dcArgPointer(vm, CreateGoString(*p->GetArgument<std::string*>(i), args));
+					dcArgPointer(vm, CreateGoString(*p->GetArgument<plg::string*>(i), args));
 					break;
 				// GoSlice*
 				case ValueType::ArrayBool:
@@ -560,7 +561,7 @@ void GoLanguageModule::InternalCall(MethodRef method, MemAddr addr, const Parame
 					dcArgPointer(vm, CreateGoSlice<double>(*p->GetArgument<std::vector<double>*>(i), args));
 					break;
 				case ValueType::ArrayString:
-					dcArgPointer(vm, CreateGoSliceString(*p->GetArgument<std::vector<std::string>*>(i), args, stringHolder));
+					dcArgPointer(vm, CreateGoSliceString(*p->GetArgument<std::vector<plg::string>*>(i), args, stringHolder));
 					break;
 				default:
 					std::puts(LOG_PREFIX "Unsupported types!\n");
@@ -618,7 +619,7 @@ void GoLanguageModule::InternalCall(MethodRef method, MemAddr addr, const Parame
 					break;
 				// GoString
 				case ValueType::String:
-					dcArgAggr(vm, CreateDcAggr<GoString>(aggrs), CreateGoString(*p->GetArgument<std::string*>(i), args));
+					dcArgAggr(vm, CreateDcAggr<GoString>(aggrs), CreateGoString(*p->GetArgument<plg::string*>(i), args));
 					break;
 				// GoSlice
 				case ValueType::ArrayBool:
@@ -664,7 +665,7 @@ void GoLanguageModule::InternalCall(MethodRef method, MemAddr addr, const Parame
 					dcArgAggr(vm, CreateDcAggr<GoSlice>(aggrs), CreateGoSlice<double>(*p->GetArgument<std::vector<double>*>(i), args));
 					break;
 				case ValueType::ArrayString:
-					dcArgAggr(vm, CreateDcAggr<GoSlice>(aggrs), CreateGoSliceString(*p->GetArgument<std::vector<std::string>*>(i), args, stringHolder));
+					dcArgAggr(vm, CreateDcAggr<GoSlice>(aggrs), CreateGoSliceString(*p->GetArgument<std::vector<plg::string>*>(i), args, stringHolder));
 					break;
 				default:
 					std::puts(LOG_PREFIX "Unsupported types!\n");
@@ -795,7 +796,7 @@ void GoLanguageModule::InternalCall(MethodRef method, MemAddr addr, const Parame
 			break;
 		}
 		case ValueType::String: {
-			auto* dest = p->GetArgument<std::string*>(0);
+			auto* dest = p->GetArgument<plg::string*>(0);
 			GoString source;
 			dcCallAggr(vm, addr, ag, &source);
 			CopyGoStringToStringReturn(source, *dest);
@@ -915,7 +916,7 @@ void GoLanguageModule::InternalCall(MethodRef method, MemAddr addr, const Parame
 			break;
 		}
 		case ValueType::ArrayString: {
-			auto* dest = p->GetArgument<std::vector<std::string>*>(0);
+			auto* dest = p->GetArgument<std::vector<plg::string>*>(0);
 			GoSlice source;
 			dcCallAggr(vm, addr, ag, &source);
 			CopyGoSliceToVectorReturn(source, *dest);
@@ -936,7 +937,7 @@ void GoLanguageModule::InternalCall(MethodRef method, MemAddr addr, const Parame
 				if (param.IsReference()) {
 					switch (param.GetType()) {
 						case ValueType::String:
-							CopyGoStringToString(*reinterpret_cast<GoString*>(&args[k++]), *p->GetArgument<std::string*>(i));
+							CopyGoStringToString(*reinterpret_cast<GoString*>(&args[k++]), *p->GetArgument<plg::string*>(i));
 							break;
 						case ValueType::ArrayBool:
 							CopyGoSliceToVector(args[k++], *p->GetArgument<std::vector<bool>*>(i));
@@ -981,7 +982,7 @@ void GoLanguageModule::InternalCall(MethodRef method, MemAddr addr, const Parame
 							CopyGoSliceToVector(args[k++], *p->GetArgument<std::vector<double>*>(i));
 							break;
 						case ValueType::ArrayString: {
-							CopyGoSliceToVector(args[k++], *p->GetArgument<std::vector<std::string>*>(i));
+							CopyGoSliceToVector(args[k++], *p->GetArgument<std::vector<plg::string>*>(i));
 							break;
 						}
 						default:
@@ -1008,7 +1009,7 @@ std::map<type_index, int32_t> g_numberOfAllocs = { };
 
 std::string_view GetTypeName(type_index type) {
 	static std::map<type_index, std::string_view> typeNameMap = {
-			{type_id<std::string>, "String"},
+			{type_id<plg::string>, "String"},
 			{type_id<std::vector<bool>>, "VectorBool"},
 			{type_id<std::vector<char>>, "VectorChar8"},
 			{type_id<std::vector<char16_t>>, "VectorChar16"},
@@ -1023,7 +1024,7 @@ std::string_view GetTypeName(type_index type) {
 			{type_id<std::vector<uintptr_t>>, "VectorUIntPtr"},
 			{type_id<std::vector<float>>, "VectorFloat"},
 			{type_id<std::vector<double>>, "VectorDouble"},
-			{type_id<std::vector<std::string>>, "VectorString"},
+			{type_id<std::vector<plg::string>>, "VectorString"},
 			{type_id<bool*>, "BoolArray"},
 			{type_id<char*>, "CString"},
 			{type_id<char**>, "CStringArray"}
@@ -1149,43 +1150,43 @@ void DeleteCStr(const char* path) {
 }
 
 void* AllocateString() {
-	auto str = static_cast<std::string*>(malloc(sizeof(std::string)));
-	g_numberOfMalloc[type_id<std::string>]++;
+	auto str = static_cast<plg::string*>(malloc(sizeof(plg::string)));
+	g_numberOfMalloc[type_id<plg::string>]++;
 	return str;
 }
 void* CreateString(GoString source) {
-	auto str = source.n == 0 || source.p == nullptr ? new std::string() : new std::string(source.p, static_cast<size_t>(source.n));
-	g_numberOfAllocs[type_id<std::string>]++;
+	auto str = source.n == 0 || source.p == nullptr ? new plg::string() : new plg::string(source.p, static_cast<size_t>(source.n));
+	g_numberOfAllocs[type_id<plg::string>]++;
 	return str;
 }
-const char* GetStringData(std::string* string) {
+const char* GetStringData(plg::string* string) {
 	return string->c_str();
 }
-ptrdiff_t GetStringLength(std::string* string) {
+ptrdiff_t GetStringLength(plg::string* string) {
 	return static_cast<ptrdiff_t>(string->length());
 }
-void ConstructString(std::string* string, GoString source) {
+void ConstructString(plg::string* string, GoString source) {
 	if (source.n == 0 || source.p == nullptr)
-		std::construct_at(string, std::string());
+		std::construct_at(string, plg::string());
 	else
-		std::construct_at(string, std::string(source.p, static_cast<size_t>(source.n)));
+		std::construct_at(string, plg::string(source.p, static_cast<size_t>(source.n)));
 }
-void AssignString(std::string* string, GoString source) {
+void AssignString(plg::string* string, GoString source) {
 	if (source.p == nullptr || source.n == 0)
 		string->clear();
 	else
 		string->assign(source.p, static_cast<size_t>(source.n));
 }
-void FreeString(std::string* string) {
+void FreeString(plg::string* string) {
 	string->~basic_string();
 	free(string);
-	g_numberOfMalloc[type_id<std::string>]--;
-	assert(g_numberOfMalloc[type_id<std::string>] != -1);
+	g_numberOfMalloc[type_id<plg::string>]--;
+	assert(g_numberOfMalloc[type_id<plg::string>] != -1);
 }
-void DeleteString(std::string* string) {
+void DeleteString(plg::string* string) {
 	delete string;
-	g_numberOfAllocs[type_id<std::string>]--;
-	assert(g_numberOfAllocs[type_id<std::string>] != -1);
+	g_numberOfAllocs[type_id<plg::string>]--;
+	assert(g_numberOfAllocs[type_id<plg::string>] != -1);
 }
 
 enum DataType {
@@ -1216,8 +1217,8 @@ namespace {
 	}
 
 	template<typename T, typename = std::enable_if_t<std::is_same_v<T, GoString>>>
-	std::vector<std::string>* CreateVector(T* arr, ptrdiff_t len) {
-		auto vector = new std::vector<std::string>();
+	std::vector<plg::string>* CreateVector(T* arr, ptrdiff_t len) {
+		auto vector = new std::vector<plg::string>();
 		if (len != 0) {
 			vector->reserve(static_cast<size_t>(len));
 			for (ptrdiff_t i = 0; i < len; ++i) {
@@ -1226,7 +1227,7 @@ namespace {
 			}
 		}
 		assert(vector);
-		g_numberOfAllocs[type_id<std::vector<std::string>>]++;
+		g_numberOfAllocs[type_id<std::vector<plg::string>>]++;
 		return vector;
 	}
 
@@ -1239,10 +1240,10 @@ namespace {
 	}
 
 	template<typename T, typename = std::enable_if_t<std::is_same_v<T, GoString>>>
-	std::vector<std::string>* AllocateVector() {
-		auto vector = static_cast<std::vector<std::string>*>(malloc(sizeof(std::vector<std::string>)));
+	std::vector<plg::string>* AllocateVector() {
+		auto vector = static_cast<std::vector<plg::string>*>(malloc(sizeof(std::vector<plg::string>)));
 		assert(vector);
-		g_numberOfMalloc[type_id<std::vector<std::string>>]++;
+		g_numberOfMalloc[type_id<std::vector<plg::string>>]++;
 		return vector;
 	}
 
@@ -1276,7 +1277,7 @@ namespace {
 	}
 
 	template<typename T, typename = std::enable_if_t<std::is_same_v<T, GoString>>>
-	void AssignVector(std::vector<std::string>* vector, T* arr, ptrdiff_t len) {
+	void AssignVector(std::vector<plg::string>* vector, T* arr, ptrdiff_t len) {
 		if (arr == nullptr || len == 0)
 			vector->clear();
 		else {
@@ -1309,7 +1310,7 @@ namespace {
 	}
 
 	template<typename T, typename = std::enable_if_t<std::is_same_v<T, GoString>>>
-	char** GetVectorData(std::vector<std::string>* vector) {
+	char** GetVectorData(std::vector<plg::string>* vector) {
 		char** strArray = new char*[vector->size()];
 
 		// Manually copy values from std::vector<std::string> to the char* array
@@ -1328,8 +1329,8 @@ namespace {
 	}
 
 	template<typename T, typename = std::enable_if_t<std::is_same_v<T, GoString>>>
-	void ConstructVector(std::vector<std::string>* vector, T* arr, ptrdiff_t len) {
-		std::construct_at(vector, std::vector<std::string>());
+	void ConstructVector(std::vector<plg::string>* vector, T* arr, ptrdiff_t len) {
+		std::construct_at(vector, std::vector<plg::string>());
 		size_t N = static_cast<size_t>(len);
 		vector->reserve(N);
 		for (size_t i = 0; i < N; ++i) {
@@ -1407,7 +1408,7 @@ void* AllocateVector(DataType type) {
 		case Double:
 			return AllocateVector<double>();
 		case String:
-			return AllocateVector<std::string>();
+			return AllocateVector<plg::string>();
 		default:
 			return nullptr;
 	}
@@ -1444,7 +1445,7 @@ ptrdiff_t GetVectorSize(void* ptr, DataType type) {
 		case Bool:
 			return GetVectorSize(reinterpret_cast<std::vector<bool>*>(ptr));
 		case String:
-			return GetVectorSize(reinterpret_cast<std::vector<std::string>*>(ptr));
+			return GetVectorSize(reinterpret_cast<std::vector<plg::string>*>(ptr));
 		default:
 			return -1; // Return -1 or some error code for invalid type
 	}
@@ -1481,7 +1482,7 @@ void* GetVectorData(void* ptr, DataType type) {
 		case Double:
 			return GetVectorData<>(reinterpret_cast<std::vector<double>*>(ptr));
 		case String:
-			return GetVectorData<GoString>(reinterpret_cast<std::vector<std::string>*>(ptr));
+			return GetVectorData<GoString>(reinterpret_cast<std::vector<plg::string>*>(ptr));
 		default:
 			return nullptr; // Return nullptr for invalid type
 	}
@@ -1532,7 +1533,7 @@ void ConstructVector(void* ptr, void* arr, ptrdiff_t len, DataType type) {
 			ConstructVector(reinterpret_cast<std::vector<double>*>(ptr), static_cast<double*>(arr), len);
 			break;
 		case String:
-			ConstructVector(reinterpret_cast<std::vector<std::string>*>(ptr), static_cast<GoString*>(arr), len);
+			ConstructVector(reinterpret_cast<std::vector<plg::string>*>(ptr), static_cast<GoString*>(arr), len);
 			break;
 		default:
 			break;
@@ -1584,7 +1585,7 @@ void AssignVector(void* ptr, void* arr, ptrdiff_t len, DataType type) {
 			AssignVector(reinterpret_cast<std::vector<double>*>(ptr), static_cast<double*>(arr), len);
 			break;
 		case String:
-			AssignVector(reinterpret_cast<std::vector<std::string>*>(ptr), static_cast<GoString*>(arr), len);
+			AssignVector(reinterpret_cast<std::vector<plg::string>*>(ptr), static_cast<GoString*>(arr), len);
 			break;
 		default:
 			break;
@@ -1636,7 +1637,7 @@ void DeleteVector(void* ptr, DataType type) {
 			DeleteVector(reinterpret_cast<std::vector<double>*>(ptr));
 			break;
 		case String:
-			DeleteVector(reinterpret_cast<std::vector<std::string>*>(ptr));
+			DeleteVector(reinterpret_cast<std::vector<plg::string>*>(ptr));
 			break;
 		default:
 			// Invalid type, do nothing or handle error if needed
@@ -1689,7 +1690,7 @@ void FreeVector(void* ptr, DataType type) {
 			FreeVector(reinterpret_cast<std::vector<double>*>(ptr));
 			break;
 		case String:
-			FreeVector(reinterpret_cast<std::vector<std::string>*>(ptr));
+			FreeVector(reinterpret_cast<std::vector<plg::string>*>(ptr));
 			break;
 		default:
 			// Invalid type, do nothing or handle error if needed
