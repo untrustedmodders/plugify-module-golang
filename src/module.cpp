@@ -1066,7 +1066,7 @@ const char* GetBaseDir() {
 	size_t size = source.length() + 1;
 	char* dest = new char[size];
 	std::memcpy(dest, source.c_str(), size);
-	g_numberOfAllocs[type_id<char*>]++;
+	++g_numberOfAllocs[type_id<char*>];
 	return dest;
 }
 
@@ -1113,7 +1113,7 @@ const char* GetPluginBaseDir(PluginRef plugin) {
 	size_t size = source.length() + 1;
 	char* dest = new char[size];
 	std::memcpy(dest, source.c_str(), size);
-	g_numberOfAllocs[type_id<char*>]++;
+	++g_numberOfAllocs[type_id<char*>];
 	return dest;
 }
 
@@ -1123,7 +1123,7 @@ const char** GetPluginDependencies(PluginRef plugin) {
 	for (size_t i = 0; i < dependencies.size(); ++i) {
 		deps[i] = dependencies[i].GetName().data();
 	}
-	g_numberOfAllocs[type_id<char**>]++;
+	++g_numberOfAllocs[type_id<char**>];
 	return deps;
 }
 
@@ -1138,25 +1138,25 @@ const char* FindPluginResource(PluginRef plugin, const char* path) {
 		size_t size = source.length() + 1;
 		char* dest = new char[size];
 		std::memcpy(dest, source.c_str(), size);
-		g_numberOfAllocs[type_id<char*>]++;
+		++g_numberOfAllocs[type_id<char*>];
 		return dest;
 	}
 	return "";
 }
 void DeleteCStr(const char* path) {
 	delete path;
-	g_numberOfAllocs[type_id<char*>]--;
+	--g_numberOfAllocs[type_id<char*>];
 	assert(g_numberOfAllocs[type_id<char*>] != -1);
 }
 
 void* AllocateString() {
 	auto str = static_cast<plg::string*>(std::malloc(sizeof(plg::string)));
-	g_numberOfMalloc[type_id<plg::string>]++;
+	++g_numberOfMalloc[type_id<plg::string>];
 	return str;
 }
 void* CreateString(GoString source) {
 	auto str = source.n == 0 || source.p == nullptr ? new plg::string() : new plg::string(source.p, static_cast<size_t>(source.n));
-	g_numberOfAllocs[type_id<plg::string>]++;
+	++g_numberOfAllocs[type_id<plg::string>];
 	return str;
 }
 const char* GetStringData(plg::string* string) {
@@ -1180,12 +1180,12 @@ void AssignString(plg::string* string, GoString source) {
 void FreeString(plg::string* string) {
 	string->~basic_string();
 	std::free(string);
-	g_numberOfMalloc[type_id<plg::string>]--;
+	--g_numberOfMalloc[type_id<plg::string>];
 	assert(g_numberOfMalloc[type_id<plg::string>] != -1);
 }
 void DeleteString(plg::string* string) {
 	delete string;
-	g_numberOfAllocs[type_id<plg::string>]--;
+	--g_numberOfAllocs[type_id<plg::string>];
 	assert(g_numberOfAllocs[type_id<plg::string>] != -1);
 }
 
@@ -1212,7 +1212,7 @@ namespace {
 	std::vector<T>* CreateVector(T* arr, ptrdiff_t len) requires(!std::is_same_v<T, GoString>) {
 		auto vector = len == 0 ? new std::vector<T>() : new std::vector<T>(arr, arr + len);
 		assert(vector);
-		g_numberOfAllocs[type_id<std::vector<T>>]++;
+		++g_numberOfAllocs[type_id<std::vector<T>>];
 		return vector;
 	}
 
@@ -1227,7 +1227,7 @@ namespace {
 			}
 		}
 		assert(vector);
-		g_numberOfAllocs[type_id<std::vector<plg::string>>]++;
+		++g_numberOfAllocs[type_id<std::vector<plg::string>>];
 		return vector;
 	}
 
@@ -1235,7 +1235,7 @@ namespace {
 	std::vector<T>* AllocateVector() requires(!std::is_same_v<T, GoString>) {
 		auto vector = static_cast<std::vector<T>*>(std::malloc(sizeof(std::vector<T>)));
 		assert(vector);
-		g_numberOfMalloc[type_id<std::vector<T>>]++;
+		++g_numberOfMalloc[type_id<std::vector<T>>];
 		return vector;
 	}
 
@@ -1243,7 +1243,7 @@ namespace {
 	std::vector<plg::string>* AllocateVector() requires(std::is_same_v<T, GoString>) {
 		auto vector = static_cast<std::vector<plg::string>*>(std::malloc(sizeof(std::vector<plg::string>)));
 		assert(vector);
-		g_numberOfMalloc[type_id<std::vector<plg::string>>]++;
+		++g_numberOfMalloc[type_id<std::vector<plg::string>>];
 		return vector;
 	}
 
@@ -1251,7 +1251,7 @@ namespace {
 	template<typename T>
 	void DeleteVector(std::vector<T>* vector) {
 		delete vector;
-		g_numberOfAllocs[type_id<std::vector<T>>]--;
+		--g_numberOfAllocs[type_id<std::vector<T>>];
 		assert(g_numberOfAllocs[type_id<std::vector<T>>] != -1);
 	}
 
@@ -1259,7 +1259,7 @@ namespace {
 	void FreeVector(std::vector<T>* vector) {
 		vector->~vector();
 		std::free(vector);
-		g_numberOfMalloc[type_id<std::vector<T>>]--;
+		--g_numberOfMalloc[type_id<std::vector<T>>];
 		assert(g_numberOfMalloc[type_id<std::vector<T>>] != -1);
 	}
 
@@ -1304,7 +1304,7 @@ namespace {
 			boolArray[i] = (*vector)[i];
 		}
 		
-		g_numberOfAllocs[type_id<bool*>]++;
+		++g_numberOfAllocs[type_id<bool*>];
 
 		return boolArray;
 	}
@@ -1318,7 +1318,7 @@ namespace {
 			strArray[i] = (*vector)[i].data();
 		}
 		
-		g_numberOfAllocs[type_id<char**>]++;
+		++g_numberOfAllocs[type_id<char**>];
 
 		return strArray;
 	}
@@ -1700,13 +1700,13 @@ void FreeVector(void* ptr, DataType type) {
 
 void DeleteVectorDataBool(void* ptr) {
 	delete[] reinterpret_cast<bool*>(ptr);
-	g_numberOfAllocs[type_id<bool*>]--;
+	--g_numberOfAllocs[type_id<bool*>];
 	assert(g_numberOfAllocs[type_id<bool*>] != -1);
 }
 
 void DeleteVectorDataCStr(void* ptr) {
 	delete[] reinterpret_cast<char**>(ptr);
-	g_numberOfAllocs[type_id<char**>]--;
+	--g_numberOfAllocs[type_id<char**>];
 	assert(g_numberOfAllocs[type_id<char**>] != -1);
 }
 
