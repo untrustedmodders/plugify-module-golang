@@ -1150,7 +1150,7 @@ void DeleteCStr(const char* path) {
 }
 
 void* AllocateString() {
-	auto str = static_cast<plg::string*>(malloc(sizeof(plg::string)));
+	auto str = static_cast<plg::string*>(std::malloc(sizeof(plg::string)));
 	g_numberOfMalloc[type_id<plg::string>]++;
 	return str;
 }
@@ -1179,7 +1179,7 @@ void AssignString(plg::string* string, GoString source) {
 }
 void FreeString(plg::string* string) {
 	string->~basic_string();
-	free(string);
+	std::free(string);
 	g_numberOfMalloc[type_id<plg::string>]--;
 	assert(g_numberOfMalloc[type_id<plg::string>] != -1);
 }
@@ -1208,16 +1208,16 @@ enum DataType {
 };
 
 namespace {
-	template<typename T, typename = std::enable_if_t<!std::is_same_v<T, GoString>>>
-	std::vector<T>* CreateVector(T* arr, ptrdiff_t len) {
+	template<typename T>
+	std::vector<T>* CreateVector(T* arr, ptrdiff_t len) requires(!std::is_same_v<T, GoString>) {
 		auto vector = len == 0 ? new std::vector<T>() : new std::vector<T>(arr, arr + len);
 		assert(vector);
 		g_numberOfAllocs[type_id<std::vector<T>>]++;
 		return vector;
 	}
 
-	template<typename T, typename = std::enable_if_t<std::is_same_v<T, GoString>>>
-	std::vector<plg::string>* CreateVector(T* arr, ptrdiff_t len) {
+	template<typename T>
+	std::vector<plg::string>* CreateVector(T* arr, ptrdiff_t len) requires(std::is_same_v<T, GoString>) {
 		auto vector = new std::vector<plg::string>();
 		if (len != 0) {
 			vector->reserve(static_cast<size_t>(len));
@@ -1231,17 +1231,17 @@ namespace {
 		return vector;
 	}
 
-	template<typename T, typename = std::enable_if_t<!std::is_same_v<T, GoString>>>
-	std::vector<T>* AllocateVector() {
-		auto vector = static_cast<std::vector<T>*>(malloc(sizeof(std::vector<T>)));
+	template<typename T>
+	std::vector<T>* AllocateVector() requires(!std::is_same_v<T, GoString>) {
+		auto vector = static_cast<std::vector<T>*>(std::malloc(sizeof(std::vector<T>)));
 		assert(vector);
 		g_numberOfMalloc[type_id<std::vector<T>>]++;
 		return vector;
 	}
 
-	template<typename T, typename = std::enable_if_t<std::is_same_v<T, GoString>>>
-	std::vector<plg::string>* AllocateVector() {
-		auto vector = static_cast<std::vector<plg::string>*>(malloc(sizeof(std::vector<plg::string>)));
+	template<typename T>
+	std::vector<plg::string>* AllocateVector() requires(std::is_same_v<T, GoString>) {
+		auto vector = static_cast<std::vector<plg::string>*>(std::malloc(sizeof(std::vector<plg::string>)));
 		assert(vector);
 		g_numberOfMalloc[type_id<std::vector<plg::string>>]++;
 		return vector;
@@ -1258,7 +1258,7 @@ namespace {
 	template<typename T>
 	void FreeVector(std::vector<T>* vector) {
 		vector->~vector();
-		free(vector);
+		std::free(vector);
 		g_numberOfMalloc[type_id<std::vector<T>>]--;
 		assert(g_numberOfMalloc[type_id<std::vector<T>>] != -1);
 	}
@@ -1268,16 +1268,16 @@ namespace {
 		return static_cast<ptrdiff_t>(vector->size());
 	}
 
-	template<typename T, typename = std::enable_if_t<!std::is_same_v<T, GoString>>>
-	void AssignVector(std::vector<T>* vector, T* arr, ptrdiff_t len) {
+	template<typename T>
+	void AssignVector(std::vector<T>* vector, T* arr, ptrdiff_t len) requires(!std::is_same_v<T, GoString>) {
 		if (arr == nullptr || len == 0)
 			vector->clear();
 		else
 			vector->assign(arr, arr + len);
 	}
 
-	template<typename T, typename = std::enable_if_t<std::is_same_v<T, GoString>>>
-	void AssignVector(std::vector<plg::string>* vector, T* arr, ptrdiff_t len) {
+	template<typename T>
+	void AssignVector(std::vector<plg::string>* vector, T* arr, ptrdiff_t len) requires(std::is_same_v<T, GoString>) {
 		if (arr == nullptr || len == 0)
 			vector->clear();
 		else {
@@ -1290,13 +1290,13 @@ namespace {
 		}
 	}
 
-	template<typename T, typename = std::enable_if_t<!std::is_same_v<T, GoString> and !std::is_same_v<T, bool>>>
-	T* GetVectorData(std::vector<T>* vector) {
+	template<typename T>
+	T* GetVectorData(std::vector<T>* vector) requires(!std::is_same_v<T, GoString> and !std::is_same_v<T, bool>) {
 		return vector->data();
 	}
 
-	template<typename T, typename = std::enable_if_t<std::is_same_v<T, bool>>>
-	bool* GetVectorData(std::vector<T>* vector) {
+	template<typename T>
+	bool* GetVectorData(std::vector<T>* vector) requires(std::is_same_v<T, bool>) {
 		bool* boolArray = new bool[vector->size()];
 
 		// Manually copy values from std::vector<bool> to the bool array
@@ -1309,8 +1309,8 @@ namespace {
 		return boolArray;
 	}
 
-	template<typename T, typename = std::enable_if_t<std::is_same_v<T, GoString>>>
-	char** GetVectorData(std::vector<plg::string>* vector) {
+	template<typename T>
+	char** GetVectorData(std::vector<plg::string>* vector) requires(std::is_same_v<T, GoString>) {
 		char** strArray = new char*[vector->size()];
 
 		// Manually copy values from std::vector<std::string> to the char* array
@@ -1323,13 +1323,13 @@ namespace {
 		return strArray;
 	}
 
-	template<typename T, typename = std::enable_if_t<!std::is_same_v<T, GoString>>>
-	void ConstructVector(std::vector<T>* vector, T* arr, ptrdiff_t len) {
+	template<typename T>
+	void ConstructVector(std::vector<T>* vector, T* arr, ptrdiff_t len) requires(!std::is_same_v<T, GoString>) {
 		std::construct_at(vector, len == 0 ? std::vector<T>() : std::vector<T>(arr, arr + len));
 	}
 
-	template<typename T, typename = std::enable_if_t<std::is_same_v<T, GoString>>>
-	void ConstructVector(std::vector<plg::string>* vector, T* arr, ptrdiff_t len) {
+	template<typename T>
+	void ConstructVector(std::vector<plg::string>* vector, T* arr, ptrdiff_t len) requires(std::is_same_v<T, GoString>) {
 		std::construct_at(vector, std::vector<plg::string>());
 		size_t N = static_cast<size_t>(len);
 		vector->reserve(N);
