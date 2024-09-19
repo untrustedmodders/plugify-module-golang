@@ -1062,7 +1062,7 @@ void GetMethodPtr2(const char* methodName, MemAddr* addressDest) {
 }
 
 const char* GetBaseDir() {
-	auto source = g_golm.GetProvider()->GetBaseDir().string();
+	auto source = fs::path(g_golm.GetProvider()->GetBaseDir()).string();
 	size_t size = source.length() + 1;
 	char* dest = new char[size];
 	std::memcpy(dest, source.c_str(), size);
@@ -1109,7 +1109,7 @@ const char* GetPluginWebsite(PluginRef plugin) {
 }
 
 const char* GetPluginBaseDir(PluginRef plugin) {
-	auto source = plugin.GetBaseDir().string();
+	auto source = fs::path(plugin.GetBaseDir()).string();
 	size_t size = source.length() + 1;
 	char* dest = new char[size];
 	std::memcpy(dest, source.c_str(), size);
@@ -1132,9 +1132,9 @@ ptrdiff_t GetPluginDependenciesSize(PluginRef plugin) {
 }
 
 const char* FindPluginResource(PluginRef plugin, const char* path) {
-	auto resource = plugin.FindResource(path);
+	auto resource = plugin.FindResource(fs::path(path).c_str());
 	if (resource.has_value()) {
-		auto source= resource->string();
+		auto source= fs::path(*resource).string();
 		size_t size = source.length() + 1;
 		char* dest = new char[size];
 		std::memcpy(dest, source.c_str(), size);
