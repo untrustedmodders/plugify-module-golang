@@ -1,7 +1,6 @@
 #pragma once
 
 #include <asmjit/asmjit.h>
-#include <dyncall/dyncall.h>
 #include <module_export.h>
 #include <plugify/assembly.h>
 #include <plugify/function.h>
@@ -28,14 +27,19 @@ typedef void* GoChan;
 typedef struct { void* t; void* v; } GoInterface;
 typedef struct { void* data; GoInt len; GoInt cap; } GoSlice;
 
+extern "C" {
+	typedef struct DCCallVM_ DCCallVM;
+	typedef struct DCaggr_ DCaggr;
+}
+
 template <>
 struct std::default_delete<DCaggr> {
-	void operator()(DCaggr* p) const { dcFreeAggr(p); }
+	void operator()(DCaggr* p) const;
 };
 
 template <>
 struct std::default_delete<DCCallVM> {
-	void operator()(DCCallVM* p) const { dcFree(p); }
+	void operator()(DCCallVM* p) const;
 };
 
 namespace golm {
@@ -62,13 +66,19 @@ namespace golm {
 	public:
 		AssemblyHolder(std::unique_ptr<plugify::Assembly> assembly, StartFunc startFunc, EndFunc endFunc) : _assembly{std::move(assembly)}, _startFunc{startFunc}, _endFunc{endFunc} {}
 
-		StartFunc GetStartFunc() const { return _startFunc; }
-		EndFunc GetEndFunc() const { return _endFunc; }
+		[[nodiscard]] StartFunc GetStartFunc() const { return _startFunc; }
+		[[nodiscard]] EndFunc GetEndFunc() const { return _endFunc; }
 
 	private:
 		std::unique_ptr<plugify::Assembly> _assembly;
 		StartFunc _startFunc;
 		EndFunc _endFunc;
+	};
+
+	struct VirtualMachine {
+		[[nodiscard]] DCCallVM& operator()();
+	private:
+		std::unique_ptr<DCCallVM> _callVirtMachine;
 	};
 
 	//using MethodRef = std::reference_wrapper<const plugify::Method>;
@@ -108,9 +118,6 @@ namespace golm {
 
 		std::vector<std::unique_ptr<plugify::Function>> _functions;
 		std::vector<plugify::MemAddr*> _addresses;
-
-		std::unique_ptr<DCCallVM> _callVirtMachine;
-		std::mutex _mutex;
 
 		static const std::array<void*, 35> _pluginApi;
 	};

@@ -9,6 +9,8 @@
 #include <plugify/plugin_reference_descriptor.h>
 #include <plugify/plugify_provider.h>
 
+#include <dyncall/dyncall.h>
+
 #if GOLM_PLATFORM_WINDOWS
 #include <Windows.h>
 #undef FindResource
@@ -18,6 +20,29 @@
 
 using namespace golm;
 using namespace plugify;
+
+void std::default_delete<DCaggr>::operator()(DCaggr* p) const {
+	dcFreeAggr(p);
+}
+
+void std::default_delete<DCCallVM>::operator()(DCCallVM* p) const {
+	dcFree(p);
+}
+
+static thread_local VirtualMachine s_vm;
+
+struct VirtualMachine {
+	[[nodiscard]] DCCallVM& operator()() {
+		if (_callVirtMachine == nullptr) {
+			DCCallVM* vm = dcNewCallVM(4096);
+			dcMode(vm, DC_CALL_C_DEFAULT);
+			_callVirtMachine = std::unique_ptr<DCCallVM>(vm);
+		}
+		return *_callVirtMachine;
+	}
+private:
+	std::unique_ptr<DCCallVM> _callVirtMachine;
+};
 
 template<class T>
 inline constexpr bool always_false_v = std::is_same_v<std::decay_t<T>, std::add_cv_t<std::decay_t<T>>>;
@@ -236,10 +261,6 @@ InitResult GoLanguageModule::Initialize(std::weak_ptr<IPlugifyProvider> provider
 
 	_rt = std::make_shared<asmjit::JitRuntime>();
 
-	DCCallVM* vm = dcNewCallVM(4096);
-	dcMode(vm, DC_CALL_C_DEFAULT);
-	_callVirtMachine = std::unique_ptr<DCCallVM>(vm);
-
 	return InitResultData{};
 }
 
@@ -251,7 +272,6 @@ void GoLanguageModule::Shutdown() {
 	_functions.clear();
 	_addresses.clear();
 	_assemblyMap.clear();
-	_callVirtMachine.reset();
 
 	DetectLeaks();
 
@@ -385,8 +405,6 @@ void GoLanguageModule::GetNativeMethod(std::string_view methodName, plugify::Mem
 
 // C++ to Go
 void GoLanguageModule::InternalCall(MethodRef method, MemAddr addr, const Parameters* p, uint8_t count, const ReturnValue* ret) {
-	std::scoped_lock<std::mutex> lock(g_golm._mutex);
-
 	PropertyRef retProp = method.GetReturnType();
 	ValueType retType = retProp.GetType();
 	std::span<const PropertyRef> paramProps = method.GetParamTypes();
@@ -402,7 +420,7 @@ void GoLanguageModule::InternalCall(MethodRef method, MemAddr addr, const Parame
 	StringHolder stringHolder;
 	BoolHolder boolHolder;
 
-	DCCallVM* vm = g_golm._callVirtMachine.get();
+	DCCallVM* vm = &s_vm();
 	dcReset(vm);
 
 	bool hasRet = ValueUtils::IsHiddenParam(retType);
