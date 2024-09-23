@@ -44,212 +44,214 @@ private:
 	std::unique_ptr<DCCallVM> _callVirtMachine;
 };
 
-template<class T>
-inline constexpr bool always_false_v = std::is_same_v<std::decay_t<T>, std::add_cv_t<std::decay_t<T>>>;
+namespace {
+	template<class T>
+	inline constexpr bool always_false_v = std::is_same_v<std::decay_t<T>, std::add_cv_t<std::decay_t<T>>>;
 
-bool IsMethodPrimitive(MethodRef method) {
-	if (ValueUtils::IsObject(method.GetReturnType().GetType()))
-		return false;
-
-	for (const auto& param : method.GetParamTypes()) {
-		if (ValueUtils::IsObject(param.GetType()))
+	bool IsMethodPrimitive(MethodRef method) {
+		if (ValueUtils::IsObject(method.GetReturnType().GetType()))
 			return false;
+
+		for (const auto& param : method.GetParamTypes()) {
+			if (ValueUtils::IsObject(param.GetType()))
+				return false;
+		}
+
+		return true;
 	}
 
-	return true;
-}
-
-GoSlice* CreateGoSliceBool(const std::vector<bool>& source, ArgumentList& args, BoolHolder& holder) {
-	assert(args.size() != args.capacity() && "Resizing list will invalidate pointers!");
-	size_t N = source.size();
-	auto& boolArray = holder.emplace_back(std::make_unique<bool[]>(N));
-	for (size_t i = 0; i < N; ++i) {
-		boolArray[i] = source[i];
+	GoSlice* CreateGoSliceBool(const std::vector<bool>& source, ArgumentList& args, BoolHolder& holder) {
+		assert(args.size() != args.capacity() && "Resizing list will invalidate pointers!");
+		size_t N = source.size();
+		auto& boolArray = holder.emplace_back(std::make_unique<bool[]>(N));
+		for (size_t i = 0; i < N; ++i) {
+			boolArray[i] = source[i];
+		}
+		auto size = static_cast<GoInt>(N);
+		auto& slice = args.emplace_back(boolArray.get(), size, size);
+		return &slice;
 	}
-	auto size = static_cast<GoInt>(N);
-	auto& slice = args.emplace_back(boolArray.get(), size, size);
-	return &slice;
-}
 
-GoSlice* CreateGoSliceString(const std::vector<plg::string>& source, ArgumentList& args, StringHolder& holder) {
-	assert(args.size() != args.capacity() && "Resizing list will invalidate pointers!");
-	size_t N = source.size();
-	auto& strArray = holder.emplace_back(std::make_unique<GoString[]>(N));
-	for (size_t i = 0; i < N; ++i) {
-		const auto& str = source[i];
-		auto& dest = strArray[i];
-		dest.p = str.c_str();
-		dest.n = static_cast<GoInt>(str.length());
+	GoSlice* CreateGoSliceString(const std::vector<plg::string>& source, ArgumentList& args, StringHolder& holder) {
+		assert(args.size() != args.capacity() && "Resizing list will invalidate pointers!");
+		size_t N = source.size();
+		auto& strArray = holder.emplace_back(std::make_unique<GoString[]>(N));
+		for (size_t i = 0; i < N; ++i) {
+			const auto& str = source[i];
+			auto& dest = strArray[i];
+			dest.p = str.c_str();
+			dest.n = static_cast<GoInt>(str.length());
+		}
+		auto size = static_cast<GoInt>(N);
+		auto& slice = args.emplace_back(strArray.get(), size, size);
+		return &slice;
 	}
-	auto size = static_cast<GoInt>(N);
-	auto& slice = args.emplace_back(strArray.get(), size, size);
-	return &slice;
-}
 
-template<typename T>
-GoSlice* CreateGoSlice(const std::vector<T>& source, ArgumentList& args) {
-	assert(args.size() != args.capacity() && "Resizing list will invalidate pointers!");
-	auto size = static_cast<GoInt>(source.size());
-	auto& slice = args.emplace_back((void*)source.data(), size, size);
-	return &slice;
-}
-
-GoSlice* CreateGoSlice(ArgumentList& args) {
-	assert(args.size() != args.capacity() && "Resizing list will invalidate pointers!");
-	auto& slice = args.emplace_back(nullptr, 0, 0);
-	return &slice;
-}
-
-GoString* CreateGoString(const plg::string& source, ArgumentList& args) {
-	assert(args.size() != args.capacity() && "Resizing list will invalidate pointers!");
-	auto size = static_cast<GoInt>(source.length());
-	auto& slice = args.emplace_back((void*)source.c_str(), size, 0);
-	return reinterpret_cast<GoString*>(&slice);
-}
-
-GoString* CreateGoString(ArgumentList& args) {
-	assert(args.size() != args.capacity() && "Resizing list will invalidate pointers!");
-	auto& slice = args.emplace_back((void*)"", 0, 0);
-	return reinterpret_cast<GoString*>(&slice);
-}
-
-template<typename T>
-void CopyGoSliceToVector(const GoSlice& source, std::vector<T>& dest) {
-	if (source.data == nullptr || source.len == 0)
-		dest.clear();
-	else if (dest.data() != source.data)
-		dest.assign(reinterpret_cast<T*>(source.data), reinterpret_cast<T*>(source.data) + static_cast<size_t>(source.len));
-}
-
-template<>
-void CopyGoSliceToVector(const GoSlice& source, std::vector<bool>& dest) {
-	dest.resize(static_cast<size_t>(source.len));
-	for (size_t i = 0; i < dest.size(); ++i) {
-		dest[i] = reinterpret_cast<bool*>(source.data)[i];
+	template<typename T>
+	GoSlice* CreateGoSlice(const std::vector<T>& source, ArgumentList& args) {
+		assert(args.size() != args.capacity() && "Resizing list will invalidate pointers!");
+		auto size = static_cast<GoInt>(source.size());
+		auto& slice = args.emplace_back((void*)source.data(), size, size);
+		return &slice;
 	}
-}
 
-template<>
-void CopyGoSliceToVector(const GoSlice& source, std::vector<plg::string>& dest) {
-	dest.resize(static_cast<size_t>(source.len));
-	for (size_t i = 0; i < dest.size(); ++i) {
-		const auto& str = reinterpret_cast<GoString*>(source.data)[i];
-		dest[i].assign(str.p, static_cast<size_t>(str.n));
+	GoSlice* CreateGoSlice(ArgumentList& args) {
+		assert(args.size() != args.capacity() && "Resizing list will invalidate pointers!");
+		auto& slice = args.emplace_back(nullptr, 0, 0);
+		return &slice;
 	}
-}
 
-void CopyGoStringToString(const GoString& source, plg::string& dest) {
-	if (source.p == nullptr || source.n == 0)
-		dest.clear();
-	else if (dest.data() != source.p)
-		dest.assign(source.p, static_cast<size_t>(source.n));
-}
+	GoString* CreateGoString(const plg::string& source, ArgumentList& args) {
+		assert(args.size() != args.capacity() && "Resizing list will invalidate pointers!");
+		auto size = static_cast<GoInt>(source.length());
+		auto& slice = args.emplace_back((void*)source.c_str(), size, 0);
+		return reinterpret_cast<GoString*>(&slice);
+	}
 
-template<typename T>
-void CopyGoSliceToVectorReturn(const GoSlice& source, std::vector<T>& dest) {
-	if (source.data == nullptr || source.len == 0)
-		std::construct_at(&dest, std::vector<T>());
-	else
-		std::construct_at(&dest, std::vector<T>(reinterpret_cast<T*>(source.data), reinterpret_cast<T*>(source.data) + static_cast<size_t>(source.len)));
-}
+	GoString* CreateGoString(ArgumentList& args) {
+		assert(args.size() != args.capacity() && "Resizing list will invalidate pointers!");
+		auto& slice = args.emplace_back((void*)"", 0, 0);
+		return reinterpret_cast<GoString*>(&slice);
+	}
 
-template<>
-void CopyGoSliceToVectorReturn(const GoSlice& source, std::vector<bool>& dest) {
-	if (source.data == nullptr || source.len == 0)
-		std::construct_at(&dest, std::vector<bool>());
-	else {
-		std::construct_at(&dest, std::vector<bool>(static_cast<size_t>(source.len)));
+	template<typename T>
+	void CopyGoSliceToVector(const GoSlice& source, std::vector<T>& dest) {
+		if (source.data == nullptr || source.len == 0)
+			dest.clear();
+		else if (dest.data() != source.data)
+			dest.assign(reinterpret_cast<T*>(source.data), reinterpret_cast<T*>(source.data) + static_cast<size_t>(source.len));
+	}
+
+	template<>
+	void CopyGoSliceToVector(const GoSlice& source, std::vector<bool>& dest) {
+		dest.resize(static_cast<size_t>(source.len));
 		for (size_t i = 0; i < dest.size(); ++i) {
 			dest[i] = reinterpret_cast<bool*>(source.data)[i];
 		}
 	}
-}
 
-template<>
-void CopyGoSliceToVectorReturn(const GoSlice& source, std::vector<plg::string>& dest) {
-	if (source.data == nullptr || source.len == 0)
-		std::construct_at(&dest, std::vector<plg::string>());
-	else {
-		std::construct_at(&dest, std::vector<plg::string>(static_cast<size_t>(source.len)));
+	template<>
+	void CopyGoSliceToVector(const GoSlice& source, std::vector<plg::string>& dest) {
+		dest.resize(static_cast<size_t>(source.len));
 		for (size_t i = 0; i < dest.size(); ++i) {
 			const auto& str = reinterpret_cast<GoString*>(source.data)[i];
 			dest[i].assign(str.p, static_cast<size_t>(str.n));
 		}
 	}
-}
 
-void CopyGoStringToStringReturn(const GoString& source, plg::string& dest) {
-	if (source.p == nullptr || source.n == 0)
-		std::construct_at(&dest, plg::string());
-	else
-		std::construct_at(&dest, plg::string(source.p, static_cast<size_t>(source.n)));
-}
+	void CopyGoStringToString(const GoString& source, plg::string& dest) {
+		if (source.p == nullptr || source.n == 0)
+			dest.clear();
+		else if (dest.data() != source.p)
+			dest.assign(source.p, static_cast<size_t>(source.n));
+	}
 
-template<typename T>
-DCaggr* CreateDcAggr(AggrList& aggrs) {
-	static_assert(always_false_v<T>, "CreateDcAggr specialization required");
-	return nullptr;
-}
+	template<typename T>
+	void CopyGoSliceToVectorReturn(const GoSlice& source, std::vector<T>& dest) {
+		if (source.data == nullptr || source.len == 0)
+			std::construct_at(&dest, std::vector<T>());
+		else
+			std::construct_at(&dest, std::vector<T>(reinterpret_cast<T*>(source.data), reinterpret_cast<T*>(source.data) + static_cast<size_t>(source.len)));
+	}
 
-template<>
-DCaggr* CreateDcAggr<Vector2>(AggrList& aggrs) {
-	DCaggr* ag = dcNewAggr(2, sizeof(Vector2));
-	for (size_t i = 0; i < 2; ++i)
-		dcAggrField(ag, DC_SIGCHAR_FLOAT, static_cast<int>(sizeof(float) * i), 1);
-	dcCloseAggr(ag);
-	aggrs.emplace_back(std::unique_ptr<DCaggr>(ag));
-	return ag;
-}
+	template<>
+	void CopyGoSliceToVectorReturn(const GoSlice& source, std::vector<bool>& dest) {
+		if (source.data == nullptr || source.len == 0)
+			std::construct_at(&dest, std::vector<bool>());
+		else {
+			std::construct_at(&dest, std::vector<bool>(static_cast<size_t>(source.len)));
+			for (size_t i = 0; i < dest.size(); ++i) {
+				dest[i] = reinterpret_cast<bool*>(source.data)[i];
+			}
+		}
+	}
 
-template<>
-DCaggr* CreateDcAggr<Vector3>(AggrList& aggrs) {
-	DCaggr* ag = dcNewAggr(3, sizeof(Vector3));
-	for (size_t i = 0; i < 3; ++i)
-		dcAggrField(ag, DC_SIGCHAR_FLOAT, static_cast<int>(sizeof(float) * i), 1);
-	dcCloseAggr(ag);
-	aggrs.emplace_back(std::unique_ptr<DCaggr>(ag));
-	return ag;
-}
+	template<>
+	void CopyGoSliceToVectorReturn(const GoSlice& source, std::vector<plg::string>& dest) {
+		if (source.data == nullptr || source.len == 0)
+			std::construct_at(&dest, std::vector<plg::string>());
+		else {
+			std::construct_at(&dest, std::vector<plg::string>(static_cast<size_t>(source.len)));
+			for (size_t i = 0; i < dest.size(); ++i) {
+				const auto& str = reinterpret_cast<GoString*>(source.data)[i];
+				dest[i].assign(str.p, static_cast<size_t>(str.n));
+			}
+		}
+	}
 
-template<>
-DCaggr* CreateDcAggr<Vector4>(AggrList& aggrs) {
-	DCaggr* ag = dcNewAggr(4, sizeof(Vector4));
-	for (size_t i = 0; i < 4; ++i)
-		dcAggrField(ag, DC_SIGCHAR_FLOAT, static_cast<int>(sizeof(float) * i), 1);
-	dcCloseAggr(ag);
-	aggrs.emplace_back(std::unique_ptr<DCaggr>(ag));
-	return ag;
-}
+	void CopyGoStringToStringReturn(const GoString& source, plg::string& dest) {
+		if (source.p == nullptr || source.n == 0)
+			std::construct_at(&dest, plg::string());
+		else
+			std::construct_at(&dest, plg::string(source.p, static_cast<size_t>(source.n)));
+	}
 
-template<>
-DCaggr* CreateDcAggr<Matrix4x4>(AggrList& aggrs) {
-	DCaggr* ag = dcNewAggr(16, sizeof(Matrix4x4));
-	for (size_t i = 0; i < 16; ++i)
-		dcAggrField(ag, DC_SIGCHAR_FLOAT, static_cast<int>(sizeof(float) * i), 1);
-	dcCloseAggr(ag);
-	aggrs.emplace_back(std::unique_ptr<DCaggr>(ag));
-	return ag;
-}
+	template<typename T>
+	DCaggr* CreateDcAggr(AggrList& aggrs) {
+		static_assert(always_false_v<T>, "CreateDcAggr specialization required");
+		return nullptr;
+	}
 
-template<>
-DCaggr* CreateDcAggr<GoString>(AggrList& aggrs) {
-	DCaggr* ag = dcNewAggr(2, sizeof(GoString));
-	dcAggrField(ag, DC_SIGCHAR_STRING, 0, 1);
-	dcAggrField(ag, DC_SIGCHAR_LONGLONG, sizeof(const char*), 1);
-	dcCloseAggr(ag);
-	aggrs.emplace_back(std::unique_ptr<DCaggr>(ag));
-	return ag;
-}
+	template<>
+	DCaggr* CreateDcAggr<Vector2>(AggrList& aggrs) {
+		DCaggr* ag = dcNewAggr(2, sizeof(Vector2));
+		for (size_t i = 0; i < 2; ++i)
+			dcAggrField(ag, DC_SIGCHAR_FLOAT, static_cast<int>(sizeof(float) * i), 1);
+		dcCloseAggr(ag);
+		aggrs.emplace_back(std::unique_ptr<DCaggr>(ag));
+		return ag;
+	}
 
-template<>
-DCaggr* CreateDcAggr<GoSlice>(AggrList& aggrs) {
-	DCaggr* ag = dcNewAggr(3, sizeof(GoSlice));
-	dcAggrField(ag, DC_SIGCHAR_POINTER, 0, 1);
-	dcAggrField(ag, DC_SIGCHAR_LONGLONG, sizeof(void*), 1);
-	dcAggrField(ag, DC_SIGCHAR_LONGLONG, sizeof(void*) * 2, 1);
-	dcCloseAggr(ag);
-	aggrs.emplace_back(std::unique_ptr<DCaggr>(ag));
-	return ag;
+	template<>
+	DCaggr* CreateDcAggr<Vector3>(AggrList& aggrs) {
+		DCaggr* ag = dcNewAggr(3, sizeof(Vector3));
+		for (size_t i = 0; i < 3; ++i)
+			dcAggrField(ag, DC_SIGCHAR_FLOAT, static_cast<int>(sizeof(float) * i), 1);
+		dcCloseAggr(ag);
+		aggrs.emplace_back(std::unique_ptr<DCaggr>(ag));
+		return ag;
+	}
+
+	template<>
+	DCaggr* CreateDcAggr<Vector4>(AggrList& aggrs) {
+		DCaggr* ag = dcNewAggr(4, sizeof(Vector4));
+		for (size_t i = 0; i < 4; ++i)
+			dcAggrField(ag, DC_SIGCHAR_FLOAT, static_cast<int>(sizeof(float) * i), 1);
+		dcCloseAggr(ag);
+		aggrs.emplace_back(std::unique_ptr<DCaggr>(ag));
+		return ag;
+	}
+
+	template<>
+	DCaggr* CreateDcAggr<Matrix4x4>(AggrList& aggrs) {
+		DCaggr* ag = dcNewAggr(16, sizeof(Matrix4x4));
+		for (size_t i = 0; i < 16; ++i)
+			dcAggrField(ag, DC_SIGCHAR_FLOAT, static_cast<int>(sizeof(float) * i), 1);
+		dcCloseAggr(ag);
+		aggrs.emplace_back(std::unique_ptr<DCaggr>(ag));
+		return ag;
+	}
+
+	template<>
+	DCaggr* CreateDcAggr<GoString>(AggrList& aggrs) {
+		DCaggr* ag = dcNewAggr(2, sizeof(GoString));
+		dcAggrField(ag, DC_SIGCHAR_STRING, 0, 1);
+		dcAggrField(ag, DC_SIGCHAR_LONGLONG, sizeof(const char*), 1);
+		dcCloseAggr(ag);
+		aggrs.emplace_back(std::unique_ptr<DCaggr>(ag));
+		return ag;
+	}
+
+	template<>
+	DCaggr* CreateDcAggr<GoSlice>(AggrList& aggrs) {
+		DCaggr* ag = dcNewAggr(3, sizeof(GoSlice));
+		dcAggrField(ag, DC_SIGCHAR_POINTER, 0, 1);
+		dcAggrField(ag, DC_SIGCHAR_LONGLONG, sizeof(void*), 1);
+		dcAggrField(ag, DC_SIGCHAR_LONGLONG, sizeof(void*) * 2, 1);
+		dcCloseAggr(ag);
+		aggrs.emplace_back(std::unique_ptr<DCaggr>(ag));
+		return ag;
+	}
 }
 
 InitResult GoLanguageModule::Initialize(std::weak_ptr<IPlugifyProvider> provider, ModuleRef /*module*/) {
@@ -1016,42 +1018,42 @@ void GoLanguageModule::InternalCall(MethodRef method, MemAddr addr, const Parame
 
 namespace golm {
 	GoLanguageModule g_golm;
-}
 
-using type_index = uint32_t;
-inline type_index type_id_seq = 0;
-template<typename T> inline const type_index type_id = type_id_seq++;
+	using type_index = uint32_t;
+	inline type_index type_id_seq = 0;
+	template<typename T> inline const type_index type_id = type_id_seq++;
 
-std::map<type_index, int32_t> g_numberOfMalloc = { };
-std::map<type_index, int32_t> g_numberOfAllocs = { };
+	std::map<type_index, int32_t> g_numberOfMalloc = { };
+	std::map<type_index, int32_t> g_numberOfAllocs = { };
 
-std::string_view GetTypeName(type_index type) {
-	static std::map<type_index, std::string_view> typeNameMap = {
-			{type_id<plg::string>, "String"},
-			{type_id<std::vector<bool>>, "VectorBool"},
-			{type_id<std::vector<char>>, "VectorChar8"},
-			{type_id<std::vector<char16_t>>, "VectorChar16"},
-			{type_id<std::vector<int8_t>>, "VectorInt8"},
-			{type_id<std::vector<int16_t>>, "VectorInt16"},
-			{type_id<std::vector<int32_t>>, "VectorInt32"},
-			{type_id<std::vector<int64_t>>, "VectorInt64"},
-			{type_id<std::vector<uint8_t>>, "VectorUInt8"},
-			{type_id<std::vector<uint16_t>>, "VectorUInt16"},
-			{type_id<std::vector<uint32_t>>, "VectorUInt32"},
-			{type_id<std::vector<uint64_t>>, "VectorUInt64"},
-			{type_id<std::vector<uintptr_t>>, "VectorUIntPtr"},
-			{type_id<std::vector<float>>, "VectorFloat"},
-			{type_id<std::vector<double>>, "VectorDouble"},
-			{type_id<std::vector<plg::string>>, "VectorString"},
-			{type_id<bool*>, "BoolArray"},
-			{type_id<char*>, "CString"},
-			{type_id<char**>, "CStringArray"}
-	};
-	auto it = typeNameMap.find(type);
-	if (it != typeNameMap.end()) {
-		return std::get<std::string_view>(*it);
+	std::string_view GetTypeName(type_index type) {
+		static std::map<type_index, std::string_view> typeNameMap = {
+				{type_id<plg::string>, "String"},
+				{type_id<std::vector<bool>>, "VectorBool"},
+				{type_id<std::vector<char>>, "VectorChar8"},
+				{type_id<std::vector<char16_t>>, "VectorChar16"},
+				{type_id<std::vector<int8_t>>, "VectorInt8"},
+				{type_id<std::vector<int16_t>>, "VectorInt16"},
+				{type_id<std::vector<int32_t>>, "VectorInt32"},
+				{type_id<std::vector<int64_t>>, "VectorInt64"},
+				{type_id<std::vector<uint8_t>>, "VectorUInt8"},
+				{type_id<std::vector<uint16_t>>, "VectorUInt16"},
+				{type_id<std::vector<uint32_t>>, "VectorUInt32"},
+				{type_id<std::vector<uint64_t>>, "VectorUInt64"},
+				{type_id<std::vector<uintptr_t>>, "VectorUIntPtr"},
+				{type_id<std::vector<float>>, "VectorFloat"},
+				{type_id<std::vector<double>>, "VectorDouble"},
+				{type_id<std::vector<plg::string>>, "VectorString"},
+				{type_id<bool*>, "BoolArray"},
+				{type_id<char*>, "CString"},
+				{type_id<char**>, "CStringArray"}
+		};
+		auto it = typeNameMap.find(type);
+		if (it != typeNameMap.end()) {
+			return std::get<std::string_view>(*it);
+		}
+		return "unknown";
 	}
-	return "unknown";
 }
 
 void GoLanguageModule::DetectLeaks() {
