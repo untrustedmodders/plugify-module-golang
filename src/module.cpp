@@ -1018,42 +1018,42 @@ void GoLanguageModule::InternalCall(MethodRef method, MemAddr addr, const Parame
 
 namespace golm {
 	GoLanguageModule g_golm;
+}
 
-	using type_index = uint32_t;
-	inline type_index type_id_seq = 0;
-	template<typename T> inline const type_index type_id = type_id_seq++;
+using type_index = uint32_t;
+inline type_index type_id_seq = 0;
+template<typename T> inline const type_index type_id = type_id_seq++;
 
-	std::map<type_index, int32_t> g_numberOfMalloc = { };
-	std::map<type_index, int32_t> g_numberOfAllocs = { };
+std::map<type_index, int32_t> g_numberOfMalloc = { };
+std::map<type_index, int32_t> g_numberOfAllocs = { };
 
-	std::string_view GetTypeName(type_index type) {
-		static std::map<type_index, std::string_view> typeNameMap = {
-				{type_id<plg::string>, "String"},
-				{type_id<std::vector<bool>>, "VectorBool"},
-				{type_id<std::vector<char>>, "VectorChar8"},
-				{type_id<std::vector<char16_t>>, "VectorChar16"},
-				{type_id<std::vector<int8_t>>, "VectorInt8"},
-				{type_id<std::vector<int16_t>>, "VectorInt16"},
-				{type_id<std::vector<int32_t>>, "VectorInt32"},
-				{type_id<std::vector<int64_t>>, "VectorInt64"},
-				{type_id<std::vector<uint8_t>>, "VectorUInt8"},
-				{type_id<std::vector<uint16_t>>, "VectorUInt16"},
-				{type_id<std::vector<uint32_t>>, "VectorUInt32"},
-				{type_id<std::vector<uint64_t>>, "VectorUInt64"},
-				{type_id<std::vector<uintptr_t>>, "VectorUIntPtr"},
-				{type_id<std::vector<float>>, "VectorFloat"},
-				{type_id<std::vector<double>>, "VectorDouble"},
-				{type_id<std::vector<plg::string>>, "VectorString"},
-				{type_id<bool*>, "BoolArray"},
-				{type_id<char*>, "CString"},
-				{type_id<char**>, "CStringArray"}
-		};
-		auto it = typeNameMap.find(type);
-		if (it != typeNameMap.end()) {
-			return std::get<std::string_view>(*it);
-		}
-		return "unknown";
+std::string_view GetTypeName(type_index type) {
+	static std::map<type_index, std::string_view> typeNameMap = {
+		{type_id<plg::string>, "String"},
+		{type_id<std::vector<bool>>, "VectorBool"},
+		{type_id<std::vector<char>>, "VectorChar8"},
+		{type_id<std::vector<char16_t>>, "VectorChar16"},
+		{type_id<std::vector<int8_t>>, "VectorInt8"},
+		{type_id<std::vector<int16_t>>, "VectorInt16"},
+		{type_id<std::vector<int32_t>>, "VectorInt32"},
+		{type_id<std::vector<int64_t>>, "VectorInt64"},
+		{type_id<std::vector<uint8_t>>, "VectorUInt8"},
+		{type_id<std::vector<uint16_t>>, "VectorUInt16"},
+		{type_id<std::vector<uint32_t>>, "VectorUInt32"},
+		{type_id<std::vector<uint64_t>>, "VectorUInt64"},
+		{type_id<std::vector<uintptr_t>>, "VectorUIntPtr"},
+		{type_id<std::vector<float>>, "VectorFloat"},
+		{type_id<std::vector<double>>, "VectorDouble"},
+		{type_id<std::vector<plg::string>>, "VectorString"},
+		{type_id<bool*>, "BoolArray"},
+		{type_id<char*>, "CString"},
+		{type_id<char**>, "CStringArray"}
+	};
+	auto it = typeNameMap.find(type);
+	if (it != typeNameMap.end()) {
+		return std::get<std::string_view>(*it);
 	}
+	return "unknown";
 }
 
 void GoLanguageModule::DetectLeaks() {
