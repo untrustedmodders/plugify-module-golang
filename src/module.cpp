@@ -31,18 +31,14 @@ void std::default_delete<DCCallVM>::operator()(DCCallVM* p) const {
 
 static thread_local VirtualMachine s_vm;
 
-struct VirtualMachine {
-	[[nodiscard]] DCCallVM& operator()() {
-		if (_callVirtMachine == nullptr) {
-			DCCallVM* vm = dcNewCallVM(4096);
-			dcMode(vm, DC_CALL_C_DEFAULT);
-			_callVirtMachine = std::unique_ptr<DCCallVM>(vm);
-		}
-		return *_callVirtMachine;
+[[nodiscard]] DCCallVM& VirtualMachine::operator()() {
+	if (_callVirtMachine == nullptr) {
+		DCCallVM* vm = dcNewCallVM(4096);
+		dcMode(vm, DC_CALL_C_DEFAULT);
+		_callVirtMachine = std::unique_ptr<DCCallVM>(vm);
 	}
-private:
-	std::unique_ptr<DCCallVM> _callVirtMachine;
-};
+	return *_callVirtMachine;
+}
 
 namespace {
 	template<class T>
