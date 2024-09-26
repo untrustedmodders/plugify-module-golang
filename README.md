@@ -21,8 +21,8 @@ The Go Language Module for Plugify enables developers to write plugins in Go for
 1. Clone this repository:
 
     ```bash
-    git clone https://github.com/untrustedmodders/go-lang-module.git
-    cd go-lang-module
+    git clone https://github.com/untrustedmodders/plugify-module-golang.git
+    cd plugify-module-golang
     git submodule update --init --recursive
     ```
 

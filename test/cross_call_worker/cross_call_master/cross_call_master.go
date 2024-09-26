@@ -1,6 +1,6 @@
 package cross_call_master
 
-//generated with https://github.com/untrustedmodders/cpp-lang-module/blob/main/generator/generator.py from cross_call_master
+//generated with https://github.com/untrustedmodders/plugify-module-cpp/blob/main/generator/generator.py from cross_call_master
 
 // #include "cross_call_master.h"
 import "C"

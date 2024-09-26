@@ -7,9 +7,9 @@
 	"description": "Adds support for Go plugins",
 	"createdBy": "untrustedmodders",
 	"createdByURL": "https://github.com/untrustedmodders/",
-	"docsURL": "https://github.com/untrustedmodders/go-lang-module/blob/main/README.md",
-	"downloadURL": "https://github.com/untrustedmodders/go-lang-module/releases/download/v${GOLM_VERSION}/${GOLM_PACKAGE}.zip",
-	"updateURL": "https://untrustedmodders.github.io/go-lang-module/go-lang-module.json",
+	"docsURL": "https://github.com/untrustedmodders/plugify-module-golang/blob/main/README.md",
+	"downloadURL": "https://github.com/untrustedmodders/plugify-module-golang/releases/download/v${GOLM_VERSION}/${GOLM_PACKAGE}.zip",
+	"updateURL": "https://untrustedmodders.github.io/plugify-module-golang/plugify-module-golang.json",
 	"supportedPlatforms": [],
 	"forceLoad": false
 }

@@ -66,13 +66,13 @@ jobs:
           mkdir -p build
           cd build
           cmake -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} -DGOLM_VERSION="${{ needs.setup.outputs.buildnumber }}" -DGOLM_PACKAGE="golm-build-${{ needs.setup.outputs.buildnumber }}-windows-${{ env.GITHUB_SHA_SHORT }}" ..
-          cmake --build . --target go-lang-module --config ${{ env.BUILD_TYPE }} -- /m
+          cmake --build . --target plugify-module-golang --config ${{ env.BUILD_TYPE }} -- /m
 
       - name: Clean build directory
         run: |
           mkdir -p build/output/bin
-          cp build/${{env.BUILD_TYPE}}/go-lang-module.dll build/output/bin
-          cp build/go-lang-module.pmodule build/output
+          cp build/${{env.BUILD_TYPE}}/plugify-module-golang.dll build/output/bin
+          cp build/plugify-module-golang.pmodule build/output
 
       - uses: actions/upload-artifact@v4
         with:
@@ -106,13 +106,13 @@ jobs:
           mkdir -p build
           cd build
           cmake -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} -DGOLM_VERSION="${{ needs.setup.outputs.buildnumber }}" -DGOLM_PACKAGE="golm-build-${{ needs.setup.outputs.buildnumber }}-linux-${{ env.GITHUB_SHA_SHORT }}" ..
-          cmake --build . --target go-lang-module --config ${{ env.BUILD_TYPE }} -- -j
+          cmake --build . --target plugify-module-golang --config ${{ env.BUILD_TYPE }} -- -j
 
       - name: Clean build directory
         run: |
           mkdir -p build/output/bin
-          mv build/libgo-lang-module.so build/output/bin
-          mv build/go-lang-module.pmodule build/output
+          mv build/libplugify-module-golang.so build/output/bin
+          mv build/plugify-module-golang.pmodule build/output
 
       - uses: actions/upload-artifact@v4
         with:
@@ -212,7 +212,7 @@ jobs:
             package_name = 'golm-build-${{ needs.setup.outputs.buildnumber }}-{}-${{ env.GITHUB_SHA_SHORT }}'
             checksum_linux = '${{ needs.publish.outputs.checksum_linux }}'
             checksum_windows = '${{ needs.publish.outputs.checksum_windows }}'
-            json_url = 'https://untrustedmodders.github.io/go-lang-module/go-lang-module.json'
+            json_url = 'https://untrustedmodders.github.io/plugify-module-golang/plugify-module-golang.json'
             
             def load_json_from_url(url):
                 try:
@@ -222,8 +222,8 @@ jobs:
                 except requests.RequestException:
                     return {
                         "content": {
-                            "go-lang-module": {
-                                "name": "go-lang-module",
+                            "plugify-module-golang": {
+                                "name": "plugify-module-golang",
                                 "type": "golang",
                                 "author": "untrustedmodders",
                                 "description": "Adds support for Go plugins",
@@ -240,11 +240,11 @@ jobs:
                 new_version = {
                     "version": version,
                     "checksum": f"{checksum}",
-                    "download": f"https://github.com/untrustedmodders/go-lang-module/releases/download/v{version}/{package.format(platform)}.zip",
+                    "download": f"https://github.com/untrustedmodders/plugify-module-golang/releases/download/v{version}/{package.format(platform)}.zip",
                     "platforms": [f"{platform}"]
                 }
             
-                versions = data["content"]["go-lang-module"]["versions"]
+                versions = data["content"]["plugify-module-golang"]["versions"]
                 versions.append(new_version)
             
                 if len(versions) > 10:
@@ -255,7 +255,7 @@ jobs:
             data = load_json_from_url(json_url)
             data = append_new_version(data, version_number, checksum_windows, package_name, "windows")
             data = append_new_version(data, version_number, checksum_linux, package_name, "linux")
-            save_json('build/repo/go-lang-module.json', data)
+            save_json('build/repo/plugify-module-golang.json', data)
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
