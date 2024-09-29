@@ -3,7 +3,7 @@
 #include <asmjit/asmjit.h>
 #include <module_export.h>
 #include <plugify/assembly.h>
-#include <plugify/function.h>
+#include <plugify/jit/callback.h>
 #include <plugify/language_module.h>
 #include <plugify/module.h>
 
@@ -106,7 +106,7 @@ namespace golm {
 		void GetNativeMethod(std::string_view methodName, plugify::MemAddr* addressDest);
 
 	private:
-		static void InternalCall(plugify::MethodRef method, plugify::MemAddr data, const plugify::Parameters* params, uint8_t count, const plugify::ReturnValue* ret);
+		static void InternalCall(plugify::MethodRef method, plugify::MemAddr data, const plugify::JitCallback::Parameters* params, uint8_t count, const plugify::JitCallback::Return* ret);
 		static void DetectLeaks();
 
 	private:
@@ -116,7 +116,7 @@ namespace golm {
 		std::map<plugify::UniqueId, AssemblyHolder> _assemblyMap;
 		std::unordered_map<std::string, plugify::MemAddr, string_hash, std::equal_to<>> _nativesMap;
 
-		std::vector<std::unique_ptr<plugify::Function>> _functions;
+		std::vector<plugify::JitCallback> _functions;
 		std::vector<plugify::MemAddr*> _addresses;
 
 		static const std::array<void*, 35> _pluginApi;

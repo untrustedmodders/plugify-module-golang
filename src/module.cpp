@@ -330,13 +330,13 @@ LoadResult GoLanguageModule::OnPluginLoad(PluginRef plugin) {
 			if (IsMethodPrimitive(method)) {
 				methods.emplace_back(method, func);
 			} else {
-				auto function = std::make_unique<Function>(_rt);
-				func = function->GetJitFunc(method, &InternalCall, func);
+				JitCallback callback(_rt);
+				func = callback.GetJitFunc(method, &InternalCall, func);
 				if (!func) {
 					funcErrors.emplace_back(method.GetName());
 					continue;
 				}
-				_functions.emplace_back(std::move(function));
+				_functions.emplace_back(std::move(callback));
 				methods.emplace_back(method, func);
 			}
 		} else {
@@ -402,7 +402,7 @@ void GoLanguageModule::GetNativeMethod(std::string_view methodName, plugify::Mem
 }
 
 // C++ to Go
-void GoLanguageModule::InternalCall(MethodRef method, MemAddr addr, const Parameters* p, uint8_t count, const ReturnValue* ret) {
+void GoLanguageModule::InternalCall(MethodRef method, MemAddr addr, const JitCallback::Parameters* p, uint8_t count, const JitCallback::Return* ret) {
 	PropertyRef retProp = method.GetReturnType();
 	ValueType retType = retProp.GetType();
 	std::span<const PropertyRef> paramProps = method.GetParamTypes();
@@ -699,116 +699,116 @@ void GoLanguageModule::InternalCall(MethodRef method, MemAddr addr, const Parame
 		}
 		case ValueType::Bool: {
 			bool val = dcCallBool(vm, addr);
-			ret->SetReturnPtr(val);
+			ret->SetReturn(val);
 			break;
 		}
 		case ValueType::Char8: {
 			char16_t val = static_cast<char16_t>(dcCallChar(vm, addr));
-			ret->SetReturnPtr(val);
+			ret->SetReturn(val);
 			break;
 		}
 		case ValueType::Char16: {
 			char16_t val = static_cast<char16_t>(dcCallShort(vm, addr));
-			ret->SetReturnPtr(val);
+			ret->SetReturn(val);
 			break;
 		}
 		case ValueType::Int8: {
 			int8_t val = dcCallChar(vm, addr);
-			ret->SetReturnPtr(val);
+			ret->SetReturn(val);
 			break;
 		}
 		case ValueType::Int16: {
 			int16_t val = dcCallShort(vm, addr);
-			ret->SetReturnPtr(val);
+			ret->SetReturn(val);
 			break;
 		}
 		case ValueType::Int32: {
 			int32_t val = dcCallInt(vm, addr);
-			ret->SetReturnPtr(val);
+			ret->SetReturn(val);
 			break;
 		}
 		case ValueType::Int64: {
 			int64_t val = dcCallLongLong(vm, addr);
-			ret->SetReturnPtr(val);
+			ret->SetReturn(val);
 			break;
 		}
 		case ValueType::UInt8: {
 			uint8_t val = static_cast<uint8_t>(dcCallChar(vm, addr));
-			ret->SetReturnPtr(val);
+			ret->SetReturn(val);
 			break;
 		}
 		case ValueType::UInt16: {
 			uint16_t val = static_cast<uint16_t>(dcCallShort(vm, addr));
-			ret->SetReturnPtr(val);
+			ret->SetReturn(val);
 			break;
 		}
 		case ValueType::UInt32: {
 			uint32_t val = static_cast<uint32_t>(dcCallInt(vm, addr));
-			ret->SetReturnPtr(val);
+			ret->SetReturn(val);
 			break;
 		}
 		case ValueType::UInt64: {
 			uint64_t val = static_cast<uint64_t>(dcCallLongLong(vm, addr));
-			ret->SetReturnPtr(val);
+			ret->SetReturn(val);
 			break;
 		}
 		case ValueType::Pointer: {
 			void* val = dcCallPointer(vm, addr);
-			ret->SetReturnPtr(val);
+			ret->SetReturn(val);
 			break;
 		}
 		case ValueType::Float: {
 			float val = dcCallFloat(vm, addr);
-			ret->SetReturnPtr(val);
+			ret->SetReturn(val);
 			break;
 		}
 		case ValueType::Double: {
 			double val = dcCallDouble(vm, addr);
-			ret->SetReturnPtr(val);
+			ret->SetReturn(val);
 			break;
 		}
 		case ValueType::Function: {
 			void* val = dcCallPointer(vm, addr);
-			ret->SetReturnPtr(val);
+			ret->SetReturn(val);
 			break;
 		}
 		case ValueType::Vector2: {
 			Vector2 source;
 			dcCallAggr(vm, addr, ag, &source);
-			ret->SetReturnPtr(source);
+			ret->SetReturn(source);
 			break;
 		}
 #if GOLM_PLATFORM_WINDOWS
 		case ValueType::Vector3: {
 			auto* dest = p->GetArgument<Vector3*>(0);
 			dcCallAggr(vm, addr, ag, dest);
-			ret->SetReturnPtr(dest);
+			ret->SetReturn(dest);
 			break;
 		}
 		case ValueType::Vector4: {
 			auto* dest = p->GetArgument<Vector4*>(0);
 			dcCallAggr(vm, addr, ag, dest);
-			ret->SetReturnPtr(dest);
+			ret->SetReturn(dest);
 			break;
 		}
 #else
 		case ValueType::Vector3: {
 			Vector3 source;
 			dcCallAggr(vm, addr, ag, &source);
-			ret->SetReturnPtr(source);
+			ret->SetReturn(source);
 			break;
 		}
 		case ValueType::Vector4: {
 			Vector4 source;
 			dcCallAggr(vm, addr, ag, &source);
-			ret->SetReturnPtr(source);
+			ret->SetReturn(source);
 			break;
 		}
 #endif
 		case ValueType::Matrix4x4: {
 			auto* dest = p->GetArgument<Matrix4x4*>(0);
 			dcCallAggr(vm, addr, ag, dest);
-			ret->SetReturnPtr(dest);
+			ret->SetReturn(dest);
 			break;
 		}
 		case ValueType::String: {
@@ -816,7 +816,7 @@ void GoLanguageModule::InternalCall(MethodRef method, MemAddr addr, const Parame
 			GoString source;
 			dcCallAggr(vm, addr, ag, &source);
 			CopyGoStringToStringReturn(source, *dest);
-			ret->SetReturnPtr(dest);
+			ret->SetReturn(dest);
 			break;
 		}
 		case ValueType::ArrayBool: {
@@ -824,7 +824,7 @@ void GoLanguageModule::InternalCall(MethodRef method, MemAddr addr, const Parame
 			GoSlice source;
 			dcCallAggr(vm, addr, ag, &source);
 			CopyGoSliceToVectorReturn(source, *dest);
-			ret->SetReturnPtr(dest);
+			ret->SetReturn(dest);
 			break;
 		}
 		case ValueType::ArrayChar8: {
@@ -832,7 +832,7 @@ void GoLanguageModule::InternalCall(MethodRef method, MemAddr addr, const Parame
 			GoSlice source;
 			dcCallAggr(vm, addr, ag, &source);
 			CopyGoSliceToVectorReturn(source, *dest);
-			ret->SetReturnPtr(dest);
+			ret->SetReturn(dest);
 			break;
 		}
 		case ValueType::ArrayChar16: {
@@ -840,7 +840,7 @@ void GoLanguageModule::InternalCall(MethodRef method, MemAddr addr, const Parame
 			GoSlice source;
 			dcCallAggr(vm, addr, ag, &source);
 			CopyGoSliceToVectorReturn(source, *dest);
-			ret->SetReturnPtr(dest);
+			ret->SetReturn(dest);
 			break;
 		}
 		case ValueType::ArrayInt8: {
@@ -848,7 +848,7 @@ void GoLanguageModule::InternalCall(MethodRef method, MemAddr addr, const Parame
 			GoSlice source;
 			dcCallAggr(vm, addr, ag, &source);
 			CopyGoSliceToVectorReturn(source, *dest);
-			ret->SetReturnPtr(dest);
+			ret->SetReturn(dest);
 			break;
 		}
 		case ValueType::ArrayInt16: {
@@ -856,7 +856,7 @@ void GoLanguageModule::InternalCall(MethodRef method, MemAddr addr, const Parame
 			GoSlice source;
 			dcCallAggr(vm, addr, ag, &source);
 			CopyGoSliceToVectorReturn(source, *dest);
-			ret->SetReturnPtr(dest);
+			ret->SetReturn(dest);
 			break;
 		}
 		case ValueType::ArrayInt32: {
@@ -864,7 +864,7 @@ void GoLanguageModule::InternalCall(MethodRef method, MemAddr addr, const Parame
 			GoSlice source;
 			dcCallAggr(vm, addr, ag, &source);
 			CopyGoSliceToVectorReturn(source, *dest);
-			ret->SetReturnPtr(dest);
+			ret->SetReturn(dest);
 			break;
 		}
 		case ValueType::ArrayInt64: {
@@ -872,7 +872,7 @@ void GoLanguageModule::InternalCall(MethodRef method, MemAddr addr, const Parame
 			GoSlice source;
 			dcCallAggr(vm, addr, ag, &source);
 			CopyGoSliceToVectorReturn(source, *dest);
-			ret->SetReturnPtr(dest);
+			ret->SetReturn(dest);
 			break;
 		}
 		case ValueType::ArrayUInt8: {
@@ -880,7 +880,7 @@ void GoLanguageModule::InternalCall(MethodRef method, MemAddr addr, const Parame
 			GoSlice source;
 			dcCallAggr(vm, addr, ag, &source);
 			CopyGoSliceToVectorReturn(source, *dest);
-			ret->SetReturnPtr(dest);
+			ret->SetReturn(dest);
 			break;
 		}
 		case ValueType::ArrayUInt16: {
@@ -888,7 +888,7 @@ void GoLanguageModule::InternalCall(MethodRef method, MemAddr addr, const Parame
 			GoSlice source;
 			dcCallAggr(vm, addr, ag, &source);
 			CopyGoSliceToVectorReturn(source, *dest);
-			ret->SetReturnPtr(dest);
+			ret->SetReturn(dest);
 			break;
 		}
 		case ValueType::ArrayUInt32: {
@@ -896,7 +896,7 @@ void GoLanguageModule::InternalCall(MethodRef method, MemAddr addr, const Parame
 			GoSlice source;
 			dcCallAggr(vm, addr, ag, &source);
 			CopyGoSliceToVectorReturn(source, *dest);
-			ret->SetReturnPtr(dest);
+			ret->SetReturn(dest);
 			break;
 		}
 		case ValueType::ArrayUInt64: {
@@ -904,7 +904,7 @@ void GoLanguageModule::InternalCall(MethodRef method, MemAddr addr, const Parame
 			GoSlice source;
 			dcCallAggr(vm, addr, ag, &source);
 			CopyGoSliceToVectorReturn(source, *dest);
-			ret->SetReturnPtr(dest);
+			ret->SetReturn(dest);
 			break;
 		}
 		case ValueType::ArrayPointer: {
@@ -912,7 +912,7 @@ void GoLanguageModule::InternalCall(MethodRef method, MemAddr addr, const Parame
 			GoSlice source;
 			dcCallAggr(vm, addr, ag, &source);
 			CopyGoSliceToVectorReturn(source, *dest);
-			ret->SetReturnPtr(dest);
+			ret->SetReturn(dest);
 			break;
 		}
 		case ValueType::ArrayFloat: {
@@ -920,7 +920,7 @@ void GoLanguageModule::InternalCall(MethodRef method, MemAddr addr, const Parame
 			GoSlice source;
 			dcCallAggr(vm, addr, ag, &source);
 			CopyGoSliceToVectorReturn(source, *dest);
-			ret->SetReturnPtr(dest);
+			ret->SetReturn(dest);
 			break;
 		}
 		case ValueType::ArrayDouble: {
@@ -928,7 +928,7 @@ void GoLanguageModule::InternalCall(MethodRef method, MemAddr addr, const Parame
 			GoSlice source;
 			dcCallAggr(vm, addr, ag, &source);
 			CopyGoSliceToVectorReturn(source, *dest);
-			ret->SetReturnPtr(dest);
+			ret->SetReturn(dest);
 			break;
 		}
 		case ValueType::ArrayString: {
@@ -936,7 +936,7 @@ void GoLanguageModule::InternalCall(MethodRef method, MemAddr addr, const Parame
 			GoSlice source;
 			dcCallAggr(vm, addr, ag, &source);
 			CopyGoSliceToVectorReturn(source, *dest);
-			ret->SetReturnPtr(dest);
+			ret->SetReturn(dest);
 			break;
 		}
 		default:
