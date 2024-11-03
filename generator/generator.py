@@ -23,22 +23,22 @@ VAL_TYPES_MAP = {
     'float': 'float',
     'double': 'double',
     'function': 'delegate',
-    'string': 'void*',
-    'bool*': 'void*',
-    'char8*': 'void*',
-    'char16*': 'void*',
-    'int8*': 'void*',
-    'int16*': 'void*',
-    'int32*': 'void*',
-    'int64*': 'void*',
-    'uint8*': 'void*',
-    'uint16*': 'void*',
-    'uint32*': 'void*',
-    'uint64*': 'void*',
-    'ptr64*': 'void*',
-    'float*': 'void*',
-    'double*': 'void*',
-    'string*': 'void*',
+    'string': 'String*',
+    'bool*': 'Vector*',
+    'char8*': 'Vector*',
+    'char16*': 'Vector*',
+    'int8*': 'Vector*',
+    'int16*': 'Vector*',
+    'int32*': 'Vector*',
+    'int64*': 'Vector*',
+    'uint8*': 'Vector*',
+    'uint16*': 'Vector*',
+    'uint32*': 'Vector*',
+    'uint64*': 'Vector*',
+    'ptr64*': 'Vector*',
+    'float*': 'Vector*',
+    'double*': 'Vector*',
+    'string*': 'Vector*',
     'vec2': 'Vector2*',
     'vec3': 'Vector3*',
     'vec4': 'Vector4*',
@@ -62,22 +62,22 @@ REF_TYPES_MAP = {
     'float': 'float*',
     'double': 'double*',
     'function': 'delegate',
-    'string': 'void*',
-    'bool*': 'void*',
-    'char8*': 'void*',
-    'char16*': 'void*',
-    'int8*': 'void*',
-    'int16*': 'void*',
-    'int32*': 'void*',
-    'int64*': 'void*',
-    'uint8*': 'void*',
-    'uint16*': 'void*',
-    'uint32*': 'void*',
-    'uint64*': 'void*',
-    'ptr64*': 'void*',
-    'float*': 'void*',
-    'double*': 'void*',
-    'string*': 'void*',
+    'string': 'String*',
+    'bool*': 'Vector*',
+    'char8*': 'Vector*',
+    'char16*': 'Vector*',
+    'int8*': 'Vector*',
+    'int16*': 'Vector*',
+    'int32*': 'Vector*',
+    'int64*': 'Vector*',
+    'uint8*': 'Vector*',
+    'uint16*': 'Vector*',
+    'uint32*': 'Vector*',
+    'uint64*': 'Vector*',
+    'ptr64*': 'Vector*',
+    'float*': 'Vector*',
+    'double*': 'Vector*',
+    'string*': 'Vector*',
     'vec2': 'Vector2*',
     'vec3': 'Vector3*',
     'vec4': 'Vector4*',
@@ -101,22 +101,22 @@ RET_TYPES_MAP = {
     'float': 'float',
     'double': 'double',
     'function': 'delegate',
-    'string': 'void',
-    'bool*': 'void',
-    'char8*': 'void',
-    'char16*': 'void',
-    'int8*': 'void',
-    'int16*': 'void',
-    'int32*': 'void',
-    'int64*': 'void',
-    'uint8*': 'void',
-    'uint16*': 'void',
-    'uint32*': 'void',
-    'uint64*': 'void',
-    'ptr64*': 'void',
-    'float*': 'void',
-    'double*': 'void',
-    'string*': 'void',
+    'string': 'String',
+    'bool*': 'Vector',
+    'char8*': 'Vector',
+    'char16*': 'Vector',
+    'int8*': 'Vector',
+    'int16*': 'Vector',
+    'int32*': 'Vector',
+    'int64*': 'Vector',
+    'uint8*': 'Vector',
+    'uint16*': 'Vector',
+    'uint32*': 'Vector',
+    'uint64*': 'Vector',
+    'ptr64*': 'Vector',
+    'float*': 'Vector',
+    'double*': 'Vector',
+    'string*': 'Vector',
     'vec2': 'Vector2',
     'vec3': 'Vector3',
     'vec4': 'Vector4',
@@ -257,66 +257,28 @@ VAL_GOTYPESCAST_MAP = {
     'float': 'C.float',
     'double': 'C.double',
     'function': '',
-    'string': 'C.Plugify_CreateString',
-    'bool*': 'C.Plugify_CreateVectorC.BOOL',
-    'char8*': 'C.Plugify_CreateVectorC.CHAR8',
-    'char16*': 'C.Plugify_CreateVectorC.CHAR16',
-    'int8*': 'C.Plugify_CreateVectorC.INT8',
-    'int16*': 'C.Plugify_CreateVectorC.INT16',
-    'int32*': 'C.Plugify_CreateVectorC.INT32',
-    'int64*': 'C.Plugify_CreateVectorC.INT64',
-    'uint8*': 'C.Plugify_CreateVectorC.UINT8',
-    'uint16*': 'C.Plugify_CreateVectorC.UINT16',
-    'uint32*': 'C.Plugify_CreateVectorC.UINT32',
-    'uint64*': 'C.Plugify_CreateVectorC.UINT64',
-    'ptr64*': 'C.Plugify_CreateVectorC.POINTER',
-    'float*': 'C.Plugify_CreateVectorC.FLOAT',
-    'double*': 'C.Plugify_CreateVectorC.DOUBLE',
-    'string*': 'C.Plugify_CreateVectorC.STRING',
+    'string': 'C.Plugify_ConstructString',
+    'bool*': 'C.Plugify_ConstructVectorC.BOOL',
+    'char8*': 'C.Plugify_ConstructVectorC.CHAR8',
+    'char16*': 'C.Plugify_ConstructVectorC.CHAR16',
+    'int8*': 'C.Plugify_ConstructVectorC.INT8',
+    'int16*': 'C.Plugify_ConstructVectorC.INT16',
+    'int32*': 'C.Plugify_ConstructVectorC.INT32',
+    'int64*': 'C.Plugify_ConstructVectorC.INT64',
+    'uint8*': 'C.Plugify_ConstructVectorC.UINT8',
+    'uint16*': 'C.Plugify_ConstructVectorC.UINT16',
+    'uint32*': 'C.Plugify_ConstructVectorC.UINT32',
+    'uint64*': 'C.Plugify_ConstructVectorC.UINT64',
+    'ptr64*': 'C.Plugify_ConstructVectorC.POINTER',
+    'float*': 'C.Plugify_ConstructVectorC.FLOAT',
+    'double*': 'C.Plugify_ConstructVectorC.DOUBLE',
+    'string*': 'C.Plugify_ConstructVectorC.STRING',
     'vec2': 'C.Vector2',
     'vec3': 'C.Vector3',
     'vec4': 'C.Vector4',
     'mat4x4': 'C.Matrix4x4'
 }
 
-RET_GOTYPESCAST_MAP = {
-    'void': '',
-    'bool': 'C.bool',
-    'char8': 'C.char',
-    'char16': 'C.uint16_t',
-    'int8': 'C.int8_t',
-    'int16': 'C.int16_t',
-    'int32': 'C.int32_t',
-    'int64': 'C.int64_t',
-    'uint8': 'C.uint8_t',
-    'uint16': 'C.uint16_t',
-    'uint32': 'C.uint32_t',
-    'uint64': 'C.uint64_t',
-    'ptr64': 'C.uintptr_t',
-    'float': 'C.float',
-    'double': 'C.double',
-    'function': '',
-    'string': 'C.Plugify_AllocateString',
-    'bool*': 'C.Plugify_AllocateVectorC.BOOL',
-    'char8*': 'C.Plugify_AllocateVectorC.CHAR8',
-    'char16*': 'C.Plugify_AllocateVectorC.CHAR16',
-    'int8*': 'C.Plugify_AllocateVectorC.INT8',
-    'int16*': 'C.Plugify_AllocateVectorC.INT16',
-    'int32*': 'C.Plugify_AllocateVectorC.INT32',
-    'int64*': 'C.Plugify_AllocateVectorC.INT64',
-    'uint8*': 'C.Plugify_AllocateVectorC.UINT8',
-    'uint16*': 'C.Plugify_AllocateVectorC.UINT16',
-    'uint32*': 'C.Plugify_AllocateVectorC.UINT32',
-    'uint64*': 'C.Plugify_AllocateVectorC.UINT64',
-    'ptr64*': 'C.Plugify_AllocateVectorC.POINTER',
-    'float*': 'C.Plugify_AllocateVectorC.FLOAT',
-    'double*': 'C.Plugify_AllocateVectorC.DOUBLE',
-    'string*': 'C.Plugify_AllocateVectorC.STRING',
-    'vec2': 'C.Vector2',
-    'vec3': 'C.Vector3',
-    'vec4': 'C.Vector4',
-    'mat4x4': 'C.Matrix4x4'
-}
 
 DEL_GOTYPESCAST_MAP = {
     'void': '',
@@ -335,61 +297,22 @@ DEL_GOTYPESCAST_MAP = {
     'float': '',
     'double': '',
     'function': '',
-    'string': 'C.Plugify_DeleteString',
-    'bool*': 'C.Plugify_DeleteVectorC.BOOL',
-    'char8*': 'C.Plugify_DeleteVectorC.CHAR8',
-    'char16*': 'C.Plugify_DeleteVectorC.CHAR16',
-    'int8*': 'C.Plugify_DeleteVectorC.INT8',
-    'int16*': 'C.Plugify_DeleteVectorC.INT16',
-    'int32*': 'C.Plugify_DeleteVectorC.INT32',
-    'int64*': 'C.Plugify_DeleteVectorC.INT64',
-    'uint8*': 'C.Plugify_DeleteVectorC.UINT8',
-    'uint16*': 'C.Plugify_DeleteVectorC.UINT16',
-    'uint32*': 'C.Plugify_DeleteVectorC.UINT32',
-    'uint64*': 'C.Plugify_DeleteVectorC.UINT64',
-    'ptr64*': 'C.Plugify_DeleteVectorC.POINTER',
-    'float*': 'C.Plugify_DeleteVectorC.FLOAT',
-    'double*': 'C.Plugify_DeleteVectorC.DOUBLE',
-    'string*': 'C.Plugify_DeleteVectorC.STRING',
-    'vec2': '',
-    'vec3': '',
-    'vec4': '',
-    'mat4x4': ''
-}
-
-FRE_GOTYPESCAST_MAP = {
-    'void': '',
-    'bool': '',
-    'char8': '',
-    'char16': '',
-    'int8': '',
-    'int16': '',
-    'int32': '',
-    'int64': '',
-    'uint8': '',
-    'uint16': '',
-    'uint32': '',
-    'uint64': '',
-    'ptr64': '',
-    'float': '',
-    'double': '',
-    'function': '',
-    'string': 'C.Plugify_FreeString',
-    'bool*': 'C.Plugify_FreeVectorC.BOOL',
-    'char8*': 'C.Plugify_FreeVectorC.CHAR8',
-    'char16*': 'C.Plugify_FreeVectorC.CHAR16',
-    'int8*': 'C.Plugify_FreeVectorC.INT8',
-    'int16*': 'C.Plugify_FreeVectorC.INT16',
-    'int32*': 'C.Plugify_FreeVectorC.INT32',
-    'int64*': 'C.Plugify_FreeVectorC.INT64',
-    'uint8*': 'C.Plugify_FreeVectorC.UINT8',
-    'uint16*': 'C.Plugify_FreeVectorC.UINT16',
-    'uint32*': 'C.Plugify_FreeVectorC.UINT32',
-    'uint64*': 'C.Plugify_FreeVectorC.UINT64',
-    'ptr64*': 'C.Plugify_FreeVectorC.POINTER',
-    'float*': 'C.Plugify_FreeVectorC.FLOAT',
-    'double*': 'C.Plugify_FreeVectorC.DOUBLE',
-    'string*': 'C.Plugify_FreeVectorC.STRING',
+    'string': 'C.Plugify_DestroyString',
+    'bool*': 'C.Plugify_DestroyVectorC.BOOL',
+    'char8*': 'C.Plugify_DestroyVectorC.CHAR8',
+    'char16*': 'C.Plugify_DestroyVectorC.CHAR16',
+    'int8*': 'C.Plugify_DestroyVectorC.INT8',
+    'int16*': 'C.Plugify_DestroyVectorC.INT16',
+    'int32*': 'C.Plugify_DestroyVectorC.INT32',
+    'int64*': 'C.Plugify_DestroyVectorC.INT64',
+    'uint8*': 'C.Plugify_DestroyVectorC.UINT8',
+    'uint16*': 'C.Plugify_DestroyVectorC.UINT16',
+    'uint32*': 'C.Plugify_DestroyVectorC.UINT32',
+    'uint64*': 'C.Plugify_DestroyVectorC.UINT64',
+    'ptr64*': 'C.Plugify_DestroyVectorC.POINTER',
+    'float*': 'C.Plugify_DestroyVectorC.FLOAT',
+    'double*': 'C.Plugify_DestroyVectorC.DOUBLE',
+    'string*': 'C.Plugify_DestroyVectorC.STRING',
     'vec2': '',
     'vec3': '',
     'vec4': '',
@@ -452,22 +375,22 @@ REF_GOTYPESCAST_MAP = {
     'float': '',
     'double': '',
     'function': '',
-    'string': '',
-    'bool*': '',
-    'char8*': '',
-    'char16*': '',
-    'int8*': '',
-    'int16*': '',
-    'int32*': '',
-    'int64*': '',
-    'uint8*': '',
-    'uint16*': '',
-    'uint32*': '',
-    'uint64*': '',
-    'ptr64*': '',
-    'float*': '',
-    'double*': '',
-    'string*': '',
+    'string': '&',
+    'bool*': '&',
+    'char8*': '&',
+    'char16*': '&',
+    'int8*': '&',
+    'int16*': '&',
+    'int32*': '&',
+    'int64*': '&',
+    'uint8*': '&',
+    'uint16*': '&',
+    'uint32*': '&',
+    'uint64*': '&',
+    'ptr64*': '&',
+    'float*': '&',
+    'double*': '&',
+    'string*': '&',
     'vec2': '&',
     'vec3': '&',
     'vec4': '&',
@@ -521,7 +444,7 @@ class ParamGen(Enum):
     TypesNames = 3
 
 
-def gen_params_string(method, param_gen: ParamGen):
+def gen_params(method, param_gen: ParamGen):
     def gen_param(param):
         if param_gen == ParamGen.Types:
             type = convert_type(param['type'], 'ref' in param and param['ref'] is True, False)
@@ -542,12 +465,7 @@ def gen_params_string(method, param_gen: ParamGen):
 
     output_string = ''
     ret_type = method['retType']
-    is_obj_ret = is_obj_return(ret_type["type"])
-    if is_obj_ret:
-        output_string += f'{gen_return(ret_type)}'
     if method["paramTypes"]:
-        if is_obj_ret:
-            output_string += ', '
         it = iter(method["paramTypes"])
         output_string += gen_param(next(it))
         for p in it:
@@ -555,7 +473,7 @@ def gen_params_string(method, param_gen: ParamGen):
     return output_string
 
 
-def gen_goparams_string(method, param_gen: ParamGen):
+def gen_goparams(method, param_gen: ParamGen):
     def gen_param(param):
         type = convert_gotype(param['type'], 'ref' in param and param['ref'] is True, False)
         if param_gen == ParamGen.Types:
@@ -586,9 +504,6 @@ def gen_goparams_string(method, param_gen: ParamGen):
 
     output_string = ''
     ret_type = method['retType']
-    is_obj_ret = is_obj_return(ret_type["type"])
-    if is_obj_ret:
-        output_string += f'{gen_return(ret_type)}'
     if method["paramTypes"]:
         it = iter(method["paramTypes"])
         output_string += gen_param(next(it))
@@ -597,10 +512,10 @@ def gen_goparams_string(method, param_gen: ParamGen):
     return output_string
 
 
-def gen_goparamscast_string(method):
+def gen_goparamscast(method):
     def gen_param(param):
         type = VAL_GOTYPESCAST_MAP.get(param['type'], 'int')
-        if 'CreateVector' in type:
+        if 'ConstructVector' in type:
             if 'ref' in param and param['ref'] is True:
                 output = f'var A_{param['name']} unsafe.Pointer\n'
                 output += f'\tS_{param['name']} := len(*{param['name']})\n'
@@ -609,7 +524,7 @@ def gen_goparamscast_string(method):
                 output += '\t} else {\n'
                 output += f'\t\tA_{param['name']} = nil\n'
                 output += '\t}\n'
-                output += f'\tC_{param['name']} := {type[:22]}(A_{param['name']}, C.ptrdiff_t(S_{param['name']}), {type[22:]})'
+                output += f'\tC_{param['name']} := {type[:25]}(A_{param['name']}, C.ptrdiff_t(S_{param['name']}), {type[25:]})'
                 return output;
             else:
                 output = f'var A_{param['name']} unsafe.Pointer\n'
@@ -619,9 +534,9 @@ def gen_goparamscast_string(method):
                 output += '\t} else {\n'
                 output += f'\t\tA_{param['name']} = nil\n'
                 output += '\t}\n'
-                output += f'\tC_{param['name']} := {type[:22]}(A_{param['name']}, C.ptrdiff_t(S_{param['name']}), {type[22:]})'
+                output += f'\tC_{param['name']} := {type[:25]}(A_{param['name']}, C.ptrdiff_t(S_{param['name']}), {type[25:]})'
                 return output;
-        elif 'CreateString' in type:
+        elif 'ConstructString' in type:
             if 'ref' in param and param['ref'] is True:
                 return f'C_{param['name']} := {type}(*{param['name']})'
             else:
@@ -643,17 +558,10 @@ def gen_goparamscast_string(method):
                 return f'C_{param['name']} := {type}({param['name']})'
 
     def gen_return(param):
-        type = RET_GOTYPESCAST_MAP.get(param['type'], 'int')
-        if 'C.Vector' in type or 'C.Matrix' in type:
-            return f'C_output := {type}' + "{}"
-        else:
-            return f'C_output := {type[:24]}({type[24:]})'
+        return ''
 
     output_string = ''
     ret_type = method['retType']
-    is_obj_ret = is_obj_return(ret_type["type"])
-    if is_obj_ret:
-        output_string += f'{gen_return(ret_type)}'
     if method["paramTypes"]:
         it = iter(method["paramTypes"])
         output_string += f'{gen_param(next(it))}\n'
@@ -662,26 +570,24 @@ def gen_goparamscast_string(method):
     return output_string
 
 
-def gen_goparamscast_assign_string(method):
+def gen_goparamscast_assign(method):
     def gen_param(param):
         if 'ref' in param and param['ref'] is True:
             type = ASS_GOTYPESCAST_MAP.get(param['type'], 'int')
             if type == 'C.GoString':
-                output = f'P_{param['name']} := C.Plugify_GetStringData(C_{param['name']})\n'
+                output = f'P_{param['name']} := C.Plugify_GetStringData(&C_{param['name']})\n'
                 output += f'\t*{param['name']} = {type}(P_{param['name']})'
                 return output
             elif 'C.Vector' in type or 'C.Matrix' in type:
                 return f'*{param['name']} = *(*{type[2:]})(unsafe.Pointer(&C_{param['name']}))'
             elif 'C.' in type or type[0] == '*' or type == 'string':
-                name = f'C_{param['name']}'
+                name = f'&C_{param['name']}'
                 mode = ''
-                if param['type'] == 'bool*':
-                    mode = 'Bool'
-                elif param['type'] == 'string*':
+                if param['type'] == 'string*':
                     mode = 'CStr'
                 go_type = VAL_GOTYPES_MAP.get(param['type'], 'int')[2:]
 
-                val_type = VAL_GOTYPESCAST_MAP.get(param['type'], 'int')[22:]
+                val_type = VAL_GOTYPESCAST_MAP.get(param['type'], 'int')[25:]
                 output = f'L_{param['name']} := C.Plugify_GetVectorSize({name}, {val_type})\n'
                 output += f'\tP_{param['name']} := C.Plugify_GetVectorData({name}, {val_type})\n'
                 #output += f'\t*{param['name']} = unsafe.Slice((*{go_type})(P_{param['name']}), L_{param['name']})'
@@ -692,7 +598,7 @@ def gen_goparamscast_assign_string(method):
                 else:
                     output += f'\t\t(*{param['name']})[i] = *(*{go_type})(unsafe.Pointer(uintptr(P_{param['name']}) + uintptr(i * C.sizeof_{type[2:]})))\n'
                 output += "\t}"
-                if mode == 'Bool' or mode == 'CStr':
+                if mode == 'CStr':
                     output += f'\n\tC.Plugify_DeleteVectorData{mode}(P_{param['name']})'
                 return output
             else:
@@ -703,20 +609,18 @@ def gen_goparamscast_assign_string(method):
     def gen_return(param):
         type = ASS_GOTYPESCAST_MAP.get(param['type'], 'int')
         if type == 'C.GoString':
-            output = f'P_output := C.Plugify_GetStringData(C_output)\n'
+            output = f'P_output := C.Plugify_GetStringData(&C_output)\n'
             output += f'\toutput := {type}(P_output)'
             return output
         elif 'C.Vector' in type or 'C.Matrix' in type:
             return f'output := *(*{type[2:]})(unsafe.Pointer(&C_output))'
         elif 'C.' in type or type[0] == '*' or type == 'string':
-            name = f'C_output'
+            name = f'&C_output'
             mode = ''
-            if param['type'] == 'bool*':
-                mode = 'Bool'
-            elif param['type'] == 'string*':
+            if param['type'] == 'string*':
                 mode = 'CStr'
             go_type = VAL_GOTYPES_MAP.get(param['type'], 'int')[2:]
-            val_type = VAL_GOTYPESCAST_MAP.get(param['type'], 'int')[22:]
+            val_type = VAL_GOTYPESCAST_MAP.get(param['type'], 'int')[25:]
             output = f'L_output := C.Plugify_GetVectorSize({name}, {val_type})\n'
             output += f'\tP_output := C.Plugify_GetVectorData({name}, {val_type})\n'
             #output += f'\toutput := unsafe.Slice((*{go_type})(P_output), L_output)'
@@ -727,7 +631,7 @@ def gen_goparamscast_assign_string(method):
             else:
                 output += f'\t\toutput[i] = *(*{go_type})(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_{type[2:]})))\n'
             output += "\t}\n"
-            if mode == 'Bool' or mode == 'CStr':
+            if mode == 'CStr':
                 output += f'\n\tC.Plugify_DeleteVectorData{mode}(P_output)'
             return output
         else:
@@ -750,24 +654,24 @@ def gen_goparamscast_assign_string(method):
     return output_string
 
 
-def gen_goparamscast_cleanup_string(method):
+def gen_goparamscast_cleanup(method):
     def gen_param(param):
         type = DEL_GOTYPESCAST_MAP.get(param['type'], 'int')
         if type == '':
             return type
-        elif 'DeleteVector' in type:
-            return f'{type[:22]}(C_{param['name']}, {type[22:]})'
+        elif 'DestroyVector' in type:
+            return f'{type[:23]}(&C_{param['name']}, {type[23:]})'
         else:
-            return f'{type}(C_{param['name']})'
+            return f'{type}(&C_{param['name']})'
 
     def gen_return(param):
-        type = FRE_GOTYPESCAST_MAP.get(param['type'], 'int')
+        type = DEL_GOTYPESCAST_MAP.get(param['type'], 'int')
         if type == '':
             return type
-        elif 'FreeVector' in type:
-            return f'{type[:20]}(C_output, {type[20:]})'
+        elif 'DestroyVector' in type:
+            return f'{type[:23]}(&C_output, {type[23:]})'
         else:
-            return f'{type}(C_output)'
+            return f'{type}(&C_output)'
 
     output_string = ''
     ret_type = method['retType']
@@ -814,75 +718,70 @@ def main(manifest_path, output_dir, override):
             print(f'  {error}')
         return 1
 
-    content = '#pragma once\n'
-    content += '#include <stdlib.h>\n'
-    content += '#include <stdint.h>\n'
-    content += '#include <stdbool.h>\n\n'
-    content += 'enum DataType {\n'
-    content += '\tBOOL,\n'
-    content += '\tCHAR8,\n'
-    content += '\tCHAR16,\n'
-    content += '\tINT8,\n'
-    content += '\tINT16,\n'
-    content += '\tINT32,\n'
-    content += '\tINT64,\n'
-    content += '\tUINT8,\n'
-    content += '\tUINT16,\n'
-    content += '\tUINT32,\n'
-    content += '\tUINT64,\n'
-    content += '\tPOINTER,\n'
-    content += '\tFLOAT,\n'
-    content += '\tDOUBLE,\n'
-    content += '\tSTRING\n'
-    content += '};\n\n'
-    content += 'extern void* Plugify_GetMethodPtr(const char* methodName);\n'
-    content += 'extern void Plugify_GetMethodPtr2(const char* methodName, void** addressDest);\n'
-    content += '\n'
-    content += 'extern void* Plugify_AllocateString();\n'
-    content += 'extern void* Plugify_CreateString(_GoString_ source);\n'
-    content += 'extern const char* Plugify_GetStringData(void* ptr);\n'
-    content += 'extern ptrdiff_t Plugify_GetStringLength(void* ptr);\n'
-    content += 'extern void Plugify_AssignString(void* ptr, _GoString_ source);\n'
-    content += 'extern void Plugify_FreeString(void* ptr);\n'
-    content += 'extern void Plugify_DeleteString(void* ptr);\n'
-    content += '\n'
-    content += 'extern void* Plugify_CreateVector(void* arr, ptrdiff_t len, enum DataType type);\n'
-    content += 'extern void* Plugify_AllocateVector(enum DataType type);\n'
-    content += 'extern ptrdiff_t Plugify_GetVectorSize(void* ptr, enum DataType type);\n'
-    content += 'extern void* Plugify_GetVectorData(void* ptr, enum DataType type);\n'
-    content += 'extern void Plugify_AssignVector(void* ptr, void* arr, ptrdiff_t len, enum DataType type);\n'
-    content += 'extern void Plugify_DeleteVector(void* ptr, enum DataType type);\n'
-    content += 'extern void Plugify_FreeVector(void* ptr, enum DataType type);\n'
-    content += '\n'
-    content += 'extern void Plugify_DeleteVectorDataBool(void* ptr);\n'
-    content += 'extern void Plugify_DeleteVectorDataCStr(void* ptr);\n'
-    content += '\n'
-    content += 'extern void Plugify_SetGetMethodPtr(void* func);\n'
-    content += 'extern void Plugify_SetAllocateString(void* func);\n'
-    content += 'extern void Plugify_SetCreateString(void* func);\n'
-    content += 'extern void Plugify_SetGetStringData(void* func);\n'
-    content += 'extern void Plugify_SetGetStringLength(void* func);\n'
-    content += 'extern void Plugify_SetAssignString(void* func);\n'
-    content += 'extern void Plugify_SetFreeString(void* func);\n'
-    content += 'extern void Plugify_SetDeleteString(void* func);\n'
-    content += 'extern void Plugify_SetCreateVector(void* func);\n'
-    content += 'extern void Plugify_SetAllocateVector(void* func);\n'
-    content += 'extern void Plugify_SetGetVectorSize(void* func);\n'
-    content += 'extern void Plugify_SetGetVectorData(void* func);\n'
-    content += 'extern void Plugify_SetAssignVector(void* func);\n'
-    content += 'extern void Plugify_SetDeleteVector(void* func);\n'
-    content += 'extern void Plugify_SetFreeVector(void* func);\n'
-    content += '\n'
-    content += 'extern void Plugify_SetDeleteVectorDataBool(void* func);\n'
-    content += 'extern void Plugify_SetDeleteVectorDataCStr(void* func);\n'
-    content += '\n'
-    content += '//typedef struct { const char *p; ptrdiff_t n; } _GoString_;\n'
-    content += 'typedef struct { void *data; ptrdiff_t len; ptrdiff_t cap; } _GoSlice_;\n'
-    content += '\n'
-    content += 'typedef struct { float x, y; } Vector2;\n'
-    content += 'typedef struct { float x, y, z; } Vector3;\n'
-    content += 'typedef struct { float x, y, z, w; } Vector4;\n'
-    content += 'typedef struct { float m[4][4]; } Matrix4x4;\n'
+    content = ('#pragma once\n'
+               '#include <stdlib.h>\n'
+               '#include <stdint.h>\n'
+               '#include <stdbool.h>\n\n'
+               'enum DataType {\n'
+               '\tBOOL,\n'
+               '\tCHAR8,\n'
+               '\tCHAR16,\n'
+               '\tINT8,\n'
+               '\tINT16,\n'
+               '\tINT32,\n'
+               '\tINT64,\n'
+               '\tUINT8,\n'
+               '\tUINT16,\n'
+               '\tUINT32,\n'
+               '\tUINT64,\n'
+               '\tPOINTER,\n'
+               '\tFLOAT,\n'
+               '\tDOUBLE,\n'
+               '\tSTRING\n'
+               '};\n\n'
+               'typedef struct { char* data; size_t size; size_t cap; } String;\n'
+               'typedef struct { size_t size; size_t cap; void* data; } Vector;\n'
+               '\n'
+               'extern void* Plugify_GetMethodPtr(const char* methodName);\n'
+               'extern void Plugify_GetMethodPtr2(const char* methodName, void** addressDest);\n'
+               '\n'
+               'extern String Plugify_ConstructString(_GoString_ source);\n'
+               'extern void Plugify_DestroyString(String* string);\n'
+               'extern const char* Plugify_GetStringData(String* string);\n'
+               'extern ptrdiff_t Plugify_GetStringLength(String* string);\n'
+               'extern void Plugify_AssignString(String* string, _GoString_ source);\n'
+               '\n'
+               'extern Vector Plugify_ConstructVector(void* arr, ptrdiff_t len, enum DataType type);\n'
+               'extern void Plugify_DestroyVector(Vector* vector, enum DataType type);\n'
+               'extern void* Plugify_GetVectorData(Vector* vector, enum DataType type);\n'
+               'extern ptrdiff_t Plugify_GetVectorSize(Vector* vector, enum DataType type);\n'
+               'extern void Plugify_AssignVector(Vector* vector, void* arr, ptrdiff_t len, enum DataType type);\n'
+               '\n'
+               'extern void Plugify_DeleteVectorDataCStr(void* arr);\n'
+               '\n'
+               'extern void Plugify_SetGetMethodPtr(void* func);\n'
+               'extern void Plugify_SetGetMethodPtr2(void* func);\n'
+               '\n'
+               'extern void Plugify_SetConstructString(void* func);\n'
+               'extern void Plugify_SetDestroyString(void* func);\n'
+               'extern void Plugify_SetGetStringData(void* func);\n'
+               'extern void Plugify_SetGetStringLength(void* func);\n'
+               'extern void Plugify_SetAssignString(void* func);\n'
+               'extern void Plugify_SetConstructVector(void* func);\n'
+               'extern void Plugify_SetDestroyVector(void* func);\n'
+               'extern void Plugify_SetGetVectorData(void* func);\n'
+               'extern void Plugify_SetGetVectorSize(void* func);\n'
+               'extern void Plugify_SetAssignVector(void* func);\n'
+               '\n'
+               'extern void Plugify_SetDeleteVectorDataCStr(void* func);\n'
+               '\n'
+               '//typedef struct { const char *p; ptrdiff_t n; } _GoString_;\n'
+               'typedef struct { void *data; ptrdiff_t len; ptrdiff_t cap; } _GoSlice_;\n'
+               '\n'
+               'typedef struct { float x, y; } Vector2;\n'
+               'typedef struct { float x, y, z; } Vector3;\n'
+               'typedef struct { float x, y, z, w; } Vector4;\n'
+               'typedef struct { float m[4][4]; } Matrix4x4;\n')
 
     content += '\n'
 
@@ -891,62 +790,62 @@ def main(manifest_path, output_dir, override):
         return_type = convert_type(ret_type["type"], "ref" in ret_type, True)
 
         content += (f'typedef {return_type} '
-                    f'(*{method['name']}Fn)({gen_params_string(method, ParamGen.Types)});\n')
-        content += (f'static {return_type} '
-                    f'{method['name']}({gen_params_string(method, ParamGen.TypesNames)}) {{\n')
-        content += f'\tstatic {method['name']}Fn __func = NULL;\n'
-        content += f'\tif (__func == NULL) Plugify_GetMethodPtr2("{plugin_name}.{method['name']}", (void**)&__func);\n'
-        content += (f'\t{"return " if ret_type['type'] != 'void' else ""}'
-                    f'__func({gen_params_string(method, ParamGen.Names)});\n')
-        content += '}\n'
+                    f'(*{method['name']}Fn)({gen_params(method, ParamGen.Types)});\n'
+                    f'static {return_type} '
+                    f'{method['name']}({gen_params(method, ParamGen.TypesNames)}) {{\n'
+                    f'\tstatic {method['name']}Fn __func = NULL;\n'
+                    f'\tif (__func == NULL) Plugify_GetMethodPtr2("{plugin_name}.{method['name']}", (void**)&__func);\n'
+                    f'\t{"return " if ret_type['type'] != 'void' else ""}'
+                    f'__func({gen_params(method, ParamGen.Names)});\n'
+                    '}\n')
 
     header_cfile = os.path.join(header_dir, f'{plugin_name}.h')
     with open(header_cfile, 'w', encoding='utf-8') as fd:
         fd.write(content)
 
-    content = ''
-
     link = 'https://github.com/untrustedmodders/plugify-module-cpp/blob/main/generator/generator.py'
 
-    content += f'package {plugin_name}\n'
-    content += '\n'
-    content += f'//generated with {link} from {plugin_name} \n'
-    content += '\n'
-    content += f'// #include "{plugin_name}.h"\n'
-    content += 'import "C"\n'
-    content += 'import "unsafe"\n'
-    content += '\n'
-    content += 'type Vector2 struct {\n\tX float32\n\tY float32\n}\n'
-    content += 'type Vector3 struct {\n\tX float32\n\tY float32\n\tZ float32\n}\n'
-    content += 'type Vector4 struct {\n\tX float32\n\tY float32\n\tZ float32\n\tW float32\n}\n'
-    content += 'type Matrix4x4 struct {\n\tM[4][4] float32\n}\n'
-    content += '\n'
+    content = (f'package {plugin_name}\n'
+               '\n'
+               f'//generated with {link} from {plugin_name} \n'
+               '\n'
+               f'// #include "{plugin_name}.h"\n'
+               'import "C"\n'
+               'import "unsafe"\n'
+               '\n'
+               'type Vector2 struct {\n\tX float32\n\tY float32\n}\n'
+               'type Vector3 struct {\n\tX float32\n\tY float32\n\tZ float32\n}\n'
+               'type Vector4 struct {\n\tX float32\n\tY float32\n\tZ float32\n\tW float32\n}\n'
+               'type Matrix4x4 struct {\n\tM[4][4] float32\n}\n'
+               '\n')
 
     for method in pplugin['exportedMethods']:
         ret_type = method['retType']
         return_type = convert_gotype(ret_type["type"], "ref" in ret_type, True)
 
         content += (f'func '
-                    f'{method['name']}({gen_goparams_string(method, ParamGen.TypesNames)}) {return_type} {{\n')
+                    f'{method['name']}({gen_goparams(method, ParamGen.TypesNames)}) {return_type} {{\n')
 
-        params = gen_goparamscast_string(method)
+        params = gen_goparamscast(method)
         if params != '':
             content += f'\t{params}\n'
 
         is_obj_ret = is_obj_return(ret_type["type"])
         is_pod_ret = is_pod_return(ret_type["type"])
         if is_pod_ret:
-            content += f'\tC_result := C.{method['name']}({gen_goparams_string(method, ParamGen.Names)})\n'
-        elif not is_obj_ret and ret_type['type'] != 'void':
-            content += f'\tresult := {return_type}(C.{method['name']}({gen_goparams_string(method, ParamGen.Names)}))\n'
+            content += f'\tC_result := C.{method['name']}({gen_goparams(method, ParamGen.Names)})\n'
+        elif is_obj_ret:
+            content += f'\tC_output := C.{method['name']}({gen_goparams(method, ParamGen.Names)})\n'
+        elif ret_type['type'] != 'void':
+            content += f'\tresult := {return_type}(C.{method['name']}({gen_goparams(method, ParamGen.Names)}))\n'
         else:
-            content += f'\tC.{method['name']}({gen_goparams_string(method, ParamGen.Names)})\n'
+            content += f'\tC.{method['name']}({gen_goparams(method, ParamGen.Names)})\n'
 
-        params = gen_goparamscast_assign_string(method)
+        params = gen_goparamscast_assign(method)
         if params != '':
             content += f'\n{params}'
 
-        params = gen_goparamscast_cleanup_string(method)
+        params = gen_goparamscast_cleanup(method)
         if params != '':
             content += f'\n{params}\n'
 

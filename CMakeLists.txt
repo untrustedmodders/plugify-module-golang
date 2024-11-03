@@ -24,8 +24,10 @@ endif()
 # Plugify
 #
 set(PLUGIFY_BUILD_SHARED_LIB ON CACHE INTERNAL "")
-set(PLUGIFY_BUILD_FUNCTION ON CACHE INTERNAL "")
+set(PLUGIFY_BUILD_JIT ON CACHE INTERNAL "")
 set(PLUGIFY_BUILD_ASSEMBLY ON CACHE INTERNAL "")
+set(PLUGIFY_BUILD_TESTS OFF CACHE INTERNAL "")
+set(PLUGIFY_DOWNLOADER OFF CACHE INTERNAL "")
 if(LINUX)
     set(PLUGIFY_USE_STATIC_STDLIB ON CACHE INTERNAL "")
 endif()
@@ -40,12 +42,12 @@ include(cmake/dyncall.cmake)
 # Go Language Module for Plugify
 #
 file(GLOB_RECURSE GOLM_SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "src/*.cpp")
-set(GOLM_PCH_FILE "src/pch.h")
+set(GOLM_PCH_FILE "src/pch.hpp")
 
 add_library(${PROJECT_NAME} SHARED ${GOLM_SOURCES})
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-set(GOLM_LINK_LIBRARIES plugify::plugify plugify::plugify-assembly asmjit::asmjit dyncall_s dyncallback_s)
+set(GOLM_LINK_LIBRARIES plugify::plugify plugify::plugify-assembly plugify::plugify-jit asmjit::asmjit dyncall_s)
 
 if(NOT COMPILER_SUPPORTS_FORMAT)
     set(GOLM_LINK_LIBRARIES ${GOLM_LINK_LIBRARIES} fmt::fmt-header-only)
