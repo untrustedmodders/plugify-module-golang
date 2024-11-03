@@ -594,12 +594,10 @@ def gen_goparamscast_assign(method):
                 output += f'\t*{param['name']} = make([]{go_type}, L_{param['name']})\n'
                 output += f'\tfor i := range (*{param['name']})' + " {\n"
                 if mode == 'CStr':
-                    output += f'\t\t(*{param['name']})[i] = C.GoString(*(**C.char)(unsafe.Pointer(uintptr(P_{param['name']}) + uintptr(i * C.sizeof_uintptr_t))))\n'
+                    output += f'\t\t(*{param['name']})[i] = C.GoString(C.Plugify_GetStringData((*C.String)(unsafe.Pointer(uintptr(P_{param['name']}) + uintptr(i * C.sizeof_uintptr_t)))))\n'
                 else:
                     output += f'\t\t(*{param['name']})[i] = *(*{go_type})(unsafe.Pointer(uintptr(P_{param['name']}) + uintptr(i * C.sizeof_{type[2:]})))\n'
                 output += "\t}"
-                if mode == 'CStr':
-                    output += f'\n\tC.Plugify_DeleteVectorData{mode}(P_{param['name']})'
                 return output
             else:
                 return ''#f'*{param['name']} = {type}(C_{param['name']})'
@@ -627,12 +625,10 @@ def gen_goparamscast_assign(method):
             output += f'\toutput := make([]{go_type}, L_output)\n'
             output += f'\tfor i := range output' + " {\n"
             if mode == 'CStr':
-                output += f'\t\toutput[i] = C.GoString(*(**C.char)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_uintptr_t))))\n'
+                output += f'\t\toutput[i] = C.GoString(C.Plugify_GetStringData((*C.String)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_uintptr_t)))))\n'
             else:
                 output += f'\t\toutput[i] = *(*{go_type})(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_{type[2:]})))\n'
             output += "\t}\n"
-            if mode == 'CStr':
-                output += f'\n\tC.Plugify_DeleteVectorData{mode}(P_output)'
             return output
         else:
             return f'output := {type}(C_output)'

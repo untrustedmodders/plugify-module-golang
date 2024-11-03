@@ -1044,7 +1044,7 @@ void AssignString(plg::string* string, GoString source) {
 		string->assign(source.p, static_cast<size_t>(source.n));
 }
 
-enum class DataType {
+enum class DataType : uint8_t {
 	Bool,
 	Char8,
 	Char16,
@@ -1133,20 +1133,8 @@ namespace {
 	}
 
 	template<typename T>
-	GOLM_FORCE_INLINE T* GetVectorData(plg::vector<T>* vector) requires(!std::is_same_v<T, GoString>) {
+	GOLM_FORCE_INLINE T* GetVectorData(plg::vector<T>* vector) {
 		return vector->data();
-	}
-
-	template<typename T>
-	GOLM_FORCE_INLINE char** GetVectorData(plg::vector<plg::string>* vector) requires(std::is_same_v<T, GoString>) {
-		char** strArray = new char*[vector->size()];
-
-		// Manually copy values from plg::vector<std::string> to the char* array
-		for (size_t i = 0; i < vector->size(); ++i) {
-			strArray[i] = (*vector)[i].data();
-		}
-
-		return strArray;
 	}
 }
 
@@ -1310,7 +1298,7 @@ void* GetVectorData(void* ptr, DataType type) {
 		case DataType::Double:
 			return GetVectorData<>(reinterpret_cast<plg::vector<double>*>(ptr));
 		case DataType::String:
-			return GetVectorData<GoString>(reinterpret_cast<plg::vector<plg::string>*>(ptr));
+			return GetVectorData<>(reinterpret_cast<plg::vector<plg::string>*>(ptr));
 		default:
 			return nullptr; // Return nullptr for invalid type
 	}

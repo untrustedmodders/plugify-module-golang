@@ -418,8 +418,8 @@ static int64_t ParamAllPrimitivesCallback(bool p1, char p2, uint16_t p3, int8_t 
 	static ParamAllPrimitivesCallbackFn __func = NULL;
 	if (__func == NULL) Plugify_GetMethodPtr2("cross_call_master.ParamAllPrimitivesCallback", (void**)&__func);
 	return __func(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14);
-}/*
-typedef void (*CallFuncVoidCallbackFn)(delegate);
+}
+/*typedef void (*CallFuncVoidCallbackFn)(delegate);
 static void CallFuncVoidCallback(delegate func) {
 	static CallFuncVoidCallbackFn __func = NULL;
 	if (__func == NULL) Plugify_GetMethodPtr2("cross_call_master.CallFuncVoidCallback", (void**)&__func);
