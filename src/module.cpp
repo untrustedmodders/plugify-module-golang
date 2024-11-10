@@ -1102,7 +1102,7 @@ namespace {
 
 	template<typename T>
 	GOLM_FORCE_INLINE void DestroyVector(plg::vector<T>* vector) {
-		vector->~vector_base();
+		vector->~vector();
 	}
 
 	template<typename T>

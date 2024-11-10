@@ -736,7 +736,7 @@ def main(manifest_path, output_dir, override):
                '\tSTRING\n'
                '};\n\n'
                'typedef struct { char* data; size_t size; size_t cap; } String;\n'
-               'typedef struct { size_t size; size_t cap; void* data; } Vector;\n'
+               'typedef struct { void* begin; void* end; void* capacity; } Vector;\n'
                '\n'
                'extern void* Plugify_GetMethodPtr(const char* methodName);\n'
                'extern void Plugify_GetMethodPtr2(const char* methodName, void** addressDest);\n'
