@@ -164,7 +164,7 @@
 			"funcName": "NoParamReturnArrayBool",
 			"paramTypes": [],
 			"retType": {
-				"type": "bool*"
+				"type": "bool[]"
 			}
 		},
 		{
@@ -172,7 +172,7 @@
 			"funcName": "NoParamReturnArrayChar8",
 			"paramTypes": [],
 			"retType": {
-				"type": "char8*"
+				"type": "char8[]"
 			}
 		},
 		{
@@ -180,7 +180,7 @@
 			"funcName": "NoParamReturnArrayChar16",
 			"paramTypes": [],
 			"retType": {
-				"type": "char16*"
+				"type": "char16[]"
 			}
 		},
 		{
@@ -188,7 +188,7 @@
 			"funcName": "NoParamReturnArrayInt8",
 			"paramTypes": [],
 			"retType": {
-				"type": "int8*"
+				"type": "int8[]"
 			}
 		},
 		{
@@ -196,7 +196,7 @@
 			"funcName": "NoParamReturnArrayInt16",
 			"paramTypes": [],
 			"retType": {
-				"type": "int16*"
+				"type": "int16[]"
 			}
 		},
 		{
@@ -204,7 +204,7 @@
 			"funcName": "NoParamReturnArrayInt32",
 			"paramTypes": [],
 			"retType": {
-				"type": "int32*"
+				"type": "int32[]"
 			}
 		},
 		{
@@ -212,7 +212,7 @@
 			"funcName": "NoParamReturnArrayInt64",
 			"paramTypes": [],
 			"retType": {
-				"type": "int64*"
+				"type": "int64[]"
 			}
 		},
 		{
@@ -220,7 +220,7 @@
 			"funcName": "NoParamReturnArrayUInt8",
 			"paramTypes": [],
 			"retType": {
-				"type": "uint8*"
+				"type": "uint8[]"
 			}
 		},
 		{
@@ -228,7 +228,7 @@
 			"funcName": "NoParamReturnArrayUInt16",
 			"paramTypes": [],
 			"retType": {
-				"type": "uint16*"
+				"type": "uint16[]"
 			}
 		},
 		{
@@ -236,7 +236,7 @@
 			"funcName": "NoParamReturnArrayUInt32",
 			"paramTypes": [],
 			"retType": {
-				"type": "uint32*"
+				"type": "uint32[]"
 			}
 		},
 		{
@@ -244,7 +244,7 @@
 			"funcName": "NoParamReturnArrayUInt64",
 			"paramTypes": [],
 			"retType": {
-				"type": "uint64*"
+				"type": "uint64[]"
 			}
 		},
 		{
@@ -252,7 +252,7 @@
 			"funcName": "NoParamReturnArrayPointer",
 			"paramTypes": [],
 			"retType": {
-				"type": "ptr64*"
+				"type": "ptr64[]"
 			}
 		},
 		{
@@ -260,7 +260,7 @@
 			"funcName": "NoParamReturnArrayFloat",
 			"paramTypes": [],
 			"retType": {
-				"type": "float*"
+				"type": "float[]"
 			}
 		},
 		{
@@ -268,7 +268,7 @@
 			"funcName": "NoParamReturnArrayDouble",
 			"paramTypes": [],
 			"retType": {
-				"type": "double*"
+				"type": "double[]"
 			}
 		},
 		{
@@ -276,7 +276,7 @@
 			"funcName": "NoParamReturnArrayString",
 			"paramTypes": [],
 			"retType": {
-				"type": "string*"
+				"type": "string[]"
 			}
 		},
 		{
@@ -423,7 +423,7 @@
 				},
 				{
 					"name": "e",
-					"type": "int64*",
+					"type": "int64[]",
 					"ref": false
 				}
 			],
@@ -457,7 +457,7 @@
 				},
 				{
 					"name": "e",
-					"type": "int64*",
+					"type": "int64[]",
 					"ref": false
 				},
 				{
@@ -496,7 +496,7 @@
 				},
 				{
 					"name": "e",
-					"type": "int64*",
+					"type": "int64[]",
 					"ref": false
 				},
 				{
@@ -540,7 +540,7 @@
 				},
 				{
 					"name": "e",
-					"type": "int64*",
+					"type": "int64[]",
 					"ref": false
 				},
 				{
@@ -589,7 +589,7 @@
 				},
 				{
 					"name": "e",
-					"type": "int64*",
+					"type": "int64[]",
 					"ref": false
 				},
 				{
@@ -643,7 +643,7 @@
 				},
 				{
 					"name": "e",
-					"type": "int64*",
+					"type": "int64[]",
 					"ref": false
 				},
 				{
@@ -788,7 +788,7 @@
 				},
 				{
 					"name": "e",
-					"type": "int64*",
+					"type": "int64[]",
 					"ref": true
 				}
 			],
@@ -822,7 +822,7 @@
 				},
 				{
 					"name": "e",
-					"type": "int64*",
+					"type": "int64[]",
 					"ref": true
 				},
 				{
@@ -861,7 +861,7 @@
 				},
 				{
 					"name": "e",
-					"type": "int64*",
+					"type": "int64[]",
 					"ref": true
 				},
 				{
@@ -905,7 +905,7 @@
 				},
 				{
 					"name": "e",
-					"type": "int64*",
+					"type": "int64[]",
 					"ref": true
 				},
 				{
@@ -954,7 +954,7 @@
 				},
 				{
 					"name": "e",
-					"type": "int64*",
+					"type": "int64[]",
 					"ref": true
 				},
 				{
@@ -1008,7 +1008,7 @@
 				},
 				{
 					"name": "e",
-					"type": "int64*",
+					"type": "int64[]",
 					"ref": true
 				},
 				{
@@ -1047,77 +1047,77 @@
 			"paramTypes": [
 				{
 					"name": "p1",
-					"type": "bool*",
+					"type": "bool[]",
 					"ref": true
 				},
 				{
 					"name": "p2",
-					"type": "char8*",
+					"type": "char8[]",
 					"ref": true
 				},
 				{
 					"name": "p3",
-					"type": "char16*",
+					"type": "char16[]",
 					"ref": true
 				},
 				{
 					"name": "p4",
-					"type": "int8*",
+					"type": "int8[]",
 					"ref": true
 				},
 				{
 					"name": "p5",
-					"type": "int16*",
+					"type": "int16[]",
 					"ref": true
 				},
 				{
 					"name": "p6",
-					"type": "int32*",
+					"type": "int32[]",
 					"ref": true
 				},
 				{
 					"name": "p7",
-					"type": "int64*",
+					"type": "int64[]",
 					"ref": true
 				},
 				{
 					"name": "p8",
-					"type": "uint8*",
+					"type": "uint8[]",
 					"ref": true
 				},
 				{
 					"name": "p9",
-					"type": "uint16*",
+					"type": "uint16[]",
 					"ref": true
 				},
 				{
 					"name": "p10",
-					"type": "uint32*",
+					"type": "uint32[]",
 					"ref": true
 				},
 				{
 					"name": "p11",
-					"type": "uint64*",
+					"type": "uint64[]",
 					"ref": true
 				},
 				{
 					"name": "p12",
-					"type": "ptr64*",
+					"type": "ptr64[]",
 					"ref": true
 				},
 				{
 					"name": "p13",
-					"type": "float*",
+					"type": "float[]",
 					"ref": true
 				},
 				{
 					"name": "p14",
-					"type": "double*",
+					"type": "double[]",
 					"ref": true
 				},
 				{
 					"name": "p15",
-					"type": "string*",
+					"type": "string[]",
 					"ref": true
 				}
 			],
