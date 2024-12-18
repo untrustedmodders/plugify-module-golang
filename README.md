@@ -23,7 +23,7 @@ The Go Language Module for Plugify enables developers to write plugins in Go for
 You can install the C++ Language Module using the Plugify plugin manager by running the following command:
 
 ```bash
-plugify install plugify-module-golang
+plg install plugify-module-golang
 ```
 
 #### Option 2: Manual Installation
