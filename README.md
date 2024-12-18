@@ -31,9 +31,8 @@ plugify install plugify-module-golang
 1. Clone this repository:
 
     ```bash
-    git clone https://github.com/untrustedmodders/plugify-module-golang.git
+    git clone https://github.com/untrustedmodders/plugify-module-golang.git --recursive
     cd plugify-module-golang
-    git submodule update --init --recursive
     ```
 
 2. Build the Go language module:
