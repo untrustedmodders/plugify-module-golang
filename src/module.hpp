@@ -45,16 +45,25 @@ namespace golm {
 
 	constexpr int kApiVersion = 1;
 
+	struct PluginContext {
+		bool hasUpdate{};
+		bool hasStart{};
+		bool hasEnd{};
+		bool hasPanic{};
+	};
+
 	using InitFunc = int (*)(GoSlice, int, const void*);
 	using StartFunc = void (*)();
 	using UpdateFunc = void (*)(float);
 	using EndFunc = void (*)();
+	using ContextFunc = PluginContext* (*)();
 
 	struct AssemblyHolder {
 		std::unique_ptr<plugify::Assembly> assembly;
 		UpdateFunc updateFunc;
 		StartFunc startFunc;
 		EndFunc endFunc;
+		ContextFunc contextFunc;
 		plugify::JitCallback::CallbackHandler callFunc;
 	};
 

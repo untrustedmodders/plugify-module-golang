@@ -86,7 +86,7 @@ LoadResult GoLanguageModule::OnPluginLoad(PluginHandle plugin) {
 	assemblyPath /= std::format("{}" GOLM_LIBRARY_SUFFIX, plugin.GetDescriptor().GetEntryPoint());
 
 	auto assembly = std::make_unique<Assembly>(assemblyPath, LoadFlag::Lazy | LoadFlag::Nodelete | LoadFlag::PinInMemory);
-	if (!assembly) {
+	if (!assembly->IsValid()) {
 		return ErrorData{ std::format("Failed to load assembly: {}", assembly->GetError()) };
 	}
 
@@ -103,6 +103,7 @@ LoadResult GoLanguageModule::OnPluginLoad(PluginHandle plugin) {
 	auto* const startFunc = assembly->GetFunctionByName("Plugify_PluginStart").RCast<StartFunc>();
 	auto* const updateFunc = assembly->GetFunctionByName("Plugify_PluginUpdate").RCast<UpdateFunc>();
 	auto* const endFunc = assembly->GetFunctionByName("Plugify_PluginEnd").RCast<EndFunc>();
+	auto* const contextFunc = assembly->GetFunctionByName("Plugify_PluginContext").RCast<ContextFunc>();
 
 	std::vector<std::string_view> funcErrors;
 
@@ -131,8 +132,10 @@ LoadResult GoLanguageModule::OnPluginLoad(PluginHandle plugin) {
 		return ErrorData{ std::format("Not supported plugin api {}, max supported {}", resultVersion, kApiVersion) };
 	}
 
-	auto data = _assemblies.emplace_back(std::make_unique<AssemblyHolder>(std::move(assembly), updateFunc, startFunc, endFunc, callFunc)).get();
-	return LoadResultData{ std::move(methods), data, { updateFunc != nullptr, startFunc != nullptr, endFunc != nullptr, !exportedMethods.empty() } };
+	auto [hasUpdate, hasStart, hasEnd, _] = contextFunc ? *(contextFunc()) : PluginContext{};
+
+	auto data = _assemblies.emplace_back(std::make_unique<AssemblyHolder>(std::move(assembly), updateFunc, startFunc, endFunc, contextFunc, callFunc)).get();
+	return LoadResultData{ std::move(methods), data, { hasUpdate, hasStart, hasEnd, !exportedMethods.empty() } };
 }
 
 void GoLanguageModule::OnPluginStart(PluginHandle plugin) {
