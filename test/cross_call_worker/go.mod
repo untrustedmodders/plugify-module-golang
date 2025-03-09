@@ -1,5 +1,5 @@
 module plugify-plugin
 
-go 1.21.5
+go 1.24.0
 
-require github.com/untrustedmodders/go-plugify v0.0.0-20240714133225-78d78cba0f42 // indirect
+require github.com/untrustedmodders/go-plugify v0.0.0-20250302220657-ee0cab0c0300

@@ -315,10 +315,10 @@ ASS_TYPESCAST_MAP = {
     'vec3[]': 'plugify.GetVectorDataVector3',
     'vec4[]': 'plugify.GetVectorDataVector4',
     'mat4x4[]': 'plugify.GetVectorDataMatrix4x4',
-    'vec2': '',
-    'vec3': '',
-    'vec4': '',
-    'mat4x4': ''
+    'vec2': 'plugify.Vector2',
+    'vec3': 'plugify.Vector3',
+    'vec4': 'plugify.Vector4',
+    'mat4x4': 'plugify.Matrix4x4'
 }
 
 DEL_TYPESCAST_MAP = {
@@ -457,16 +457,6 @@ def convert_type(type_name: str, is_ref: bool = False) -> str:
     return f'*{base_type}' if is_ref else base_type
 
 
-def convert_dtype(type_name: str, is_ref: bool = False, is_ret: bool = False) -> str:
-    """
-    Converts a type name to its corresponding Go type, with additional handling for references
-    and return types (for POD types, references are forced).
-    """
-    if not is_ret and is_pod_type(type_name):
-        is_ref = True
-    return convert_type(type_name, is_ref)
-
-
 def convert_ctype(type_name: str, is_ref: bool = False, is_ret: bool = False) -> str:
     """
     Converts a type name to its corresponding C type.
@@ -505,12 +495,6 @@ def get_type_name(param: dict) -> str:
     return adjust_type_name(param, type_name, is_ref)
 
 
-def get_dtype_name(param: dict, is_ret: bool = False) -> str:
-    is_ref = 'ref' in param and param['ref']
-    type_name = convert_dtype(param['type'], is_ref, is_ret)
-    return adjust_type_name(param, type_name, is_ref)
-
-
 def get_ctype_name(param: dict, is_ret: bool) -> str:
     is_ref = 'ref' in param and param['ref']
     type_name = convert_ctype(param['type'], is_ref, is_ret)
@@ -528,14 +512,13 @@ class ParamGen(IntEnum):
     Types = 1
     Names = 2
     TypesNames = 3
-    TypesCastNames = 4
     CastNames = 5
 
 
 def gen_params(method: dict, param_gen: ParamGen) -> str:
     """
     Generates the parameters string for the method based on the param_gen type.
-    Handles different modes such as Types, Names, CastNames, and TypesCastNames.
+    Handles different modes such as Types, Names, CastNames, and TypesNames.
     """
 
     # Helper function to generate the type of a parameter, considering references and function types
@@ -566,10 +549,6 @@ def gen_params(method: dict, param_gen: ParamGen) -> str:
     def gen_param_type_name(param: dict) -> str:
         return f'{generate_name(param["name"])} {get_type_name(param)}'
 
-    # Helper function to generate the parameter type and cast name for TypesCastNames
-    def gen_param_types_cast(param: dict) -> str:
-        return f'{generate_name(param["name"])} {get_dtype_name(param)}'
-
     # Function to generate the appropriate string for a single parameter based on the param_gen mode
     def gen_param(param: dict) -> str:
         match param_gen:
@@ -585,9 +564,6 @@ def gen_params(method: dict, param_gen: ParamGen) -> str:
             # Handle types with type names
             case ParamGen.TypesNames:
                 return gen_param_type_name(param)
-            # Handle types with cast names
-            case ParamGen.TypesCastNames:
-                return gen_param_types_cast(param)
             case _:
                 return ''
 
@@ -647,7 +623,7 @@ def gen_types(method: dict) -> str:
     return ', '.join(parts)
 
 
-def gen_paramscast(method: dict, tabs: str) -> str:
+def gen_paramscast(method: dict, tabs: str) -> list[str]:
     """
     Generates parameter casting code for a method, considering various cases like
     function pointers, references, and vector constructions.
@@ -661,15 +637,6 @@ def gen_paramscast(method: dict, tabs: str) -> str:
         # Check if the parameter type requires a casting transformation (from VAL_TYPESCAST_MAP)
         param_type = VAL_TYPESCAST_MAP.get(param['type'], None)
         name = generate_name(param['name'])
-
-        # Handle function pointer marshalling, skip if it's already marshaled
-        #if 'prototype' in param:
-        #    func = generate_name(param['prototype']['name'])
-        #    output = [
-        #        f'__{func}__ = {name}\n',
-        #        f'\t__{name} := {param_type}("__{func}")'
-        #    ]
-        #    return ''.join(output)
 
         # Handle vector type-base casting
         if 'C.Vector' in param_type or 'C.Matrix' in param_type:
@@ -688,7 +655,7 @@ def gen_paramscast(method: dict, tabs: str) -> str:
         # Return an empty string for unhandled cases
         return ''
 
-    def gen_return(param):
+    def gen_return(param) -> str:
         """
         Generates the return value casting code for the method, if applicable.
         """
@@ -702,7 +669,7 @@ def gen_paramscast(method: dict, tabs: str) -> str:
         if is_obj_type(ret_type.get('type')):
             ret_val = gen_return(ret_type)
             if ret_val:
-                output_parts.append(f'{tabs}{ret_val}\n')
+                output_parts.append(f'{tabs}{ret_val}')
 
     # Handle casting for each parameter in the method
     if method.get('paramTypes'):
@@ -710,13 +677,12 @@ def gen_paramscast(method: dict, tabs: str) -> str:
             param_cast = gen_param(param)
             if param_cast:
                 output_parts.append(f'{tabs}{param_cast}')
-                output_parts.append('\n' if param_cast[-1] != '{' else '\n')
 
     # Return the full generated string of parameter and return type casting code
-    return ''.join(output_parts)
+    return output_parts
 
 
-def gen_paramscast_assign(method: dict, tabs: str) -> str:
+def gen_paramscast_assign(method: dict, tabs: str) -> list[str]:
     """
     Generates parameter assignment code for a method, including casting, marshaling for 'ref' types,
     and handling special types like 'VectorData'.
@@ -730,8 +696,12 @@ def gen_paramscast_assign(method: dict, tabs: str) -> str:
             param_type = ASS_TYPESCAST_MAP.get(param['type'], None)
             name = generate_name(param['name'])
 
+            # Handle vector type-base casting
+            if 'plugify.Vector' in param_type or 'plugify.Matrix' in param_type:
+                return f'*{name} = *(*{param_type})(unsafe.Pointer(&__{name}))'
+
             # Handle 'VectorData' type
-            if 'VectorData' in param_type:
+            elif 'VectorData' in param_type:
                 return f'{param_type}To(&__{name}, {name})'
             elif 'plugify.' in param_type:  # Handle other types
                 return f'*{name} = {param_type}(&__{name})'
@@ -744,7 +714,7 @@ def gen_paramscast_assign(method: dict, tabs: str) -> str:
                 return ''
         return ''  # Return empty if no 'ref' is in param
 
-    def gen_return(param):
+    def gen_return(param) -> str:
         """
         Generates assignment code for the return type, considering 'VectorData' and other special cases.
         """
@@ -767,19 +737,19 @@ def gen_paramscast_assign(method: dict, tabs: str) -> str:
         if is_obj_type(ret_type.get('type')):
             ret_val = gen_return(ret_type)
             if ret_val:
-                output_parts.append(f'{tabs}{ret_val}\n')
+                output_parts.append(f'{tabs}{ret_val}')
 
     # Handle parameter types
     if method.get('paramTypes'):
         for param in method['paramTypes']:
             param_cast = gen_param(param)
             if param_cast:
-                output_parts.append(f'{tabs}{param_cast}\n')
+                output_parts.append(f'{tabs}{param_cast}')
 
-    return ''.join(output_parts)
+    return output_parts
 
 
-def gen_paramscast_cleanup(method: dict, tabs: str) -> str:
+def gen_paramscast_cleanup(method: dict, tabs: str) -> list[str]:
     """
     Generate code for parameter and return value cleanup using type casts.
     """
@@ -813,15 +783,15 @@ def gen_paramscast_cleanup(method: dict, tabs: str) -> str:
     if is_obj_type(ret_type.get('type', '')):
         ret_cast = gen_return(ret_type)
         if ret_cast:
-            output_parts.append(f'{tabs}{ret_cast}\n')
+            output_parts.append(f'{tabs}{ret_cast}')
 
     # Handle parameter cleanup
     for param in method.get('paramTypes', []):
         param_cast = gen_param(param)
         if param_cast:
-            output_parts.append(f'{tabs}{param_cast}\n')
+            output_parts.append(f'{tabs}{param_cast}')
 
-    return ''.join(output_parts)
+    return output_parts
 
 
 def gen_delegate_body(prototype: dict, delegates: set[str]) -> str:
@@ -841,10 +811,10 @@ def gen_delegate_body(prototype: dict, delegates: set[str]) -> str:
 
     # Get the return type and convert it
     ret_type = prototype.get('retType', {})
-    return_type = get_dtype_name(ret_type, True)
+    return_type = get_type_name(ret_type)
 
     # Get the parameter list
-    param_list = gen_params(prototype, ParamGen.TypesCastNames)
+    param_list = gen_params(prototype, ParamGen.TypesNames)
 
     # Start building the Go function type definition
     delegate_code = []
@@ -880,7 +850,7 @@ def gen_enum_body(enum: dict, enum_type: str, enums: set[str]) -> str:
     if enum_description:
         enum_code.append(f'// {enum_name} - {enum_description}')
 
-    enum_code.append(f'type {enum_name} {convert_type(enum_type)}\n')
+    enum_code.append(f'type {enum_name} = {convert_type(enum_type)}\n')
 
     # Define constants
     enum_code.append('const (')
@@ -946,13 +916,14 @@ def generate_method_body(method: dict, ret_type: dict, return_type: str) -> list
     params_cast = gen_paramscast(method, indent)
 
     # For object return types, declare a return value variable
-    has_cast = params_cast and ret_type['type'] != 'void'
+    has_cast = len(params_cast) > 0 and ret_type['type'] != 'void'
     if is_obj_ret or has_cast:
         body.append(f'{indent}var __retVal {return_type}')
 
     has_try = False
-    if params_cast:
-        body.append(params_cast)
+    if len(params_cast) > 0:
+        for params in params_cast:
+            body.append(params)
         index = len(body)  # Mark position to insert try block
         body.append(f'{indent}plugify.Block {{')
         body.append(f'{indent}\tTry: func() {{')  # Start try block
@@ -983,14 +954,19 @@ def generate_method_body(method: dict, ret_type: dict, return_type: str) -> list
 
     # Unmarshal native data back into managed data
     assign_cast = gen_paramscast_assign(method, inner_indent)
-    if assign_cast:
-        body.append(f'{inner_indent}// Unmarshal - Convert native data to managed data.\n{assign_cast}')
+    if len(assign_cast) > 0:
+        body.append(f'{inner_indent}// Unmarshal - Convert native data to managed data.')
+        for assign in assign_cast:
+            body.append(assign)
 
     # Cleanup after function call
-    cleanup = gen_paramscast_cleanup(method, inner_indent)
-    if cleanup:
-        body.append(f'{indent}\t}},\n{indent}\tFinally: func() {{\n{inner_indent}// Perform cleanup.\n{cleanup}{indent}\t}},\n{indent}}}.Do()')
-    elif params_cast:
+    cleanup_cast = gen_paramscast_cleanup(method, inner_indent)
+    if len(cleanup_cast) > 0:
+        body.append(f'{indent}\t}},\n{indent}\tFinally: func() {{\n{inner_indent}// Perform cleanup.')
+        for cleanup in cleanup_cast:
+            body.append(cleanup)
+        body.append(f'{indent}\t}},\n{indent}}}.Do()')
+    elif len(params_cast) > 0:
         # If no cleanup, remove try/catch block and adjust indentation
         body.pop(index)
         body.pop(index)
@@ -1173,14 +1149,27 @@ def generate_header(plugin_name: str, pplugin: dict) -> str:
     # GitHub link for reference
     link = 'https://github.com/untrustedmodders/plugify-module-golang/blob/main/generator/generator.py'
 
+    directives = []
+
+    # Append directives implementations
+    for method in pplugin.get('exportedMethods', []):
+        directives.append(f'#cgo noescape {method.get("name", "UnnamedMethod")}')
+        #languageModule = pplugin.get('languageModule', {})
+        #if languageModule.get('name', '') == 'golang':
+        #   directives.append(f'#cgo noescape {method.get("name", "UnnamedMethod")}')
+
     # Initialize content with common imports and namespace declaration
     content = [
         f'package {plugin_name}',
         '',
-        f'// #include "{plugin_name}.h"',
+        '/*',
+        f'#include "{plugin_name}.h"',
+        '\n'.join(directives),
+        '*/',
         'import "C"',
         'import (',
         '\t"unsafe"',
+        '\t"reflect"',
         '\t"github.com/untrustedmodders/go-plugify"',
         ')',
         '',

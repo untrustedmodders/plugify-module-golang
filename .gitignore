@@ -2,9 +2,10 @@
 .idea
 .vscode
 .vs
+.PVS-Studio
 
 # CMake
 CMakeUserPresets.json
 
 # Build results
-build/
+/build

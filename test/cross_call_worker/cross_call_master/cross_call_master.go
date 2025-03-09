@@ -1,1693 +1,2783 @@
 package cross_call_master
 
-//generated with https://github.com/untrustedmodders/plugify-module-cpp/blob/main/generator/generator.py from cross_call_master 
-
-// #include "cross_call_master.h"
+/*
+#include "cross_call_master.h"
+#cgo noescape ReverseReturn
+#cgo noescape NoParamReturnVoidCallback
+#cgo noescape NoParamReturnBoolCallback
+#cgo noescape NoParamReturnChar8Callback
+#cgo noescape NoParamReturnChar16Callback
+#cgo noescape NoParamReturnInt8Callback
+#cgo noescape NoParamReturnInt16Callback
+#cgo noescape NoParamReturnInt32Callback
+#cgo noescape NoParamReturnInt64Callback
+#cgo noescape NoParamReturnUInt8Callback
+#cgo noescape NoParamReturnUInt16Callback
+#cgo noescape NoParamReturnUInt32Callback
+#cgo noescape NoParamReturnUInt64Callback
+#cgo noescape NoParamReturnPointerCallback
+#cgo noescape NoParamReturnFloatCallback
+#cgo noescape NoParamReturnDoubleCallback
+#cgo noescape NoParamReturnFunctionCallback
+#cgo noescape NoParamReturnStringCallback
+#cgo noescape NoParamReturnAnyCallback
+#cgo noescape NoParamReturnArrayBoolCallback
+#cgo noescape NoParamReturnArrayChar8Callback
+#cgo noescape NoParamReturnArrayChar16Callback
+#cgo noescape NoParamReturnArrayInt8Callback
+#cgo noescape NoParamReturnArrayInt16Callback
+#cgo noescape NoParamReturnArrayInt32Callback
+#cgo noescape NoParamReturnArrayInt64Callback
+#cgo noescape NoParamReturnArrayUInt8Callback
+#cgo noescape NoParamReturnArrayUInt16Callback
+#cgo noescape NoParamReturnArrayUInt32Callback
+#cgo noescape NoParamReturnArrayUInt64Callback
+#cgo noescape NoParamReturnArrayPointerCallback
+#cgo noescape NoParamReturnArrayFloatCallback
+#cgo noescape NoParamReturnArrayDoubleCallback
+#cgo noescape NoParamReturnArrayStringCallback
+#cgo noescape NoParamReturnArrayAnyCallback
+#cgo noescape NoParamReturnArrayVector2Callback
+#cgo noescape NoParamReturnArrayVector3Callback
+#cgo noescape NoParamReturnArrayVector4Callback
+#cgo noescape NoParamReturnArrayMatrix4x4Callback
+#cgo noescape NoParamReturnVector2Callback
+#cgo noescape NoParamReturnVector3Callback
+#cgo noescape NoParamReturnVector4Callback
+#cgo noescape NoParamReturnMatrix4x4Callback
+#cgo noescape Param1Callback
+#cgo noescape Param2Callback
+#cgo noescape Param3Callback
+#cgo noescape Param4Callback
+#cgo noescape Param5Callback
+#cgo noescape Param6Callback
+#cgo noescape Param7Callback
+#cgo noescape Param8Callback
+#cgo noescape Param9Callback
+#cgo noescape Param10Callback
+#cgo noescape ParamRef1Callback
+#cgo noescape ParamRef2Callback
+#cgo noescape ParamRef3Callback
+#cgo noescape ParamRef4Callback
+#cgo noescape ParamRef5Callback
+#cgo noescape ParamRef6Callback
+#cgo noescape ParamRef7Callback
+#cgo noescape ParamRef8Callback
+#cgo noescape ParamRef9Callback
+#cgo noescape ParamRef10Callback
+#cgo noescape ParamRefVectorsCallback
+#cgo noescape ParamAllPrimitivesCallback
+#cgo noescape ParamEnumCallback
+#cgo noescape ParamEnumRefCallback
+#cgo noescape ParamVariantCallback
+#cgo noescape ParamVariantRefCallback
+#cgo noescape CallFuncVoidCallback
+#cgo noescape CallFuncBoolCallback
+#cgo noescape CallFuncChar8Callback
+#cgo noescape CallFuncChar16Callback
+#cgo noescape CallFuncInt8Callback
+#cgo noescape CallFuncInt16Callback
+#cgo noescape CallFuncInt32Callback
+#cgo noescape CallFuncInt64Callback
+#cgo noescape CallFuncUInt8Callback
+#cgo noescape CallFuncUInt16Callback
+#cgo noescape CallFuncUInt32Callback
+#cgo noescape CallFuncUInt64Callback
+#cgo noescape CallFuncPtrCallback
+#cgo noescape CallFuncFloatCallback
+#cgo noescape CallFuncDoubleCallback
+#cgo noescape CallFuncStringCallback
+#cgo noescape CallFuncAnyCallback
+#cgo noescape CallFuncFunctionCallback
+#cgo noescape CallFuncBoolVectorCallback
+#cgo noescape CallFuncChar8VectorCallback
+#cgo noescape CallFuncChar16VectorCallback
+#cgo noescape CallFuncInt8VectorCallback
+#cgo noescape CallFuncInt16VectorCallback
+#cgo noescape CallFuncInt32VectorCallback
+#cgo noescape CallFuncInt64VectorCallback
+#cgo noescape CallFuncUInt8VectorCallback
+#cgo noescape CallFuncUInt16VectorCallback
+#cgo noescape CallFuncUInt32VectorCallback
+#cgo noescape CallFuncUInt64VectorCallback
+#cgo noescape CallFuncPtrVectorCallback
+#cgo noescape CallFuncFloatVectorCallback
+#cgo noescape CallFuncDoubleVectorCallback
+#cgo noescape CallFuncStringVectorCallback
+#cgo noescape CallFuncAnyVectorCallback
+#cgo noescape CallFuncVec2VectorCallback
+#cgo noescape CallFuncVec3VectorCallback
+#cgo noescape CallFuncVec4VectorCallback
+#cgo noescape CallFuncMat4x4VectorCallback
+#cgo noescape CallFuncVec2Callback
+#cgo noescape CallFuncVec3Callback
+#cgo noescape CallFuncVec4Callback
+#cgo noescape CallFuncMat4x4Callback
+#cgo noescape CallFunc1Callback
+#cgo noescape CallFunc2Callback
+#cgo noescape CallFunc3Callback
+#cgo noescape CallFunc4Callback
+#cgo noescape CallFunc5Callback
+#cgo noescape CallFunc6Callback
+#cgo noescape CallFunc7Callback
+#cgo noescape CallFunc8Callback
+#cgo noescape CallFunc9Callback
+#cgo noescape CallFunc10Callback
+#cgo noescape CallFunc11Callback
+#cgo noescape CallFunc12Callback
+#cgo noescape CallFunc13Callback
+#cgo noescape CallFunc14Callback
+#cgo noescape CallFunc15Callback
+#cgo noescape CallFunc16Callback
+#cgo noescape CallFunc17Callback
+#cgo noescape CallFunc18Callback
+#cgo noescape CallFunc19Callback
+#cgo noescape CallFunc20Callback
+#cgo noescape CallFunc21Callback
+#cgo noescape CallFunc22Callback
+#cgo noescape CallFunc23Callback
+#cgo noescape CallFunc24Callback
+#cgo noescape CallFunc25Callback
+#cgo noescape CallFunc26Callback
+#cgo noescape CallFunc27Callback
+#cgo noescape CallFunc28Callback
+#cgo noescape CallFunc29Callback
+#cgo noescape CallFunc30Callback
+#cgo noescape CallFunc31Callback
+#cgo noescape CallFunc32Callback
+#cgo noescape CallFunc33Callback
+#cgo noescape CallFuncEnumCallback
+*/
 import "C"
-import "unsafe"
+import (
+	"github.com/untrustedmodders/go-plugify"
+	"reflect"
+	"unsafe"
+)
 
-type Vector2 struct {
-	X float32
-	Y float32
+// Generated with https://github.com/untrustedmodders/plugify-module-golang/blob/main/generator/generator.py from cross_call_master
+
+type Example = int32
+
+const (
+	First  Example = 1
+	Second Example = 2
+	Third  Example = 3
+	Forth  Example = 4
+)
+
+type NoParamReturnFunctionCallbackFunc func() int32
+type FuncVoid func()
+type FuncBool func() bool
+type FuncChar8 func() int8
+type FuncChar16 func() uint16
+type FuncInt8 func() int8
+type FuncInt16 func() int16
+type FuncInt32 func() int32
+type FuncInt64 func() int64
+type FuncUInt8 func() uint8
+type FuncUInt16 func() uint16
+type FuncUInt32 func() uint32
+type FuncUInt64 func() uint64
+type FuncPtr func() uintptr
+type FuncFloat func() float32
+type FuncDouble func() float64
+type FuncString func() string
+type FuncAny func() interface{}
+type FuncFunction func() uintptr
+type FuncBoolVector func() []bool
+type FuncChar8Vector func() []int8
+type FuncChar16Vector func() []uint16
+type FuncInt8Vector func() []int8
+type FuncInt16Vector func() []int16
+type FuncInt32Vector func() []int32
+type FuncInt64Vector func() []int64
+type FuncUInt8Vector func() []uint8
+type FuncUInt16Vector func() []uint16
+type FuncUInt32Vector func() []uint32
+type FuncUInt64Vector func() []uint64
+type FuncPtrVector func() []uintptr
+type FuncFloatVector func() []float32
+type FuncDoubleVector func() []float64
+type FuncStringVector func() []string
+type FuncAnyVector func() []interface{}
+type FuncVec2Vector func() []plugify.Vector2
+type FuncVec3Vector func() []plugify.Vector3
+type FuncVec4Vector func() []plugify.Vector4
+type FuncMat4x4Vector func() []plugify.Matrix4x4
+type FuncVec2 func() plugify.Vector2
+type FuncVec3 func() plugify.Vector3
+type FuncVec4 func() plugify.Vector4
+type FuncMat4x4 func() plugify.Matrix4x4
+type Func1 func(a plugify.Vector3) int32
+type Func2 func(a float32, b int64) int8
+type Func3 func(a uintptr, b plugify.Vector4, c string)
+type Func4 func(a bool, b int32, c uint16, d plugify.Matrix4x4) plugify.Vector4
+type Func5 func(a int8, b plugify.Vector2, c uintptr, d float64, e []uint64) bool
+type Func6 func(a string, b float32, c []float32, d int16, e []uint8, f uintptr) int64
+type Func7 func(vecC []int8, u16 uint16, ch16 uint16, vecU32 []uint32, vec4 plugify.Vector4, b bool, u64 uint64) float64
+type Func8 func(vec3 plugify.Vector3, vecU32 []uint32, i16 int16, b bool, vec4 plugify.Vector4, vecC16 []uint16, ch16 uint16, i32 int32) plugify.Matrix4x4
+type Func9 func(f float32, vec2 plugify.Vector2, vecI8 []int8, u64 uint64, b bool, str string, vec4 plugify.Vector4, i16 int16, ptr uintptr)
+type Func10 func(vec4 plugify.Vector4, mat plugify.Matrix4x4, vecU32 []uint32, u64 uint64, vecC []int8, i32 int32, b bool, vec2 plugify.Vector2, i64 int64, d float64) uint32
+type Func11 func(vecB []bool, ch16 uint16, u8 uint8, d float64, vec3 plugify.Vector3, vecI8 []int8, i64 int64, u16 uint16, f float32, vec2 plugify.Vector2, u32 uint32) uintptr
+type Func12 func(ptr uintptr, vecD []float64, u32 uint32, d float64, b bool, i32 int32, i8 int8, u64 uint64, f float32, vecPtr []uintptr, i64 int64, ch int8) bool
+type Func13 func(i64 int64, vecC []int8, d uint16, f float32, b []bool, vec4 plugify.Vector4, str string, int32_ int32, vec3 plugify.Vector3, ptr uintptr, vec2 plugify.Vector2, arr []uint8, i16 int16) string
+type Func14 func(vecC []int8, vecU32 []uint32, mat plugify.Matrix4x4, b bool, ch16 uint16, i32 int32, vecF []float32, u16 uint16, vecU8 []uint8, i8 int8, vec3 plugify.Vector3, vec4 plugify.Vector4, d float64, ptr uintptr) []string
+type Func15 func(vecI16 []int16, mat plugify.Matrix4x4, vec4 plugify.Vector4, ptr uintptr, u64 uint64, vecU32 []uint32, b bool, f float32, vecC16 []uint16, u8 uint8, i32 int32, vec2 plugify.Vector2, u16 uint16, d float64, vecU8 []uint8) int16
+type Func16 func(vecB []bool, i16 int16, vecI8 []int8, vec4 plugify.Vector4, mat plugify.Matrix4x4, vec2 plugify.Vector2, vecU64 []uint64, vecC []int8, str string, i64 int64, vecU32 []uint32, vec3 plugify.Vector3, f float32, d float64, i8 int8, u16 uint16) uintptr
+type Func17 func(i32 *int32)
+type Func18 func(i8 *int8, i16 *int16) plugify.Vector2
+type Func19 func(u32 *uint32, vec3 *plugify.Vector3, vecU32 *[]uint32)
+type Func20 func(ch16 *uint16, vec4 *plugify.Vector4, vecU64 *[]uint64, ch *int8) int32
+type Func21 func(mat *plugify.Matrix4x4, vecI32 *[]int32, vec2 *plugify.Vector2, b *bool, extraParam *float64) float32
+type Func22 func(ptr64Ref *uintptr, uint32Ref *uint32, vectorDoubleRef *[]float64, int16Ref *int16, plgStringRef *string, plgVector4Ref *plugify.Vector4) uint64
+type Func23 func(uint64Ref *uint64, plgVector2Ref *plugify.Vector2, vectorInt16Ref *[]int16, char16Ref *uint16, floatRef *float32, int8Ref *int8, vectorUInt8Ref *[]uint8)
+type Func24 func(vectorCharRef *[]int8, int64Ref *int64, vectorUInt8Ref *[]uint8, plgVector4Ref *plugify.Vector4, uint64Ref *uint64, vectorptr64Ref *[]uintptr, doubleRef *float64, vectorptr64Ref2 *[]uintptr) plugify.Matrix4x4
+type Func25 func(int32Ref *int32, vectorptr64Ref *[]uintptr, boolRef *bool, uint8Ref *uint8, plgStringRef *string, plgVector3Ref *plugify.Vector3, int64Ref *int64, plgVector4Ref *plugify.Vector4, uint16Ref *uint16) float64
+type Func26 func(char16Ref *uint16, plgVector2Ref *plugify.Vector2, plgMatrix4x4Ref *plugify.Matrix4x4, vectorFloatRef *[]float32, int16Ref *int16, uint64Ref *uint64, uint32Ref *uint32, vectorUInt16Ref *[]uint16, ptr64Ref *uintptr, boolRef *bool) int8
+type Func27 func(floatRef *float32, plgVector3Ref *plugify.Vector3, ptr64Ref *uintptr, plgVector2Ref *plugify.Vector2, vectorInt16Ref *[]int16, plgMatrix4x4Ref *plugify.Matrix4x4, boolRef *bool, plgVector4Ref *plugify.Vector4, int8Ref *int8, int32Ref *int32, vectorUInt8Ref *[]uint8) uint8
+type Func28 func(ptr64Ref *uintptr, uint16Ref *uint16, vectorUInt32Ref *[]uint32, plgMatrix4x4Ref *plugify.Matrix4x4, floatRef *float32, plgVector4Ref *plugify.Vector4, plgStringRef *string, vectorUInt64Ref *[]uint64, int64Ref *int64, boolRef *bool, plgVector3Ref *plugify.Vector3, vectorFloatRef *[]float32) string
+type Func29 func(plgVector4Ref *plugify.Vector4, int32Ref *int32, vectorInt8Ref *[]int8, doubleRef *float64, boolRef *bool, int8Ref *int8, vectorUInt16Ref *[]uint16, floatRef *float32, plgStringRef *string, plgMatrix4x4Ref *plugify.Matrix4x4, uint64Ref *uint64, plgVector3Ref *plugify.Vector3, vectorInt64Ref *[]int64) []string
+type Func30 func(ptr64Ref *uintptr, plgVector4Ref *plugify.Vector4, int64Ref *int64, vectorUInt32Ref *[]uint32, boolRef *bool, plgStringRef *string, plgVector3Ref *plugify.Vector3, vectorUInt8Ref *[]uint8, floatRef *float32, plgVector2Ref *plugify.Vector2, plgMatrix4x4Ref *plugify.Matrix4x4, int8Ref *int8, vectorFloatRef *[]float32, doubleRef *float64) int32
+type Func31 func(charRef *int8, uint32Ref *uint32, vectorUInt64Ref *[]uint64, plgVector4Ref *plugify.Vector4, plgStringRef *string, boolRef *bool, int64Ref *int64, vec2Ref *plugify.Vector2, int8Ref *int8, uint16Ref *uint16, vectorInt16Ref *[]int16, mat4x4Ref *plugify.Matrix4x4, vec3Ref *plugify.Vector3, floatRef *float32, vectorDoubleRef *[]float64) plugify.Vector3
+type Func32 func(p1 *int32, p2 *uint16, p3 *[]int8, p4 *plugify.Vector4, p5 *uintptr, p6 *[]uint32, p7 *plugify.Matrix4x4, p8 *uint64, p9 *string, p10 *int64, p11 *plugify.Vector2, p12 *[]int8, p13 *bool, p14 *plugify.Vector3, p15 *uint8, p16 *[]uint16) float64
+type Func33 func(variant *interface{})
+type FuncEnum func(p1 Example, p2 *[]Example) []Example
+
+// ReverseReturn - No description provided.
+// @param returnString: No description available.
+func ReverseReturn(returnString string) {
+	__returnString := plugify.ConstructString(returnString)
+	plugify.Block{
+		Try: func() {
+			C.ReverseReturn((*C.String)(unsafe.Pointer(&__returnString)))
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyString(&__returnString)
+		},
+	}.Do()
 }
-type Vector3 struct {
-	X float32
-	Y float32
-	Z float32
-}
-type Vector4 struct {
-	X float32
-	Y float32
-	Z float32
-	W float32
-}
-type Matrix4x4 struct {
-	M[4][4] float32
-}
 
-func ReverseReturn(returnString string)  {
-	C_returnString := C.Plugify_ConstructString(returnString)
-
-	C.ReverseReturn(&C_returnString)
-
-	C.Plugify_DestroyString(&C_returnString)
-
-}
-
-func NoParamReturnVoidCallback()  {
+// NoParamReturnVoidCallback - No description provided.
+func NoParamReturnVoidCallback() {
 	C.NoParamReturnVoidCallback()
 }
 
+// NoParamReturnBoolCallback - No description provided.
+// @return No description available.
 func NoParamReturnBoolCallback() bool {
-	result := bool(C.NoParamReturnBoolCallback())
-	return result
+	__retVal := bool(C.NoParamReturnBoolCallback())
+	return __retVal
 }
 
+// NoParamReturnChar8Callback - No description provided.
+// @return No description available.
 func NoParamReturnChar8Callback() int8 {
-	result := int8(C.NoParamReturnChar8Callback())
-	return result
+	__retVal := int8(C.NoParamReturnChar8Callback())
+	return __retVal
 }
 
+// NoParamReturnChar16Callback - No description provided.
+// @return No description available.
 func NoParamReturnChar16Callback() uint16 {
-	result := uint16(C.NoParamReturnChar16Callback())
-	return result
+	__retVal := uint16(C.NoParamReturnChar16Callback())
+	return __retVal
 }
 
+// NoParamReturnInt8Callback - No description provided.
+// @return No description available.
 func NoParamReturnInt8Callback() int8 {
-	result := int8(C.NoParamReturnInt8Callback())
-	return result
+	__retVal := int8(C.NoParamReturnInt8Callback())
+	return __retVal
 }
 
+// NoParamReturnInt16Callback - No description provided.
+// @return No description available.
 func NoParamReturnInt16Callback() int16 {
-	result := int16(C.NoParamReturnInt16Callback())
-	return result
+	__retVal := int16(C.NoParamReturnInt16Callback())
+	return __retVal
 }
 
+// NoParamReturnInt32Callback - No description provided.
+// @return No description available.
 func NoParamReturnInt32Callback() int32 {
-	result := int32(C.NoParamReturnInt32Callback())
-	return result
+	__retVal := int32(C.NoParamReturnInt32Callback())
+	return __retVal
 }
 
+// NoParamReturnInt64Callback - No description provided.
+// @return No description available.
 func NoParamReturnInt64Callback() int64 {
-	result := int64(C.NoParamReturnInt64Callback())
-	return result
+	__retVal := int64(C.NoParamReturnInt64Callback())
+	return __retVal
 }
 
+// NoParamReturnUInt8Callback - No description provided.
+// @return No description available.
 func NoParamReturnUInt8Callback() uint8 {
-	result := uint8(C.NoParamReturnUInt8Callback())
-	return result
+	__retVal := uint8(C.NoParamReturnUInt8Callback())
+	return __retVal
 }
 
+// NoParamReturnUInt16Callback - No description provided.
+// @return No description available.
 func NoParamReturnUInt16Callback() uint16 {
-	result := uint16(C.NoParamReturnUInt16Callback())
-	return result
+	__retVal := uint16(C.NoParamReturnUInt16Callback())
+	return __retVal
 }
 
+// NoParamReturnUInt32Callback - No description provided.
+// @return No description available.
 func NoParamReturnUInt32Callback() uint32 {
-	result := uint32(C.NoParamReturnUInt32Callback())
-	return result
+	__retVal := uint32(C.NoParamReturnUInt32Callback())
+	return __retVal
 }
 
+// NoParamReturnUInt64Callback - No description provided.
+// @return No description available.
 func NoParamReturnUInt64Callback() uint64 {
-	result := uint64(C.NoParamReturnUInt64Callback())
-	return result
+	__retVal := uint64(C.NoParamReturnUInt64Callback())
+	return __retVal
 }
 
+// NoParamReturnPointerCallback - No description provided.
+// @return No description available.
 func NoParamReturnPointerCallback() uintptr {
-	result := uintptr(C.NoParamReturnPointerCallback())
-	return result
+	__retVal := uintptr(C.NoParamReturnPointerCallback())
+	return __retVal
 }
 
+// NoParamReturnFloatCallback - No description provided.
+// @return No description available.
 func NoParamReturnFloatCallback() float32 {
-	result := float32(C.NoParamReturnFloatCallback())
-	return result
+	__retVal := float32(C.NoParamReturnFloatCallback())
+	return __retVal
 }
 
+// NoParamReturnDoubleCallback - No description provided.
+// @return No description available.
 func NoParamReturnDoubleCallback() float64 {
-	result := float64(C.NoParamReturnDoubleCallback())
-	return result
+	__retVal := float64(C.NoParamReturnDoubleCallback())
+	return __retVal
 }
 
-func NoParamReturnFunctionCallback() uintptr {
-	result := uintptr(C.NoParamReturnFunctionCallback())
-	return result
+// NoParamReturnFunctionCallback - No description provided.
+// @return No description available.
+func NoParamReturnFunctionCallback() NoParamReturnFunctionCallbackFunc {
+	__retVal := plugify.GetDelegateForFunctionPointer(C.NoParamReturnFunctionCallback(), reflect.TypeOf(NoParamReturnFunctionCallbackFunc(nil))).(NoParamReturnFunctionCallbackFunc)
+	return __retVal
 }
 
+// NoParamReturnStringCallback - No description provided.
+// @return No description available.
 func NoParamReturnStringCallback() string {
-	C_output := C.NoParamReturnStringCallback()
-
-	P_output := C.Plugify_GetStringData(&C_output)
-	output := C.GoString(P_output)
-	C.Plugify_DestroyString(&C_output)
-	return output
+	var __retVal string
+	var __retVal_native plugify.PlgString
+	plugify.Block{
+		Try: func() {
+			__native := C.NoParamReturnStringCallback()
+			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetStringData(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyString(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
 }
 
+// NoParamReturnAnyCallback - No description provided.
+// @return No description available.
+func NoParamReturnAnyCallback() interface{} {
+	var __retVal interface{}
+	var __retVal_native plugify.PlgVariant
+	plugify.Block{
+		Try: func() {
+			__native := C.NoParamReturnAnyCallback()
+			__retVal_native = *(*plugify.PlgVariant)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVariantData(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVariant(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// NoParamReturnArrayBoolCallback - No description provided.
+// @return No description available.
 func NoParamReturnArrayBoolCallback() []bool {
-	C_output := C.NoParamReturnArrayBoolCallback()
-
-	L_output := C.Plugify_GetVectorSize(&C_output, C.BOOL)
-	P_output := C.Plugify_GetVectorData(&C_output, C.BOOL)
-	output := make([]bool, L_output)
-	for i := range output {
-		output[i] = *(*bool)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_bool)))
-	}
-
-	C.Plugify_DestroyVector(&C_output, C.BOOL)
-	return output
+	var __retVal []bool
+	var __retVal_native plugify.PlgVector
+	plugify.Block{
+		Try: func() {
+			__native := C.NoParamReturnArrayBoolCallback()
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataBool(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorBool(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
 }
 
+// NoParamReturnArrayChar8Callback - No description provided.
+// @return No description available.
 func NoParamReturnArrayChar8Callback() []int8 {
-	C_output := C.NoParamReturnArrayChar8Callback()
-
-	L_output := C.Plugify_GetVectorSize(&C_output, C.CHAR8)
-	P_output := C.Plugify_GetVectorData(&C_output, C.CHAR8)
-	output := make([]int8, L_output)
-	for i := range output {
-		output[i] = *(*int8)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_char)))
-	}
-
-	C.Plugify_DestroyVector(&C_output, C.CHAR8)
-	return output
+	var __retVal []int8
+	var __retVal_native plugify.PlgVector
+	plugify.Block{
+		Try: func() {
+			__native := C.NoParamReturnArrayChar8Callback()
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataChar8(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorChar8(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
 }
 
+// NoParamReturnArrayChar16Callback - No description provided.
+// @return No description available.
 func NoParamReturnArrayChar16Callback() []uint16 {
-	C_output := C.NoParamReturnArrayChar16Callback()
-
-	L_output := C.Plugify_GetVectorSize(&C_output, C.CHAR16)
-	P_output := C.Plugify_GetVectorData(&C_output, C.CHAR16)
-	output := make([]uint16, L_output)
-	for i := range output {
-		output[i] = *(*uint16)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_uint16_t)))
-	}
-
-	C.Plugify_DestroyVector(&C_output, C.CHAR16)
-	return output
+	var __retVal []uint16
+	var __retVal_native plugify.PlgVector
+	plugify.Block{
+		Try: func() {
+			__native := C.NoParamReturnArrayChar16Callback()
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataChar16(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorChar16(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
 }
 
+// NoParamReturnArrayInt8Callback - No description provided.
+// @return No description available.
 func NoParamReturnArrayInt8Callback() []int8 {
-	C_output := C.NoParamReturnArrayInt8Callback()
-
-	L_output := C.Plugify_GetVectorSize(&C_output, C.INT8)
-	P_output := C.Plugify_GetVectorData(&C_output, C.INT8)
-	output := make([]int8, L_output)
-	for i := range output {
-		output[i] = *(*int8)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_int8_t)))
-	}
-
-	C.Plugify_DestroyVector(&C_output, C.INT8)
-	return output
+	var __retVal []int8
+	var __retVal_native plugify.PlgVector
+	plugify.Block{
+		Try: func() {
+			__native := C.NoParamReturnArrayInt8Callback()
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataInt8(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorInt8(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
 }
 
+// NoParamReturnArrayInt16Callback - No description provided.
+// @return No description available.
 func NoParamReturnArrayInt16Callback() []int16 {
-	C_output := C.NoParamReturnArrayInt16Callback()
-
-	L_output := C.Plugify_GetVectorSize(&C_output, C.INT16)
-	P_output := C.Plugify_GetVectorData(&C_output, C.INT16)
-	output := make([]int16, L_output)
-	for i := range output {
-		output[i] = *(*int16)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_int16_t)))
-	}
-
-	C.Plugify_DestroyVector(&C_output, C.INT16)
-	return output
+	var __retVal []int16
+	var __retVal_native plugify.PlgVector
+	plugify.Block{
+		Try: func() {
+			__native := C.NoParamReturnArrayInt16Callback()
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataInt16(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorInt16(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
 }
 
+// NoParamReturnArrayInt32Callback - No description provided.
+// @return No description available.
 func NoParamReturnArrayInt32Callback() []int32 {
-	C_output := C.NoParamReturnArrayInt32Callback()
-
-	L_output := C.Plugify_GetVectorSize(&C_output, C.INT32)
-	P_output := C.Plugify_GetVectorData(&C_output, C.INT32)
-	output := make([]int32, L_output)
-	for i := range output {
-		output[i] = *(*int32)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_int32_t)))
-	}
-
-	C.Plugify_DestroyVector(&C_output, C.INT32)
-	return output
+	var __retVal []int32
+	var __retVal_native plugify.PlgVector
+	plugify.Block{
+		Try: func() {
+			__native := C.NoParamReturnArrayInt32Callback()
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataInt32(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorInt32(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
 }
 
+// NoParamReturnArrayInt64Callback - No description provided.
+// @return No description available.
 func NoParamReturnArrayInt64Callback() []int64 {
-	C_output := C.NoParamReturnArrayInt64Callback()
-
-	L_output := C.Plugify_GetVectorSize(&C_output, C.INT64)
-	P_output := C.Plugify_GetVectorData(&C_output, C.INT64)
-	output := make([]int64, L_output)
-	for i := range output {
-		output[i] = *(*int64)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_int64_t)))
-	}
-
-	C.Plugify_DestroyVector(&C_output, C.INT64)
-	return output
+	var __retVal []int64
+	var __retVal_native plugify.PlgVector
+	plugify.Block{
+		Try: func() {
+			__native := C.NoParamReturnArrayInt64Callback()
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataInt64(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorInt64(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
 }
 
+// NoParamReturnArrayUInt8Callback - No description provided.
+// @return No description available.
 func NoParamReturnArrayUInt8Callback() []uint8 {
-	C_output := C.NoParamReturnArrayUInt8Callback()
-
-	L_output := C.Plugify_GetVectorSize(&C_output, C.UINT8)
-	P_output := C.Plugify_GetVectorData(&C_output, C.UINT8)
-	output := make([]uint8, L_output)
-	for i := range output {
-		output[i] = *(*uint8)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_uint8_t)))
-	}
-
-	C.Plugify_DestroyVector(&C_output, C.UINT8)
-	return output
+	var __retVal []uint8
+	var __retVal_native plugify.PlgVector
+	plugify.Block{
+		Try: func() {
+			__native := C.NoParamReturnArrayUInt8Callback()
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataUInt8(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorUInt8(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
 }
 
+// NoParamReturnArrayUInt16Callback - No description provided.
+// @return No description available.
 func NoParamReturnArrayUInt16Callback() []uint16 {
-	C_output := C.NoParamReturnArrayUInt16Callback()
-
-	L_output := C.Plugify_GetVectorSize(&C_output, C.UINT16)
-	P_output := C.Plugify_GetVectorData(&C_output, C.UINT16)
-	output := make([]uint16, L_output)
-	for i := range output {
-		output[i] = *(*uint16)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_uint16_t)))
-	}
-
-	C.Plugify_DestroyVector(&C_output, C.UINT16)
-	return output
+	var __retVal []uint16
+	var __retVal_native plugify.PlgVector
+	plugify.Block{
+		Try: func() {
+			__native := C.NoParamReturnArrayUInt16Callback()
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataUInt16(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorUInt16(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
 }
 
+// NoParamReturnArrayUInt32Callback - No description provided.
+// @return No description available.
 func NoParamReturnArrayUInt32Callback() []uint32 {
-	C_output := C.NoParamReturnArrayUInt32Callback()
-
-	L_output := C.Plugify_GetVectorSize(&C_output, C.UINT32)
-	P_output := C.Plugify_GetVectorData(&C_output, C.UINT32)
-	output := make([]uint32, L_output)
-	for i := range output {
-		output[i] = *(*uint32)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_uint32_t)))
-	}
-
-	C.Plugify_DestroyVector(&C_output, C.UINT32)
-	return output
+	var __retVal []uint32
+	var __retVal_native plugify.PlgVector
+	plugify.Block{
+		Try: func() {
+			__native := C.NoParamReturnArrayUInt32Callback()
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataUInt32(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorUInt32(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
 }
 
+// NoParamReturnArrayUInt64Callback - No description provided.
+// @return No description available.
 func NoParamReturnArrayUInt64Callback() []uint64 {
-	C_output := C.NoParamReturnArrayUInt64Callback()
-
-	L_output := C.Plugify_GetVectorSize(&C_output, C.UINT64)
-	P_output := C.Plugify_GetVectorData(&C_output, C.UINT64)
-	output := make([]uint64, L_output)
-	for i := range output {
-		output[i] = *(*uint64)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_uint64_t)))
-	}
-
-	C.Plugify_DestroyVector(&C_output, C.UINT64)
-	return output
+	var __retVal []uint64
+	var __retVal_native plugify.PlgVector
+	plugify.Block{
+		Try: func() {
+			__native := C.NoParamReturnArrayUInt64Callback()
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataUInt64(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorUInt64(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
 }
 
+// NoParamReturnArrayPointerCallback - No description provided.
+// @return No description available.
 func NoParamReturnArrayPointerCallback() []uintptr {
-	C_output := C.NoParamReturnArrayPointerCallback()
-
-	L_output := C.Plugify_GetVectorSize(&C_output, C.POINTER)
-	P_output := C.Plugify_GetVectorData(&C_output, C.POINTER)
-	output := make([]uintptr, L_output)
-	for i := range output {
-		output[i] = *(*uintptr)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_uintptr_t)))
-	}
-
-	C.Plugify_DestroyVector(&C_output, C.POINTER)
-	return output
+	var __retVal []uintptr
+	var __retVal_native plugify.PlgVector
+	plugify.Block{
+		Try: func() {
+			__native := C.NoParamReturnArrayPointerCallback()
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataPointer(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorPointer(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
 }
 
+// NoParamReturnArrayFloatCallback - No description provided.
+// @return No description available.
 func NoParamReturnArrayFloatCallback() []float32 {
-	C_output := C.NoParamReturnArrayFloatCallback()
-
-	L_output := C.Plugify_GetVectorSize(&C_output, C.FLOAT)
-	P_output := C.Plugify_GetVectorData(&C_output, C.FLOAT)
-	output := make([]float32, L_output)
-	for i := range output {
-		output[i] = *(*float32)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_float)))
-	}
-
-	C.Plugify_DestroyVector(&C_output, C.FLOAT)
-	return output
+	var __retVal []float32
+	var __retVal_native plugify.PlgVector
+	plugify.Block{
+		Try: func() {
+			__native := C.NoParamReturnArrayFloatCallback()
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataFloat(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorFloat(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
 }
 
+// NoParamReturnArrayDoubleCallback - No description provided.
+// @return No description available.
 func NoParamReturnArrayDoubleCallback() []float64 {
-	C_output := C.NoParamReturnArrayDoubleCallback()
-
-	L_output := C.Plugify_GetVectorSize(&C_output, C.DOUBLE)
-	P_output := C.Plugify_GetVectorData(&C_output, C.DOUBLE)
-	output := make([]float64, L_output)
-	for i := range output {
-		output[i] = *(*float64)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_double)))
-	}
-
-	C.Plugify_DestroyVector(&C_output, C.DOUBLE)
-	return output
+	var __retVal []float64
+	var __retVal_native plugify.PlgVector
+	plugify.Block{
+		Try: func() {
+			__native := C.NoParamReturnArrayDoubleCallback()
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataDouble(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorDouble(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
 }
 
+// NoParamReturnArrayStringCallback - No description provided.
+// @return No description available.
 func NoParamReturnArrayStringCallback() []string {
-	C_output := C.NoParamReturnArrayStringCallback()
-
-	L_output := C.Plugify_GetVectorSize(&C_output, C.STRING)
-	P_output := C.Plugify_GetVectorData(&C_output, C.STRING)
-	output := make([]string, L_output)
-	for i := range output {
-		output[i] = C.GoString(C.Plugify_GetStringData((*C.String)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_uintptr_t)))))
-	}
-
-	C.Plugify_DestroyVector(&C_output, C.STRING)
-	return output
+	var __retVal []string
+	var __retVal_native plugify.PlgVector
+	plugify.Block{
+		Try: func() {
+			__native := C.NoParamReturnArrayStringCallback()
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataString(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorString(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
 }
 
-func NoParamReturnVector2Callback() Vector2 {
-	C_result := C.NoParamReturnVector2Callback()
-	return *(*Vector2)(unsafe.Pointer(&C_result))
+// NoParamReturnArrayAnyCallback - No description provided.
+// @return No description available.
+func NoParamReturnArrayAnyCallback() []interface{} {
+	var __retVal []interface{}
+	var __retVal_native plugify.PlgVector
+	plugify.Block{
+		Try: func() {
+			__native := C.NoParamReturnArrayAnyCallback()
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataVariant(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorVariant(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
 }
 
-func NoParamReturnVector3Callback() Vector3 {
-	C_result := C.NoParamReturnVector3Callback()
-	return *(*Vector3)(unsafe.Pointer(&C_result))
+// NoParamReturnArrayVector2Callback - No description provided.
+// @return No description available.
+func NoParamReturnArrayVector2Callback() []plugify.Vector2 {
+	var __retVal []plugify.Vector2
+	var __retVal_native plugify.PlgVector
+	plugify.Block{
+		Try: func() {
+			__native := C.NoParamReturnArrayVector2Callback()
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataVector2(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorVector2(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
 }
 
-func NoParamReturnVector4Callback() Vector4 {
-	C_result := C.NoParamReturnVector4Callback()
-	return *(*Vector4)(unsafe.Pointer(&C_result))
+// NoParamReturnArrayVector3Callback - No description provided.
+// @return No description available.
+func NoParamReturnArrayVector3Callback() []plugify.Vector3 {
+	var __retVal []plugify.Vector3
+	var __retVal_native plugify.PlgVector
+	plugify.Block{
+		Try: func() {
+			__native := C.NoParamReturnArrayVector3Callback()
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataVector3(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorVector3(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
 }
 
-func NoParamReturnMatrix4x4Callback() Matrix4x4 {
-	C_result := C.NoParamReturnMatrix4x4Callback()
-	return *(*Matrix4x4)(unsafe.Pointer(&C_result))
+// NoParamReturnArrayVector4Callback - No description provided.
+// @return No description available.
+func NoParamReturnArrayVector4Callback() []plugify.Vector4 {
+	var __retVal []plugify.Vector4
+	var __retVal_native plugify.PlgVector
+	plugify.Block{
+		Try: func() {
+			__native := C.NoParamReturnArrayVector4Callback()
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataVector4(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorVector4(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
 }
 
-func Param1Callback(a int32)  {
-	C_a := C.int32_t(a)
-
-	C.Param1Callback(C_a)
+// NoParamReturnArrayMatrix4x4Callback - No description provided.
+// @return No description available.
+func NoParamReturnArrayMatrix4x4Callback() []plugify.Matrix4x4 {
+	var __retVal []plugify.Matrix4x4
+	var __retVal_native plugify.PlgVector
+	plugify.Block{
+		Try: func() {
+			__native := C.NoParamReturnArrayMatrix4x4Callback()
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataMatrix4x4(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorMatrix4x4(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
 }
 
-func Param2Callback(a int32, b float32)  {
-	C_a := C.int32_t(a)
-	C_b := C.float(b)
-
-	C.Param2Callback(C_a, C_b)
+// NoParamReturnVector2Callback - No description provided.
+// @return No description available.
+func NoParamReturnVector2Callback() plugify.Vector2 {
+	__native := C.NoParamReturnVector2Callback()
+	__retVal := *(*plugify.Vector2)(unsafe.Pointer(&__native))
+	return __retVal
 }
 
-func Param3Callback(a int32, b float32, c float64)  {
-	C_a := C.int32_t(a)
-	C_b := C.float(b)
-	C_c := C.double(c)
-
-	C.Param3Callback(C_a, C_b, C_c)
+// NoParamReturnVector3Callback - No description provided.
+// @return No description available.
+func NoParamReturnVector3Callback() plugify.Vector3 {
+	__native := C.NoParamReturnVector3Callback()
+	__retVal := *(*plugify.Vector3)(unsafe.Pointer(&__native))
+	return __retVal
 }
 
-func Param4Callback(a int32, b float32, c float64, d Vector4)  {
-	C_a := C.int32_t(a)
-	C_b := C.float(b)
-	C_c := C.double(c)
-	C_d := *(*C.Vector4)(unsafe.Pointer(&d))
-
-	C.Param4Callback(C_a, C_b, C_c, &C_d)
+// NoParamReturnVector4Callback - No description provided.
+// @return No description available.
+func NoParamReturnVector4Callback() plugify.Vector4 {
+	__native := C.NoParamReturnVector4Callback()
+	__retVal := *(*plugify.Vector4)(unsafe.Pointer(&__native))
+	return __retVal
 }
 
-func Param5Callback(a int32, b float32, c float64, d Vector4, e []int64)  {
-	C_a := C.int32_t(a)
-	C_b := C.float(b)
-	C_c := C.double(c)
-	C_d := *(*C.Vector4)(unsafe.Pointer(&d))
-	var A_e unsafe.Pointer
-	S_e := len(e)
-	if S_e > 0 {
-		A_e = unsafe.Pointer(&e[0])
-	} else {
-		A_e = nil
-	}
-	C_e := C.Plugify_ConstructVector(A_e, C.ptrdiff_t(S_e), C.INT64)
-
-	C.Param5Callback(C_a, C_b, C_c, &C_d, &C_e)
-
-	C.Plugify_DestroyVector(&C_e, C.INT64)
-
+// NoParamReturnMatrix4x4Callback - No description provided.
+// @return No description available.
+func NoParamReturnMatrix4x4Callback() plugify.Matrix4x4 {
+	__native := C.NoParamReturnMatrix4x4Callback()
+	__retVal := *(*plugify.Matrix4x4)(unsafe.Pointer(&__native))
+	return __retVal
 }
 
-func Param6Callback(a int32, b float32, c float64, d Vector4, e []int64, f int8)  {
-	C_a := C.int32_t(a)
-	C_b := C.float(b)
-	C_c := C.double(c)
-	C_d := *(*C.Vector4)(unsafe.Pointer(&d))
-	var A_e unsafe.Pointer
-	S_e := len(e)
-	if S_e > 0 {
-		A_e = unsafe.Pointer(&e[0])
-	} else {
-		A_e = nil
-	}
-	C_e := C.Plugify_ConstructVector(A_e, C.ptrdiff_t(S_e), C.INT64)
-	C_f := C.char(f)
-
-	C.Param6Callback(C_a, C_b, C_c, &C_d, &C_e, C_f)
-
-	C.Plugify_DestroyVector(&C_e, C.INT64)
-
+// Param1Callback - No description provided.
+// @param a: No description available.
+func Param1Callback(a int32) {
+	__a := C.int32_t(a)
+	C.Param1Callback(__a)
 }
 
-func Param7Callback(a int32, b float32, c float64, d Vector4, e []int64, f int8, g string)  {
-	C_a := C.int32_t(a)
-	C_b := C.float(b)
-	C_c := C.double(c)
-	C_d := *(*C.Vector4)(unsafe.Pointer(&d))
-	var A_e unsafe.Pointer
-	S_e := len(e)
-	if S_e > 0 {
-		A_e = unsafe.Pointer(&e[0])
-	} else {
-		A_e = nil
-	}
-	C_e := C.Plugify_ConstructVector(A_e, C.ptrdiff_t(S_e), C.INT64)
-	C_f := C.char(f)
-	C_g := C.Plugify_ConstructString(g)
-
-	C.Param7Callback(C_a, C_b, C_c, &C_d, &C_e, C_f, &C_g)
-
-	C.Plugify_DestroyVector(&C_e, C.INT64)
-	C.Plugify_DestroyString(&C_g)
-
+// Param2Callback - No description provided.
+// @param a: No description available.
+// @param b: No description available.
+func Param2Callback(a int32, b float32) {
+	__a := C.int32_t(a)
+	__b := C.float(b)
+	C.Param2Callback(__a, __b)
 }
 
-func Param8Callback(a int32, b float32, c float64, d Vector4, e []int64, f int8, g string, h uint16)  {
-	C_a := C.int32_t(a)
-	C_b := C.float(b)
-	C_c := C.double(c)
-	C_d := *(*C.Vector4)(unsafe.Pointer(&d))
-	var A_e unsafe.Pointer
-	S_e := len(e)
-	if S_e > 0 {
-		A_e = unsafe.Pointer(&e[0])
-	} else {
-		A_e = nil
-	}
-	C_e := C.Plugify_ConstructVector(A_e, C.ptrdiff_t(S_e), C.INT64)
-	C_f := C.char(f)
-	C_g := C.Plugify_ConstructString(g)
-	C_h := C.uint16_t(h)
-
-	C.Param8Callback(C_a, C_b, C_c, &C_d, &C_e, C_f, &C_g, C_h)
-
-	C.Plugify_DestroyVector(&C_e, C.INT64)
-	C.Plugify_DestroyString(&C_g)
-
+// Param3Callback - No description provided.
+// @param a: No description available.
+// @param b: No description available.
+// @param c: No description available.
+func Param3Callback(a int32, b float32, c float64) {
+	__a := C.int32_t(a)
+	__b := C.float(b)
+	__c := C.double(c)
+	C.Param3Callback(__a, __b, __c)
 }
 
-func Param9Callback(a int32, b float32, c float64, d Vector4, e []int64, f int8, g string, h uint16, k int16)  {
-	C_a := C.int32_t(a)
-	C_b := C.float(b)
-	C_c := C.double(c)
-	C_d := *(*C.Vector4)(unsafe.Pointer(&d))
-	var A_e unsafe.Pointer
-	S_e := len(e)
-	if S_e > 0 {
-		A_e = unsafe.Pointer(&e[0])
-	} else {
-		A_e = nil
-	}
-	C_e := C.Plugify_ConstructVector(A_e, C.ptrdiff_t(S_e), C.INT64)
-	C_f := C.char(f)
-	C_g := C.Plugify_ConstructString(g)
-	C_h := C.uint16_t(h)
-	C_k := C.int16_t(k)
-
-	C.Param9Callback(C_a, C_b, C_c, &C_d, &C_e, C_f, &C_g, C_h, C_k)
-
-	C.Plugify_DestroyVector(&C_e, C.INT64)
-	C.Plugify_DestroyString(&C_g)
-
+// Param4Callback - No description provided.
+// @param a: No description available.
+// @param b: No description available.
+// @param c: No description available.
+// @param d: No description available.
+func Param4Callback(a int32, b float32, c float64, d plugify.Vector4) {
+	__a := C.int32_t(a)
+	__b := C.float(b)
+	__c := C.double(c)
+	__d := *(*C.Vector4)(unsafe.Pointer(&d))
+	C.Param4Callback(__a, __b, __c, &__d)
 }
 
-func Param10Callback(a int32, b float32, c float64, d Vector4, e []int64, f int8, g string, h uint16, k int16, l uintptr)  {
-	C_a := C.int32_t(a)
-	C_b := C.float(b)
-	C_c := C.double(c)
-	C_d := *(*C.Vector4)(unsafe.Pointer(&d))
-	var A_e unsafe.Pointer
-	S_e := len(e)
-	if S_e > 0 {
-		A_e = unsafe.Pointer(&e[0])
-	} else {
-		A_e = nil
-	}
-	C_e := C.Plugify_ConstructVector(A_e, C.ptrdiff_t(S_e), C.INT64)
-	C_f := C.char(f)
-	C_g := C.Plugify_ConstructString(g)
-	C_h := C.uint16_t(h)
-	C_k := C.int16_t(k)
-	C_l := C.uintptr_t(l)
-
-	C.Param10Callback(C_a, C_b, C_c, &C_d, &C_e, C_f, &C_g, C_h, C_k, C_l)
-
-	C.Plugify_DestroyVector(&C_e, C.INT64)
-	C.Plugify_DestroyString(&C_g)
-
+// Param5Callback - No description provided.
+// @param a: No description available.
+// @param b: No description available.
+// @param c: No description available.
+// @param d: No description available.
+// @param e: No description available.
+func Param5Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64) {
+	__a := C.int32_t(a)
+	__b := C.float(b)
+	__c := C.double(c)
+	__d := *(*C.Vector4)(unsafe.Pointer(&d))
+	__e := plugify.ConstructVectorInt64(e)
+	plugify.Block{
+		Try: func() {
+			C.Param5Callback(__a, __b, __c, &__d, (*C.Vector)(unsafe.Pointer(&__e)))
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorInt64(&__e)
+		},
+	}.Do()
 }
 
-func ParamRef1Callback(a *int32)  {
-	C_a := (*C.int32_t)(a)
-
-	C.ParamRef1Callback(C_a)
+// Param6Callback - No description provided.
+// @param a: No description available.
+// @param b: No description available.
+// @param c: No description available.
+// @param d: No description available.
+// @param e: No description available.
+// @param f: No description available.
+func Param6Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8) {
+	__a := C.int32_t(a)
+	__b := C.float(b)
+	__c := C.double(c)
+	__d := *(*C.Vector4)(unsafe.Pointer(&d))
+	__e := plugify.ConstructVectorInt64(e)
+	__f := C.int8_t(f)
+	plugify.Block{
+		Try: func() {
+			C.Param6Callback(__a, __b, __c, &__d, (*C.Vector)(unsafe.Pointer(&__e)), __f)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorInt64(&__e)
+		},
+	}.Do()
 }
 
-func ParamRef2Callback(a *int32, b *float32)  {
-	C_a := (*C.int32_t)(a)
-	C_b := (*C.float)(b)
-
-	C.ParamRef2Callback(C_a, C_b)
+// Param7Callback - No description provided.
+// @param a: No description available.
+// @param b: No description available.
+// @param c: No description available.
+// @param d: No description available.
+// @param e: No description available.
+// @param f: No description available.
+// @param g: No description available.
+func Param7Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8, g string) {
+	__a := C.int32_t(a)
+	__b := C.float(b)
+	__c := C.double(c)
+	__d := *(*C.Vector4)(unsafe.Pointer(&d))
+	__e := plugify.ConstructVectorInt64(e)
+	__f := C.int8_t(f)
+	__g := plugify.ConstructString(g)
+	plugify.Block{
+		Try: func() {
+			C.Param7Callback(__a, __b, __c, &__d, (*C.Vector)(unsafe.Pointer(&__e)), __f, (*C.String)(unsafe.Pointer(&__g)))
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorInt64(&__e)
+			plugify.DestroyString(&__g)
+		},
+	}.Do()
 }
 
-func ParamRef3Callback(a *int32, b *float32, c *float64)  {
-	C_a := (*C.int32_t)(a)
-	C_b := (*C.float)(b)
-	C_c := (*C.double)(c)
-
-	C.ParamRef3Callback(C_a, C_b, C_c)
+// Param8Callback - No description provided.
+// @param a: No description available.
+// @param b: No description available.
+// @param c: No description available.
+// @param d: No description available.
+// @param e: No description available.
+// @param f: No description available.
+// @param g: No description available.
+// @param h: No description available.
+func Param8Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8, g string, h uint16) {
+	__a := C.int32_t(a)
+	__b := C.float(b)
+	__c := C.double(c)
+	__d := *(*C.Vector4)(unsafe.Pointer(&d))
+	__e := plugify.ConstructVectorInt64(e)
+	__f := C.int8_t(f)
+	__g := plugify.ConstructString(g)
+	__h := C.uint16_t(h)
+	plugify.Block{
+		Try: func() {
+			C.Param8Callback(__a, __b, __c, &__d, (*C.Vector)(unsafe.Pointer(&__e)), __f, (*C.String)(unsafe.Pointer(&__g)), __h)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorInt64(&__e)
+			plugify.DestroyString(&__g)
+		},
+	}.Do()
 }
 
-func ParamRef4Callback(a *int32, b *float32, c *float64, d *Vector4)  {
-	C_a := (*C.int32_t)(a)
-	C_b := (*C.float)(b)
-	C_c := (*C.double)(c)
-	C_d := *(*C.Vector4)(unsafe.Pointer(d))
-
-	C.ParamRef4Callback(C_a, C_b, C_c, &C_d)
-
-	*d = *(*Vector4)(unsafe.Pointer(&C_d))
+// Param9Callback - No description provided.
+// @param a: No description available.
+// @param b: No description available.
+// @param c: No description available.
+// @param d: No description available.
+// @param e: No description available.
+// @param f: No description available.
+// @param g: No description available.
+// @param h: No description available.
+// @param k: No description available.
+func Param9Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8, g string, h uint16, k int16) {
+	__a := C.int32_t(a)
+	__b := C.float(b)
+	__c := C.double(c)
+	__d := *(*C.Vector4)(unsafe.Pointer(&d))
+	__e := plugify.ConstructVectorInt64(e)
+	__f := C.int8_t(f)
+	__g := plugify.ConstructString(g)
+	__h := C.uint16_t(h)
+	__k := C.int16_t(k)
+	plugify.Block{
+		Try: func() {
+			C.Param9Callback(__a, __b, __c, &__d, (*C.Vector)(unsafe.Pointer(&__e)), __f, (*C.String)(unsafe.Pointer(&__g)), __h, __k)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorInt64(&__e)
+			plugify.DestroyString(&__g)
+		},
+	}.Do()
 }
 
-func ParamRef5Callback(a *int32, b *float32, c *float64, d *Vector4, e *[]int64)  {
-	C_a := (*C.int32_t)(a)
-	C_b := (*C.float)(b)
-	C_c := (*C.double)(c)
-	C_d := *(*C.Vector4)(unsafe.Pointer(d))
-	var A_e unsafe.Pointer
-	S_e := len(*e)
-	if S_e > 0 {
-		A_e = unsafe.Pointer(&(*e)[0])
-	} else {
-		A_e = nil
-	}
-	C_e := C.Plugify_ConstructVector(A_e, C.ptrdiff_t(S_e), C.INT64)
-
-	C.ParamRef5Callback(C_a, C_b, C_c, &C_d, &C_e)
-
-	*d = *(*Vector4)(unsafe.Pointer(&C_d))
-	L_e := C.Plugify_GetVectorSize(&C_e, C.INT64)
-	P_e := C.Plugify_GetVectorData(&C_e, C.INT64)
-	*e = make([]int64, L_e)
-	for i := range (*e) {
-		(*e)[i] = *(*int64)(unsafe.Pointer(uintptr(P_e) + uintptr(i * C.sizeof_int64_t)))
-	}
-
-	C.Plugify_DestroyVector(&C_e, C.INT64)
-
+// Param10Callback - No description provided.
+// @param a: No description available.
+// @param b: No description available.
+// @param c: No description available.
+// @param d: No description available.
+// @param e: No description available.
+// @param f: No description available.
+// @param g: No description available.
+// @param h: No description available.
+// @param k: No description available.
+// @param l: No description available.
+func Param10Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8, g string, h uint16, k int16, l uintptr) {
+	__a := C.int32_t(a)
+	__b := C.float(b)
+	__c := C.double(c)
+	__d := *(*C.Vector4)(unsafe.Pointer(&d))
+	__e := plugify.ConstructVectorInt64(e)
+	__f := C.int8_t(f)
+	__g := plugify.ConstructString(g)
+	__h := C.uint16_t(h)
+	__k := C.int16_t(k)
+	__l := C.uintptr_t(l)
+	plugify.Block{
+		Try: func() {
+			C.Param10Callback(__a, __b, __c, &__d, (*C.Vector)(unsafe.Pointer(&__e)), __f, (*C.String)(unsafe.Pointer(&__g)), __h, __k, __l)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorInt64(&__e)
+			plugify.DestroyString(&__g)
+		},
+	}.Do()
 }
 
-func ParamRef6Callback(a *int32, b *float32, c *float64, d *Vector4, e *[]int64, f *int8)  {
-	C_a := (*C.int32_t)(a)
-	C_b := (*C.float)(b)
-	C_c := (*C.double)(c)
-	C_d := *(*C.Vector4)(unsafe.Pointer(d))
-	var A_e unsafe.Pointer
-	S_e := len(*e)
-	if S_e > 0 {
-		A_e = unsafe.Pointer(&(*e)[0])
-	} else {
-		A_e = nil
-	}
-	C_e := C.Plugify_ConstructVector(A_e, C.ptrdiff_t(S_e), C.INT64)
-	C_f := (*C.char)(f)
-
-	C.ParamRef6Callback(C_a, C_b, C_c, &C_d, &C_e, C_f)
-
-	*d = *(*Vector4)(unsafe.Pointer(&C_d))
-	L_e := C.Plugify_GetVectorSize(&C_e, C.INT64)
-	P_e := C.Plugify_GetVectorData(&C_e, C.INT64)
-	*e = make([]int64, L_e)
-	for i := range (*e) {
-		(*e)[i] = *(*int64)(unsafe.Pointer(uintptr(P_e) + uintptr(i * C.sizeof_int64_t)))
-	}
-
-	C.Plugify_DestroyVector(&C_e, C.INT64)
-
+// ParamRef1Callback - No description provided.
+// @param a: No description available.
+func ParamRef1Callback(a *int32) {
+	__a := C.int32_t(*a)
+	C.ParamRef1Callback(&__a)
+	// Unmarshal - Convert native data to managed data.
+	*a = int32(__a)
 }
 
-func ParamRef7Callback(a *int32, b *float32, c *float64, d *Vector4, e *[]int64, f *int8, g *string)  {
-	C_a := (*C.int32_t)(a)
-	C_b := (*C.float)(b)
-	C_c := (*C.double)(c)
-	C_d := *(*C.Vector4)(unsafe.Pointer(d))
-	var A_e unsafe.Pointer
-	S_e := len(*e)
-	if S_e > 0 {
-		A_e = unsafe.Pointer(&(*e)[0])
-	} else {
-		A_e = nil
-	}
-	C_e := C.Plugify_ConstructVector(A_e, C.ptrdiff_t(S_e), C.INT64)
-	C_f := (*C.char)(f)
-	C_g := C.Plugify_ConstructString(*g)
-
-	C.ParamRef7Callback(C_a, C_b, C_c, &C_d, &C_e, C_f, &C_g)
-
-	*d = *(*Vector4)(unsafe.Pointer(&C_d))
-	L_e := C.Plugify_GetVectorSize(&C_e, C.INT64)
-	P_e := C.Plugify_GetVectorData(&C_e, C.INT64)
-	*e = make([]int64, L_e)
-	for i := range (*e) {
-		(*e)[i] = *(*int64)(unsafe.Pointer(uintptr(P_e) + uintptr(i * C.sizeof_int64_t)))
-	}
-	P_g := C.Plugify_GetStringData(&C_g)
-	*g = C.GoString(P_g)
-
-	C.Plugify_DestroyVector(&C_e, C.INT64)
-	C.Plugify_DestroyString(&C_g)
-
+// ParamRef2Callback - No description provided.
+// @param a: No description available.
+// @param b: No description available.
+func ParamRef2Callback(a *int32, b *float32) {
+	__a := C.int32_t(*a)
+	__b := C.float(*b)
+	C.ParamRef2Callback(&__a, &__b)
+	// Unmarshal - Convert native data to managed data.
+	*a = int32(__a)
+	*b = float32(__b)
 }
 
-func ParamRef8Callback(a *int32, b *float32, c *float64, d *Vector4, e *[]int64, f *int8, g *string, h *uint16)  {
-	C_a := (*C.int32_t)(a)
-	C_b := (*C.float)(b)
-	C_c := (*C.double)(c)
-	C_d := *(*C.Vector4)(unsafe.Pointer(d))
-	var A_e unsafe.Pointer
-	S_e := len(*e)
-	if S_e > 0 {
-		A_e = unsafe.Pointer(&(*e)[0])
-	} else {
-		A_e = nil
-	}
-	C_e := C.Plugify_ConstructVector(A_e, C.ptrdiff_t(S_e), C.INT64)
-	C_f := (*C.char)(f)
-	C_g := C.Plugify_ConstructString(*g)
-	C_h := (*C.uint16_t)(h)
-
-	C.ParamRef8Callback(C_a, C_b, C_c, &C_d, &C_e, C_f, &C_g, C_h)
-
-	*d = *(*Vector4)(unsafe.Pointer(&C_d))
-	L_e := C.Plugify_GetVectorSize(&C_e, C.INT64)
-	P_e := C.Plugify_GetVectorData(&C_e, C.INT64)
-	*e = make([]int64, L_e)
-	for i := range (*e) {
-		(*e)[i] = *(*int64)(unsafe.Pointer(uintptr(P_e) + uintptr(i * C.sizeof_int64_t)))
-	}
-	P_g := C.Plugify_GetStringData(&C_g)
-	*g = C.GoString(P_g)
-
-	C.Plugify_DestroyVector(&C_e, C.INT64)
-	C.Plugify_DestroyString(&C_g)
-
+// ParamRef3Callback - No description provided.
+// @param a: No description available.
+// @param b: No description available.
+// @param c: No description available.
+func ParamRef3Callback(a *int32, b *float32, c *float64) {
+	__a := C.int32_t(*a)
+	__b := C.float(*b)
+	__c := C.double(*c)
+	C.ParamRef3Callback(&__a, &__b, &__c)
+	// Unmarshal - Convert native data to managed data.
+	*a = int32(__a)
+	*b = float32(__b)
+	*c = float64(__c)
 }
 
-func ParamRef9Callback(a *int32, b *float32, c *float64, d *Vector4, e *[]int64, f *int8, g *string, h *uint16, k *int16)  {
-	C_a := (*C.int32_t)(a)
-	C_b := (*C.float)(b)
-	C_c := (*C.double)(c)
-	C_d := *(*C.Vector4)(unsafe.Pointer(d))
-	var A_e unsafe.Pointer
-	S_e := len(*e)
-	if S_e > 0 {
-		A_e = unsafe.Pointer(&(*e)[0])
-	} else {
-		A_e = nil
-	}
-	C_e := C.Plugify_ConstructVector(A_e, C.ptrdiff_t(S_e), C.INT64)
-	C_f := (*C.char)(f)
-	C_g := C.Plugify_ConstructString(*g)
-	C_h := (*C.uint16_t)(h)
-	C_k := (*C.int16_t)(k)
-
-	C.ParamRef9Callback(C_a, C_b, C_c, &C_d, &C_e, C_f, &C_g, C_h, C_k)
-
-	*d = *(*Vector4)(unsafe.Pointer(&C_d))
-	L_e := C.Plugify_GetVectorSize(&C_e, C.INT64)
-	P_e := C.Plugify_GetVectorData(&C_e, C.INT64)
-	*e = make([]int64, L_e)
-	for i := range (*e) {
-		(*e)[i] = *(*int64)(unsafe.Pointer(uintptr(P_e) + uintptr(i * C.sizeof_int64_t)))
-	}
-	P_g := C.Plugify_GetStringData(&C_g)
-	*g = C.GoString(P_g)
-
-	C.Plugify_DestroyVector(&C_e, C.INT64)
-	C.Plugify_DestroyString(&C_g)
-
+// ParamRef4Callback - No description provided.
+// @param a: No description available.
+// @param b: No description available.
+// @param c: No description available.
+// @param d: No description available.
+func ParamRef4Callback(a *int32, b *float32, c *float64, d *plugify.Vector4) {
+	__a := C.int32_t(*a)
+	__b := C.float(*b)
+	__c := C.double(*c)
+	__d := *(*C.Vector4)(unsafe.Pointer(d))
+	C.ParamRef4Callback(&__a, &__b, &__c, &__d)
+	// Unmarshal - Convert native data to managed data.
+	*a = int32(__a)
+	*b = float32(__b)
+	*c = float64(__c)
+	*d = *(*plugify.Vector4)(unsafe.Pointer(&__d))
 }
 
-func ParamRef10Callback(a *int32, b *float32, c *float64, d *Vector4, e *[]int64, f *int8, g *string, h *uint16, k *int16, l *uintptr)  {
-	C_a := (*C.int32_t)(a)
-	C_b := (*C.float)(b)
-	C_c := (*C.double)(c)
-	C_d := *(*C.Vector4)(unsafe.Pointer(d))
-	var A_e unsafe.Pointer
-	S_e := len(*e)
-	if S_e > 0 {
-		A_e = unsafe.Pointer(&(*e)[0])
-	} else {
-		A_e = nil
-	}
-	C_e := C.Plugify_ConstructVector(A_e, C.ptrdiff_t(S_e), C.INT64)
-	C_f := (*C.char)(f)
-	C_g := C.Plugify_ConstructString(*g)
-	C_h := (*C.uint16_t)(h)
-	C_k := (*C.int16_t)(k)
-	C_l := (*C.uintptr_t)(unsafe.Pointer(l))
-
-	C.ParamRef10Callback(C_a, C_b, C_c, &C_d, &C_e, C_f, &C_g, C_h, C_k, C_l)
-
-	*d = *(*Vector4)(unsafe.Pointer(&C_d))
-	L_e := C.Plugify_GetVectorSize(&C_e, C.INT64)
-	P_e := C.Plugify_GetVectorData(&C_e, C.INT64)
-	*e = make([]int64, L_e)
-	for i := range (*e) {
-		(*e)[i] = *(*int64)(unsafe.Pointer(uintptr(P_e) + uintptr(i * C.sizeof_int64_t)))
-	}
-	P_g := C.Plugify_GetStringData(&C_g)
-	*g = C.GoString(P_g)
-
-	C.Plugify_DestroyVector(&C_e, C.INT64)
-	C.Plugify_DestroyString(&C_g)
-
+// ParamRef5Callback - No description provided.
+// @param a: No description available.
+// @param b: No description available.
+// @param c: No description available.
+// @param d: No description available.
+// @param e: No description available.
+func ParamRef5Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64) {
+	__a := C.int32_t(*a)
+	__b := C.float(*b)
+	__c := C.double(*c)
+	__d := *(*C.Vector4)(unsafe.Pointer(d))
+	__e := plugify.ConstructVectorInt64(*e)
+	plugify.Block{
+		Try: func() {
+			C.ParamRef5Callback(&__a, &__b, &__c, &__d, (*C.Vector)(unsafe.Pointer(&__e)))
+			// Unmarshal - Convert native data to managed data.
+			*a = int32(__a)
+			*b = float32(__b)
+			*c = float64(__c)
+			*d = *(*plugify.Vector4)(unsafe.Pointer(&__d))
+			plugify.GetVectorDataInt64To(&__e, e)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorInt64(&__e)
+		},
+	}.Do()
 }
 
-func ParamRefVectorsCallback(p1 *[]bool, p2 *[]int8, p3 *[]uint16, p4 *[]int8, p5 *[]int16, p6 *[]int32, p7 *[]int64, p8 *[]uint8, p9 *[]uint16, p10 *[]uint32, p11 *[]uint64, p12 *[]uintptr, p13 *[]float32, p14 *[]float64, p15 *[]string)  {
-	var A_p1 unsafe.Pointer
-	S_p1 := len(*p1)
-	if S_p1 > 0 {
-		A_p1 = unsafe.Pointer(&(*p1)[0])
-	} else {
-		A_p1 = nil
-	}
-	C_p1 := C.Plugify_ConstructVector(A_p1, C.ptrdiff_t(S_p1), C.BOOL)
-	var A_p2 unsafe.Pointer
-	S_p2 := len(*p2)
-	if S_p2 > 0 {
-		A_p2 = unsafe.Pointer(&(*p2)[0])
-	} else {
-		A_p2 = nil
-	}
-	C_p2 := C.Plugify_ConstructVector(A_p2, C.ptrdiff_t(S_p2), C.CHAR8)
-	var A_p3 unsafe.Pointer
-	S_p3 := len(*p3)
-	if S_p3 > 0 {
-		A_p3 = unsafe.Pointer(&(*p3)[0])
-	} else {
-		A_p3 = nil
-	}
-	C_p3 := C.Plugify_ConstructVector(A_p3, C.ptrdiff_t(S_p3), C.CHAR16)
-	var A_p4 unsafe.Pointer
-	S_p4 := len(*p4)
-	if S_p4 > 0 {
-		A_p4 = unsafe.Pointer(&(*p4)[0])
-	} else {
-		A_p4 = nil
-	}
-	C_p4 := C.Plugify_ConstructVector(A_p4, C.ptrdiff_t(S_p4), C.INT8)
-	var A_p5 unsafe.Pointer
-	S_p5 := len(*p5)
-	if S_p5 > 0 {
-		A_p5 = unsafe.Pointer(&(*p5)[0])
-	} else {
-		A_p5 = nil
-	}
-	C_p5 := C.Plugify_ConstructVector(A_p5, C.ptrdiff_t(S_p5), C.INT16)
-	var A_p6 unsafe.Pointer
-	S_p6 := len(*p6)
-	if S_p6 > 0 {
-		A_p6 = unsafe.Pointer(&(*p6)[0])
-	} else {
-		A_p6 = nil
-	}
-	C_p6 := C.Plugify_ConstructVector(A_p6, C.ptrdiff_t(S_p6), C.INT32)
-	var A_p7 unsafe.Pointer
-	S_p7 := len(*p7)
-	if S_p7 > 0 {
-		A_p7 = unsafe.Pointer(&(*p7)[0])
-	} else {
-		A_p7 = nil
-	}
-	C_p7 := C.Plugify_ConstructVector(A_p7, C.ptrdiff_t(S_p7), C.INT64)
-	var A_p8 unsafe.Pointer
-	S_p8 := len(*p8)
-	if S_p8 > 0 {
-		A_p8 = unsafe.Pointer(&(*p8)[0])
-	} else {
-		A_p8 = nil
-	}
-	C_p8 := C.Plugify_ConstructVector(A_p8, C.ptrdiff_t(S_p8), C.UINT8)
-	var A_p9 unsafe.Pointer
-	S_p9 := len(*p9)
-	if S_p9 > 0 {
-		A_p9 = unsafe.Pointer(&(*p9)[0])
-	} else {
-		A_p9 = nil
-	}
-	C_p9 := C.Plugify_ConstructVector(A_p9, C.ptrdiff_t(S_p9), C.UINT16)
-	var A_p10 unsafe.Pointer
-	S_p10 := len(*p10)
-	if S_p10 > 0 {
-		A_p10 = unsafe.Pointer(&(*p10)[0])
-	} else {
-		A_p10 = nil
-	}
-	C_p10 := C.Plugify_ConstructVector(A_p10, C.ptrdiff_t(S_p10), C.UINT32)
-	var A_p11 unsafe.Pointer
-	S_p11 := len(*p11)
-	if S_p11 > 0 {
-		A_p11 = unsafe.Pointer(&(*p11)[0])
-	} else {
-		A_p11 = nil
-	}
-	C_p11 := C.Plugify_ConstructVector(A_p11, C.ptrdiff_t(S_p11), C.UINT64)
-	var A_p12 unsafe.Pointer
-	S_p12 := len(*p12)
-	if S_p12 > 0 {
-		A_p12 = unsafe.Pointer(&(*p12)[0])
-	} else {
-		A_p12 = nil
-	}
-	C_p12 := C.Plugify_ConstructVector(A_p12, C.ptrdiff_t(S_p12), C.POINTER)
-	var A_p13 unsafe.Pointer
-	S_p13 := len(*p13)
-	if S_p13 > 0 {
-		A_p13 = unsafe.Pointer(&(*p13)[0])
-	} else {
-		A_p13 = nil
-	}
-	C_p13 := C.Plugify_ConstructVector(A_p13, C.ptrdiff_t(S_p13), C.FLOAT)
-	var A_p14 unsafe.Pointer
-	S_p14 := len(*p14)
-	if S_p14 > 0 {
-		A_p14 = unsafe.Pointer(&(*p14)[0])
-	} else {
-		A_p14 = nil
-	}
-	C_p14 := C.Plugify_ConstructVector(A_p14, C.ptrdiff_t(S_p14), C.DOUBLE)
-	var A_p15 unsafe.Pointer
-	S_p15 := len(*p15)
-	if S_p15 > 0 {
-		A_p15 = unsafe.Pointer(&(*p15)[0])
-	} else {
-		A_p15 = nil
-	}
-	C_p15 := C.Plugify_ConstructVector(A_p15, C.ptrdiff_t(S_p15), C.STRING)
-
-	C.ParamRefVectorsCallback(&C_p1, &C_p2, &C_p3, &C_p4, &C_p5, &C_p6, &C_p7, &C_p8, &C_p9, &C_p10, &C_p11, &C_p12, &C_p13, &C_p14, &C_p15)
-
-	L_p1 := C.Plugify_GetVectorSize(&C_p1, C.BOOL)
-	P_p1 := C.Plugify_GetVectorData(&C_p1, C.BOOL)
-	*p1 = make([]bool, L_p1)
-	for i := range (*p1) {
-		(*p1)[i] = *(*bool)(unsafe.Pointer(uintptr(P_p1) + uintptr(i * C.sizeof_bool)))
-	}
-	L_p2 := C.Plugify_GetVectorSize(&C_p2, C.CHAR8)
-	P_p2 := C.Plugify_GetVectorData(&C_p2, C.CHAR8)
-	*p2 = make([]int8, L_p2)
-	for i := range (*p2) {
-		(*p2)[i] = *(*int8)(unsafe.Pointer(uintptr(P_p2) + uintptr(i * C.sizeof_char)))
-	}
-	L_p3 := C.Plugify_GetVectorSize(&C_p3, C.CHAR16)
-	P_p3 := C.Plugify_GetVectorData(&C_p3, C.CHAR16)
-	*p3 = make([]uint16, L_p3)
-	for i := range (*p3) {
-		(*p3)[i] = *(*uint16)(unsafe.Pointer(uintptr(P_p3) + uintptr(i * C.sizeof_uint16_t)))
-	}
-	L_p4 := C.Plugify_GetVectorSize(&C_p4, C.INT8)
-	P_p4 := C.Plugify_GetVectorData(&C_p4, C.INT8)
-	*p4 = make([]int8, L_p4)
-	for i := range (*p4) {
-		(*p4)[i] = *(*int8)(unsafe.Pointer(uintptr(P_p4) + uintptr(i * C.sizeof_int8_t)))
-	}
-	L_p5 := C.Plugify_GetVectorSize(&C_p5, C.INT16)
-	P_p5 := C.Plugify_GetVectorData(&C_p5, C.INT16)
-	*p5 = make([]int16, L_p5)
-	for i := range (*p5) {
-		(*p5)[i] = *(*int16)(unsafe.Pointer(uintptr(P_p5) + uintptr(i * C.sizeof_int16_t)))
-	}
-	L_p6 := C.Plugify_GetVectorSize(&C_p6, C.INT32)
-	P_p6 := C.Plugify_GetVectorData(&C_p6, C.INT32)
-	*p6 = make([]int32, L_p6)
-	for i := range (*p6) {
-		(*p6)[i] = *(*int32)(unsafe.Pointer(uintptr(P_p6) + uintptr(i * C.sizeof_int32_t)))
-	}
-	L_p7 := C.Plugify_GetVectorSize(&C_p7, C.INT64)
-	P_p7 := C.Plugify_GetVectorData(&C_p7, C.INT64)
-	*p7 = make([]int64, L_p7)
-	for i := range (*p7) {
-		(*p7)[i] = *(*int64)(unsafe.Pointer(uintptr(P_p7) + uintptr(i * C.sizeof_int64_t)))
-	}
-	L_p8 := C.Plugify_GetVectorSize(&C_p8, C.UINT8)
-	P_p8 := C.Plugify_GetVectorData(&C_p8, C.UINT8)
-	*p8 = make([]uint8, L_p8)
-	for i := range (*p8) {
-		(*p8)[i] = *(*uint8)(unsafe.Pointer(uintptr(P_p8) + uintptr(i * C.sizeof_uint8_t)))
-	}
-	L_p9 := C.Plugify_GetVectorSize(&C_p9, C.UINT16)
-	P_p9 := C.Plugify_GetVectorData(&C_p9, C.UINT16)
-	*p9 = make([]uint16, L_p9)
-	for i := range (*p9) {
-		(*p9)[i] = *(*uint16)(unsafe.Pointer(uintptr(P_p9) + uintptr(i * C.sizeof_uint16_t)))
-	}
-	L_p10 := C.Plugify_GetVectorSize(&C_p10, C.UINT32)
-	P_p10 := C.Plugify_GetVectorData(&C_p10, C.UINT32)
-	*p10 = make([]uint32, L_p10)
-	for i := range (*p10) {
-		(*p10)[i] = *(*uint32)(unsafe.Pointer(uintptr(P_p10) + uintptr(i * C.sizeof_uint32_t)))
-	}
-	L_p11 := C.Plugify_GetVectorSize(&C_p11, C.UINT64)
-	P_p11 := C.Plugify_GetVectorData(&C_p11, C.UINT64)
-	*p11 = make([]uint64, L_p11)
-	for i := range (*p11) {
-		(*p11)[i] = *(*uint64)(unsafe.Pointer(uintptr(P_p11) + uintptr(i * C.sizeof_uint64_t)))
-	}
-	L_p12 := C.Plugify_GetVectorSize(&C_p12, C.POINTER)
-	P_p12 := C.Plugify_GetVectorData(&C_p12, C.POINTER)
-	*p12 = make([]uintptr, L_p12)
-	for i := range (*p12) {
-		(*p12)[i] = *(*uintptr)(unsafe.Pointer(uintptr(P_p12) + uintptr(i * C.sizeof_uintptr_t)))
-	}
-	L_p13 := C.Plugify_GetVectorSize(&C_p13, C.FLOAT)
-	P_p13 := C.Plugify_GetVectorData(&C_p13, C.FLOAT)
-	*p13 = make([]float32, L_p13)
-	for i := range (*p13) {
-		(*p13)[i] = *(*float32)(unsafe.Pointer(uintptr(P_p13) + uintptr(i * C.sizeof_float)))
-	}
-	L_p14 := C.Plugify_GetVectorSize(&C_p14, C.DOUBLE)
-	P_p14 := C.Plugify_GetVectorData(&C_p14, C.DOUBLE)
-	*p14 = make([]float64, L_p14)
-	for i := range (*p14) {
-		(*p14)[i] = *(*float64)(unsafe.Pointer(uintptr(P_p14) + uintptr(i * C.sizeof_double)))
-	}
-	L_p15 := C.Plugify_GetVectorSize(&C_p15, C.STRING)
-	P_p15 := C.Plugify_GetVectorData(&C_p15, C.STRING)
-	*p15 = make([]string, L_p15)
-	for i := range (*p15) {
-		(*p15)[i] = C.GoString(C.Plugify_GetStringData((*C.String)(unsafe.Pointer(uintptr(P_p15) + uintptr(i * C.sizeof_uintptr_t)))))
-	}
-
-	C.Plugify_DestroyVector(&C_p1, C.BOOL)
-	C.Plugify_DestroyVector(&C_p2, C.CHAR8)
-	C.Plugify_DestroyVector(&C_p3, C.CHAR16)
-	C.Plugify_DestroyVector(&C_p4, C.INT8)
-	C.Plugify_DestroyVector(&C_p5, C.INT16)
-	C.Plugify_DestroyVector(&C_p6, C.INT32)
-	C.Plugify_DestroyVector(&C_p7, C.INT64)
-	C.Plugify_DestroyVector(&C_p8, C.UINT8)
-	C.Plugify_DestroyVector(&C_p9, C.UINT16)
-	C.Plugify_DestroyVector(&C_p10, C.UINT32)
-	C.Plugify_DestroyVector(&C_p11, C.UINT64)
-	C.Plugify_DestroyVector(&C_p12, C.POINTER)
-	C.Plugify_DestroyVector(&C_p13, C.FLOAT)
-	C.Plugify_DestroyVector(&C_p14, C.DOUBLE)
-	C.Plugify_DestroyVector(&C_p15, C.STRING)
-
+// ParamRef6Callback - No description provided.
+// @param a: No description available.
+// @param b: No description available.
+// @param c: No description available.
+// @param d: No description available.
+// @param e: No description available.
+// @param f: No description available.
+func ParamRef6Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8) {
+	__a := C.int32_t(*a)
+	__b := C.float(*b)
+	__c := C.double(*c)
+	__d := *(*C.Vector4)(unsafe.Pointer(d))
+	__e := plugify.ConstructVectorInt64(*e)
+	__f := C.int8_t(*f)
+	plugify.Block{
+		Try: func() {
+			C.ParamRef6Callback(&__a, &__b, &__c, &__d, (*C.Vector)(unsafe.Pointer(&__e)), &__f)
+			// Unmarshal - Convert native data to managed data.
+			*a = int32(__a)
+			*b = float32(__b)
+			*c = float64(__c)
+			*d = *(*plugify.Vector4)(unsafe.Pointer(&__d))
+			plugify.GetVectorDataInt64To(&__e, e)
+			*f = int8(__f)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorInt64(&__e)
+		},
+	}.Do()
 }
 
+// ParamRef7Callback - No description provided.
+// @param a: No description available.
+// @param b: No description available.
+// @param c: No description available.
+// @param d: No description available.
+// @param e: No description available.
+// @param f: No description available.
+// @param g: No description available.
+func ParamRef7Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8, g *string) {
+	__a := C.int32_t(*a)
+	__b := C.float(*b)
+	__c := C.double(*c)
+	__d := *(*C.Vector4)(unsafe.Pointer(d))
+	__e := plugify.ConstructVectorInt64(*e)
+	__f := C.int8_t(*f)
+	__g := plugify.ConstructString(*g)
+	plugify.Block{
+		Try: func() {
+			C.ParamRef7Callback(&__a, &__b, &__c, &__d, (*C.Vector)(unsafe.Pointer(&__e)), &__f, (*C.String)(unsafe.Pointer(&__g)))
+			// Unmarshal - Convert native data to managed data.
+			*a = int32(__a)
+			*b = float32(__b)
+			*c = float64(__c)
+			*d = *(*plugify.Vector4)(unsafe.Pointer(&__d))
+			plugify.GetVectorDataInt64To(&__e, e)
+			*f = int8(__f)
+			*g = plugify.GetStringData(&__g)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorInt64(&__e)
+			plugify.DestroyString(&__g)
+		},
+	}.Do()
+}
+
+// ParamRef8Callback - No description provided.
+// @param a: No description available.
+// @param b: No description available.
+// @param c: No description available.
+// @param d: No description available.
+// @param e: No description available.
+// @param f: No description available.
+// @param g: No description available.
+// @param h: No description available.
+func ParamRef8Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8, g *string, h *uint16) {
+	__a := C.int32_t(*a)
+	__b := C.float(*b)
+	__c := C.double(*c)
+	__d := *(*C.Vector4)(unsafe.Pointer(d))
+	__e := plugify.ConstructVectorInt64(*e)
+	__f := C.int8_t(*f)
+	__g := plugify.ConstructString(*g)
+	__h := C.uint16_t(*h)
+	plugify.Block{
+		Try: func() {
+			C.ParamRef8Callback(&__a, &__b, &__c, &__d, (*C.Vector)(unsafe.Pointer(&__e)), &__f, (*C.String)(unsafe.Pointer(&__g)), &__h)
+			// Unmarshal - Convert native data to managed data.
+			*a = int32(__a)
+			*b = float32(__b)
+			*c = float64(__c)
+			*d = *(*plugify.Vector4)(unsafe.Pointer(&__d))
+			plugify.GetVectorDataInt64To(&__e, e)
+			*f = int8(__f)
+			*g = plugify.GetStringData(&__g)
+			*h = uint16(__h)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorInt64(&__e)
+			plugify.DestroyString(&__g)
+		},
+	}.Do()
+}
+
+// ParamRef9Callback - No description provided.
+// @param a: No description available.
+// @param b: No description available.
+// @param c: No description available.
+// @param d: No description available.
+// @param e: No description available.
+// @param f: No description available.
+// @param g: No description available.
+// @param h: No description available.
+// @param k: No description available.
+func ParamRef9Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8, g *string, h *uint16, k *int16) {
+	__a := C.int32_t(*a)
+	__b := C.float(*b)
+	__c := C.double(*c)
+	__d := *(*C.Vector4)(unsafe.Pointer(d))
+	__e := plugify.ConstructVectorInt64(*e)
+	__f := C.int8_t(*f)
+	__g := plugify.ConstructString(*g)
+	__h := C.uint16_t(*h)
+	__k := C.int16_t(*k)
+	plugify.Block{
+		Try: func() {
+			C.ParamRef9Callback(&__a, &__b, &__c, &__d, (*C.Vector)(unsafe.Pointer(&__e)), &__f, (*C.String)(unsafe.Pointer(&__g)), &__h, &__k)
+			// Unmarshal - Convert native data to managed data.
+			*a = int32(__a)
+			*b = float32(__b)
+			*c = float64(__c)
+			*d = *(*plugify.Vector4)(unsafe.Pointer(&__d))
+			plugify.GetVectorDataInt64To(&__e, e)
+			*f = int8(__f)
+			*g = plugify.GetStringData(&__g)
+			*h = uint16(__h)
+			*k = int16(__k)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorInt64(&__e)
+			plugify.DestroyString(&__g)
+		},
+	}.Do()
+}
+
+// ParamRef10Callback - No description provided.
+// @param a: No description available.
+// @param b: No description available.
+// @param c: No description available.
+// @param d: No description available.
+// @param e: No description available.
+// @param f: No description available.
+// @param g: No description available.
+// @param h: No description available.
+// @param k: No description available.
+// @param l: No description available.
+func ParamRef10Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8, g *string, h *uint16, k *int16, l *uintptr) {
+	__a := C.int32_t(*a)
+	__b := C.float(*b)
+	__c := C.double(*c)
+	__d := *(*C.Vector4)(unsafe.Pointer(d))
+	__e := plugify.ConstructVectorInt64(*e)
+	__f := C.int8_t(*f)
+	__g := plugify.ConstructString(*g)
+	__h := C.uint16_t(*h)
+	__k := C.int16_t(*k)
+	__l := C.uintptr_t(*l)
+	plugify.Block{
+		Try: func() {
+			C.ParamRef10Callback(&__a, &__b, &__c, &__d, (*C.Vector)(unsafe.Pointer(&__e)), &__f, (*C.String)(unsafe.Pointer(&__g)), &__h, &__k, &__l)
+			// Unmarshal - Convert native data to managed data.
+			*a = int32(__a)
+			*b = float32(__b)
+			*c = float64(__c)
+			*d = *(*plugify.Vector4)(unsafe.Pointer(&__d))
+			plugify.GetVectorDataInt64To(&__e, e)
+			*f = int8(__f)
+			*g = plugify.GetStringData(&__g)
+			*h = uint16(__h)
+			*k = int16(__k)
+			*l = uintptr(__l)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorInt64(&__e)
+			plugify.DestroyString(&__g)
+		},
+	}.Do()
+}
+
+// ParamRefVectorsCallback - No description provided.
+// @param p1: No description available.
+// @param p2: No description available.
+// @param p3: No description available.
+// @param p4: No description available.
+// @param p5: No description available.
+// @param p6: No description available.
+// @param p7: No description available.
+// @param p8: No description available.
+// @param p9: No description available.
+// @param p10: No description available.
+// @param p11: No description available.
+// @param p12: No description available.
+// @param p13: No description available.
+// @param p14: No description available.
+// @param p15: No description available.
+func ParamRefVectorsCallback(p1 *[]bool, p2 *[]int8, p3 *[]uint16, p4 *[]int8, p5 *[]int16, p6 *[]int32, p7 *[]int64, p8 *[]uint8, p9 *[]uint16, p10 *[]uint32, p11 *[]uint64, p12 *[]uintptr, p13 *[]float32, p14 *[]float64, p15 *[]string) {
+	__p1 := plugify.ConstructVectorBool(*p1)
+	__p2 := plugify.ConstructVectorChar8(*p2)
+	__p3 := plugify.ConstructVectorChar16(*p3)
+	__p4 := plugify.ConstructVectorInt8(*p4)
+	__p5 := plugify.ConstructVectorInt16(*p5)
+	__p6 := plugify.ConstructVectorInt32(*p6)
+	__p7 := plugify.ConstructVectorInt64(*p7)
+	__p8 := plugify.ConstructVectorUInt8(*p8)
+	__p9 := plugify.ConstructVectorUInt16(*p9)
+	__p10 := plugify.ConstructVectorUInt32(*p10)
+	__p11 := plugify.ConstructVectorUInt64(*p11)
+	__p12 := plugify.ConstructVectorPointer(*p12)
+	__p13 := plugify.ConstructVectorFloat(*p13)
+	__p14 := plugify.ConstructVectorDouble(*p14)
+	__p15 := plugify.ConstructVectorString(*p15)
+	plugify.Block{
+		Try: func() {
+			C.ParamRefVectorsCallback((*C.Vector)(unsafe.Pointer(&__p1)), (*C.Vector)(unsafe.Pointer(&__p2)), (*C.Vector)(unsafe.Pointer(&__p3)), (*C.Vector)(unsafe.Pointer(&__p4)), (*C.Vector)(unsafe.Pointer(&__p5)), (*C.Vector)(unsafe.Pointer(&__p6)), (*C.Vector)(unsafe.Pointer(&__p7)), (*C.Vector)(unsafe.Pointer(&__p8)), (*C.Vector)(unsafe.Pointer(&__p9)), (*C.Vector)(unsafe.Pointer(&__p10)), (*C.Vector)(unsafe.Pointer(&__p11)), (*C.Vector)(unsafe.Pointer(&__p12)), (*C.Vector)(unsafe.Pointer(&__p13)), (*C.Vector)(unsafe.Pointer(&__p14)), (*C.Vector)(unsafe.Pointer(&__p15)))
+			// Unmarshal - Convert native data to managed data.
+			plugify.GetVectorDataBoolTo(&__p1, p1)
+			plugify.GetVectorDataChar8To(&__p2, p2)
+			plugify.GetVectorDataChar16To(&__p3, p3)
+			plugify.GetVectorDataInt8To(&__p4, p4)
+			plugify.GetVectorDataInt16To(&__p5, p5)
+			plugify.GetVectorDataInt32To(&__p6, p6)
+			plugify.GetVectorDataInt64To(&__p7, p7)
+			plugify.GetVectorDataUInt8To(&__p8, p8)
+			plugify.GetVectorDataUInt16To(&__p9, p9)
+			plugify.GetVectorDataUInt32To(&__p10, p10)
+			plugify.GetVectorDataUInt64To(&__p11, p11)
+			plugify.GetVectorDataPointerTo(&__p12, p12)
+			plugify.GetVectorDataFloatTo(&__p13, p13)
+			plugify.GetVectorDataDoubleTo(&__p14, p14)
+			plugify.GetVectorDataStringTo(&__p15, p15)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorBool(&__p1)
+			plugify.DestroyVectorChar8(&__p2)
+			plugify.DestroyVectorChar16(&__p3)
+			plugify.DestroyVectorInt8(&__p4)
+			plugify.DestroyVectorInt16(&__p5)
+			plugify.DestroyVectorInt32(&__p6)
+			plugify.DestroyVectorInt64(&__p7)
+			plugify.DestroyVectorUInt8(&__p8)
+			plugify.DestroyVectorUInt16(&__p9)
+			plugify.DestroyVectorUInt32(&__p10)
+			plugify.DestroyVectorUInt64(&__p11)
+			plugify.DestroyVectorPointer(&__p12)
+			plugify.DestroyVectorFloat(&__p13)
+			plugify.DestroyVectorDouble(&__p14)
+			plugify.DestroyVectorString(&__p15)
+		},
+	}.Do()
+}
+
+// ParamAllPrimitivesCallback - No description provided.
+// @param p1: No description available.
+// @param p2: No description available.
+// @param p3: No description available.
+// @param p4: No description available.
+// @param p5: No description available.
+// @param p6: No description available.
+// @param p7: No description available.
+// @param p8: No description available.
+// @param p9: No description available.
+// @param p10: No description available.
+// @param p11: No description available.
+// @param p12: No description available.
+// @param p13: No description available.
+// @param p14: No description available.
+// @return No description available.
 func ParamAllPrimitivesCallback(p1 bool, p2 int8, p3 uint16, p4 int8, p5 int16, p6 int32, p7 int64, p8 uint8, p9 uint16, p10 uint32, p11 uint64, p12 uintptr, p13 float32, p14 float64) int64 {
-	C_p1 := C.bool(p1)
-	C_p2 := C.char(p2)
-	C_p3 := C.uint16_t(p3)
-	C_p4 := C.int8_t(p4)
-	C_p5 := C.int16_t(p5)
-	C_p6 := C.int32_t(p6)
-	C_p7 := C.int64_t(p7)
-	C_p8 := C.uint8_t(p8)
-	C_p9 := C.uint16_t(p9)
-	C_p10 := C.uint32_t(p10)
-	C_p11 := C.uint64_t(p11)
-	C_p12 := C.uintptr_t(p12)
-	C_p13 := C.float(p13)
-	C_p14 := C.double(p14)
-
-	result := int64(C.ParamAllPrimitivesCallback(C_p1, C_p2, C_p3, C_p4, C_p5, C_p6, C_p7, C_p8, C_p9, C_p10, C_p11, C_p12, C_p13, C_p14))
-	return result
-}
-/*
-func CallFuncVoidCallback(func func)  {
-	C_func := (func)
-
-	C.CallFuncVoidCallback(C_func)
-}
-
-func CallFuncBoolCallback(func func) bool {
-	C_func := (func)
-
-	result := bool(C.CallFuncBoolCallback(C_func))
-	return result
-}
-
-func CallFuncChar8Callback(func func) int8 {
-	C_func := (func)
-
-	result := int8(C.CallFuncChar8Callback(C_func))
-	return result
-}
-
-func CallFuncChar16Callback(func func) uint16 {
-	C_func := (func)
-
-	result := uint16(C.CallFuncChar16Callback(C_func))
-	return result
-}
-
-func CallFuncInt8Callback(func func) int8 {
-	C_func := (func)
-
-	result := int8(C.CallFuncInt8Callback(C_func))
-	return result
-}
-
-func CallFuncInt16Callback(func func) int16 {
-	C_func := (func)
-
-	result := int16(C.CallFuncInt16Callback(C_func))
-	return result
-}
-
-func CallFuncInt32Callback(func func) int32 {
-	C_func := (func)
-
-	result := int32(C.CallFuncInt32Callback(C_func))
-	return result
-}
-
-func CallFuncInt64Callback(func func) int64 {
-	C_func := (func)
-
-	result := int64(C.CallFuncInt64Callback(C_func))
-	return result
-}
-
-func CallFuncUInt8Callback(func func) uint8 {
-	C_func := (func)
-
-	result := uint8(C.CallFuncUInt8Callback(C_func))
-	return result
-}
-
-func CallFuncUInt16Callback(func func) uint16 {
-	C_func := (func)
-
-	result := uint16(C.CallFuncUInt16Callback(C_func))
-	return result
-}
-
-func CallFuncUInt32Callback(func func) uint32 {
-	C_func := (func)
-
-	result := uint32(C.CallFuncUInt32Callback(C_func))
-	return result
-}
-
-func CallFuncUInt64Callback(func func) uint64 {
-	C_func := (func)
-
-	result := uint64(C.CallFuncUInt64Callback(C_func))
-	return result
-}
-
-func CallFuncPtrCallback(func func) uintptr {
-	C_func := (func)
-
-	result := uintptr(C.CallFuncPtrCallback(C_func))
-	return result
-}
-
-func CallFuncFloatCallback(func func) float32 {
-	C_func := (func)
-
-	result := float32(C.CallFuncFloatCallback(C_func))
-	return result
-}
-
-func CallFuncDoubleCallback(func func) float64 {
-	C_func := (func)
-
-	result := float64(C.CallFuncDoubleCallback(C_func))
-	return result
-}
-
-func CallFuncStringCallback(func func) string {
-	C_func := (func)
-
-	C_output := C.CallFuncStringCallback(C_func)
-
-	P_output := C.Plugify_GetStringData(&C_output)
-	output := C.GoString(P_output)
-	C.Plugify_DestroyString(&C_output)
-	return output
-}
-
-func CallFuncFunctionCallback(func func) uintptr {
-	C_func := (func)
-
-	result := uintptr(C.CallFuncFunctionCallback(C_func))
-	return result
-}
-
-func CallFuncBoolVectorCallback(func func) []bool {
-	C_func := (func)
-
-	C_output := C.CallFuncBoolVectorCallback(C_func)
-
-	L_output := C.Plugify_GetVectorSize(&C_output, C.BOOL)
-	P_output := C.Plugify_GetVectorData(&C_output, C.BOOL)
-	output := make([]bool, L_output)
-	for i := range output {
-		output[i] = *(*bool)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_bool)))
-	}
-
-	C.Plugify_DestroyVector(&C_output, C.BOOL)
-	return output
-}
-
-func CallFuncChar8VectorCallback(func func) []int8 {
-	C_func := (func)
-
-	C_output := C.CallFuncChar8VectorCallback(C_func)
-
-	L_output := C.Plugify_GetVectorSize(&C_output, C.CHAR8)
-	P_output := C.Plugify_GetVectorData(&C_output, C.CHAR8)
-	output := make([]int8, L_output)
-	for i := range output {
-		output[i] = *(*int8)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_char)))
-	}
-
-	C.Plugify_DestroyVector(&C_output, C.CHAR8)
-	return output
-}
-
-func CallFuncChar16VectorCallback(func func) []uint16 {
-	C_func := (func)
-
-	C_output := C.CallFuncChar16VectorCallback(C_func)
-
-	L_output := C.Plugify_GetVectorSize(&C_output, C.CHAR16)
-	P_output := C.Plugify_GetVectorData(&C_output, C.CHAR16)
-	output := make([]uint16, L_output)
-	for i := range output {
-		output[i] = *(*uint16)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_uint16_t)))
-	}
-
-	C.Plugify_DestroyVector(&C_output, C.CHAR16)
-	return output
-}
-
-func CallFuncInt8VectorCallback(func func) []int8 {
-	C_func := (func)
-
-	C_output := C.CallFuncInt8VectorCallback(C_func)
-
-	L_output := C.Plugify_GetVectorSize(&C_output, C.INT8)
-	P_output := C.Plugify_GetVectorData(&C_output, C.INT8)
-	output := make([]int8, L_output)
-	for i := range output {
-		output[i] = *(*int8)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_int8_t)))
-	}
-
-	C.Plugify_DestroyVector(&C_output, C.INT8)
-	return output
-}
-
-func CallFuncInt16VectorCallback(func func) []int16 {
-	C_func := (func)
-
-	C_output := C.CallFuncInt16VectorCallback(C_func)
-
-	L_output := C.Plugify_GetVectorSize(&C_output, C.INT16)
-	P_output := C.Plugify_GetVectorData(&C_output, C.INT16)
-	output := make([]int16, L_output)
-	for i := range output {
-		output[i] = *(*int16)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_int16_t)))
-	}
-
-	C.Plugify_DestroyVector(&C_output, C.INT16)
-	return output
-}
-
-func CallFuncInt32VectorCallback(func func) []int32 {
-	C_func := (func)
-
-	C_output := C.CallFuncInt32VectorCallback(C_func)
-
-	L_output := C.Plugify_GetVectorSize(&C_output, C.INT32)
-	P_output := C.Plugify_GetVectorData(&C_output, C.INT32)
-	output := make([]int32, L_output)
-	for i := range output {
-		output[i] = *(*int32)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_int32_t)))
-	}
-
-	C.Plugify_DestroyVector(&C_output, C.INT32)
-	return output
-}
-
-func CallFuncInt64VectorCallback(func func) []int64 {
-	C_func := (func)
-
-	C_output := C.CallFuncInt64VectorCallback(C_func)
-
-	L_output := C.Plugify_GetVectorSize(&C_output, C.INT64)
-	P_output := C.Plugify_GetVectorData(&C_output, C.INT64)
-	output := make([]int64, L_output)
-	for i := range output {
-		output[i] = *(*int64)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_int64_t)))
-	}
-
-	C.Plugify_DestroyVector(&C_output, C.INT64)
-	return output
-}
-
-func CallFuncUInt8VectorCallback(func func) []uint8 {
-	C_func := (func)
-
-	C_output := C.CallFuncUInt8VectorCallback(C_func)
-
-	L_output := C.Plugify_GetVectorSize(&C_output, C.UINT8)
-	P_output := C.Plugify_GetVectorData(&C_output, C.UINT8)
-	output := make([]uint8, L_output)
-	for i := range output {
-		output[i] = *(*uint8)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_uint8_t)))
-	}
-
-	C.Plugify_DestroyVector(&C_output, C.UINT8)
-	return output
-}
-
-func CallFuncUInt16VectorCallback(func func) []uint16 {
-	C_func := (func)
-
-	C_output := C.CallFuncUInt16VectorCallback(C_func)
-
-	L_output := C.Plugify_GetVectorSize(&C_output, C.UINT16)
-	P_output := C.Plugify_GetVectorData(&C_output, C.UINT16)
-	output := make([]uint16, L_output)
-	for i := range output {
-		output[i] = *(*uint16)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_uint16_t)))
-	}
-
-	C.Plugify_DestroyVector(&C_output, C.UINT16)
-	return output
-}
-
-func CallFuncUInt32VectorCallback(func func) []uint32 {
-	C_func := (func)
-
-	C_output := C.CallFuncUInt32VectorCallback(C_func)
-
-	L_output := C.Plugify_GetVectorSize(&C_output, C.UINT32)
-	P_output := C.Plugify_GetVectorData(&C_output, C.UINT32)
-	output := make([]uint32, L_output)
-	for i := range output {
-		output[i] = *(*uint32)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_uint32_t)))
-	}
-
-	C.Plugify_DestroyVector(&C_output, C.UINT32)
-	return output
-}
-
-func CallFuncUInt64VectorCallback(func func) []uint64 {
-	C_func := (func)
-
-	C_output := C.CallFuncUInt64VectorCallback(C_func)
-
-	L_output := C.Plugify_GetVectorSize(&C_output, C.UINT64)
-	P_output := C.Plugify_GetVectorData(&C_output, C.UINT64)
-	output := make([]uint64, L_output)
-	for i := range output {
-		output[i] = *(*uint64)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_uint64_t)))
-	}
-
-	C.Plugify_DestroyVector(&C_output, C.UINT64)
-	return output
-}
-
-func CallFuncPtrVectorCallback(func func) []uintptr {
-	C_func := (func)
-
-	C_output := C.CallFuncPtrVectorCallback(C_func)
-
-	L_output := C.Plugify_GetVectorSize(&C_output, C.POINTER)
-	P_output := C.Plugify_GetVectorData(&C_output, C.POINTER)
-	output := make([]uintptr, L_output)
-	for i := range output {
-		output[i] = *(*uintptr)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_uintptr_t)))
-	}
-
-	C.Plugify_DestroyVector(&C_output, C.POINTER)
-	return output
-}
-
-func CallFuncFloatVectorCallback(func func) []float32 {
-	C_func := (func)
-
-	C_output := C.CallFuncFloatVectorCallback(C_func)
-
-	L_output := C.Plugify_GetVectorSize(&C_output, C.FLOAT)
-	P_output := C.Plugify_GetVectorData(&C_output, C.FLOAT)
-	output := make([]float32, L_output)
-	for i := range output {
-		output[i] = *(*float32)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_float)))
-	}
-
-	C.Plugify_DestroyVector(&C_output, C.FLOAT)
-	return output
-}
-
-func CallFuncStringVectorCallback(func func) []string {
-	C_func := (func)
-
-	C_output := C.CallFuncStringVectorCallback(C_func)
-
-	L_output := C.Plugify_GetVectorSize(&C_output, C.STRING)
-	P_output := C.Plugify_GetVectorData(&C_output, C.STRING)
-	output := make([]string, L_output)
-	for i := range output {
-		output[i] = C.GoString(C.Plugify_GetStringData((*C.String)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_uintptr_t)))))
-	}
-
-	C.Plugify_DestroyVector(&C_output, C.STRING)
-	return output
-}
-
-func CallFuncDoubleVectorCallback(func func) []float64 {
-	C_func := (func)
-
-	C_output := C.CallFuncDoubleVectorCallback(C_func)
-
-	L_output := C.Plugify_GetVectorSize(&C_output, C.DOUBLE)
-	P_output := C.Plugify_GetVectorData(&C_output, C.DOUBLE)
-	output := make([]float64, L_output)
-	for i := range output {
-		output[i] = *(*float64)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_double)))
-	}
-
-	C.Plugify_DestroyVector(&C_output, C.DOUBLE)
-	return output
+	var __retVal int64
+	__p1 := C.bool(p1)
+	__p2 := C.int8_t(p2)
+	__p3 := C.uint16_t(p3)
+	__p4 := C.int8_t(p4)
+	__p5 := C.int16_t(p5)
+	__p6 := C.int32_t(p6)
+	__p7 := C.int64_t(p7)
+	__p8 := C.uint8_t(p8)
+	__p9 := C.uint16_t(p9)
+	__p10 := C.uint32_t(p10)
+	__p11 := C.uint64_t(p11)
+	__p12 := C.uintptr_t(p12)
+	__p13 := C.float(p13)
+	__p14 := C.double(p14)
+	__retVal = int64(C.ParamAllPrimitivesCallback(__p1, __p2, __p3, __p4, __p5, __p6, __p7, __p8, __p9, __p10, __p11, __p12, __p13, __p14))
+	return __retVal
+}
+
+// ParamEnumCallback - No description provided.
+// @param p1: No description available.
+// @param p2: No description available.
+// @return No description available.
+func ParamEnumCallback(p1 Example, p2 []Example) int32 {
+	var __retVal int32
+	__p1 := C.int32_t(p1)
+	__p2 := plugify.ConstructVectorInt32(p2)
+	plugify.Block{
+		Try: func() {
+			__retVal = int32(C.ParamEnumCallback(__p1, (*C.Vector)(unsafe.Pointer(&__p2))))
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorInt32(&__p2)
+		},
+	}.Do()
+	return __retVal
+}
+
+// ParamEnumRefCallback - No description provided.
+// @param p1: No description available.
+// @param p2: No description available.
+// @return No description available.
+func ParamEnumRefCallback(p1 *Example, p2 *[]Example) int32 {
+	var __retVal int32
+	__p1 := C.int32_t(*p1)
+	__p2 := plugify.ConstructVectorInt32(*p2)
+	plugify.Block{
+		Try: func() {
+			__retVal = int32(C.ParamEnumRefCallback(&__p1, (*C.Vector)(unsafe.Pointer(&__p2))))
+			// Unmarshal - Convert native data to managed data.
+			*p1 = Example(__p1)
+			plugify.GetVectorDataInt32To(&__p2, p2)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorInt32(&__p2)
+		},
+	}.Do()
+	return __retVal
+}
+
+// ParamVariantCallback - No description provided.
+// @param p1: No description available.
+// @param p2: No description available.
+func ParamVariantCallback(p1 interface{}, p2 []interface{}) {
+	__p1 := plugify.ConstructVariant(p1)
+	__p2 := plugify.ConstructVectorVariant(p2)
+	plugify.Block{
+		Try: func() {
+			C.ParamVariantCallback((*C.Variant)(unsafe.Pointer(&__p1)), (*C.Vector)(unsafe.Pointer(&__p2)))
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVariant(&__p1)
+			plugify.DestroyVectorVariant(&__p2)
+		},
+	}.Do()
+}
+
+// ParamVariantRefCallback - No description provided.
+// @param p1: No description available.
+// @param p2: No description available.
+func ParamVariantRefCallback(p1 *interface{}, p2 *[]interface{}) {
+	__p1 := plugify.ConstructVariant(*p1)
+	__p2 := plugify.ConstructVectorVariant(*p2)
+	plugify.Block{
+		Try: func() {
+			C.ParamVariantRefCallback((*C.Variant)(unsafe.Pointer(&__p1)), (*C.Vector)(unsafe.Pointer(&__p2)))
+			// Unmarshal - Convert native data to managed data.
+			*p1 = plugify.GetVariantData(&__p1)
+			plugify.GetVectorDataVariantTo(&__p2, p2)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVariant(&__p1)
+			plugify.DestroyVectorVariant(&__p2)
+		},
+	}.Do()
+}
+
+// CallFuncVoidCallback - No description provided.
+// @param func: No description available.
+func CallFuncVoidCallback(func_ FuncVoid) {
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	C.CallFuncVoidCallback(__func_)
+}
+
+// CallFuncBoolCallback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncBoolCallback(func_ FuncBool) bool {
+	var __retVal bool
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	__retVal = bool(C.CallFuncBoolCallback(__func_))
+	return __retVal
+}
+
+// CallFuncChar8Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncChar8Callback(func_ FuncChar8) int8 {
+	var __retVal int8
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	__retVal = int8(C.CallFuncChar8Callback(__func_))
+	return __retVal
+}
+
+// CallFuncChar16Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncChar16Callback(func_ FuncChar16) uint16 {
+	var __retVal uint16
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	__retVal = uint16(C.CallFuncChar16Callback(__func_))
+	return __retVal
+}
+
+// CallFuncInt8Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncInt8Callback(func_ FuncInt8) int8 {
+	var __retVal int8
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	__retVal = int8(C.CallFuncInt8Callback(__func_))
+	return __retVal
+}
+
+// CallFuncInt16Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncInt16Callback(func_ FuncInt16) int16 {
+	var __retVal int16
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	__retVal = int16(C.CallFuncInt16Callback(__func_))
+	return __retVal
+}
+
+// CallFuncInt32Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncInt32Callback(func_ FuncInt32) int32 {
+	var __retVal int32
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	__retVal = int32(C.CallFuncInt32Callback(__func_))
+	return __retVal
+}
+
+// CallFuncInt64Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncInt64Callback(func_ FuncInt64) int64 {
+	var __retVal int64
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	__retVal = int64(C.CallFuncInt64Callback(__func_))
+	return __retVal
+}
+
+// CallFuncUInt8Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncUInt8Callback(func_ FuncUInt8) uint8 {
+	var __retVal uint8
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	__retVal = uint8(C.CallFuncUInt8Callback(__func_))
+	return __retVal
+}
+
+// CallFuncUInt16Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncUInt16Callback(func_ FuncUInt16) uint16 {
+	var __retVal uint16
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	__retVal = uint16(C.CallFuncUInt16Callback(__func_))
+	return __retVal
+}
+
+// CallFuncUInt32Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncUInt32Callback(func_ FuncUInt32) uint32 {
+	var __retVal uint32
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	__retVal = uint32(C.CallFuncUInt32Callback(__func_))
+	return __retVal
+}
+
+// CallFuncUInt64Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncUInt64Callback(func_ FuncUInt64) uint64 {
+	var __retVal uint64
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	__retVal = uint64(C.CallFuncUInt64Callback(__func_))
+	return __retVal
+}
+
+// CallFuncPtrCallback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncPtrCallback(func_ FuncPtr) uintptr {
+	var __retVal uintptr
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	__retVal = uintptr(C.CallFuncPtrCallback(__func_))
+	return __retVal
+}
+
+// CallFuncFloatCallback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncFloatCallback(func_ FuncFloat) float32 {
+	var __retVal float32
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	__retVal = float32(C.CallFuncFloatCallback(__func_))
+	return __retVal
+}
+
+// CallFuncDoubleCallback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncDoubleCallback(func_ FuncDouble) float64 {
+	var __retVal float64
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	__retVal = float64(C.CallFuncDoubleCallback(__func_))
+	return __retVal
+}
+
+// CallFuncStringCallback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncStringCallback(func_ FuncString) string {
+	var __retVal string
+	var __retVal_native plugify.PlgString
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFuncStringCallback(__func_)
+			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetStringData(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyString(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFuncAnyCallback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncAnyCallback(func_ FuncAny) interface{} {
+	var __retVal interface{}
+	var __retVal_native plugify.PlgVariant
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFuncAnyCallback(__func_)
+			__retVal_native = *(*plugify.PlgVariant)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVariantData(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVariant(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFuncFunctionCallback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncFunctionCallback(func_ FuncFunction) uintptr {
+	var __retVal uintptr
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	__retVal = uintptr(C.CallFuncFunctionCallback(__func_))
+	return __retVal
+}
+
+// CallFuncBoolVectorCallback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncBoolVectorCallback(func_ FuncBoolVector) []bool {
+	var __retVal []bool
+	var __retVal_native plugify.PlgVector
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFuncBoolVectorCallback(__func_)
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataBool(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorBool(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFuncChar8VectorCallback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncChar8VectorCallback(func_ FuncChar8Vector) []int8 {
+	var __retVal []int8
+	var __retVal_native plugify.PlgVector
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFuncChar8VectorCallback(__func_)
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataChar8(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorChar8(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFuncChar16VectorCallback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncChar16VectorCallback(func_ FuncChar16Vector) []uint16 {
+	var __retVal []uint16
+	var __retVal_native plugify.PlgVector
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFuncChar16VectorCallback(__func_)
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataChar16(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorChar16(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFuncInt8VectorCallback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncInt8VectorCallback(func_ FuncInt8Vector) []int8 {
+	var __retVal []int8
+	var __retVal_native plugify.PlgVector
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFuncInt8VectorCallback(__func_)
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataInt8(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorInt8(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFuncInt16VectorCallback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncInt16VectorCallback(func_ FuncInt16Vector) []int16 {
+	var __retVal []int16
+	var __retVal_native plugify.PlgVector
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFuncInt16VectorCallback(__func_)
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataInt16(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorInt16(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFuncInt32VectorCallback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncInt32VectorCallback(func_ FuncInt32Vector) []int32 {
+	var __retVal []int32
+	var __retVal_native plugify.PlgVector
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFuncInt32VectorCallback(__func_)
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataInt32(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorInt32(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFuncInt64VectorCallback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncInt64VectorCallback(func_ FuncInt64Vector) []int64 {
+	var __retVal []int64
+	var __retVal_native plugify.PlgVector
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFuncInt64VectorCallback(__func_)
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataInt64(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorInt64(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFuncUInt8VectorCallback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncUInt8VectorCallback(func_ FuncUInt8Vector) []uint8 {
+	var __retVal []uint8
+	var __retVal_native plugify.PlgVector
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFuncUInt8VectorCallback(__func_)
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataUInt8(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorUInt8(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFuncUInt16VectorCallback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncUInt16VectorCallback(func_ FuncUInt16Vector) []uint16 {
+	var __retVal []uint16
+	var __retVal_native plugify.PlgVector
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFuncUInt16VectorCallback(__func_)
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataUInt16(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorUInt16(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFuncUInt32VectorCallback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncUInt32VectorCallback(func_ FuncUInt32Vector) []uint32 {
+	var __retVal []uint32
+	var __retVal_native plugify.PlgVector
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFuncUInt32VectorCallback(__func_)
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataUInt32(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorUInt32(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFuncUInt64VectorCallback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncUInt64VectorCallback(func_ FuncUInt64Vector) []uint64 {
+	var __retVal []uint64
+	var __retVal_native plugify.PlgVector
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFuncUInt64VectorCallback(__func_)
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataUInt64(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorUInt64(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFuncPtrVectorCallback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncPtrVectorCallback(func_ FuncPtrVector) []uintptr {
+	var __retVal []uintptr
+	var __retVal_native plugify.PlgVector
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFuncPtrVectorCallback(__func_)
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataPointer(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorPointer(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFuncFloatVectorCallback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncFloatVectorCallback(func_ FuncFloatVector) []float32 {
+	var __retVal []float32
+	var __retVal_native plugify.PlgVector
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFuncFloatVectorCallback(__func_)
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataFloat(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorFloat(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFuncDoubleVectorCallback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncDoubleVectorCallback(func_ FuncDoubleVector) []float64 {
+	var __retVal []float64
+	var __retVal_native plugify.PlgVector
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFuncDoubleVectorCallback(__func_)
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataDouble(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorDouble(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFuncStringVectorCallback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncStringVectorCallback(func_ FuncStringVector) []string {
+	var __retVal []string
+	var __retVal_native plugify.PlgVector
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFuncStringVectorCallback(__func_)
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataString(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorString(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFuncAnyVectorCallback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncAnyVectorCallback(func_ FuncAnyVector) []interface{} {
+	var __retVal []interface{}
+	var __retVal_native plugify.PlgVector
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFuncAnyVectorCallback(__func_)
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataVariant(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorVariant(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFuncVec2VectorCallback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncVec2VectorCallback(func_ FuncVec2Vector) []plugify.Vector2 {
+	var __retVal []plugify.Vector2
+	var __retVal_native plugify.PlgVector
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFuncVec2VectorCallback(__func_)
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataVector2(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorVector2(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFuncVec3VectorCallback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncVec3VectorCallback(func_ FuncVec3Vector) []plugify.Vector3 {
+	var __retVal []plugify.Vector3
+	var __retVal_native plugify.PlgVector
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFuncVec3VectorCallback(__func_)
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataVector3(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorVector3(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFuncVec4VectorCallback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncVec4VectorCallback(func_ FuncVec4Vector) []plugify.Vector4 {
+	var __retVal []plugify.Vector4
+	var __retVal_native plugify.PlgVector
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFuncVec4VectorCallback(__func_)
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataVector4(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorVector4(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFuncMat4x4VectorCallback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncMat4x4VectorCallback(func_ FuncMat4x4Vector) []plugify.Matrix4x4 {
+	var __retVal []plugify.Matrix4x4
+	var __retVal_native plugify.PlgVector
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFuncMat4x4VectorCallback(__func_)
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataMatrix4x4(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorMatrix4x4(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFuncVec2Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncVec2Callback(func_ FuncVec2) plugify.Vector2 {
+	var __retVal plugify.Vector2
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	__native := C.CallFuncVec2Callback(__func_)
+	__retVal = *(*plugify.Vector2)(unsafe.Pointer(&__native))
+	return __retVal
+}
+
+// CallFuncVec3Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncVec3Callback(func_ FuncVec3) plugify.Vector3 {
+	var __retVal plugify.Vector3
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	__native := C.CallFuncVec3Callback(__func_)
+	__retVal = *(*plugify.Vector3)(unsafe.Pointer(&__native))
+	return __retVal
+}
+
+// CallFuncVec4Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncVec4Callback(func_ FuncVec4) plugify.Vector4 {
+	var __retVal plugify.Vector4
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	__native := C.CallFuncVec4Callback(__func_)
+	__retVal = *(*plugify.Vector4)(unsafe.Pointer(&__native))
+	return __retVal
+}
+
+// CallFuncMat4x4Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncMat4x4Callback(func_ FuncMat4x4) plugify.Matrix4x4 {
+	var __retVal plugify.Matrix4x4
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	__native := C.CallFuncMat4x4Callback(__func_)
+	__retVal = *(*plugify.Matrix4x4)(unsafe.Pointer(&__native))
+	return __retVal
+}
+
+// CallFunc1Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFunc1Callback(func_ Func1) int32 {
+	var __retVal int32
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	__retVal = int32(C.CallFunc1Callback(__func_))
+	return __retVal
+}
+
+// CallFunc2Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFunc2Callback(func_ Func2) int8 {
+	var __retVal int8
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	__retVal = int8(C.CallFunc2Callback(__func_))
+	return __retVal
+}
+
+// CallFunc3Callback - No description provided.
+// @param func: No description available.
+func CallFunc3Callback(func_ Func3) {
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	C.CallFunc3Callback(__func_)
+}
+
+// CallFunc4Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFunc4Callback(func_ Func4) plugify.Vector4 {
+	var __retVal plugify.Vector4
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	__native := C.CallFunc4Callback(__func_)
+	__retVal = *(*plugify.Vector4)(unsafe.Pointer(&__native))
+	return __retVal
+}
+
+// CallFunc5Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFunc5Callback(func_ Func5) bool {
+	var __retVal bool
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	__retVal = bool(C.CallFunc5Callback(__func_))
+	return __retVal
+}
+
+// CallFunc6Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFunc6Callback(func_ Func6) int64 {
+	var __retVal int64
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	__retVal = int64(C.CallFunc6Callback(__func_))
+	return __retVal
+}
+
+// CallFunc7Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFunc7Callback(func_ Func7) float64 {
+	var __retVal float64
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	__retVal = float64(C.CallFunc7Callback(__func_))
+	return __retVal
+}
+
+// CallFunc8Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFunc8Callback(func_ Func8) plugify.Matrix4x4 {
+	var __retVal plugify.Matrix4x4
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	__native := C.CallFunc8Callback(__func_)
+	__retVal = *(*plugify.Matrix4x4)(unsafe.Pointer(&__native))
+	return __retVal
+}
+
+// CallFunc9Callback - No description provided.
+// @param func: No description available.
+func CallFunc9Callback(func_ Func9) {
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	C.CallFunc9Callback(__func_)
+}
+
+// CallFunc10Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFunc10Callback(func_ Func10) uint32 {
+	var __retVal uint32
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	__retVal = uint32(C.CallFunc10Callback(__func_))
+	return __retVal
+}
+
+// CallFunc11Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFunc11Callback(func_ Func11) uintptr {
+	var __retVal uintptr
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	__retVal = uintptr(C.CallFunc11Callback(__func_))
+	return __retVal
+}
+
+// CallFunc12Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFunc12Callback(func_ Func12) bool {
+	var __retVal bool
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	__retVal = bool(C.CallFunc12Callback(__func_))
+	return __retVal
+}
+
+// CallFunc13Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFunc13Callback(func_ Func13) string {
+	var __retVal string
+	var __retVal_native plugify.PlgString
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFunc13Callback(__func_)
+			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetStringData(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyString(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFunc14Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFunc14Callback(func_ Func14) []string {
+	var __retVal []string
+	var __retVal_native plugify.PlgVector
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFunc14Callback(__func_)
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataString(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorString(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFunc15Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFunc15Callback(func_ Func15) int16 {
+	var __retVal int16
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	__retVal = int16(C.CallFunc15Callback(__func_))
+	return __retVal
+}
+
+// CallFunc16Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFunc16Callback(func_ Func16) uintptr {
+	var __retVal uintptr
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	__retVal = uintptr(C.CallFunc16Callback(__func_))
+	return __retVal
+}
+
+// CallFunc17Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFunc17Callback(func_ Func17) string {
+	var __retVal string
+	var __retVal_native plugify.PlgString
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFunc17Callback(__func_)
+			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetStringData(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyString(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFunc18Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFunc18Callback(func_ Func18) string {
+	var __retVal string
+	var __retVal_native plugify.PlgString
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFunc18Callback(__func_)
+			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetStringData(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyString(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFunc19Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFunc19Callback(func_ Func19) string {
+	var __retVal string
+	var __retVal_native plugify.PlgString
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFunc19Callback(__func_)
+			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetStringData(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyString(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFunc20Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFunc20Callback(func_ Func20) string {
+	var __retVal string
+	var __retVal_native plugify.PlgString
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFunc20Callback(__func_)
+			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetStringData(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyString(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFunc21Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFunc21Callback(func_ Func21) string {
+	var __retVal string
+	var __retVal_native plugify.PlgString
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFunc21Callback(__func_)
+			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetStringData(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyString(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFunc22Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFunc22Callback(func_ Func22) string {
+	var __retVal string
+	var __retVal_native plugify.PlgString
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFunc22Callback(__func_)
+			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetStringData(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyString(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFunc23Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFunc23Callback(func_ Func23) string {
+	var __retVal string
+	var __retVal_native plugify.PlgString
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFunc23Callback(__func_)
+			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetStringData(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyString(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFunc24Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFunc24Callback(func_ Func24) string {
+	var __retVal string
+	var __retVal_native plugify.PlgString
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFunc24Callback(__func_)
+			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetStringData(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyString(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFunc25Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFunc25Callback(func_ Func25) string {
+	var __retVal string
+	var __retVal_native plugify.PlgString
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFunc25Callback(__func_)
+			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetStringData(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyString(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFunc26Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFunc26Callback(func_ Func26) string {
+	var __retVal string
+	var __retVal_native plugify.PlgString
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFunc26Callback(__func_)
+			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetStringData(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyString(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFunc27Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFunc27Callback(func_ Func27) string {
+	var __retVal string
+	var __retVal_native plugify.PlgString
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFunc27Callback(__func_)
+			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetStringData(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyString(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFunc28Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFunc28Callback(func_ Func28) string {
+	var __retVal string
+	var __retVal_native plugify.PlgString
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFunc28Callback(__func_)
+			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetStringData(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyString(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFunc29Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFunc29Callback(func_ Func29) string {
+	var __retVal string
+	var __retVal_native plugify.PlgString
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFunc29Callback(__func_)
+			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetStringData(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyString(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFunc30Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFunc30Callback(func_ Func30) string {
+	var __retVal string
+	var __retVal_native plugify.PlgString
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFunc30Callback(__func_)
+			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetStringData(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyString(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFunc31Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFunc31Callback(func_ Func31) string {
+	var __retVal string
+	var __retVal_native plugify.PlgString
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFunc31Callback(__func_)
+			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetStringData(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyString(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFunc32Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFunc32Callback(func_ Func32) string {
+	var __retVal string
+	var __retVal_native plugify.PlgString
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFunc32Callback(__func_)
+			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetStringData(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyString(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFunc33Callback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFunc33Callback(func_ Func33) string {
+	var __retVal string
+	var __retVal_native plugify.PlgString
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFunc33Callback(__func_)
+			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetStringData(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyString(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+// CallFuncEnumCallback - No description provided.
+// @param func: No description available.
+// @return No description available.
+func CallFuncEnumCallback(func_ FuncEnum) string {
+	var __retVal string
+	var __retVal_native plugify.PlgString
+	__func_ := plugify.GetFunctionPointerForDelegate(func_)
+	plugify.Block{
+		Try: func() {
+			__native := C.CallFuncEnumCallback(__func_)
+			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetStringData(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyString(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
 }
-
-func CallFuncVec2Callback(func func) Vector2 {
-	C_func := (func)
-
-	C_result := C.CallFuncVec2Callback(C_func)
-	return *(*Vector2)(unsafe.Pointer(&C_result))
-}
-
-func CallFuncVec3Callback(func func) Vector3 {
-	C_func := (func)
-
-	C_result := C.CallFuncVec3Callback(C_func)
-	return *(*Vector3)(unsafe.Pointer(&C_result))
-}
-
-func CallFuncVec4Callback(func func) Vector4 {
-	C_func := (func)
-
-	C_result := C.CallFuncVec4Callback(C_func)
-	return *(*Vector4)(unsafe.Pointer(&C_result))
-}
-
-func CallFuncMat4x4Callback(func func) Matrix4x4 {
-	C_func := (func)
-
-	C_result := C.CallFuncMat4x4Callback(C_func)
-	return *(*Matrix4x4)(unsafe.Pointer(&C_result))
-}
-
-func CallFunc1Callback(func func) int32 {
-	C_func := (func)
-
-	result := int32(C.CallFunc1Callback(C_func))
-	return result
-}
-
-func CallFunc2Callback(func func) int8 {
-	C_func := (func)
-
-	result := int8(C.CallFunc2Callback(C_func))
-	return result
-}
-
-func CallFunc3Callback(func func)  {
-	C_func := (func)
-
-	C.CallFunc3Callback(C_func)
-}
-
-func CallFunc4Callback(func func) Vector4 {
-	C_func := (func)
-
-	C_result := C.CallFunc4Callback(C_func)
-	return *(*Vector4)(unsafe.Pointer(&C_result))
-}
-
-func CallFunc5Callback(func func) bool {
-	C_func := (func)
-
-	result := bool(C.CallFunc5Callback(C_func))
-	return result
-}
-
-func CallFunc6Callback(func func) int64 {
-	C_func := (func)
-
-	result := int64(C.CallFunc6Callback(C_func))
-	return result
-}
-
-func CallFunc7Callback(func func) float64 {
-	C_func := (func)
-
-	result := float64(C.CallFunc7Callback(C_func))
-	return result
-}
-
-func CallFunc8Callback(func func) Matrix4x4 {
-	C_func := (func)
-
-	C_result := C.CallFunc8Callback(C_func)
-	return *(*Matrix4x4)(unsafe.Pointer(&C_result))
-}
-
-func CallFunc9Callback(func func)  {
-	C_func := (func)
-
-	C.CallFunc9Callback(C_func)
-}
-
-func CallFunc10Callback(func func) uint32 {
-	C_func := (func)
-
-	result := uint32(C.CallFunc10Callback(C_func))
-	return result
-}
-
-func CallFunc11Callback(func func) uintptr {
-	C_func := (func)
-
-	result := uintptr(C.CallFunc11Callback(C_func))
-	return result
-}
-
-func CallFunc12Callback(func func) bool {
-	C_func := (func)
-
-	result := bool(C.CallFunc12Callback(C_func))
-	return result
-}
-
-func CallFunc13Callback(func func) string {
-	C_func := (func)
-
-	C_output := C.CallFunc13Callback(C_func)
-
-	P_output := C.Plugify_GetStringData(&C_output)
-	output := C.GoString(P_output)
-	C.Plugify_DestroyString(&C_output)
-	return output
-}
-
-func CallFunc14Callback(func func) []string {
-	C_func := (func)
-
-	C_output := C.CallFunc14Callback(C_func)
-
-	L_output := C.Plugify_GetVectorSize(&C_output, C.STRING)
-	P_output := C.Plugify_GetVectorData(&C_output, C.STRING)
-	output := make([]string, L_output)
-	for i := range output {
-		output[i] = C.GoString(C.Plugify_GetStringData((*C.String)(unsafe.Pointer(uintptr(P_output) + uintptr(i * C.sizeof_uintptr_t)))))
-	}
-
-	C.Plugify_DestroyVector(&C_output, C.STRING)
-	return output
-}
-
-func CallFunc15Callback(func func) int16 {
-	C_func := (func)
-
-	result := int16(C.CallFunc15Callback(C_func))
-	return result
-}
-
-func CallFunc16Callback(func func) uintptr {
-	C_func := (func)
-
-	result := uintptr(C.CallFunc16Callback(C_func))
-	return result
-}
-
-func CallFunc17Callback(func func) string {
-	C_func := (func)
-
-	C_output := C.CallFunc17Callback(C_func)
-
-	P_output := C.Plugify_GetStringData(&C_output)
-	output := C.GoString(P_output)
-	C.Plugify_DestroyString(&C_output)
-	return output
-}
-
-func CallFunc18Callback(func func) string {
-	C_func := (func)
-
-	C_output := C.CallFunc18Callback(C_func)
-
-	P_output := C.Plugify_GetStringData(&C_output)
-	output := C.GoString(P_output)
-	C.Plugify_DestroyString(&C_output)
-	return output
-}
-
-func CallFunc19Callback(func func) string {
-	C_func := (func)
-
-	C_output := C.CallFunc19Callback(C_func)
-
-	P_output := C.Plugify_GetStringData(&C_output)
-	output := C.GoString(P_output)
-	C.Plugify_DestroyString(&C_output)
-	return output
-}
-
-func CallFunc20Callback(func func) string {
-	C_func := (func)
-
-	C_output := C.CallFunc20Callback(C_func)
-
-	P_output := C.Plugify_GetStringData(&C_output)
-	output := C.GoString(P_output)
-	C.Plugify_DestroyString(&C_output)
-	return output
-}
-
-func CallFunc21Callback(func func) string {
-	C_func := (func)
-
-	C_output := C.CallFunc21Callback(C_func)
-
-	P_output := C.Plugify_GetStringData(&C_output)
-	output := C.GoString(P_output)
-	C.Plugify_DestroyString(&C_output)
-	return output
-}
-
-func CallFunc22Callback(func func) string {
-	C_func := (func)
-
-	C_output := C.CallFunc22Callback(C_func)
-
-	P_output := C.Plugify_GetStringData(&C_output)
-	output := C.GoString(P_output)
-	C.Plugify_DestroyString(&C_output)
-	return output
-}
-
-func CallFunc23Callback(func func) string {
-	C_func := (func)
-
-	C_output := C.CallFunc23Callback(C_func)
-
-	P_output := C.Plugify_GetStringData(&C_output)
-	output := C.GoString(P_output)
-	C.Plugify_DestroyString(&C_output)
-	return output
-}
-
-func CallFunc24Callback(func func) string {
-	C_func := (func)
-
-	C_output := C.CallFunc24Callback(C_func)
-
-	P_output := C.Plugify_GetStringData(&C_output)
-	output := C.GoString(P_output)
-	C.Plugify_DestroyString(&C_output)
-	return output
-}
-
-func CallFunc25Callback(func func) string {
-	C_func := (func)
-
-	C_output := C.CallFunc25Callback(C_func)
-
-	P_output := C.Plugify_GetStringData(&C_output)
-	output := C.GoString(P_output)
-	C.Plugify_DestroyString(&C_output)
-	return output
-}
-
-func CallFunc26Callback(func func) string {
-	C_func := (func)
-
-	C_output := C.CallFunc26Callback(C_func)
-
-	P_output := C.Plugify_GetStringData(&C_output)
-	output := C.GoString(P_output)
-	C.Plugify_DestroyString(&C_output)
-	return output
-}
-
-func CallFunc27Callback(func func) string {
-	C_func := (func)
-
-	C_output := C.CallFunc27Callback(C_func)
-
-	P_output := C.Plugify_GetStringData(&C_output)
-	output := C.GoString(P_output)
-	C.Plugify_DestroyString(&C_output)
-	return output
-}
-
-func CallFunc28Callback(func func) string {
-	C_func := (func)
-
-	C_output := C.CallFunc28Callback(C_func)
-
-	P_output := C.Plugify_GetStringData(&C_output)
-	output := C.GoString(P_output)
-	C.Plugify_DestroyString(&C_output)
-	return output
-}
-
-func CallFunc29Callback(func func) string {
-	C_func := (func)
-
-	C_output := C.CallFunc29Callback(C_func)
-
-	P_output := C.Plugify_GetStringData(&C_output)
-	output := C.GoString(P_output)
-	C.Plugify_DestroyString(&C_output)
-	return output
-}
-
-func CallFunc30Callback(func func) string {
-	C_func := (func)
-
-	C_output := C.CallFunc30Callback(C_func)
-
-	P_output := C.Plugify_GetStringData(&C_output)
-	output := C.GoString(P_output)
-	C.Plugify_DestroyString(&C_output)
-	return output
-}
-
-func CallFunc31Callback(func func) string {
-	C_func := (func)
-
-	C_output := C.CallFunc31Callback(C_func)
-
-	P_output := C.Plugify_GetStringData(&C_output)
-	output := C.GoString(P_output)
-	C.Plugify_DestroyString(&C_output)
-	return output
-}
-
-func CallFunc32Callback(func func) string {
-	C_func := (func)
-
-	C_output := C.CallFunc32Callback(C_func)
-
-	P_output := C.Plugify_GetStringData(&C_output)
-	output := C.GoString(P_output)
-	C.Plugify_DestroyString(&C_output)
-	return output
-}
-
-*/

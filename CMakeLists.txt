@@ -5,7 +5,11 @@ if(POLICY CMP0092)
 endif()
 
 
-project(plugify-module-golang VERSION 1.0.0.0 DESCRIPTION "Go Language Module" HOMEPAGE_URL "https://github.com/untrustedmodders/plugify-module-golang" LANGUAGES CXX)
+project(plugify-module-golang 
+        VERSION 1.0.0.0 
+        DESCRIPTION "Go Language Module" 
+        HOMEPAGE_URL "https://github.com/untrustedmodders/plugify-module-golang" 
+        LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -21,22 +25,23 @@ if(UNIX AND NOT APPLE)
 endif()
 
 #
+# CPPtrace
+#
+include(cmake/cpptrace.cmake)
+
+#
 # Plugify
 #
 set(PLUGIFY_BUILD_SHARED_LIB ON CACHE INTERNAL "")
 set(PLUGIFY_BUILD_JIT ON CACHE INTERNAL "")
 set(PLUGIFY_BUILD_ASSEMBLY ON CACHE INTERNAL "")
 set(PLUGIFY_BUILD_TESTS OFF CACHE INTERNAL "")
+set(PLUGIFY_INTERFACE ON CACHE INTERNAL "")
 set(PLUGIFY_DOWNLOADER OFF CACHE INTERNAL "")
 if(LINUX)
     set(PLUGIFY_USE_STATIC_STDLIB ON CACHE INTERNAL "")
 endif()
 add_subdirectory(external/plugify)
-
-#
-# Dyncall
-#
-include(cmake/dyncall.cmake)
 
 #
 # Go Language Module for Plugify
@@ -47,7 +52,7 @@ set(GOLM_PCH_FILE "src/pch.hpp")
 add_library(${PROJECT_NAME} SHARED ${GOLM_SOURCES})
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-set(GOLM_LINK_LIBRARIES plugify::plugify plugify::plugify-assembly plugify::plugify-jit asmjit::asmjit dyncall_s)
+set(GOLM_LINK_LIBRARIES plugify::plugify plugify::plugify-assembly plugify::plugify-jit asmjit::asmjit  cpptrace::cpptrace)
 
 if(NOT COMPILER_SUPPORTS_FORMAT)
     set(GOLM_LINK_LIBRARIES ${GOLM_LINK_LIBRARIES} fmt::fmt-header-only)
@@ -78,12 +83,16 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
         GOLM_PLATFORM_WINDOWS=$<BOOL:${WIN32}>
         GOLM_PLATFORM_APPLE=$<BOOL:${APPLE}>
         GOLM_PLATFORM_LINUX=$<BOOL:${LINUX}>
+        GOLM_ARCH_ARM=$<BOOL:${PLUGIFY_USE_ARM}>
         GOLM_IS_DEBUG=$<STREQUAL:${CMAKE_BUILD_TYPE},Debug>
         GOLM_LIBRARY_SUFFIX="${CMAKE_SHARED_LIBRARY_SUFFIX}"
-        GOLM_LIBRARY_PREFIX="${CMAKE_SHARED_LIBRARY_PREFIX}")
+        GOLM_LIBRARY_PREFIX="${CMAKE_SHARED_LIBRARY_PREFIX}"
+)
 
-set(GOLM_VERSION "0" CACHE STRING "Set version name")
+set(GOLM_VERSION "v0.1.0" CACHE STRING "Set version name")
 set(GOLM_PACKAGE "${PROJECT_NAME}" CACHE STRING "Set package name")
+string(REPLACE "v" "" GOLM_VERSION "${GOLM_VERSION}")
+
 
 configure_file(
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}.pmodule.in

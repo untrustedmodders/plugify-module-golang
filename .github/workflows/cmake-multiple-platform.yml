@@ -212,7 +212,7 @@ jobs:
             package_name = 'golm-build-${{ needs.setup.outputs.buildnumber }}-{}-${{ env.GITHUB_SHA_SHORT }}'
             checksum_linux = '${{ needs.publish.outputs.checksum_linux }}'
             checksum_windows = '${{ needs.publish.outputs.checksum_windows }}'
-            json_url = 'https://untrustedmodders.github.io/plugify-module-golang/plugify-module-golang.json'
+            json_url = '${{ vars.REPOSITORY_URL }}'
             
             def load_json_from_url(url):
                 try:
