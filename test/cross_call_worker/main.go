@@ -6,6 +6,7 @@ import (
 	"github.com/untrustedmodders/go-plugify"
 	"math"
 	"plugify-plugin/cross_call_master"
+	"runtime/debug"
 	"strconv"
 	"strings"
 	"unsafe"
@@ -105,6 +106,10 @@ func init() {
 
 	plugify.OnPluginEnd(func() {
 		fmt.Println("Go: OnPluginEnd")
+	})
+
+	plugify.OnPluginPanic(func() []byte {
+		return debug.Stack() // workaround for could not import runtime/debug inside plugify package
 	})
 }
 
