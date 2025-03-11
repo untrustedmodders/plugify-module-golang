@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/untrustedmodders/plugify-module-golang/compare/v1.0.1...v1.0.2) (2025-03-11)
+
+
+### Bug Fixes
+
+* avoid copying of context ([a75d513](https://github.com/untrustedmodders/plugify-module-golang/commit/a75d513244c92663468803d98e737d51182a1ce5))
+
 ## [1.0.1](https://github.com/untrustedmodders/plugify-module-golang/compare/v1.0.0...v1.0.1) (2025-03-10)
 
 
