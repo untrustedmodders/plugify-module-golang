@@ -196,14 +196,6 @@ void GetMethodPtr2(const char* methodName, MemAddr* addressDest) {
 	g_golm.GetNativeMethod(methodName, addressDest);
 }
 
-const char* GetBaseDir() {
-	auto source = fs::path(g_golm.GetProvider()->GetBaseDir()).string();
-	size_t size = source.length() + 1;
-	char* dest = new char[size];
-	std::memcpy(dest, source.c_str(), size);
-	return dest;
-}
-
 bool IsModuleLoaded(GoString moduleName, int version, bool minimum) {
 	//auto requiredVersion = (version >= 0 && version != INT_MAX) ? std::make_optional(version) : std::nullopt;
 	//return g_golm.GetProvider()->IsModuleLoaded(moduleName, requiredVersion, minimum);
@@ -262,6 +254,30 @@ const char* GetPluginWebsite(PluginHandle plugin) {
 
 const char* GetPluginBaseDir(PluginHandle plugin) {
 	auto source = fs::path(plugin.GetBaseDir()).string();
+	size_t size = source.length() + 1;
+	char* dest = new char[size];
+	std::memcpy(dest, source.c_str(), size);
+	return dest;
+}
+
+const char* GetPluginConfigsDir(PluginHandle plugin) {
+	auto source = fs::path(plugin.GetConfigsDir()).string();
+	size_t size = source.length() + 1;
+	char* dest = new char[size];
+	std::memcpy(dest, source.c_str(), size);
+	return dest;
+}
+
+const char* GetPluginDataDir(PluginHandle plugin) {
+	auto source = fs::path(plugin.GetDataDir()).string();
+	size_t size = source.length() + 1;
+	char* dest = new char[size];
+	std::memcpy(dest, source.c_str(), size);
+	return dest;
+}
+
+const char* GetPluginLogsDir(PluginHandle plugin) {
+	auto source = fs::path(plugin.GetLogsDir()).string();
 	size_t size = source.length() + 1;
 	char* dest = new char[size];
 	std::memcpy(dest, source.c_str(), size);
@@ -604,10 +620,9 @@ EnumHandle GetMethodEnum(MethodHandle handle, ptrdiff_t index) {
 	}
 }
 
-const std::array<void*, 137> GoLanguageModule::_pluginApi = {
+const std::array<void*, 139> GoLanguageModule::_pluginApi = {
 		reinterpret_cast<void*>(&::GetMethodPtr),
 		reinterpret_cast<void*>(&::GetMethodPtr2),
-		reinterpret_cast<void*>(&::GetBaseDir),
 		reinterpret_cast<void*>(&::IsModuleLoaded),
 		reinterpret_cast<void*>(&::IsPluginLoaded),
 		reinterpret_cast<void*>(&::PrintException),
@@ -620,6 +635,9 @@ const std::array<void*, 137> GoLanguageModule::_pluginApi = {
 		reinterpret_cast<void*>(&::GetPluginAuthor),
 		reinterpret_cast<void*>(&::GetPluginWebsite),
 		reinterpret_cast<void*>(&::GetPluginBaseDir),
+		reinterpret_cast<void*>(&::GetPluginConfigsDir),
+		reinterpret_cast<void*>(&::GetPluginDataDir),
+		reinterpret_cast<void*>(&::GetPluginLogsDir),
 		reinterpret_cast<void*>(&::GetPluginDependencies),
 		reinterpret_cast<void*>(&::GetPluginDependenciesSize),
 		reinterpret_cast<void*>(&::FindPluginResource),
