@@ -5,8 +5,18 @@ if(POLICY CMP0092)
 endif()
 
 
+file(READ "${CMAKE_CURRENT_SOURCE_DIR}/version.txt" VERSION_FILE_CONTENTS)
+string(STRIP "${VERSION_FILE_CONTENTS}" VERSION_FILE_CONTENTS)
+set(GOLM_VERSION "${VERSION_FILE_CONTENTS}" CACHE STRING "Set version name")
+set(GOLM_PACKAGE "plugify-module-golang" CACHE STRING "Set package name")
+string(REPLACE "v" "" GOLM_VERSION "${GOLM_VERSION}")
+string(REGEX REPLACE "[.+-]" ";" GOLM_VERSION_LIST ${GOLM_VERSION})
+list(GET GOLM_VERSION_LIST 0 GOLM_VERSION_MAJOR)
+list(GET GOLM_VERSION_LIST 1 GOLM_VERSION_MINOR)
+list(GET GOLM_VERSION_LIST 2 GOLM_VERSION_PATCH)
+
 project(plugify-module-golang 
-        VERSION 1.0.0.0 
+        VERSION "${GOLM_VERSION_MAJOR}.${GOLM_VERSION_MINOR}.${GOLM_VERSION_PATCH}"
         DESCRIPTION "Go Language Module" 
         HOMEPAGE_URL "https://github.com/untrustedmodders/plugify-module-golang" 
         LANGUAGES CXX)
@@ -23,11 +33,6 @@ endif()
 if(UNIX AND NOT APPLE)
     set(LINUX TRUE)
 endif()
-
-#
-# CPPtrace
-#
-include(cmake/cpptrace.cmake)
 
 #
 # Plugify
@@ -52,10 +57,14 @@ set(GOLM_PCH_FILE "src/pch.hpp")
 add_library(${PROJECT_NAME} SHARED ${GOLM_SOURCES})
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-set(GOLM_LINK_LIBRARIES plugify::plugify plugify::plugify-assembly plugify::plugify-jit asmjit::asmjit cpptrace::cpptrace)
+set(GOLM_LINK_LIBRARIES plugify::plugify plugify::plugify-assembly plugify::plugify-jit asmjit::asmjit)
 
 if(NOT COMPILER_SUPPORTS_FORMAT)
     set(GOLM_LINK_LIBRARIES ${GOLM_LINK_LIBRARIES} fmt::fmt-header-only)
+endif()
+
+if(NOT COMPILER_SUPPORTS_STACKTRACE)
+    set(GOLM_LINK_LIBRARIES ${GOLM_LINK_LIBRARIES} cpptrace::cpptrace)
 endif()
 
 target_link_libraries(${PROJECT_NAME} PRIVATE ${GOLM_LINK_LIBRARIES})
@@ -86,13 +95,6 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
         GOLM_LIBRARY_SUFFIX="${CMAKE_SHARED_LIBRARY_SUFFIX}"
         GOLM_LIBRARY_PREFIX="${CMAKE_SHARED_LIBRARY_PREFIX}"
 )
-
-file(READ "${CMAKE_CURRENT_SOURCE_DIR}/version.txt" VERSION_FILE_CONTENTS)
-string(STRIP "${VERSION_FILE_CONTENTS}" VERSION_FILE_CONTENTS)
-set(GOLM_VERSION "${VERSION_FILE_CONTENTS}" CACHE STRING "Set version name")
-set(GOLM_PACKAGE "${PROJECT_NAME}" CACHE STRING "Set package name")
-string(REPLACE "v" "" GOLM_VERSION "${GOLM_VERSION}")
-
 
 configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}.pmodule.in
