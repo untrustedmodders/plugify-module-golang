@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.1.2](https://github.com/untrustedmodders/plugify-module-golang/compare/v1.1.1...v1.1.2) (2025-05-15)
+
+
+### Bug Fixes
+
+* add cmake versioning ([0ea729e](https://github.com/untrustedmodders/plugify-module-golang/commit/0ea729e17d78b012ad53287739d16f3daba8fb4a))
+* arm build ([213fc99](https://github.com/untrustedmodders/plugify-module-golang/commit/213fc99cae8d684cfde7c3f3b3604e2d5fca9311))
+* update plugify ([0c6810b](https://github.com/untrustedmodders/plugify-module-golang/commit/0c6810bf0c543c4d603bbc46d35f1e646f17e869))
+* update plugify and clang tools ([1dca0b4](https://github.com/untrustedmodders/plugify-module-golang/commit/1dca0b4866512a610404f0fbc4fc1aec861e64fc))
+
 ## [1.1.1](https://github.com/untrustedmodders/plugify-module-golang/compare/v1.1.0...v1.1.1) (2025-03-26)
 
 
