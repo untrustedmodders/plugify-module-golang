@@ -8,3 +8,6 @@ github.com/untrustedmodders/go-plugify v1.0.4 h1:qKf7QxjFSlnurnDVev7rzLgNgA5Qrah
 github.com/untrustedmodders/go-plugify v1.0.4/go.mod h1:c5w+u1HBAOxLPJzBwT0OBpfokLuZxGvnjtNSTOmynWc=
 github.com/untrustedmodders/go-plugify v1.0.5 h1:UCeww6Z2kTmouCRsqqkM3PYDcRL4HzqVWNmzXsz738I=
 github.com/untrustedmodders/go-plugify v1.0.5/go.mod h1:c5w+u1HBAOxLPJzBwT0OBpfokLuZxGvnjtNSTOmynWc=
+github.com/untrustedmodders/go-plugify v1.1.3/go.mod h1:c5w+u1HBAOxLPJzBwT0OBpfokLuZxGvnjtNSTOmynWc=
+github.com/untrustedmodders/go-plugify v1.1.4 h1:x85BExKXTqxYmDN39qalsIovEEJXSxSesHvzU4ye2Hc=
+github.com/untrustedmodders/go-plugify v1.1.4/go.mod h1:c5w+u1HBAOxLPJzBwT0OBpfokLuZxGvnjtNSTOmynWc=
