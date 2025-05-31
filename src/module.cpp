@@ -45,7 +45,7 @@ namespace {
 }
 
 InitResult GoLanguageModule::Initialize(std::weak_ptr<IPlugifyProvider> provider, ModuleHandle /*module*/) {
-	if (!(_provider = provider.lock())) {
+	if (!((_provider = provider.lock()))) {
 		return ErrorData{ "Provider not exposed" };
 	}
 
