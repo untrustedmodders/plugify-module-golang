@@ -17,8 +17,13 @@ typedef int GoInt32;
 typedef unsigned int GoUint32;
 typedef long long GoInt64;
 typedef unsigned long long GoUint64;
+#if INTPTR_MAX == INT64_MAX
 typedef GoInt64 GoInt;
 typedef GoUint64 GoUint;
+#elif INTPTR_MAX == INT32_MAX
+typedef GoInt32 GoInt;
+typedef GoUint32 GoUint;
+#endif // INTPTR_MAX
 typedef void* GoUintptr;
 typedef float GoFloat32;
 typedef double GoFloat64;

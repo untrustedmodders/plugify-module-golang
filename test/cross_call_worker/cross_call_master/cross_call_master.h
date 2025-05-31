@@ -32,6 +32,9 @@ typedef struct Variant {
         Vector3 vec3;
         Vector4 vec4;
     };
+#if INTPTR_MAX == INT32_MAX
+	volatile char pad[8];
+#endif
     uint8_t current;
 } Variant;
 
