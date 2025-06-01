@@ -14,7 +14,7 @@
 #include <plugify/any.hpp>
 
 #if GOLM_PLATFORM_WINDOWS
-#include <Windows.h>
+#include <windows.h>
 #undef FindResource
 #endif
 
@@ -196,27 +196,23 @@ void GetMethodPtr2(const char* methodName, MemAddr* addressDest) {
 	g_golm.GetNativeMethod(methodName, addressDest);
 }
 
-bool IsModuleLoaded(GoString moduleName, int version, bool minimum) {
-	//auto requiredVersion = (version >= 0 && version != INT_MAX) ? std::make_optional(version) : std::nullopt;
-	//return g_golm.GetProvider()->IsModuleLoaded(moduleName, requiredVersion, minimum);
-	(void)moduleName;
-	(void)version;
-	(void)minimum;
-	return false;
+bool IsModuleLoaded(GoString moduleName, GoString versionName, bool minimum) {
+	if (std::string_view version = versionName; !version.empty())
+		return g_golm.GetProvider()->IsModuleLoaded(moduleName, plg::version(version), minimum);
+	else
+		return g_golm.GetProvider()->IsModuleLoaded(moduleName, std::nullopt, minimum);
 }
 
-bool IsPluginLoaded(GoString pluginName, int version, bool minimum) {
-	//auto requiredVersion = (version >= 0 && version != INT_MAX) ? std::make_optional(version) : std::nullopt;
-	//return g_golm.GetProvider()->IsPluginLoaded(pluginName, requiredVersion, minimum);
-	(void)pluginName;
-	(void)version;
-	(void)minimum;
-	return false;
+bool IsPluginLoaded(GoString pluginName, GoString versionName, bool minimum) {
+	if (std::string_view version = versionName; !version.empty())
+		return g_golm.GetProvider()->IsPluginLoaded(pluginName, plg::version(version), minimum);
+	else
+		return g_golm.GetProvider()->IsPluginLoaded(pluginName, std::nullopt, minimum);
 }
 
 void PrintException(GoString message) {
 	if (const auto& provider = g_golm.GetProvider()) {
-		provider->Log(std::format(LOG_PREFIX "[Exception] {}", std::string_view{message.p, static_cast<size_t>(message.n)}), Severity::Error);
+		provider->Log(std::format(LOG_PREFIX "[Exception] {}", std::string_view(message)), Severity::Error);
 
 		std::stringstream stream;
 		cpptrace::generate_trace().print(stream);
@@ -298,7 +294,7 @@ ptrdiff_t GetPluginDependenciesSize(PluginHandle plugin) {
 }
 
 const char* FindPluginResource(PluginHandle plugin, GoString path) {
-	auto resource = plugin.FindResource(fs::path(std::string_view{path.p, static_cast<size_t>(path.n)}).c_str());
+	auto resource = plugin.FindResource(fs::path(std::string_view(path)).c_str());
 	if (resource.has_value()) {
 		auto source= fs::path(*resource).string();
 		size_t size = source.length() + 1;
@@ -538,7 +534,7 @@ JitCall* NewCall(void* target, ManagedType* params, ptrdiff_t count, ManagedType
 #endif
 
 	bool retHidden = ValueUtils::IsHiddenParam(ret.type);
-	asmjit::FuncSignature sig(asmjit::CallConvId::kHost, asmjit::FuncSignature::kNoVarArgs, JitUtils::GetRetTypeId(retHidden ? typeHidden : ret.type));
+	asmjit::FuncSignature sig(asmjit::CallConvId::kCDecl, asmjit::FuncSignature::kNoVarArgs, JitUtils::GetRetTypeId(retHidden ? typeHidden : ret.type));
 
 #if !GOLM_ARCH_ARM
 	if (retHidden) {
@@ -569,7 +565,7 @@ const char* GetCallError(JitCall* call) {
 }
 
 JitCallback* NewCallback(PluginHandle plugin, GoString name, void* delegate) {
-	MethodHandle method = g_golm.FindMethod(std::string_view{name.p, static_cast<size_t>(name.n)});
+	MethodHandle method = g_golm.FindMethod(name);
 	if (method == nullptr || delegate == nullptr)
 		return nullptr;
 

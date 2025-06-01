@@ -9,30 +9,48 @@
 #include <asmjit/asmjit.h>
 #include <cpptrace/cpptrace.hpp>
 
-typedef signed char GoInt8;
-typedef unsigned char GoUint8;
-typedef short GoInt16;
-typedef unsigned short GoUint16;
-typedef int GoInt32;
-typedef unsigned int GoUint32;
-typedef long long GoInt64;
-typedef unsigned long long GoUint64;
+using GoInt8 = signed char;
+using GoUint8 = unsigned char;
+using GoInt16 = short;
+using GoUint16 = unsigned short;
+using GoInt32 = int;
+using GoUint32 = unsigned int;
+using GoInt64 = long long;
+using GoUint64 = unsigned long long;
 #if INTPTR_MAX == INT64_MAX
-typedef GoInt64 GoInt;
-typedef GoUint64 GoUint;
+using GoInt = GoInt64;
+using GoUint = GoUint64;
 #elif INTPTR_MAX == INT32_MAX
-typedef GoInt32 GoInt;
-typedef GoUint32 GoUint;
+using GoInt = GoInt32 ;
+using GoUint = GoUint32;
 #endif // INTPTR_MAX
-typedef void* GoUintptr;
-typedef float GoFloat32;
-typedef double GoFloat64;
+using GoUintptr = void*;
+using GoFloat32 = float;
+using GoFloat64 = double;
 
-typedef struct { const char* p; GoInt n; } GoString;
-typedef void* GoMap;
-typedef void* GoChan;
-typedef struct { void* t; void* v; } GoInterface;
-typedef struct { void* data; GoInt len; GoInt cap; } GoSlice;
+struct GoString {
+	const char* p;
+	GoInt n;
+
+	operator std::string_view() const { return {p, static_cast<size_t>(n)};  }
+};
+
+using GoMap = void*;
+using GoChan = void*;
+
+struct GoInterface {
+	void* t;
+	void* v;
+};
+
+struct GoSlice {
+	void* data;
+	GoInt len;
+	GoInt cap;
+
+	template<typename T>
+	operator std::span<T>() const { return { static_cast<T*>(data), static_cast<size_t>(len)}; }
+};
 
 namespace golm {
 	struct string_hash {
