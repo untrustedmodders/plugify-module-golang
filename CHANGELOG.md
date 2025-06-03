@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.3](https://github.com/untrustedmodders/plugify-module-golang/compare/v1.1.2...v1.1.3) (2025-06-03)
+
+
+### Bug Fixes
+
+* IsModuleLoaded and IsPluginLoaded methods ([5aa3875](https://github.com/untrustedmodders/plugify-module-golang/commit/5aa3875e794d8412a641817bd0fb42617c5fa81c))
+* update version naming ([49b7799](https://github.com/untrustedmodders/plugify-module-golang/commit/49b77990725c1617efbd1fd40147f9d1e7c18438))
+
 ## [1.1.2](https://github.com/untrustedmodders/plugify-module-golang/compare/v1.1.1...v1.1.2) (2025-05-31)
 
 
