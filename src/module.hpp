@@ -6,9 +6,6 @@
 #include <plugify/language_module.hpp>
 #include <plugify/module.hpp>
 
-#include <asmjit/asmjit.h>
-#include <cpptrace/cpptrace.hpp>
-
 using GoInt8 = signed char;
 using GoUint8 = unsigned char;
 using GoInt16 = short;

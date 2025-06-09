@@ -13,6 +13,8 @@
 #include <plugify/numerics.hpp>
 #include <plugify/any.hpp>
 
+#include <cpptrace/cpptrace.hpp>
+
 #if GOLM_PLATFORM_WINDOWS
 #include <windows.h>
 #undef FindResource
