@@ -356,7 +356,7 @@ namespace {
 	}
 
 	template<typename T>
-	PLUGIFY_FORCE_INLINE plg::vector<plg::string> ConstructVector(T* arr, ptrdiff_t len) requires(std::is_same_v<T, GoString>) {
+	plg::vector<plg::string> ConstructVector(T* arr, ptrdiff_t len) requires(std::is_same_v<T, GoString>) {
 		if (arr == nullptr || len == 0) [[unlikely]]
 			if (len > 0)
 				return plg::vector<plg::string>(static_cast<size_t>(len));
