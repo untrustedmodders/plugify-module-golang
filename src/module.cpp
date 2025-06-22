@@ -250,35 +250,82 @@ const char* GetPluginWebsite(PluginHandle plugin) {
 	return plugin.GetDescriptor().GetCreatedByURL().data();
 }
 
+#if GOLM_PLATFORM_WINDOWS
+namespace {
+	bool ConvertUtf8ToWide(std::wstring& dest, std::string_view str) {
+		int wlen = MultiByteToWideChar(CP_UTF8, 0, str.data(), static_cast<int>(str.length()), nullptr, 0);
+		if (wlen < 0)
+			return false;
+
+		dest.resize(static_cast<size_t>(wlen));
+		if (wlen > 0 && MultiByteToWideChar(CP_UTF8, 0, str.data(), static_cast<int>(str.length()), dest.data(), wlen) < 0)
+			return false;
+
+		return true;
+	}
+
+	std::wstring ConvertUtf8ToWide(std::string_view str){
+		std::wstring ret;
+		if (!ConvertUtf8ToWide(ret, str))
+			return {};
+		return ret;
+	}
+
+	bool ConvertWideToUtf8(std::string& dest, std::wstring_view str) {
+		int mblen = WideCharToMultiByte(CP_UTF8, 0, str.data(), static_cast<int>(str.length()), nullptr, 0, nullptr, nullptr);
+		if (mblen < 0)
+			return false;
+
+		dest.resize(static_cast<size_t>(mblen));
+		if (mblen > 0 && WideCharToMultiByte(CP_UTF8, 0, str.data(), static_cast<int>(str.length()), dest.data(), mblen, nullptr, nullptr) < 0)
+			return false;
+
+		return true;
+	}
+
+	std::string ConvertWideToUtf8(std::wstring_view str) {
+		std::string ret;
+		if (!ConvertWideToUtf8(ret, str))
+			return {};
+		return ret;
+	}
+}
+#define GOLM_UTF8(str) ConvertWideToUtf8(str)
+#define GOLM_PSTR(str) ConvertUtf8ToWide(str)
+#else
+#define GOLM_UTF8(str) str
+#define GOLM_PSTR(str) str
+#endif
+
 const char* GetPluginBaseDir(PluginHandle plugin) {
-	auto source = fs::path(plugin.GetBaseDir()).string();
+	auto source = GOLM_UTF8(plugin.GetBaseDir());
 	size_t size = source.length() + 1;
 	char* dest = new char[size];
-	std::memcpy(dest, source.c_str(), size);
+	std::memcpy(dest, source.data(), size);
 	return dest;
 }
 
 const char* GetPluginConfigsDir(PluginHandle plugin) {
-	auto source = fs::path(plugin.GetConfigsDir()).string();
+	auto source = GOLM_UTF8(plugin.GetConfigsDir());
 	size_t size = source.length() + 1;
 	char* dest = new char[size];
-	std::memcpy(dest, source.c_str(), size);
+	std::memcpy(dest, source.data(), size);
 	return dest;
 }
 
 const char* GetPluginDataDir(PluginHandle plugin) {
-	auto source = fs::path(plugin.GetDataDir()).string();
+	auto source = GOLM_UTF8(plugin.GetDataDir());
 	size_t size = source.length() + 1;
 	char* dest = new char[size];
-	std::memcpy(dest, source.c_str(), size);
+	std::memcpy(dest, source.data(), size);
 	return dest;
 }
 
 const char* GetPluginLogsDir(PluginHandle plugin) {
-	auto source = fs::path(plugin.GetLogsDir()).string();
+	auto source = GOLM_UTF8(plugin.GetLogsDir());
 	size_t size = source.length() + 1;
 	char* dest = new char[size];
-	std::memcpy(dest, source.c_str(), size);
+	std::memcpy(dest, source.data(), size);
 	return dest;
 }
 
@@ -296,12 +343,12 @@ ptrdiff_t GetPluginDependenciesSize(PluginHandle plugin) {
 }
 
 const char* FindPluginResource(PluginHandle plugin, GoString path) {
-	auto resource = plugin.FindResource(fs::path(std::string_view(path)).c_str());
+	auto resource = plugin.FindResource(GOLM_PSTR(path));
 	if (resource.has_value()) {
-		auto source= fs::path(*resource).string();
+		auto source= GOLM_UTF8(*resource);
 		size_t size = source.length() + 1;
 		char* dest = new char[size];
-		std::memcpy(dest, source.c_str(), size);
+		std::memcpy(dest, source.data(), size);
 		return dest;
 	}
 	return "";
