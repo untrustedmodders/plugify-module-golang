@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.4](https://github.com/untrustedmodders/plugify-module-golang/compare/v1.1.3...v1.1.4) (2025-06-26)
+
+
+### Bug Fixes
+
+* build on linux ([2d3245b](https://github.com/untrustedmodders/plugify-module-golang/commit/2d3245bc890836f3a65059891bddf0b8c3e0336d))
+
 ## [1.1.3](https://github.com/untrustedmodders/plugify-module-golang/compare/v1.1.2...v1.1.3) (2025-06-26)
 
 
