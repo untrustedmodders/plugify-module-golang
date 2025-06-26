@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.1.3](https://github.com/untrustedmodders/plugify-module-golang/compare/v1.1.2...v1.1.3) (2025-06-26)
+
+
+### Bug Fixes
+
+* add default build type ([149eb00](https://github.com/untrustedmodders/plugify-module-golang/commit/149eb000d0cfff4e3de4da32f9eafccdde342210))
+* add utf16 convertion for path ([4405fd0](https://github.com/untrustedmodders/plugify-module-golang/commit/4405fd070904ea493cc7ed503134244794cf2d9e))
+* IsModuleLoaded and IsPluginLoaded methods ([5aa3875](https://github.com/untrustedmodders/plugify-module-golang/commit/5aa3875e794d8412a641817bd0fb42617c5fa81c))
+* release build ([654b273](https://github.com/untrustedmodders/plugify-module-golang/commit/654b2732b87eabbafa64cce1b4ee9442725bf995))
+* replace reinterpret_cast by static_cast ([8814580](https://github.com/untrustedmodders/plugify-module-golang/commit/88145802d87ee5892d1063cd53fca4fce676445a))
+* update arch tags for action build ([d7edfc9](https://github.com/untrustedmodders/plugify-module-golang/commit/d7edfc98c2fb88a67a1d3c5f01239d9f16c3649e))
+* update plugify ([2336bbc](https://github.com/untrustedmodders/plugify-module-golang/commit/2336bbc0b8447b5338ab8f35268965a98f69e5e1))
+* update plugify ([1c5e578](https://github.com/untrustedmodders/plugify-module-golang/commit/1c5e5780d211b3bf9a585cc715f2f183530f9d4f))
+* update plugify ([d7c079b](https://github.com/untrustedmodders/plugify-module-golang/commit/d7c079b33f5c7ec023449fd2f595f193c6663331))
+* update version naming ([49b7799](https://github.com/untrustedmodders/plugify-module-golang/commit/49b77990725c1617efbd1fd40147f9d1e7c18438))
+* win build ([ee07210](https://github.com/untrustedmodders/plugify-module-golang/commit/ee072101ec4f829d001f84de3587f025eab98e12))
+
 ## [1.1.2](https://github.com/untrustedmodders/plugify-module-golang/compare/v1.1.1...v1.1.2) (2025-05-31)
 
 
