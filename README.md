@@ -66,7 +66,7 @@ plg install plugify-module-golang
 
 2. **Write Go Plugins**
 
-   Develop your plugins in Go using the Plugify Go API. Refer to the [Plugify Go Plugin Guide](https://untrustedmodders.github.io/en/developing/plugins/first-plugin) for detailed instructions.
+   Develop your plugins in Go using the Plugify Go API. Refer to the [Plugify Go Plugin Guide](https://untrustedmodders.github.io/languages/golang/first-plugin) for detailed instructions.
 
 3. **Build and Install Plugins**
 
@@ -102,11 +102,15 @@ import (
 
 func init() {
 	plugify.OnPluginStart(func() {
-		fmt.Println("OnPluginStart")
+		fmt.Println("Go: OnPluginStart")
+	})
+
+	plugify.OnPluginUpdate(func(dt float32) {
+		fmt.Println("Go: OnPluginUpdate")
 	})
 
 	plugify.OnPluginEnd(func() {
-		fmt.Println("OnPluginEnd")
+		fmt.Println("Go: OnPluginEnd")
 	})
 }
 
