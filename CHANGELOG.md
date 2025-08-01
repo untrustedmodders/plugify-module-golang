@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.5](https://github.com/untrustedmodders/plugify-module-golang/compare/v1.1.4...v1.1.5) (2025-08-01)
+
+
+### Bug Fixes
+
+* bump C++ to 23 ([316ef5a](https://github.com/untrustedmodders/plugify-module-golang/commit/316ef5a552baa623bf0e636c7d9ec847dcd04923))
+* update readme and add missing permission ([e72d5dc](https://github.com/untrustedmodders/plugify-module-golang/commit/e72d5dcb47e54853975445052fe5820a472e4ba7))
+
 ## [1.1.4](https://github.com/untrustedmodders/plugify-module-golang/compare/v1.1.3...v1.1.4) (2025-06-26)
 
 
