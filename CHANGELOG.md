@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.7](https://github.com/untrustedmodders/plugify-module-golang/compare/v1.1.6...v1.1.7) (2025-08-01)
+
+
+### Bug Fixes
+
+* libdrarf supress warnings ([1b95c32](https://github.com/untrustedmodders/plugify-module-golang/commit/1b95c32c416ed3927642351b7bfa120c14466fa0))
+
 ## [1.1.6](https://github.com/untrustedmodders/plugify-module-golang/compare/v1.1.5...v1.1.6) (2025-08-01)
 
 
