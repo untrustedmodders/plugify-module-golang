@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.6](https://github.com/untrustedmodders/plugify-module-golang/compare/v1.1.5...v1.1.6) (2025-08-01)
+
+
+### Bug Fixes
+
+* add stacktrace include ([c98aa3a](https://github.com/untrustedmodders/plugify-module-golang/commit/c98aa3a0f27e733c1513521cb45198f807a6d4bd))
+
 ## [1.1.5](https://github.com/untrustedmodders/plugify-module-golang/compare/v1.1.4...v1.1.5) (2025-08-01)
 
 
