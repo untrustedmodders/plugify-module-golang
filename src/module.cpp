@@ -13,7 +13,11 @@
 #include <plugify/numerics.hpp>
 #include <plugify/any.hpp>
 
+#if PLUGIFY_STACKTRACE_SUPPORT
+#include <stacktrace>
+#else
 #include <cpptrace/cpptrace.hpp>
+#endif
 
 #if GOLM_PLATFORM_WINDOWS
 #include <windows.h>
@@ -216,9 +220,14 @@ void PrintException(GoString message) {
 	if (const auto& provider = g_golm.GetProvider()) {
 		provider->Log(std::format(LOG_PREFIX "[Exception] {}", std::string_view(message)), Severity::Error);
 
+#if PLUGIFY_STACKTRACE_SUPPORT
+		auto trace = std::stacktrace::current();
+		provider->Log(std::to_string(trace), Severity::Error);
+#else
 		std::stringstream stream;
 		cpptrace::generate_trace().print(stream);
 		provider->Log(stream.str(), Severity::Error);
+#endif
 	}
 }
 
