@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.8](https://github.com/untrustedmodders/plugify-module-golang/compare/v1.1.7...v1.1.8) (2025-08-02)
+
+
+### Bug Fixes
+
+* revert dwarf changes ([2992872](https://github.com/untrustedmodders/plugify-module-golang/commit/2992872d2a8a6e747061273dfd317dc832967320))
+* update plugify ([a9cf35b](https://github.com/untrustedmodders/plugify-module-golang/commit/a9cf35b2c145fdbc8cf4d7f38dfad9caf89b6eb4))
+
 ## [1.1.7](https://github.com/untrustedmodders/plugify-module-golang/compare/v1.1.6...v1.1.7) (2025-08-01)
 
 
