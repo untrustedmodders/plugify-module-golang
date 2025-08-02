@@ -75,9 +75,6 @@ if(MSVC)
     target_compile_options(${PROJECT_NAME} PRIVATE /W4 /WX)
 else()
     target_compile_options(${PROJECT_NAME} PRIVATE -Wextra -Wconversion -Werror)# -Wshadow -Wpedantic
-    if(LINUX OR MINGW)
-        target_compile_options(${PROJECT_NAME} PUBLIC -Wno-implicit-function-declaration -Wno-int-conversion) # libdwarf workaround
-    endif()
 endif()
 
 if(APPLE)
