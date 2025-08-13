@@ -827,7 +827,7 @@ def gen_delegate_body(prototype: dict, delegates: set[str]) -> str:
     return '\n'.join(delegate_code)
 
 
-def gen_enum_body(enum: dict, enum_type: str, enums: set[str]) -> str:
+def gen_enum_body(enum: dict, enum_type: str, enums: set[str], used_names: set[str]) -> str:
     """
     Generates Go-style constant definitions for an enum.
     """
@@ -843,30 +843,61 @@ def gen_enum_body(enum: dict, enum_type: str, enums: set[str]) -> str:
     # Add the enum name to the set
     enums.add(enum_name)
 
+    underlying = convert_type(enum_type)
+
     # Start building the Go enum definition
-    enum_code = []
+    enum_code: list[str] = []
 
     # Add enum description
     if enum_description:
         enum_code.append(f'// {enum_name} - {enum_description}')
 
-    enum_code.append(f'type {enum_name} = {convert_type(enum_type)}\n')
+    enum_code.append(f'type {enum_name} = {underlying}\n')
 
     # Define constants
     enum_code.append('const (')
+
+    local_seen: dict[str, int] = {}
+
     for i, value in enumerate(enum_values):
-        name = value.get('name', 'InvalidName')
-        enum_value = value.get('value', str(i))
-        description = value.get('description', '')
+        raw_name = value.get('name', f'Value{i}')
+        base_name = generate_name(raw_name)
+        enum_val = value.get('value', str(i))
+        descr = value.get('description', '')
 
-        # Add comment for each constant
-        if description:
-            enum_code.append(f'\t// {name} - {description}')
-        enum_code.append(f'\t{name} {enum_name} = {enum_value}')
+        ## Counter for local repeats
+        local_seen[base_name] = local_seen.get(base_name, 0) + 1
+        is_local_duplicate = local_seen[base_name] > 1
 
-    #  Close the enum definition
+        candidate = base_name
+
+        def resolve_conflict(name: str) -> str:
+            if name not in used_names:
+                return name
+            # trying with prefix
+            pref = f'{name}_{enum_name}'
+            if pref not in used_names:
+                return pref
+            # if the prefix is also occupied, add suffixes
+            suffix = 2
+            while True:
+                trial = f'{pref}_{suffix}'
+                if trial not in used_names:
+                    return trial
+                suffix += 1
+
+        # If it is already globally occupied or a local duplicate, we run the logic of the conflict.
+        if candidate in used_names or is_local_duplicate:
+            candidate = resolve_conflict(candidate)
+
+        # Registration
+        used_names.add(candidate)
+
+        if descr:
+            enum_code.append(f'\t// {raw_name} - {descr}')
+        enum_code.append(f'\t{candidate} {enum_name} = {enum_val}')
+
     enum_code.append(')')
-
     return '\n'.join(enum_code)
 
 
@@ -1036,46 +1067,42 @@ def generate_delegate_code(pplugin: dict, delegates: set[str]) -> str:
 
 def generate_enum_code(pplugin: dict, enums: set[str]) -> str:
     """
-    Generate Go enum code from a plugin definition.
+    Iterates over all methods and collects enums.
+    used_names — global set of already occupied identifiers (constants).
     """
-    # Container for all generated enum code
-    content = []
+    content: list[str] = []
+    used_names: set[str] = set()
 
-    def process_enum(enum_data: dict, enum_type: str):
-        """
-        Generate enum code from the given enum data if it hasn't been processed.
-        """
-        enum_code = gen_enum_body(enum_data, enum_type, enums)
-        if enum_code:
-            content.append(enum_code)
+    def process_enum(e: dict, etype: str):
+        code = gen_enum_body(e, etype, enums, used_names)
+        if code:
+            content.append(code)
 
-    def process_prototype(prototype: dict):
-        """
-        Recursively process a function prototype for enums.
-        """
-        if 'enum' in prototype.get('retType', {}):
-            process_enum(prototype['retType']['enum'], prototype['retType'].get('type', ''))
+    def process_prototype(proto: dict):
+        # Return type
+        if 'enum' in proto.get('retType', {}):
+            rt = proto['retType']
+            process_enum(rt['enum'], rt.get('type', ''))
+        # Parameters
+        for p in proto.get('paramTypes', []):
+            if 'enum' in p:
+                process_enum(p['enum'], p.get('type', ''))
+            if 'prototype' in p:
+                process_prototype(p['prototype'])
 
-        for param in prototype.get('paramTypes', []):
-            if 'enum' in param:
-                process_enum(param['enum'], param.get('type', ''))
-            if 'prototype' in param:  # Process nested prototypes
-                process_prototype(param['prototype'])
-
-    # Main loop: Process all exported methods in the plugin
     for method in pplugin.get('exportedMethods', []):
+        # Return type
         if 'retType' in method and 'enum' in method['retType']:
-            process_enum(method['retType']['enum'], method['retType'].get('type', ''))
-
+            rt = method['retType']
+            process_enum(rt['enum'], rt.get('type', ''))
+        # Parameters
         for param in method.get('paramTypes', []):
             if 'enum' in param:
                 process_enum(param['enum'], param.get('type', ''))
-            if 'prototype' in param:  # Handle nested function prototypes
+            if 'prototype' in param:
                 process_prototype(param['prototype'])
 
     content.append('')
-
-    # Join all generated enums into a single string
     return '\n'.join(content)
 
 
@@ -1172,7 +1199,7 @@ def generate_header(plugin_name: str, pplugin: dict) -> str:
         'import "C"',
         'import (',
         '\t"unsafe"',
-        '\t"reflect"',
+        '\t_ "reflect"',
         '\t"github.com/untrustedmodders/go-plugify"',
         ')',
         '',
