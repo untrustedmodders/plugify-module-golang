@@ -875,7 +875,7 @@ def gen_enum_body(enum: dict, enum_type: str, enums: set[str], used_names: set[s
             if name not in used_names:
                 return name
             # trying with prefix
-            pref = f'{name}_{enum_name}'
+            pref = f'{enum_name}_{name}'
             if pref not in used_names:
                 return pref
             # if the prefix is also occupied, add suffixes
