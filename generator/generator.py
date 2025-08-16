@@ -869,19 +869,14 @@ def gen_enum_body(enum: dict, enum_type: str, enums: set[str], used_names: set[s
         local_seen[base_name] = local_seen.get(base_name, 0) + 1
         is_local_duplicate = local_seen[base_name] > 1
 
-        candidate = base_name
+        candidate = f'{enum_name}_{base_name}'
 
         def resolve_conflict(name: str) -> str:
             if name not in used_names:
                 return name
-            # trying with prefix
-            pref = f'{enum_name}_{name}'
-            if pref not in used_names:
-                return pref
-            # if the prefix is also occupied, add suffixes
             suffix = 2
             while True:
-                trial = f'{pref}_{suffix}'
+                trial = f'{name}_{suffix}'
                 if trial not in used_names:
                     return trial
                 suffix += 1
@@ -915,18 +910,18 @@ def gen_documentation(method: dict, tab_level: int = 0) -> str:
     tab = '\t' * tab_level
 
     # Start building the Go documentation comment
-    docstring = [f'{tab}// {name} - {description}']
+    docstring = [f'{tab}// {name} \n{tab}//  @brief {description}\n//']
 
     # Add parameters
     for param in param_types:
         param_name = param.get('name', 'UnnamedParam')
         param_desc = param.get('description', 'No description available.')
-        docstring.append(f'\n{tab}// @param {param_name}: {param_desc}')
+        docstring.append(f'\n{tab}//  @param {param_name}: {param_desc}')
 
     # Add return type description
     if ret_type.lower() != 'void':
         ret_desc = method.get('retType', {}).get('description', 'No description available.')
-        docstring.append(f'\n{tab}// @return {ret_desc}')
+        docstring.append(f'\n//\n{tab}//  @return {ret_desc}')
 
     return ''.join(docstring)
 
