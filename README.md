@@ -1,3 +1,5 @@
+[![Русский](https://img.shields.io/badge/Русский-%F0%9F%87%B7%F0%9F%87%BA-green?style=for-the-badge)](README_ru.md)
+
 # Go Language Module for Plugify
 
 The Go Language Module for Plugify enables developers to write plugins in Go for the Plugify framework. This module provides a seamless integration for Go plugins, allowing them to be dynamically loaded and managed by the Plugify core.

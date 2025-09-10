@@ -1043,7 +1043,7 @@ def generate_delegate_code(pplugin: dict, delegates: set[str]) -> str:
             content.append(delegate_code)
 
     # Main loop: Process all exported methods in the plugin
-    for method in pplugin.get('exportedMethods', []):
+    for method in pplugin.get('methods', []):
         # Check the return type for a delegate
         ret_type = method.get('retType', {})
         if 'prototype' in ret_type:
@@ -1085,7 +1085,7 @@ def generate_enum_code(pplugin: dict, enums: set[str]) -> str:
             if 'prototype' in p:
                 process_prototype(p['prototype'])
 
-    for method in pplugin.get('exportedMethods', []):
+    for method in pplugin.get('methods', []):
         # Return type
         if 'retType' in method and 'enum' in method['retType']:
             rt = method['retType']
@@ -1145,7 +1145,7 @@ def generate_cheader(plugin_name: str, pplugin: dict) -> str:
     ]
 
     # Append method implementations
-    for method in pplugin.get('exportedMethods', []):
+    for method in pplugin.get('methods', []):
         method_name = method.get('name', 'UnnamedMethod')
         #param_types_data = method.get('paramTypes', [])
         ret_type_data = method.get('retType', {})
@@ -1177,7 +1177,7 @@ def generate_header(plugin_name: str, pplugin: dict) -> str:
     directives = []
 
     # Append directives implementations
-    for method in pplugin.get('exportedMethods', []):
+    for method in pplugin.get('methods', []):
         directives.append(f'#cgo noescape {method.get("name", "UnnamedMethod")}')
         #languageModule = pplugin.get('languageModule', {})
         #if languageModule.get('name', '') == 'golang':
@@ -1211,7 +1211,7 @@ def generate_header(plugin_name: str, pplugin: dict) -> str:
     content.append(generate_delegate_code(pplugin, delegates))
 
     # Append method implementations
-    for method in pplugin.get('exportedMethods', []):
+    for method in pplugin.get('methods', []):
         content.append(generate_method_code(method))
 
     # Join and return the complete content as a single string
@@ -1220,7 +1220,6 @@ def generate_header(plugin_name: str, pplugin: dict) -> str:
 
 def main(manifest_path: str, output_dir: str, override: bool):
     """Main function to process the plugin and generate the Go header file."""
-    # Validate inputs
     if not os.path.isfile(manifest_path):
         print(f'Manifest file does not exist: {manifest_path}')
         return 1
@@ -1228,33 +1227,31 @@ def main(manifest_path: str, output_dir: str, override: bool):
         print(f'Output folder does not exist: {output_dir}')
         return 1
 
-    # Determine plugin name and output file path
-    plugin_name = os.path.basename(manifest_path).rsplit('.', 3)[0]
+    try:
+        with open(manifest_path, 'r', encoding='utf-8') as file:
+            pplugin = json.load(file)
+
+    except Exception as e:
+        print(f'An error occurred: {e}')
+        return 1
+
+    plugin_name = pplugin.get('name', os.path.basename(manifest_path).rsplit('.', 3)[0])
     output_path = os.path.join(output_dir, plugin_name, f'{plugin_name}.go')
     output_path2 = os.path.join(output_dir, plugin_name, f'{plugin_name}.h')
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
-    # Handle existing file
     if os.path.isfile(output_path) and not override:
         print(f'Output file already exists: {output_path}. Use --override to overwrite existing file.')
         return 1
 
     try:
-        # Read and parse manifest
-        with open(manifest_path, 'r', encoding='utf-8') as file:
-            pplugin = json.load(file)
-
-        # Generate header content
         content = generate_header(plugin_name, pplugin)
 
-        # Write content to file
         with open(output_path, 'w', encoding='utf-8') as fd:
             fd.write(''.join(content))
 
-        # Generate c header content
         content = generate_cheader(plugin_name, pplugin)
 
-        # Write content to file
         with open(output_path2, 'w', encoding='utf-8') as fd:
             fd.write(content)
 

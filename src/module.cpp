@@ -1,28 +1,16 @@
 #include "module.hpp"
 
-#include <plugify/module.hpp>
-#include <plugify/plugin.hpp>
-#include <plugify/log.hpp>
-#include <plugify/string.hpp>
-#include <plugify/numerics.hpp>
-#include <plugify/plugin_descriptor.hpp>
-#include <plugify/plugin_reference_descriptor.hpp>
-#include <plugify/plugify_provider.hpp>
-#include <plugify/jit/call.hpp>
-#include <plugify/jit/helpers.hpp>
-#include <plugify/numerics.hpp>
-#include <plugify/any.hpp>
+#include <plugify/logger.hpp>
+#include <plugify/provider.hpp>
+#include <plugify/call.hpp>
 
-#if PLUGIFY_STACKTRACE_SUPPORT
+#include <plg/numerics.hpp>
+#include <plg/any.hpp>
+#include <plg/string.hpp>
+#include <plg/numerics.hpp>
+
 #include <stacktrace>
-#else
-#include <cpptrace/cpptrace.hpp>
-#endif
-
-#if GOLM_PLATFORM_WINDOWS
-#include <windows.h>
-#undef FindResource
-#endif
+#include <plugify/assembly_loader.hpp>
 
 #define LOG_PREFIX "[GOLM] "
 
@@ -50,16 +38,12 @@ namespace {
 	}
 }
 
-InitResult GoLanguageModule::Initialize(std::weak_ptr<IPlugifyProvider> provider, ModuleHandle /*module*/) {
-	if (!((_provider = provider.lock()))) {
-		return ErrorData{ "Provider not exposed" };
-	}
-
-	_rt = std::make_shared<asmjit::JitRuntime>();
+Result<InitData> GoLanguageModule::Initialize(const Provider& provider, [[maybe_unused]] const Extension& module) {
+	_provider = std::make_unique<Provider>(provider);
 
 	_provider->Log(LOG_PREFIX "Inited!", Severity::Debug);
 
-	return InitResultData{{ .hasUpdate = false }};
+	return InitData{{ .hasUpdate = false }};
 }
 
 void GoLanguageModule::Shutdown() {
@@ -69,91 +53,112 @@ void GoLanguageModule::Shutdown() {
 	_nativesMap.clear();
 	_addresses.clear();
 	_assemblies.clear();
-	_rt.reset();
 	_provider.reset();
 }
 
-void GoLanguageModule::OnUpdate(plugify::DateTime) {
-	
+void GoLanguageModule::OnUpdate([[maybe_unused]] std::chrono::milliseconds dt) {
 }
 
 bool GoLanguageModule::IsDebugBuild() {
 	return GOLM_IS_DEBUG;
 }
 
-void GoLanguageModule::OnMethodExport(PluginHandle plugin) {
-	for (const auto& [method, addr] : plugin.GetMethods()) {
+void GoLanguageModule::OnMethodExport(const Extension& plugin) {
+	const auto& methods = plugin.GetMethodsData();
+	_nativesMap.reserve(_nativesMap.size() + methods.size());
+	for (const auto& [method, addr] :methods) {
 		_nativesMap.try_emplace(std::format("{}.{}", plugin.GetName(), method.GetName()), addr);
 	}
 }
 
-LoadResult GoLanguageModule::OnPluginLoad(PluginHandle plugin) {
-	fs::path assemblyPath(plugin.GetBaseDir());
-	assemblyPath /= std::format("{}" GOLM_LIBRARY_SUFFIX, plugin.GetDescriptor().GetEntryPoint());
+Result<LoadData> GoLanguageModule::OnPluginLoad(const Extension& plugin) {
+	fs::path assemblyPath(plugin.GetLocation());
+	assemblyPath /= std::format("{}" GOLM_LIBRARY_SUFFIX, plugin.GetEntry());
 
-	auto assembly = std::make_unique<Assembly>(assemblyPath, LoadFlag::Lazy | LoadFlag::Nodelete | LoadFlag::PinInMemory);
-	if (!assembly->IsValid()) {
-		return ErrorData{ std::format("Failed to load assembly: {}", assembly->GetError()) };
+	LoadFlag flags = LoadFlag::LazyBinding | LoadFlag::NoUnload;
+	auto assemblyResult = _provider->Resolve<IAssemblyLoader>()->Load(assemblyPath, flags);
+	if (!assemblyResult) {
+		return MakeError(std::move(assemblyResult.error()));
 	}
 
-	auto* const initFunc = assembly->GetFunctionByName("Plugify_Init").RCast<InitFunc>();
-	if (!initFunc) {
-		return ErrorData{ "Not found 'Plugify_Init' function" };
+	auto& assembly = *assemblyResult;
+
+	auto initResult = assembly->GetSymbol("Plugify_Init");
+	if (!initResult) {
+		return MakeError(std::move(initResult.error()));
+	}
+	auto callResult = assembly->GetSymbol("Plugify_InternalCall");
+	if (!callResult) {
+		return MakeError(std::move(callResult.error()));
+	}
+	auto startResult = assembly->GetSymbol("Plugify_PluginStart");
+	if (!startResult) {
+		return MakeError(std::move(startResult.error()));
+	}
+	auto updateResult = assembly->GetSymbol("Plugify_PluginUpdate");
+	if (!updateResult) {
+		return MakeError(std::move(updateResult.error()));
+	}
+	auto endResult = assembly->GetSymbol("Plugify_PluginEnd");
+	if (!endResult) {
+		return MakeError(std::move(endResult.error()));
+	}
+	auto contextResult = assembly->GetSymbol("Plugify_PluginContext");
+	if (!contextResult) {
+		return MakeError(std::move(contextResult.error()));
 	}
 
-	auto* const callFunc = assembly->GetFunctionByName("Plugify_InternalCall").RCast<JitCallback::CallbackHandler>();
-	if (!callFunc) {
-		return ErrorData{ "Not found 'Plugify_InternalCall' function" };
-	}
+	auto* initFunc = initResult->RCast<InitFunc>();
+	auto* callFunc = callResult->RCast<CallFunc>();
+	auto* startFunc = startResult->RCast<StartFunc>();
+	auto* updateFunc = updateResult->RCast<UpdateFunc>();
+	auto* endFunc = endResult->RCast<EndFunc>();
+	auto* contextFunc = contextResult->RCast<ContextFunc>();
 
-	auto* const startFunc = assembly->GetFunctionByName("Plugify_PluginStart").RCast<StartFunc>();
-	auto* const updateFunc = assembly->GetFunctionByName("Plugify_PluginUpdate").RCast<UpdateFunc>();
-	auto* const endFunc = assembly->GetFunctionByName("Plugify_PluginEnd").RCast<EndFunc>();
-	auto* const contextFunc = assembly->GetFunctionByName("Plugify_PluginContext").RCast<ContextFunc>();
+	std::vector<std::string> errors;
 
-	std::vector<std::string_view> funcErrors;
-
-	std::span<const MethodHandle> exportedMethods = plugin.GetDescriptor().GetExportedMethods();
+	const std::vector<Method>& exportedMethods = plugin.GetMethods();
 	std::vector<MethodData> methods;
 	methods.reserve(exportedMethods.size());
 
-	for (const auto& method : exportedMethods) {
-		if (auto func = assembly->GetFunctionByName(method.GetFunctionName())) {
-			methods.emplace_back(method, func);
+	for (size_t i = 0; i < exportedMethods.size(); ++i) {
+		const auto& method = exportedMethods[i];
+		if (auto funcResult = assembly->GetSymbol(method.GetFuncName())) {
+			methods.emplace_back(method, *funcResult);
 		} else {
-			funcErrors.emplace_back(method.GetName());
+			errors.emplace_back(std::format("{:>3}. {} {}", i + 1, method.GetName(), funcResult.error()));
+			if (constexpr size_t kMaxDisplay = 100; errors.size() >= kMaxDisplay) {
+				errors.emplace_back(std::format("... and {} more", exportedMethods.size() - kMaxDisplay));
+				break;
+			}
 		}
 	}
-	if (!funcErrors.empty()) {
-		std::string funcs(funcErrors[0]);
-		for (auto it = std::next(funcErrors.begin()); it != funcErrors.end(); ++it) {
-			std::format_to(std::back_inserter(funcs), ", {}", *it);
-		}
-		return ErrorData{ std::format("Not found {} method function(s)", funcs) };
+	if (!errors.empty()) {
+		return MakeError("Invalid methods:\n{}", plg::join(errors, "\n"));
 	}
 
 	GoSlice api { const_cast<void**>(_pluginApi.data()), _pluginApi.size(), _pluginApi.size() };
-	const int resultVersion = initFunc(api, kApiVersion, plugin);
+	const int resultVersion = initFunc(api, kApiVersion, static_cast<const void *>(&plugin));
 	if (resultVersion != 0) {
-		return ErrorData{ std::format("Not supported plugin api {}, max supported {}", resultVersion, kApiVersion) };
+		return MakeError("Not supported plugin api {}, max supported {}", resultVersion, kApiVersion);
 	}
 
 	const auto& [hasUpdate, hasStart, hasEnd, _] = contextFunc ? *(contextFunc()) : PluginContext{};
 
 	auto data = _assemblies.emplace_back(std::make_unique<AssemblyHolder>(std::move(assembly), updateFunc, startFunc, endFunc, contextFunc, callFunc)).get();
-	return LoadResultData{ std::move(methods), data, { hasUpdate, hasStart, hasEnd, !exportedMethods.empty() } };
+	return LoadData{ std::move(methods), data, { hasUpdate, hasStart, hasEnd, !exportedMethods.empty() } };
 }
 
-void GoLanguageModule::OnPluginStart(PluginHandle plugin) {
-	plugin.GetData().RCast<AssemblyHolder*>()->startFunc();
+void GoLanguageModule::OnPluginStart(const Extension& plugin) {
+	plugin.GetUserData().RCast<AssemblyHolder*>()->startFunc();
 }
 
-void GoLanguageModule::OnPluginUpdate(plugify::PluginHandle plugin, plugify::DateTime dt) {
-	plugin.GetData().RCast<AssemblyHolder*>()->updateFunc(dt.AsSeconds());
+void GoLanguageModule::OnPluginUpdate(const Extension& plugin, std::chrono::milliseconds dt) {
+	plugin.GetUserData().RCast<AssemblyHolder*>()->updateFunc(std::chrono::duration<float>(dt).count());
 }
 
-void GoLanguageModule::OnPluginEnd(PluginHandle plugin) {
-	plugin.GetData().RCast<AssemblyHolder*>()->endFunc();
+void GoLanguageModule::OnPluginEnd(const Extension& plugin) {
+	plugin.GetUserData().RCast<AssemblyHolder*>()->endFunc();
 }
 
 MemAddr GoLanguageModule::GetNativeMethod(std::string_view methodName) const {
@@ -164,7 +169,7 @@ MemAddr GoLanguageModule::GetNativeMethod(std::string_view methodName) const {
 	return nullptr;
 }
 
-void GoLanguageModule::GetNativeMethod(std::string_view methodName, plugify::MemAddr* addressDest) {
+void GoLanguageModule::GetNativeMethod(std::string_view methodName, MemAddr* addressDest) {
 	if (const auto it = _nativesMap.find(methodName); it != _nativesMap.end()) {
 		*addressDest = std::get<MemAddr>(*it);
 		_addresses.emplace_back(addressDest);
@@ -173,20 +178,17 @@ void GoLanguageModule::GetNativeMethod(std::string_view methodName, plugify::Mem
 	_provider->Log(std::format(LOG_PREFIX "GetNativeMethod failed to find: '{}'", methodName), Severity::Fatal);
 }
 
-MethodHandle GoLanguageModule::FindMethod(std::string_view name) {
-	auto separated = Split(name, ".");
-	if (separated.size() != 2)
-		return {};
-
-	auto plugin = _provider->FindPlugin(separated[0]);
-	if (plugin) {
-		for (const auto& method : plugin.GetDescriptor().GetExportedMethods()) {
-			auto prototype = method.FindPrototype(separated[1]);
-			if (prototype) {
-				return prototype;
+const Method* GoLanguageModule::FindMethod(std::string_view name) {
+	if (auto separated = Split(name, "."); separated.size() == 2) {
+		if (auto plugin = _provider->FindExtension(separated[0])) {
+			for (const auto& method : plugin->GetMethods()) {
+				if (auto prototype = method.FindPrototype(separated[1])) {
+					return prototype;
+				}
 			}
 		}
 	}
+	_provider->Log(std::format(LOG_PREFIX "FindMethod failed to find: '{}'", name), Severity::Error);
 	return {};
 }
 
@@ -202,165 +204,120 @@ void GetMethodPtr2(const char* methodName, MemAddr* addressDest) {
 	g_golm.GetNativeMethod(methodName, addressDest);
 }
 
-bool IsModuleLoaded(GoString moduleName, GoString versionName, bool minimum) {
-	if (std::string_view version = versionName; !version.empty())
-		return g_golm.GetProvider()->IsModuleLoaded(moduleName, plg::version(version), minimum);
+bool IsExtensionLoaded(GoString name, GoString constraint) {
+	if (constraint) {
+		plg::range_set<> range;
+		plg::parse(constraint, range);
+		return g_golm.GetProvider()->IsExtensionLoaded(name, std::move(range));
+	}
 	else
-		return g_golm.GetProvider()->IsModuleLoaded(moduleName, std::nullopt, minimum);
+		return g_golm.GetProvider()->IsExtensionLoaded(name);
 }
 
-bool IsPluginLoaded(GoString pluginName, GoString versionName, bool minimum) {
-	if (std::string_view version = versionName; !version.empty())
-		return g_golm.GetProvider()->IsPluginLoaded(pluginName, plg::version(version), minimum);
-	else
-		return g_golm.GetProvider()->IsPluginLoaded(pluginName, std::nullopt, minimum);
+const char* GetBaseDir() {
+	const auto& source = plg::as_string(g_golm.GetProvider()->GetBaseDir());
+	size_t size = source.length() + 1;
+	char* dest = new char[size];
+	std::memcpy(dest, source.data(), size);
+	return dest;
+}
+
+const char* GetExtensionsDir() {
+	const auto& source = plg::as_string(g_golm.GetProvider()->GetExtensionsDir());
+	size_t size = source.length() + 1;
+	char* dest = new char[size];
+	std::memcpy(dest, source.data(), size);
+	return dest;
+}
+
+const char* GetConfigsDir() {
+	const auto& source = plg::as_string(g_golm.GetProvider()->GetConfigsDir());
+	size_t size = source.length() + 1;
+	char* dest = new char[size];
+	std::memcpy(dest, source.data(), size);
+	return dest;
+}
+
+const char* GetDataDir() {
+	const auto& source = plg::as_string(g_golm.GetProvider()->GetDataDir());
+	size_t size = source.length() + 1;
+	char* dest = new char[size];
+	std::memcpy(dest, source.data(), size);
+	return dest;
+}
+
+const char* GetLogsDir() {
+	const auto& source = plg::as_string(g_golm.GetProvider()->GetLogsDir());
+	size_t size = source.length() + 1;
+	char* dest = new char[size];
+	std::memcpy(dest, source.data(), size);
+	return dest;
+}
+
+const char* GetCacheDir() {
+	const auto& source = plg::as_string(g_golm.GetProvider()->GetCacheDir());
+	size_t size = source.length() + 1;
+	char* dest = new char[size];
+	std::memcpy(dest, source.data(), size);
+	return dest;
 }
 
 void PrintException(GoString message) {
 	if (const auto& provider = g_golm.GetProvider()) {
 		provider->Log(std::format(LOG_PREFIX "[Exception] {}", std::string_view(message)), Severity::Error);
 
-#if PLUGIFY_STACKTRACE_SUPPORT
 		auto trace = std::stacktrace::current();
 		provider->Log(std::to_string(trace), Severity::Error);
-#else
-		std::stringstream stream;
-		cpptrace::generate_trace().print(stream);
-		provider->Log(stream.str(), Severity::Error);
-#endif
 	}
 }
 
-ptrdiff_t GetPluginId(PluginHandle plugin) {
+ptrdiff_t GetPluginId(const Extension& plugin) {
 	return static_cast<ptrdiff_t>(plugin.GetId());
 }
 
-const char* GetPluginName(PluginHandle plugin) {
-	return plugin.GetName().data();
+const char* GetPluginName(const Extension& plugin) {
+	return plugin.GetName().c_str();
 }
 
-const char* GetPluginFullName(PluginHandle plugin) {
-	return plugin.GetFriendlyName().data();
+const char* GetPluginDescription(const Extension& plugin) {
+	return plugin.GetDescription().c_str();
 }
 
-const char* GetPluginDescription(PluginHandle plugin) {
-	return plugin.GetDescriptor().GetDescription().data();
+const char* GetPluginVersion(const Extension& plugin) {
+	return plugin.GetVersionString().c_str();
 }
 
-const char* GetPluginVersion(PluginHandle plugin) {
-	return plugin.GetDescriptor().GetVersionName().data();
+const char* GetPluginAuthor(const Extension& plugin) {
+	return plugin.GetAuthor().c_str();
 }
 
-const char* GetPluginAuthor(PluginHandle plugin) {
-	return plugin.GetDescriptor().GetCreatedBy().data();
+const char* GetPluginWebsite(const Extension& plugin) {
+	return plugin.GetWebsite().c_str();
 }
 
-const char* GetPluginWebsite(PluginHandle plugin) {
-	return plugin.GetDescriptor().GetCreatedByURL().data();
+const char* GetPluginLicense(const Extension& plugin) {
+	return plugin.GetLicense().c_str();
 }
 
-#if GOLM_PLATFORM_WINDOWS
-namespace {
-	bool ConvertUtf8ToWide(std::wstring& dest, std::string_view str) {
-		int wlen = MultiByteToWideChar(CP_UTF8, 0, str.data(), static_cast<int>(str.length()), nullptr, 0);
-		if (wlen < 0)
-			return false;
-
-		dest.resize(static_cast<size_t>(wlen));
-		if (wlen > 0 && MultiByteToWideChar(CP_UTF8, 0, str.data(), static_cast<int>(str.length()), dest.data(), wlen) < 0)
-			return false;
-
-		return true;
-	}
-
-	std::wstring ConvertUtf8ToWide(std::string_view str){
-		std::wstring ret;
-		if (!ConvertUtf8ToWide(ret, str))
-			return {};
-		return ret;
-	}
-
-	bool ConvertWideToUtf8(std::string& dest, std::wstring_view str) {
-		int mblen = WideCharToMultiByte(CP_UTF8, 0, str.data(), static_cast<int>(str.length()), nullptr, 0, nullptr, nullptr);
-		if (mblen < 0)
-			return false;
-
-		dest.resize(static_cast<size_t>(mblen));
-		if (mblen > 0 && WideCharToMultiByte(CP_UTF8, 0, str.data(), static_cast<int>(str.length()), dest.data(), mblen, nullptr, nullptr) < 0)
-			return false;
-
-		return true;
-	}
-
-	std::string ConvertWideToUtf8(std::wstring_view str) {
-		std::string ret;
-		if (!ConvertWideToUtf8(ret, str))
-			return {};
-		return ret;
-	}
-}
-#define GOLM_UTF8(str) ConvertWideToUtf8(str)
-#define GOLM_PSTR(str) ConvertUtf8ToWide(str)
-#else
-#define GOLM_UTF8(str) str
-#define GOLM_PSTR(str) str
-#endif
-
-const char* GetPluginBaseDir(PluginHandle plugin) {
-	auto source = GOLM_UTF8(plugin.GetBaseDir());
+const char* GetPluginLocation(const Extension& plugin) {
+	const auto& source = plg::as_string(plugin.GetLocation());
 	size_t size = source.length() + 1;
 	char* dest = new char[size];
 	std::memcpy(dest, source.data(), size);
 	return dest;
 }
 
-const char* GetPluginConfigsDir(PluginHandle plugin) {
-	auto source = GOLM_UTF8(plugin.GetConfigsDir());
-	size_t size = source.length() + 1;
-	char* dest = new char[size];
-	std::memcpy(dest, source.data(), size);
-	return dest;
-}
-
-const char* GetPluginDataDir(PluginHandle plugin) {
-	auto source = GOLM_UTF8(plugin.GetDataDir());
-	size_t size = source.length() + 1;
-	char* dest = new char[size];
-	std::memcpy(dest, source.data(), size);
-	return dest;
-}
-
-const char* GetPluginLogsDir(PluginHandle plugin) {
-	auto source = GOLM_UTF8(plugin.GetLogsDir());
-	size_t size = source.length() + 1;
-	char* dest = new char[size];
-	std::memcpy(dest, source.data(), size);
-	return dest;
-}
-
-const char** GetPluginDependencies(PluginHandle plugin) {
-	std::span<const PluginReferenceDescriptorHandle> dependencies = plugin.GetDescriptor().GetDependencies();
+const char** GetPluginDependencies(const Extension& plugin) {
+	const std::vector<Dependency>& dependencies = plugin.GetDependencies();
 	auto* deps = new const char*[dependencies.size()];
 	for (size_t i = 0; i < dependencies.size(); ++i) {
-		deps[i] = dependencies[i].GetName().data();
+		deps[i] = dependencies[i].GetName().c_str();
 	}
 	return deps;
 }
 
-ptrdiff_t GetPluginDependenciesSize(PluginHandle plugin) {
-	return static_cast<ptrdiff_t>(plugin.GetDescriptor().GetDependencies().size());
-}
-
-const char* FindPluginResource(PluginHandle plugin, GoString path) {
-	auto resource = plugin.FindResource(GOLM_PSTR(path));
-	if (resource.has_value()) {
-		auto source= GOLM_UTF8(*resource);
-		size_t size = source.length() + 1;
-		char* dest = new char[size];
-		std::memcpy(dest, source.data(), size);
-		return dest;
-	}
-	return "";
+ptrdiff_t GetPluginDependenciesSize(const Extension& plugin) {
+	return static_cast<ptrdiff_t>(plugin.GetDependencies().size());
 }
 
 void DeleteCStr(const char* str) {
@@ -398,6 +355,8 @@ void AssignString(plg::string* string, GoString source) {
 void DestroyVariant(plg::any* any) {
 	any->~variant();
 }
+
+#undef as_string
 
 namespace {
 	template<typename T>
@@ -575,7 +534,7 @@ void AssignVectorVector4(plg::vector<plg::vec4>* ptr, plg::vec4* arr, ptrdiff_t 
 void AssignVectorMatrix4x4(plg::vector<plg::mat4x4>* ptr, plg::mat4x4* arr, ptrdiff_t len) { AssignVector(ptr, arr, len); }
 
 struct ManagedType {
-	plugify::ValueType type{};
+	ValueType type{};
 	bool ref{};
 };
 
@@ -592,20 +551,20 @@ JitCall* NewCall(void* target, ManagedType* params, ptrdiff_t count, ManagedType
 #endif
 
 	bool retHidden = ValueUtils::IsHiddenParam(ret.type);
-	asmjit::FuncSignature sig(asmjit::CallConvId::kCDecl, asmjit::FuncSignature::kNoVarArgs, JitUtils::GetRetTypeId(retHidden ? typeHidden : ret.type));
+	Signature sig(CallConv::CDecl, retHidden ? typeHidden : ret.type);
 
 #if !GOLM_ARCH_ARM
 	if (retHidden) {
-		sig.addArg(JitUtils::GetValueTypeId(ret.type));
+		sig.AddArg(ret.type);
 	}
 #endif
 
 	for (ptrdiff_t i = 0; i < count; ++i) {
 		const auto& [type, ref] = params[i];
-		sig.addArg(JitUtils::GetValueTypeId(ref ? ValueType::Pointer : type));
+		sig.AddArg(ref ? ValueType::Pointer : type);
 	}
 
-	JitCall* call = new JitCall(g_golm.GetRuntime());
+	JitCall* call = new JitCall{};
 	call->GetJitFunc(sig, target, JitCall::WaitType::None, retHidden);
 	return call;
 }
@@ -622,13 +581,13 @@ const char* GetCallError(JitCall* call) {
 	return call ? call->GetError().data() : "Target invalid";
 }
 
-JitCallback* NewCallback(PluginHandle plugin, GoString name, void* delegate) {
-	MethodHandle method = g_golm.FindMethod(name);
+JitCallback* NewCallback(const Extension& plugin, GoString name, void* delegate) {
+	const Method* method = g_golm.FindMethod(name);
 	if (method == nullptr || delegate == nullptr)
 		return nullptr;
 
-	JitCallback* callback = new JitCallback(g_golm.GetRuntime());
-	callback->GetJitFunc(method, plugin.GetData().RCast<AssemblyHolder*>()->callFunc, delegate);
+	JitCallback* callback = new JitCallback{};
+	callback->GetJitFunc(*method, plugin.GetUserData().RCast<AssemblyHolder*>()->callFunc, delegate);
 	return callback;
 }
 
@@ -644,57 +603,53 @@ const char* GetCallbackError(JitCallback* callback) {
 	return callback ? callback->GetError().data() : "Method invalid";
 }
 
-ptrdiff_t GetMethodParamCount(MethodHandle handle) {
+ptrdiff_t GetMethodParamCount(const Method& handle) {
 	return static_cast<ptrdiff_t>(handle.GetParamTypes().size());
 }
 
-ManagedType GetMethodParamType(MethodHandle handle, ptrdiff_t index) {
-	PropertyHandle param;
-	if (index < 0) {
-		param = handle.GetReturnType();
-	} else {
-		param = handle.GetParamTypes()[static_cast<size_t>(index)];
-	}
-	return { param.GetType(), param.IsReference() };
+ManagedType GetMethodParamType(const Method& handle, ptrdiff_t index) {
+	const Property& param = index < 0 ? handle.GetRetType() : handle.GetParamTypes()[static_cast<size_t>(index)];
+	return { param.GetType(), param.IsRef() };
 }
 
-MethodHandle GetMethodPrototype(MethodHandle handle, ptrdiff_t index) {
+const Method& GetMethodPrototype(const Method& handle, ptrdiff_t index) {
 	if (index < 0) {
-		return handle.GetReturnType().GetPrototype();
+		return *handle.GetRetType().GetPrototype();
 	} else {
-		return handle.GetParamTypes()[static_cast<size_t>(index)].GetPrototype();
+		return *handle.GetParamTypes()[static_cast<size_t>(index)].GetPrototype();
 	}
 }
 
-EnumHandle GetMethodEnum(MethodHandle handle, ptrdiff_t index) {
+const EnumObject& GetMethodEnum(const Method& handle, ptrdiff_t index) {
 	if (index < 0) {
-		return handle.GetReturnType().GetEnum();
+		return *handle.GetRetType().GetEnumerate();
 	} else {
-		return handle.GetParamTypes()[static_cast<size_t>(index)].GetEnum();
+		return *handle.GetParamTypes()[static_cast<size_t>(index)].GetEnumerate();
 	}
 }
 
-const std::array<void*, 139> GoLanguageModule::_pluginApi = {
+const std::array<void*, 140> GoLanguageModule::_pluginApi = {
 		reinterpret_cast<void*>(&::GetMethodPtr),
 		reinterpret_cast<void*>(&::GetMethodPtr2),
-		reinterpret_cast<void*>(&::IsModuleLoaded),
-		reinterpret_cast<void*>(&::IsPluginLoaded),
+		reinterpret_cast<void*>(&::IsExtensionLoaded),
+		reinterpret_cast<void*>(&::GetBaseDir),
+		reinterpret_cast<void*>(&::GetExtensionsDir),
+		reinterpret_cast<void*>(&::GetConfigsDir),
+		reinterpret_cast<void*>(&::GetDataDir),
+		reinterpret_cast<void*>(&::GetLogsDir),
+		reinterpret_cast<void*>(&::GetCacheDir),
 		reinterpret_cast<void*>(&::PrintException),
 
 		reinterpret_cast<void*>(&::GetPluginId),
 		reinterpret_cast<void*>(&::GetPluginName),
-		reinterpret_cast<void*>(&::GetPluginFullName),
 		reinterpret_cast<void*>(&::GetPluginDescription),
 		reinterpret_cast<void*>(&::GetPluginVersion),
 		reinterpret_cast<void*>(&::GetPluginAuthor),
 		reinterpret_cast<void*>(&::GetPluginWebsite),
-		reinterpret_cast<void*>(&::GetPluginBaseDir),
-		reinterpret_cast<void*>(&::GetPluginConfigsDir),
-		reinterpret_cast<void*>(&::GetPluginDataDir),
-		reinterpret_cast<void*>(&::GetPluginLogsDir),
+		reinterpret_cast<void*>(&::GetPluginLicense),
+		reinterpret_cast<void*>(&::GetPluginLocation),
 		reinterpret_cast<void*>(&::GetPluginDependencies),
 		reinterpret_cast<void*>(&::GetPluginDependenciesSize),
-		reinterpret_cast<void*>(&::FindPluginResource),
 
 		reinterpret_cast<void*>(&::DeleteCStr),
 		reinterpret_cast<void*>(&::DeleteCStrArr),

@@ -1,15 +1,11 @@
 {
-    "$schema": "https://raw.githubusercontent.com/untrustedmodders/plugify/refs/heads/main/schemas/language-module.schema.json",
-    "fileVersion": 1,
-    "version": "${GOLM_VERSION}",
-    "friendlyName": "Go language module",
-    "language": "golang",
-    "description": "Adds support for Go plugins",
-    "createdBy": "untrustedmodders",
-    "createdByURL": "https://github.com/untrustedmodders/",
-    "docsURL": "https://github.com/untrustedmodders/plugify-module-golang/blob/main/README.md",
-    "downloadURL": "https://github.com/untrustedmodders/plugify-module-golang/releases/download/v${GOLM_VERSION}/${GOLM_PACKAGE}.zip",
-    "updateURL": "https://untrustedmodders.github.io/plugify-module-golang/plugify-module-golang.json",
-    "supportedPlatforms": [],
-    "forceLoad": false
+	"$schema": "https://raw.githubusercontent.com/untrustedmodders/plugify/refs/heads/main/schemas/language-module.schema.json",
+	"version": "${GOLM_VERSION}",
+	"name": "${GOLM_PACKAGE}",
+	"language": "golang",
+	"description": "Adds support for Go plugins",
+	"author": "untrustedmodders",
+	"website": "https://github.com/untrustedmodders/",
+	"license": "MIT",
+	"platforms": []
 }

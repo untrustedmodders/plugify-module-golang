@@ -1,10 +1,11 @@
 #pragma once
 
-#include <module_export.h>
 #include <plugify/assembly.hpp>
-#include <plugify/jit/callback.hpp>
+#include <plugify/callback.hpp>
 #include <plugify/language_module.hpp>
-#include <plugify/module.hpp>
+#include <plugify/extension.hpp>
+
+#include <module_export.h>
 
 using GoInt8 = signed char;
 using GoUint8 = unsigned char;
@@ -30,6 +31,7 @@ struct GoString {
 	GoInt n;
 
 	operator std::string_view() const { return {p, static_cast<size_t>(n)};  }
+	operator bool() const { return n > 0;  }
 };
 
 using GoMap = void*;
@@ -47,22 +49,12 @@ struct GoSlice {
 
 	template<typename T>
 	operator std::span<T>() const { return { static_cast<T*>(data), static_cast<size_t>(len)}; }
+	operator bool() const { return len > 0;  }
 };
 
-namespace golm {
-	struct string_hash {
-		using is_transparent = void;
-		[[nodiscard]] size_t operator()(const char* txt) const {
-			return std::hash<std::string_view>{}(txt);
-		}
-		[[nodiscard]] size_t operator()(std::string_view txt) const {
-			return std::hash<std::string_view>{}(txt);
-		}
-		[[nodiscard]] size_t operator()(const std::string& txt) const {
-			return std::hash<std::string>{}(txt);
-		}
-	};
+using namespace plugify;
 
+namespace golm {
 	constexpr int kApiVersion = 1;
 
 	struct PluginContext {
@@ -73,56 +65,55 @@ namespace golm {
 	};
 
 	using InitFunc = int (*)(GoSlice, int, const void*);
+	using CallFunc = JitCallback::CallbackHandler;
 	using StartFunc = void (*)();
 	using UpdateFunc = void (*)(float);
 	using EndFunc = void (*)();
 	using ContextFunc = PluginContext* (*)();
 
 	struct AssemblyHolder {
-		std::unique_ptr<plugify::Assembly> assembly;
+		std::shared_ptr<IAssembly> assembly;
 		UpdateFunc updateFunc;
 		StartFunc startFunc;
 		EndFunc endFunc;
 		ContextFunc contextFunc;
-		plugify::JitCallback::CallbackHandler callFunc;
+		CallFunc callFunc;
 	};
 
-	class GoLanguageModule final : public plugify::ILanguageModule {
+	class GoLanguageModule final : public ILanguageModule {
 	public:
 		GoLanguageModule() = default;
 		~GoLanguageModule() = default;
 
 		// ILanguageModule
-		plugify::InitResult Initialize(std::weak_ptr<plugify::IPlugifyProvider> provider, plugify::ModuleHandle module) override;
+		Result<InitData> Initialize(const Provider& provider, const Extension& module) override;
 		void Shutdown() override;
-		void OnUpdate(plugify::DateTime dt) override;
-		plugify::LoadResult OnPluginLoad(plugify::PluginHandle plugin) override;
-		void OnPluginStart(plugify::PluginHandle plugin) override;
-		void OnPluginUpdate(plugify::PluginHandle plugin, plugify::DateTime dt) override;
-		void OnPluginEnd(plugify::PluginHandle plugin) override;
-		void OnMethodExport(plugify::PluginHandle plugin) override;
+		void OnUpdate(std::chrono::milliseconds dt) override;
+		Result<LoadData> OnPluginLoad(const Extension& plugin) override;
+		void OnPluginStart(const Extension& plugin) override;
+		void OnPluginUpdate(const Extension& plugin, std::chrono::milliseconds dt) override;
+		void OnPluginEnd(const Extension& plugin) override;
+		void OnMethodExport(const Extension& plugin) override;
 		bool IsDebugBuild() override;
 
-		const std::shared_ptr<plugify::IPlugifyProvider>& GetProvider() { return _provider; }
-		const std::shared_ptr<asmjit::JitRuntime>& GetRuntime() { return _rt; }
+		const std::unique_ptr<Provider>& GetProvider() { return _provider; }
 
-		plugify::MemAddr GetNativeMethod(std::string_view methodName) const;
-		void GetNativeMethod(std::string_view methodName, plugify::MemAddr* addressDest);
-		plugify::MethodHandle FindMethod(std::string_view name);
+		MemAddr GetNativeMethod(std::string_view methodName) const;
+		void GetNativeMethod(std::string_view methodName, MemAddr* addressDest);
+		const Method* FindMethod(std::string_view name);
 
 	private:
-		std::shared_ptr<plugify::IPlugifyProvider> _provider;
-		std::shared_ptr<asmjit::JitRuntime> _rt;
+		std::unique_ptr<Provider> _provider;
 
 		std::vector<std::unique_ptr<AssemblyHolder>> _assemblies;
-		std::unordered_map<std::string, plugify::MemAddr, string_hash, std::equal_to<>> _nativesMap;
+		std::unordered_map<std::string, MemAddr, plg::string_hash, std::equal_to<>> _nativesMap;
 
-		std::vector<plugify::MemAddr*> _addresses;
+		std::vector<MemAddr*> _addresses;
 
-		static const std::array<void*, 139> _pluginApi;
+		static const std::array<void*, 140> _pluginApi;
 	};
 
 	extern GoLanguageModule g_golm;
 }
 
-extern "C" GOLM_EXPORT plugify::ILanguageModule* GetLanguageModule();
+extern "C" GOLM_EXPORT ILanguageModule* GetLanguageModule();
