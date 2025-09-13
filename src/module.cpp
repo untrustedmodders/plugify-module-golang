@@ -631,13 +631,13 @@ const EnumObject& GetMethodEnum(const Method& handle, ptrdiff_t index) {
 const std::array<void*, 140> GoLanguageModule::_pluginApi = {
 		reinterpret_cast<void*>(&::GetMethodPtr),
 		reinterpret_cast<void*>(&::GetMethodPtr2),
-		reinterpret_cast<void*>(&::IsExtensionLoaded),
 		reinterpret_cast<void*>(&::GetBaseDir),
 		reinterpret_cast<void*>(&::GetExtensionsDir),
 		reinterpret_cast<void*>(&::GetConfigsDir),
 		reinterpret_cast<void*>(&::GetDataDir),
 		reinterpret_cast<void*>(&::GetLogsDir),
 		reinterpret_cast<void*>(&::GetCacheDir),
+		reinterpret_cast<void*>(&::IsExtensionLoaded),
 		reinterpret_cast<void*>(&::PrintException),
 
 		reinterpret_cast<void*>(&::GetPluginId),
