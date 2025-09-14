@@ -1,5 +1,25 @@
 # Changelog
 
+## [2.0.0](https://github.com/untrustedmodders/plugify-module-golang/compare/v1.1.8...v2.0.0) (2025-09-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* update for a new plugify
+
+### Features
+
+* update for a new plugify ([ff091f8](https://github.com/untrustedmodders/plugify-module-golang/commit/ff091f801c501407145c6a8d2b1a7c0fee836856))
+
+
+### Bug Fixes
+
+* add prefix to all enum parameter names ([2c0347f](https://github.com/untrustedmodders/plugify-module-golang/commit/2c0347f688de410e626a9133cf43ec865a50c3c9))
+* change function order ([8aef780](https://github.com/untrustedmodders/plugify-module-golang/commit/8aef780253267f158b88bcbd7a46f211770f787c))
+* changing suffix to prefix ([7e206b2](https://github.com/untrustedmodders/plugify-module-golang/commit/7e206b2153e5bf0e043baac390a2d90271561692))
+* resolve enum constant name collisions and add side-effect reflect import ([0e39f68](https://github.com/untrustedmodders/plugify-module-golang/commit/0e39f684b65d3b573a48d745202faa2c208190eb))
+* update clang format ([28d3e5b](https://github.com/untrustedmodders/plugify-module-golang/commit/28d3e5b97560ef4fb78465f0b6454a8a1783a966))
+
 ## [1.1.8](https://github.com/untrustedmodders/plugify-module-golang/compare/v1.1.7...v1.1.8) (2025-08-02)
 
 
