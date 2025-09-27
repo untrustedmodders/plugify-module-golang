@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.1](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.0.0...v2.0.1) (2025-09-27)
+
+
+### Bug Fixes
+
+* add mac build ([b2a70c5](https://github.com/untrustedmodders/plugify-module-golang/commit/b2a70c514d369d2f2d86ea65b5a3055cee9faad9))
+* linux stacktrace lib ([1d424ed](https://github.com/untrustedmodders/plugify-module-golang/commit/1d424ed4e148da0ad413a4d076d4f0188fcbcc6d))
+* remove unused ([8b0d0a8](https://github.com/untrustedmodders/plugify-module-golang/commit/8b0d0a895a2e57d1d21d7ce1205bf4548bb1208b))
+* update plugify ([4c7dc2b](https://github.com/untrustedmodders/plugify-module-golang/commit/4c7dc2bd5f314ca193469b9646f58f8775ed8c46))
+* update plugify ([9ed511b](https://github.com/untrustedmodders/plugify-module-golang/commit/9ed511b70260b88a551a25e4977425289aab6b83))
+
 ## [2.0.0](https://github.com/untrustedmodders/plugify-module-golang/compare/v1.1.8...v2.0.0) (2025-09-14)
 
 
