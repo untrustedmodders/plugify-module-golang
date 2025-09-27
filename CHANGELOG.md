@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.2](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.0.1...v2.0.2) (2025-09-27)
+
+
+### Bug Fixes
+
+* disable stacktrace if not avail ([e820178](https://github.com/untrustedmodders/plugify-module-golang/commit/e8201789034df738f089743c77d5cddbea84c53b))
+
 ## [2.0.1](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.0.0...v2.0.1) (2025-09-27)
 
 
