@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.3](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.0.2...v2.0.3) (2025-09-27)
+
+
+### Bug Fixes
+
+* add missing run req for conda ([3c04862](https://github.com/untrustedmodders/plugify-module-golang/commit/3c048626f69995c98997ca95503d23f00de4c5fb))
+* change default build type ([3fa825b](https://github.com/untrustedmodders/plugify-module-golang/commit/3fa825b3cb8a19a57af3c8424dbe8749da96dcb3))
+
 ## [2.0.2](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.0.1...v2.0.2) (2025-09-27)
 
 
