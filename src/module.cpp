@@ -356,8 +356,6 @@ void DestroyVariant(plg::any* any) {
 	any->~variant();
 }
 
-#undef as_string
-
 namespace {
 	template<typename T>
 	PLUGIFY_FORCE_INLINE plg::vector<T> ConstructVector(T* arr, ptrdiff_t len) requires(!std::is_same_v<T, GoString>) {
