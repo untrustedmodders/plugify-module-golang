@@ -3,16 +3,26 @@
 
 set -ex
 
+# Detect the platform and set the appropriate library extension
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    LIB_EXT="dylib"
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    LIB_EXT="so"
+else
+    echo "Unsupported platform: $OSTYPE"
+    exit 1
+fi
+
 # Create the target directories
 mkdir -p $PREFIX/bin
 mkdir -p $PREFIX
 
 # Copy the shared library and module file
-cp bin/libplugify-module-golang.so $PREFIX/bin/
+cp bin/libplugify-module-golang.$LIB_EXT $PREFIX/bin/
 cp plugify-module-golang.pmodule $PREFIX/
 
 # Set proper permissions
-chmod 755 $PREFIX/bin/libplugify-module-golang.so
+chmod 755 $PREFIX/bin/libplugify-module-golang.$LIB_EXT
 chmod 644 $PREFIX/plugify-module-golang.pmodule
 
 # Create activation scripts for proper library path
