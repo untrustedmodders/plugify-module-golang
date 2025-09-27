@@ -9,8 +9,14 @@
 #include <plg/string.hpp>
 #include <plg/numerics.hpp>
 
-#include <stacktrace>
 #include <plugify/assembly_loader.hpp>
+
+#if __has_include(<stacktrace>)
+#include <stacktrace>
+#define HAS_STACKTRACE 1
+#else
+#define HAS_STACKTRACE 0
+#endif
 
 #define LOG_PREFIX "[GOLM] "
 
@@ -265,9 +271,10 @@ const char* GetCacheDir() {
 void PrintException(GoString message) {
 	if (const auto& provider = g_golm.GetProvider()) {
 		provider->Log(std::format(LOG_PREFIX "[Exception] {}", std::string_view(message)), Severity::Error);
-
+#if HAS_STACKTRACE
 		auto trace = std::stacktrace::current();
 		provider->Log(std::to_string(trace), Severity::Error);
+#endif
 	}
 }
 
