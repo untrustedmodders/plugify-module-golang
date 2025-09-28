@@ -22,10 +22,10 @@
 
 #### Вариант 1: Установка через менеджер плагинов Plugify
 
-Вы можете установить модуль языка Go с помощью менеджера плагинов Plugify, выполнив следующую команду:
+Вы можете установить модуль языка Go с помощью менеджера пакетов Mamba, выполнив следующую команду:
 
 ```bash
-plg install plugify-module-golang
+mamba install -n your_env_name -c https://untrustedmodders.github.io/plugify-module-golang/ plugify-module-golang
 ```
 
 #### Вариант 2: Ручная установка
