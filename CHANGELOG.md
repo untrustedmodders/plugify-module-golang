@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.4](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.0.3...v2.0.4) (2025-10-03)
+
+
+### Bug Fixes
+
+* add `out` folder to .gitignore ([a077b06](https://github.com/untrustedmodders/plugify-module-golang/commit/a077b063b4b5188642d24a551ee0f04828c74221))
+* improve san and debug symbols on windows ([c4ad48c](https://github.com/untrustedmodders/plugify-module-golang/commit/c4ad48c92ae2644e1f6af58d616351ad27801dc4))
+* update plugify ([9b29a9d](https://github.com/untrustedmodders/plugify-module-golang/commit/9b29a9d58228f5106a209779b32f25b282dba9ed))
+* update plugify ([c34cecb](https://github.com/untrustedmodders/plugify-module-golang/commit/c34cecbeaed648b6d1d0cbff34ce67d4a8fe4879))
+* update tests ([4202fbd](https://github.com/untrustedmodders/plugify-module-golang/commit/4202fbd971e1baee4f3bc70b2c309e56314f6bb5))
+
 ## [2.0.3](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.0.2...v2.0.3) (2025-09-27)
 
 
