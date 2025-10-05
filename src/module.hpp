@@ -100,7 +100,7 @@ namespace golm {
 
 		MemAddr GetNativeMethod(std::string_view methodName) const;
 		void GetNativeMethod(std::string_view methodName, MemAddr* addressDest);
-		const Method* FindMethod(std::string_view name);
+		std::shared_ptr<Method> FindMethod(std::string_view name);
 
 	private:
 		std::unique_ptr<Provider> _provider;

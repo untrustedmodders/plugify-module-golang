@@ -587,7 +587,7 @@ const char* GetCallError(JitCall* call) {
 }
 
 JitCallback* NewCallback(const Extension& plugin, GoString name, void* delegate) {
-	const Method* method = g_golm.FindMethod(name);
+	std::shared_ptr<Method> method = g_golm.FindMethod(name);
 	if (method == nullptr || delegate == nullptr)
 		return nullptr;
 
