@@ -184,7 +184,7 @@ void GoLanguageModule::GetNativeMethod(std::string_view methodName, MemAddr* add
 	_provider->Log(std::format(LOG_PREFIX "GetNativeMethod failed to find: '{}'", methodName), Severity::Fatal);
 }
 
-const Method* GoLanguageModule::FindMethod(std::string_view name) {
+std::shared_ptr<Method> GoLanguageModule::FindMethod(std::string_view name) {
 	if (auto separated = Split(name, "."); separated.size() == 2) {
 		if (auto plugin = _provider->FindExtension(separated[0])) {
 			for (const auto& method : plugin->GetMethods()) {
