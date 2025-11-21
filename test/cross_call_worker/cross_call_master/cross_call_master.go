@@ -147,11 +147,38 @@ package cross_call_master
 #cgo noescape CallFunc32Callback
 #cgo noescape CallFunc33Callback
 #cgo noescape CallFuncEnumCallback
+#cgo noescape ResourceHandleCreate
+#cgo noescape ResourceHandleCreateDefault
+#cgo noescape ResourceHandleDestroy
+#cgo noescape ResourceHandleGetId
+#cgo noescape ResourceHandleGetName
+#cgo noescape ResourceHandleSetName
+#cgo noescape ResourceHandleIncrementCounter
+#cgo noescape ResourceHandleGetCounter
+#cgo noescape ResourceHandleAddData
+#cgo noescape ResourceHandleGetData
+#cgo noescape ResourceHandleGetAliveCount
+#cgo noescape ResourceHandleGetTotalCreated
+#cgo noescape ResourceHandleGetTotalDestroyed
+#cgo noescape CounterCreate
+#cgo noescape CounterCreateZero
+#cgo noescape CounterGetValue
+#cgo noescape CounterSetValue
+#cgo noescape CounterIncrement
+#cgo noescape CounterDecrement
+#cgo noescape CounterAdd
+#cgo noescape CounterReset
+#cgo noescape CounterIsPositive
+#cgo noescape CounterCompare
+#cgo noescape CounterSum
 */
 import "C"
 import (
+	"errors"
 	"github.com/untrustedmodders/go-plugify"
 	"reflect"
+	_ "reflect"
+	"runtime"
 	"unsafe"
 )
 
@@ -160,92 +187,166 @@ import (
 type Example = int32
 
 const (
-	First  Example = 1
-	Second Example = 2
-	Third  Example = 3
-	Forth  Example = 4
+	Example_First  Example = 1
+	Example_Second Example = 2
+	Example_Third  Example = 3
+	Example_Forth  Example = 4
 )
 
 type NoParamReturnFunctionCallbackFunc func() int32
+
 type FuncVoid func()
+
 type FuncBool func() bool
+
 type FuncChar8 func() int8
+
 type FuncChar16 func() uint16
+
 type FuncInt8 func() int8
+
 type FuncInt16 func() int16
+
 type FuncInt32 func() int32
+
 type FuncInt64 func() int64
+
 type FuncUInt8 func() uint8
+
 type FuncUInt16 func() uint16
+
 type FuncUInt32 func() uint32
+
 type FuncUInt64 func() uint64
+
 type FuncPtr func() uintptr
+
 type FuncFloat func() float32
+
 type FuncDouble func() float64
+
 type FuncString func() string
+
 type FuncAny func() interface{}
+
 type FuncFunction func() uintptr
+
 type FuncBoolVector func() []bool
+
 type FuncChar8Vector func() []int8
+
 type FuncChar16Vector func() []uint16
+
 type FuncInt8Vector func() []int8
+
 type FuncInt16Vector func() []int16
+
 type FuncInt32Vector func() []int32
+
 type FuncInt64Vector func() []int64
+
 type FuncUInt8Vector func() []uint8
+
 type FuncUInt16Vector func() []uint16
+
 type FuncUInt32Vector func() []uint32
+
 type FuncUInt64Vector func() []uint64
+
 type FuncPtrVector func() []uintptr
+
 type FuncFloatVector func() []float32
+
 type FuncDoubleVector func() []float64
+
 type FuncStringVector func() []string
+
 type FuncAnyVector func() []interface{}
+
 type FuncVec2Vector func() []plugify.Vector2
+
 type FuncVec3Vector func() []plugify.Vector3
+
 type FuncVec4Vector func() []plugify.Vector4
+
 type FuncMat4x4Vector func() []plugify.Matrix4x4
+
 type FuncVec2 func() plugify.Vector2
+
 type FuncVec3 func() plugify.Vector3
+
 type FuncVec4 func() plugify.Vector4
+
 type FuncMat4x4 func() plugify.Matrix4x4
+
 type Func1 func(a plugify.Vector3) int32
+
 type Func2 func(a float32, b int64) int8
+
 type Func3 func(a uintptr, b plugify.Vector4, c string)
+
 type Func4 func(a bool, b int32, c uint16, d plugify.Matrix4x4) plugify.Vector4
+
 type Func5 func(a int8, b plugify.Vector2, c uintptr, d float64, e []uint64) bool
+
 type Func6 func(a string, b float32, c []float32, d int16, e []uint8, f uintptr) int64
+
 type Func7 func(vecC []int8, u16 uint16, ch16 uint16, vecU32 []uint32, vec4 plugify.Vector4, b bool, u64 uint64) float64
+
 type Func8 func(vec3 plugify.Vector3, vecU32 []uint32, i16 int16, b bool, vec4 plugify.Vector4, vecC16 []uint16, ch16 uint16, i32 int32) plugify.Matrix4x4
+
 type Func9 func(f float32, vec2 plugify.Vector2, vecI8 []int8, u64 uint64, b bool, str string, vec4 plugify.Vector4, i16 int16, ptr uintptr)
+
 type Func10 func(vec4 plugify.Vector4, mat plugify.Matrix4x4, vecU32 []uint32, u64 uint64, vecC []int8, i32 int32, b bool, vec2 plugify.Vector2, i64 int64, d float64) uint32
+
 type Func11 func(vecB []bool, ch16 uint16, u8 uint8, d float64, vec3 plugify.Vector3, vecI8 []int8, i64 int64, u16 uint16, f float32, vec2 plugify.Vector2, u32 uint32) uintptr
+
 type Func12 func(ptr uintptr, vecD []float64, u32 uint32, d float64, b bool, i32 int32, i8 int8, u64 uint64, f float32, vecPtr []uintptr, i64 int64, ch int8) bool
+
 type Func13 func(i64 int64, vecC []int8, d uint16, f float32, b []bool, vec4 plugify.Vector4, str string, int32_ int32, vec3 plugify.Vector3, ptr uintptr, vec2 plugify.Vector2, arr []uint8, i16 int16) string
+
 type Func14 func(vecC []int8, vecU32 []uint32, mat plugify.Matrix4x4, b bool, ch16 uint16, i32 int32, vecF []float32, u16 uint16, vecU8 []uint8, i8 int8, vec3 plugify.Vector3, vec4 plugify.Vector4, d float64, ptr uintptr) []string
+
 type Func15 func(vecI16 []int16, mat plugify.Matrix4x4, vec4 plugify.Vector4, ptr uintptr, u64 uint64, vecU32 []uint32, b bool, f float32, vecC16 []uint16, u8 uint8, i32 int32, vec2 plugify.Vector2, u16 uint16, d float64, vecU8 []uint8) int16
+
 type Func16 func(vecB []bool, i16 int16, vecI8 []int8, vec4 plugify.Vector4, mat plugify.Matrix4x4, vec2 plugify.Vector2, vecU64 []uint64, vecC []int8, str string, i64 int64, vecU32 []uint32, vec3 plugify.Vector3, f float32, d float64, i8 int8, u16 uint16) uintptr
+
 type Func17 func(i32 *int32)
+
 type Func18 func(i8 *int8, i16 *int16) plugify.Vector2
+
 type Func19 func(u32 *uint32, vec3 *plugify.Vector3, vecU32 *[]uint32)
+
 type Func20 func(ch16 *uint16, vec4 *plugify.Vector4, vecU64 *[]uint64, ch *int8) int32
+
 type Func21 func(mat *plugify.Matrix4x4, vecI32 *[]int32, vec2 *plugify.Vector2, b *bool, extraParam *float64) float32
+
 type Func22 func(ptr64Ref *uintptr, uint32Ref *uint32, vectorDoubleRef *[]float64, int16Ref *int16, plgStringRef *string, plgVector4Ref *plugify.Vector4) uint64
+
 type Func23 func(uint64Ref *uint64, plgVector2Ref *plugify.Vector2, vectorInt16Ref *[]int16, char16Ref *uint16, floatRef *float32, int8Ref *int8, vectorUInt8Ref *[]uint8)
+
 type Func24 func(vectorCharRef *[]int8, int64Ref *int64, vectorUInt8Ref *[]uint8, plgVector4Ref *plugify.Vector4, uint64Ref *uint64, vectorptr64Ref *[]uintptr, doubleRef *float64, vectorptr64Ref2 *[]uintptr) plugify.Matrix4x4
+
 type Func25 func(int32Ref *int32, vectorptr64Ref *[]uintptr, boolRef *bool, uint8Ref *uint8, plgStringRef *string, plgVector3Ref *plugify.Vector3, int64Ref *int64, plgVector4Ref *plugify.Vector4, uint16Ref *uint16) float64
+
 type Func26 func(char16Ref *uint16, plgVector2Ref *plugify.Vector2, plgMatrix4x4Ref *plugify.Matrix4x4, vectorFloatRef *[]float32, int16Ref *int16, uint64Ref *uint64, uint32Ref *uint32, vectorUInt16Ref *[]uint16, ptr64Ref *uintptr, boolRef *bool) int8
+
 type Func27 func(floatRef *float32, plgVector3Ref *plugify.Vector3, ptr64Ref *uintptr, plgVector2Ref *plugify.Vector2, vectorInt16Ref *[]int16, plgMatrix4x4Ref *plugify.Matrix4x4, boolRef *bool, plgVector4Ref *plugify.Vector4, int8Ref *int8, int32Ref *int32, vectorUInt8Ref *[]uint8) uint8
+
 type Func28 func(ptr64Ref *uintptr, uint16Ref *uint16, vectorUInt32Ref *[]uint32, plgMatrix4x4Ref *plugify.Matrix4x4, floatRef *float32, plgVector4Ref *plugify.Vector4, plgStringRef *string, vectorUInt64Ref *[]uint64, int64Ref *int64, boolRef *bool, plgVector3Ref *plugify.Vector3, vectorFloatRef *[]float32) string
+
 type Func29 func(plgVector4Ref *plugify.Vector4, int32Ref *int32, vectorInt8Ref *[]int8, doubleRef *float64, boolRef *bool, int8Ref *int8, vectorUInt16Ref *[]uint16, floatRef *float32, plgStringRef *string, plgMatrix4x4Ref *plugify.Matrix4x4, uint64Ref *uint64, plgVector3Ref *plugify.Vector3, vectorInt64Ref *[]int64) []string
+
 type Func30 func(ptr64Ref *uintptr, plgVector4Ref *plugify.Vector4, int64Ref *int64, vectorUInt32Ref *[]uint32, boolRef *bool, plgStringRef *string, plgVector3Ref *plugify.Vector3, vectorUInt8Ref *[]uint8, floatRef *float32, plgVector2Ref *plugify.Vector2, plgMatrix4x4Ref *plugify.Matrix4x4, int8Ref *int8, vectorFloatRef *[]float32, doubleRef *float64) int32
+
 type Func31 func(charRef *int8, uint32Ref *uint32, vectorUInt64Ref *[]uint64, plgVector4Ref *plugify.Vector4, plgStringRef *string, boolRef *bool, int64Ref *int64, vec2Ref *plugify.Vector2, int8Ref *int8, uint16Ref *uint16, vectorInt16Ref *[]int16, mat4x4Ref *plugify.Matrix4x4, vec3Ref *plugify.Vector3, floatRef *float32, vectorDoubleRef *[]float64) plugify.Vector3
+
 type Func32 func(p1 *int32, p2 *uint16, p3 *[]int8, p4 *plugify.Vector4, p5 *uintptr, p6 *[]uint32, p7 *plugify.Matrix4x4, p8 *uint64, p9 *string, p10 *int64, p11 *plugify.Vector2, p12 *[]int8, p13 *bool, p14 *plugify.Vector3, p15 *uint8, p16 *[]uint16) float64
+
 type Func33 func(variant *interface{})
+
 type FuncEnum func(p1 Example, p2 *[]Example) []Example
 
-// ReverseReturn - No description provided.
-// @param returnString: No description available.
 func ReverseReturn(returnString string) {
 	__returnString := plugify.ConstructString(returnString)
 	plugify.Block{
@@ -259,118 +360,85 @@ func ReverseReturn(returnString string) {
 	}.Do()
 }
 
-// NoParamReturnVoidCallback - No description provided.
 func NoParamReturnVoidCallback() {
 	C.NoParamReturnVoidCallback()
 }
 
-// NoParamReturnBoolCallback - No description provided.
-// @return No description available.
 func NoParamReturnBoolCallback() bool {
 	__retVal := bool(C.NoParamReturnBoolCallback())
 	return __retVal
 }
 
-// NoParamReturnChar8Callback - No description provided.
-// @return No description available.
 func NoParamReturnChar8Callback() int8 {
 	__retVal := int8(C.NoParamReturnChar8Callback())
 	return __retVal
 }
 
-// NoParamReturnChar16Callback - No description provided.
-// @return No description available.
 func NoParamReturnChar16Callback() uint16 {
 	__retVal := uint16(C.NoParamReturnChar16Callback())
 	return __retVal
 }
 
-// NoParamReturnInt8Callback - No description provided.
-// @return No description available.
 func NoParamReturnInt8Callback() int8 {
 	__retVal := int8(C.NoParamReturnInt8Callback())
 	return __retVal
 }
 
-// NoParamReturnInt16Callback - No description provided.
-// @return No description available.
 func NoParamReturnInt16Callback() int16 {
 	__retVal := int16(C.NoParamReturnInt16Callback())
 	return __retVal
 }
 
-// NoParamReturnInt32Callback - No description provided.
-// @return No description available.
 func NoParamReturnInt32Callback() int32 {
 	__retVal := int32(C.NoParamReturnInt32Callback())
 	return __retVal
 }
 
-// NoParamReturnInt64Callback - No description provided.
-// @return No description available.
 func NoParamReturnInt64Callback() int64 {
 	__retVal := int64(C.NoParamReturnInt64Callback())
 	return __retVal
 }
 
-// NoParamReturnUInt8Callback - No description provided.
-// @return No description available.
 func NoParamReturnUInt8Callback() uint8 {
 	__retVal := uint8(C.NoParamReturnUInt8Callback())
 	return __retVal
 }
 
-// NoParamReturnUInt16Callback - No description provided.
-// @return No description available.
 func NoParamReturnUInt16Callback() uint16 {
 	__retVal := uint16(C.NoParamReturnUInt16Callback())
 	return __retVal
 }
 
-// NoParamReturnUInt32Callback - No description provided.
-// @return No description available.
 func NoParamReturnUInt32Callback() uint32 {
 	__retVal := uint32(C.NoParamReturnUInt32Callback())
 	return __retVal
 }
 
-// NoParamReturnUInt64Callback - No description provided.
-// @return No description available.
 func NoParamReturnUInt64Callback() uint64 {
 	__retVal := uint64(C.NoParamReturnUInt64Callback())
 	return __retVal
 }
 
-// NoParamReturnPointerCallback - No description provided.
-// @return No description available.
 func NoParamReturnPointerCallback() uintptr {
 	__retVal := uintptr(C.NoParamReturnPointerCallback())
 	return __retVal
 }
 
-// NoParamReturnFloatCallback - No description provided.
-// @return No description available.
 func NoParamReturnFloatCallback() float32 {
 	__retVal := float32(C.NoParamReturnFloatCallback())
 	return __retVal
 }
 
-// NoParamReturnDoubleCallback - No description provided.
-// @return No description available.
 func NoParamReturnDoubleCallback() float64 {
 	__retVal := float64(C.NoParamReturnDoubleCallback())
 	return __retVal
 }
 
-// NoParamReturnFunctionCallback - No description provided.
-// @return No description available.
 func NoParamReturnFunctionCallback() NoParamReturnFunctionCallbackFunc {
 	__retVal := plugify.GetDelegateForFunctionPointer(C.NoParamReturnFunctionCallback(), reflect.TypeOf(NoParamReturnFunctionCallbackFunc(nil))).(NoParamReturnFunctionCallbackFunc)
 	return __retVal
 }
 
-// NoParamReturnStringCallback - No description provided.
-// @return No description available.
 func NoParamReturnStringCallback() string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
@@ -389,8 +457,6 @@ func NoParamReturnStringCallback() string {
 	return __retVal
 }
 
-// NoParamReturnAnyCallback - No description provided.
-// @return No description available.
 func NoParamReturnAnyCallback() interface{} {
 	var __retVal interface{}
 	var __retVal_native plugify.PlgVariant
@@ -409,8 +475,6 @@ func NoParamReturnAnyCallback() interface{} {
 	return __retVal
 }
 
-// NoParamReturnArrayBoolCallback - No description provided.
-// @return No description available.
 func NoParamReturnArrayBoolCallback() []bool {
 	var __retVal []bool
 	var __retVal_native plugify.PlgVector
@@ -429,8 +493,6 @@ func NoParamReturnArrayBoolCallback() []bool {
 	return __retVal
 }
 
-// NoParamReturnArrayChar8Callback - No description provided.
-// @return No description available.
 func NoParamReturnArrayChar8Callback() []int8 {
 	var __retVal []int8
 	var __retVal_native plugify.PlgVector
@@ -449,8 +511,6 @@ func NoParamReturnArrayChar8Callback() []int8 {
 	return __retVal
 }
 
-// NoParamReturnArrayChar16Callback - No description provided.
-// @return No description available.
 func NoParamReturnArrayChar16Callback() []uint16 {
 	var __retVal []uint16
 	var __retVal_native plugify.PlgVector
@@ -469,8 +529,6 @@ func NoParamReturnArrayChar16Callback() []uint16 {
 	return __retVal
 }
 
-// NoParamReturnArrayInt8Callback - No description provided.
-// @return No description available.
 func NoParamReturnArrayInt8Callback() []int8 {
 	var __retVal []int8
 	var __retVal_native plugify.PlgVector
@@ -489,8 +547,6 @@ func NoParamReturnArrayInt8Callback() []int8 {
 	return __retVal
 }
 
-// NoParamReturnArrayInt16Callback - No description provided.
-// @return No description available.
 func NoParamReturnArrayInt16Callback() []int16 {
 	var __retVal []int16
 	var __retVal_native plugify.PlgVector
@@ -509,8 +565,6 @@ func NoParamReturnArrayInt16Callback() []int16 {
 	return __retVal
 }
 
-// NoParamReturnArrayInt32Callback - No description provided.
-// @return No description available.
 func NoParamReturnArrayInt32Callback() []int32 {
 	var __retVal []int32
 	var __retVal_native plugify.PlgVector
@@ -529,8 +583,6 @@ func NoParamReturnArrayInt32Callback() []int32 {
 	return __retVal
 }
 
-// NoParamReturnArrayInt64Callback - No description provided.
-// @return No description available.
 func NoParamReturnArrayInt64Callback() []int64 {
 	var __retVal []int64
 	var __retVal_native plugify.PlgVector
@@ -549,8 +601,6 @@ func NoParamReturnArrayInt64Callback() []int64 {
 	return __retVal
 }
 
-// NoParamReturnArrayUInt8Callback - No description provided.
-// @return No description available.
 func NoParamReturnArrayUInt8Callback() []uint8 {
 	var __retVal []uint8
 	var __retVal_native plugify.PlgVector
@@ -569,8 +619,6 @@ func NoParamReturnArrayUInt8Callback() []uint8 {
 	return __retVal
 }
 
-// NoParamReturnArrayUInt16Callback - No description provided.
-// @return No description available.
 func NoParamReturnArrayUInt16Callback() []uint16 {
 	var __retVal []uint16
 	var __retVal_native plugify.PlgVector
@@ -589,8 +637,6 @@ func NoParamReturnArrayUInt16Callback() []uint16 {
 	return __retVal
 }
 
-// NoParamReturnArrayUInt32Callback - No description provided.
-// @return No description available.
 func NoParamReturnArrayUInt32Callback() []uint32 {
 	var __retVal []uint32
 	var __retVal_native plugify.PlgVector
@@ -609,8 +655,6 @@ func NoParamReturnArrayUInt32Callback() []uint32 {
 	return __retVal
 }
 
-// NoParamReturnArrayUInt64Callback - No description provided.
-// @return No description available.
 func NoParamReturnArrayUInt64Callback() []uint64 {
 	var __retVal []uint64
 	var __retVal_native plugify.PlgVector
@@ -629,8 +673,6 @@ func NoParamReturnArrayUInt64Callback() []uint64 {
 	return __retVal
 }
 
-// NoParamReturnArrayPointerCallback - No description provided.
-// @return No description available.
 func NoParamReturnArrayPointerCallback() []uintptr {
 	var __retVal []uintptr
 	var __retVal_native plugify.PlgVector
@@ -649,8 +691,6 @@ func NoParamReturnArrayPointerCallback() []uintptr {
 	return __retVal
 }
 
-// NoParamReturnArrayFloatCallback - No description provided.
-// @return No description available.
 func NoParamReturnArrayFloatCallback() []float32 {
 	var __retVal []float32
 	var __retVal_native plugify.PlgVector
@@ -669,8 +709,6 @@ func NoParamReturnArrayFloatCallback() []float32 {
 	return __retVal
 }
 
-// NoParamReturnArrayDoubleCallback - No description provided.
-// @return No description available.
 func NoParamReturnArrayDoubleCallback() []float64 {
 	var __retVal []float64
 	var __retVal_native plugify.PlgVector
@@ -689,8 +727,6 @@ func NoParamReturnArrayDoubleCallback() []float64 {
 	return __retVal
 }
 
-// NoParamReturnArrayStringCallback - No description provided.
-// @return No description available.
 func NoParamReturnArrayStringCallback() []string {
 	var __retVal []string
 	var __retVal_native plugify.PlgVector
@@ -709,8 +745,6 @@ func NoParamReturnArrayStringCallback() []string {
 	return __retVal
 }
 
-// NoParamReturnArrayAnyCallback - No description provided.
-// @return No description available.
 func NoParamReturnArrayAnyCallback() []interface{} {
 	var __retVal []interface{}
 	var __retVal_native plugify.PlgVector
@@ -729,8 +763,6 @@ func NoParamReturnArrayAnyCallback() []interface{} {
 	return __retVal
 }
 
-// NoParamReturnArrayVector2Callback - No description provided.
-// @return No description available.
 func NoParamReturnArrayVector2Callback() []plugify.Vector2 {
 	var __retVal []plugify.Vector2
 	var __retVal_native plugify.PlgVector
@@ -749,8 +781,6 @@ func NoParamReturnArrayVector2Callback() []plugify.Vector2 {
 	return __retVal
 }
 
-// NoParamReturnArrayVector3Callback - No description provided.
-// @return No description available.
 func NoParamReturnArrayVector3Callback() []plugify.Vector3 {
 	var __retVal []plugify.Vector3
 	var __retVal_native plugify.PlgVector
@@ -769,8 +799,6 @@ func NoParamReturnArrayVector3Callback() []plugify.Vector3 {
 	return __retVal
 }
 
-// NoParamReturnArrayVector4Callback - No description provided.
-// @return No description available.
 func NoParamReturnArrayVector4Callback() []plugify.Vector4 {
 	var __retVal []plugify.Vector4
 	var __retVal_native plugify.PlgVector
@@ -789,8 +817,6 @@ func NoParamReturnArrayVector4Callback() []plugify.Vector4 {
 	return __retVal
 }
 
-// NoParamReturnArrayMatrix4x4Callback - No description provided.
-// @return No description available.
 func NoParamReturnArrayMatrix4x4Callback() []plugify.Matrix4x4 {
 	var __retVal []plugify.Matrix4x4
 	var __retVal_native plugify.PlgVector
@@ -809,58 +835,41 @@ func NoParamReturnArrayMatrix4x4Callback() []plugify.Matrix4x4 {
 	return __retVal
 }
 
-// NoParamReturnVector2Callback - No description provided.
-// @return No description available.
 func NoParamReturnVector2Callback() plugify.Vector2 {
 	__native := C.NoParamReturnVector2Callback()
 	__retVal := *(*plugify.Vector2)(unsafe.Pointer(&__native))
 	return __retVal
 }
 
-// NoParamReturnVector3Callback - No description provided.
-// @return No description available.
 func NoParamReturnVector3Callback() plugify.Vector3 {
 	__native := C.NoParamReturnVector3Callback()
 	__retVal := *(*plugify.Vector3)(unsafe.Pointer(&__native))
 	return __retVal
 }
 
-// NoParamReturnVector4Callback - No description provided.
-// @return No description available.
 func NoParamReturnVector4Callback() plugify.Vector4 {
 	__native := C.NoParamReturnVector4Callback()
 	__retVal := *(*plugify.Vector4)(unsafe.Pointer(&__native))
 	return __retVal
 }
 
-// NoParamReturnMatrix4x4Callback - No description provided.
-// @return No description available.
 func NoParamReturnMatrix4x4Callback() plugify.Matrix4x4 {
 	__native := C.NoParamReturnMatrix4x4Callback()
 	__retVal := *(*plugify.Matrix4x4)(unsafe.Pointer(&__native))
 	return __retVal
 }
 
-// Param1Callback - No description provided.
-// @param a: No description available.
 func Param1Callback(a int32) {
 	__a := C.int32_t(a)
 	C.Param1Callback(__a)
 }
 
-// Param2Callback - No description provided.
-// @param a: No description available.
-// @param b: No description available.
 func Param2Callback(a int32, b float32) {
 	__a := C.int32_t(a)
 	__b := C.float(b)
 	C.Param2Callback(__a, __b)
 }
 
-// Param3Callback - No description provided.
-// @param a: No description available.
-// @param b: No description available.
-// @param c: No description available.
 func Param3Callback(a int32, b float32, c float64) {
 	__a := C.int32_t(a)
 	__b := C.float(b)
@@ -868,11 +877,6 @@ func Param3Callback(a int32, b float32, c float64) {
 	C.Param3Callback(__a, __b, __c)
 }
 
-// Param4Callback - No description provided.
-// @param a: No description available.
-// @param b: No description available.
-// @param c: No description available.
-// @param d: No description available.
 func Param4Callback(a int32, b float32, c float64, d plugify.Vector4) {
 	__a := C.int32_t(a)
 	__b := C.float(b)
@@ -881,12 +885,6 @@ func Param4Callback(a int32, b float32, c float64, d plugify.Vector4) {
 	C.Param4Callback(__a, __b, __c, &__d)
 }
 
-// Param5Callback - No description provided.
-// @param a: No description available.
-// @param b: No description available.
-// @param c: No description available.
-// @param d: No description available.
-// @param e: No description available.
 func Param5Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64) {
 	__a := C.int32_t(a)
 	__b := C.float(b)
@@ -904,13 +902,6 @@ func Param5Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64)
 	}.Do()
 }
 
-// Param6Callback - No description provided.
-// @param a: No description available.
-// @param b: No description available.
-// @param c: No description available.
-// @param d: No description available.
-// @param e: No description available.
-// @param f: No description available.
 func Param6Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8) {
 	__a := C.int32_t(a)
 	__b := C.float(b)
@@ -929,14 +920,6 @@ func Param6Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64,
 	}.Do()
 }
 
-// Param7Callback - No description provided.
-// @param a: No description available.
-// @param b: No description available.
-// @param c: No description available.
-// @param d: No description available.
-// @param e: No description available.
-// @param f: No description available.
-// @param g: No description available.
 func Param7Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8, g string) {
 	__a := C.int32_t(a)
 	__b := C.float(b)
@@ -957,15 +940,6 @@ func Param7Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64,
 	}.Do()
 }
 
-// Param8Callback - No description provided.
-// @param a: No description available.
-// @param b: No description available.
-// @param c: No description available.
-// @param d: No description available.
-// @param e: No description available.
-// @param f: No description available.
-// @param g: No description available.
-// @param h: No description available.
 func Param8Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8, g string, h uint16) {
 	__a := C.int32_t(a)
 	__b := C.float(b)
@@ -987,16 +961,6 @@ func Param8Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64,
 	}.Do()
 }
 
-// Param9Callback - No description provided.
-// @param a: No description available.
-// @param b: No description available.
-// @param c: No description available.
-// @param d: No description available.
-// @param e: No description available.
-// @param f: No description available.
-// @param g: No description available.
-// @param h: No description available.
-// @param k: No description available.
 func Param9Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8, g string, h uint16, k int16) {
 	__a := C.int32_t(a)
 	__b := C.float(b)
@@ -1019,17 +983,6 @@ func Param9Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64,
 	}.Do()
 }
 
-// Param10Callback - No description provided.
-// @param a: No description available.
-// @param b: No description available.
-// @param c: No description available.
-// @param d: No description available.
-// @param e: No description available.
-// @param f: No description available.
-// @param g: No description available.
-// @param h: No description available.
-// @param k: No description available.
-// @param l: No description available.
 func Param10Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8, g string, h uint16, k int16, l uintptr) {
 	__a := C.int32_t(a)
 	__b := C.float(b)
@@ -1053,8 +1006,6 @@ func Param10Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64
 	}.Do()
 }
 
-// ParamRef1Callback - No description provided.
-// @param a: No description available.
 func ParamRef1Callback(a *int32) {
 	__a := C.int32_t(*a)
 	C.ParamRef1Callback(&__a)
@@ -1062,9 +1013,6 @@ func ParamRef1Callback(a *int32) {
 	*a = int32(__a)
 }
 
-// ParamRef2Callback - No description provided.
-// @param a: No description available.
-// @param b: No description available.
 func ParamRef2Callback(a *int32, b *float32) {
 	__a := C.int32_t(*a)
 	__b := C.float(*b)
@@ -1074,10 +1022,6 @@ func ParamRef2Callback(a *int32, b *float32) {
 	*b = float32(__b)
 }
 
-// ParamRef3Callback - No description provided.
-// @param a: No description available.
-// @param b: No description available.
-// @param c: No description available.
 func ParamRef3Callback(a *int32, b *float32, c *float64) {
 	__a := C.int32_t(*a)
 	__b := C.float(*b)
@@ -1089,11 +1033,6 @@ func ParamRef3Callback(a *int32, b *float32, c *float64) {
 	*c = float64(__c)
 }
 
-// ParamRef4Callback - No description provided.
-// @param a: No description available.
-// @param b: No description available.
-// @param c: No description available.
-// @param d: No description available.
 func ParamRef4Callback(a *int32, b *float32, c *float64, d *plugify.Vector4) {
 	__a := C.int32_t(*a)
 	__b := C.float(*b)
@@ -1107,12 +1046,6 @@ func ParamRef4Callback(a *int32, b *float32, c *float64, d *plugify.Vector4) {
 	*d = *(*plugify.Vector4)(unsafe.Pointer(&__d))
 }
 
-// ParamRef5Callback - No description provided.
-// @param a: No description available.
-// @param b: No description available.
-// @param c: No description available.
-// @param d: No description available.
-// @param e: No description available.
 func ParamRef5Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64) {
 	__a := C.int32_t(*a)
 	__b := C.float(*b)
@@ -1136,13 +1069,6 @@ func ParamRef5Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *
 	}.Do()
 }
 
-// ParamRef6Callback - No description provided.
-// @param a: No description available.
-// @param b: No description available.
-// @param c: No description available.
-// @param d: No description available.
-// @param e: No description available.
-// @param f: No description available.
 func ParamRef6Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8) {
 	__a := C.int32_t(*a)
 	__b := C.float(*b)
@@ -1168,14 +1094,6 @@ func ParamRef6Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *
 	}.Do()
 }
 
-// ParamRef7Callback - No description provided.
-// @param a: No description available.
-// @param b: No description available.
-// @param c: No description available.
-// @param d: No description available.
-// @param e: No description available.
-// @param f: No description available.
-// @param g: No description available.
 func ParamRef7Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8, g *string) {
 	__a := C.int32_t(*a)
 	__b := C.float(*b)
@@ -1204,15 +1122,6 @@ func ParamRef7Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *
 	}.Do()
 }
 
-// ParamRef8Callback - No description provided.
-// @param a: No description available.
-// @param b: No description available.
-// @param c: No description available.
-// @param d: No description available.
-// @param e: No description available.
-// @param f: No description available.
-// @param g: No description available.
-// @param h: No description available.
 func ParamRef8Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8, g *string, h *uint16) {
 	__a := C.int32_t(*a)
 	__b := C.float(*b)
@@ -1243,16 +1152,6 @@ func ParamRef8Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *
 	}.Do()
 }
 
-// ParamRef9Callback - No description provided.
-// @param a: No description available.
-// @param b: No description available.
-// @param c: No description available.
-// @param d: No description available.
-// @param e: No description available.
-// @param f: No description available.
-// @param g: No description available.
-// @param h: No description available.
-// @param k: No description available.
 func ParamRef9Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8, g *string, h *uint16, k *int16) {
 	__a := C.int32_t(*a)
 	__b := C.float(*b)
@@ -1285,17 +1184,6 @@ func ParamRef9Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *
 	}.Do()
 }
 
-// ParamRef10Callback - No description provided.
-// @param a: No description available.
-// @param b: No description available.
-// @param c: No description available.
-// @param d: No description available.
-// @param e: No description available.
-// @param f: No description available.
-// @param g: No description available.
-// @param h: No description available.
-// @param k: No description available.
-// @param l: No description available.
 func ParamRef10Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8, g *string, h *uint16, k *int16, l *uintptr) {
 	__a := C.int32_t(*a)
 	__b := C.float(*b)
@@ -1330,22 +1218,6 @@ func ParamRef10Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e 
 	}.Do()
 }
 
-// ParamRefVectorsCallback - No description provided.
-// @param p1: No description available.
-// @param p2: No description available.
-// @param p3: No description available.
-// @param p4: No description available.
-// @param p5: No description available.
-// @param p6: No description available.
-// @param p7: No description available.
-// @param p8: No description available.
-// @param p9: No description available.
-// @param p10: No description available.
-// @param p11: No description available.
-// @param p12: No description available.
-// @param p13: No description available.
-// @param p14: No description available.
-// @param p15: No description available.
 func ParamRefVectorsCallback(p1 *[]bool, p2 *[]int8, p3 *[]uint16, p4 *[]int8, p5 *[]int16, p6 *[]int32, p7 *[]int64, p8 *[]uint8, p9 *[]uint16, p10 *[]uint32, p11 *[]uint64, p12 *[]uintptr, p13 *[]float32, p14 *[]float64, p15 *[]string) {
 	__p1 := plugify.ConstructVectorBool(*p1)
 	__p2 := plugify.ConstructVectorChar8(*p2)
@@ -1403,22 +1275,6 @@ func ParamRefVectorsCallback(p1 *[]bool, p2 *[]int8, p3 *[]uint16, p4 *[]int8, p
 	}.Do()
 }
 
-// ParamAllPrimitivesCallback - No description provided.
-// @param p1: No description available.
-// @param p2: No description available.
-// @param p3: No description available.
-// @param p4: No description available.
-// @param p5: No description available.
-// @param p6: No description available.
-// @param p7: No description available.
-// @param p8: No description available.
-// @param p9: No description available.
-// @param p10: No description available.
-// @param p11: No description available.
-// @param p12: No description available.
-// @param p13: No description available.
-// @param p14: No description available.
-// @return No description available.
 func ParamAllPrimitivesCallback(p1 bool, p2 int8, p3 uint16, p4 int8, p5 int16, p6 int32, p7 int64, p8 uint8, p9 uint16, p10 uint32, p11 uint64, p12 uintptr, p13 float32, p14 float64) int64 {
 	var __retVal int64
 	__p1 := C.bool(p1)
@@ -1439,10 +1295,6 @@ func ParamAllPrimitivesCallback(p1 bool, p2 int8, p3 uint16, p4 int8, p5 int16, 
 	return __retVal
 }
 
-// ParamEnumCallback - No description provided.
-// @param p1: No description available.
-// @param p2: No description available.
-// @return No description available.
 func ParamEnumCallback(p1 Example, p2 []Example) int32 {
 	var __retVal int32
 	__p1 := C.int32_t(p1)
@@ -1459,10 +1311,6 @@ func ParamEnumCallback(p1 Example, p2 []Example) int32 {
 	return __retVal
 }
 
-// ParamEnumRefCallback - No description provided.
-// @param p1: No description available.
-// @param p2: No description available.
-// @return No description available.
 func ParamEnumRefCallback(p1 *Example, p2 *[]Example) int32 {
 	var __retVal int32
 	__p1 := C.int32_t(*p1)
@@ -1482,9 +1330,6 @@ func ParamEnumRefCallback(p1 *Example, p2 *[]Example) int32 {
 	return __retVal
 }
 
-// ParamVariantCallback - No description provided.
-// @param p1: No description available.
-// @param p2: No description available.
 func ParamVariantCallback(p1 interface{}, p2 []interface{}) {
 	__p1 := plugify.ConstructVariant(p1)
 	__p2 := plugify.ConstructVectorVariant(p2)
@@ -1500,9 +1345,6 @@ func ParamVariantCallback(p1 interface{}, p2 []interface{}) {
 	}.Do()
 }
 
-// ParamVariantRefCallback - No description provided.
-// @param p1: No description available.
-// @param p2: No description available.
 func ParamVariantRefCallback(p1 *interface{}, p2 *[]interface{}) {
 	__p1 := plugify.ConstructVariant(*p1)
 	__p2 := plugify.ConstructVectorVariant(*p2)
@@ -1521,16 +1363,11 @@ func ParamVariantRefCallback(p1 *interface{}, p2 *[]interface{}) {
 	}.Do()
 }
 
-// CallFuncVoidCallback - No description provided.
-// @param func: No description available.
 func CallFuncVoidCallback(func_ FuncVoid) {
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	C.CallFuncVoidCallback(__func_)
 }
 
-// CallFuncBoolCallback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncBoolCallback(func_ FuncBool) bool {
 	var __retVal bool
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1538,9 +1375,6 @@ func CallFuncBoolCallback(func_ FuncBool) bool {
 	return __retVal
 }
 
-// CallFuncChar8Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncChar8Callback(func_ FuncChar8) int8 {
 	var __retVal int8
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1548,9 +1382,6 @@ func CallFuncChar8Callback(func_ FuncChar8) int8 {
 	return __retVal
 }
 
-// CallFuncChar16Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncChar16Callback(func_ FuncChar16) uint16 {
 	var __retVal uint16
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1558,9 +1389,6 @@ func CallFuncChar16Callback(func_ FuncChar16) uint16 {
 	return __retVal
 }
 
-// CallFuncInt8Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncInt8Callback(func_ FuncInt8) int8 {
 	var __retVal int8
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1568,9 +1396,6 @@ func CallFuncInt8Callback(func_ FuncInt8) int8 {
 	return __retVal
 }
 
-// CallFuncInt16Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncInt16Callback(func_ FuncInt16) int16 {
 	var __retVal int16
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1578,9 +1403,6 @@ func CallFuncInt16Callback(func_ FuncInt16) int16 {
 	return __retVal
 }
 
-// CallFuncInt32Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncInt32Callback(func_ FuncInt32) int32 {
 	var __retVal int32
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1588,9 +1410,6 @@ func CallFuncInt32Callback(func_ FuncInt32) int32 {
 	return __retVal
 }
 
-// CallFuncInt64Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncInt64Callback(func_ FuncInt64) int64 {
 	var __retVal int64
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1598,9 +1417,6 @@ func CallFuncInt64Callback(func_ FuncInt64) int64 {
 	return __retVal
 }
 
-// CallFuncUInt8Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncUInt8Callback(func_ FuncUInt8) uint8 {
 	var __retVal uint8
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1608,9 +1424,6 @@ func CallFuncUInt8Callback(func_ FuncUInt8) uint8 {
 	return __retVal
 }
 
-// CallFuncUInt16Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncUInt16Callback(func_ FuncUInt16) uint16 {
 	var __retVal uint16
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1618,9 +1431,6 @@ func CallFuncUInt16Callback(func_ FuncUInt16) uint16 {
 	return __retVal
 }
 
-// CallFuncUInt32Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncUInt32Callback(func_ FuncUInt32) uint32 {
 	var __retVal uint32
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1628,9 +1438,6 @@ func CallFuncUInt32Callback(func_ FuncUInt32) uint32 {
 	return __retVal
 }
 
-// CallFuncUInt64Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncUInt64Callback(func_ FuncUInt64) uint64 {
 	var __retVal uint64
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1638,9 +1445,6 @@ func CallFuncUInt64Callback(func_ FuncUInt64) uint64 {
 	return __retVal
 }
 
-// CallFuncPtrCallback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncPtrCallback(func_ FuncPtr) uintptr {
 	var __retVal uintptr
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1648,9 +1452,6 @@ func CallFuncPtrCallback(func_ FuncPtr) uintptr {
 	return __retVal
 }
 
-// CallFuncFloatCallback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncFloatCallback(func_ FuncFloat) float32 {
 	var __retVal float32
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1658,9 +1459,6 @@ func CallFuncFloatCallback(func_ FuncFloat) float32 {
 	return __retVal
 }
 
-// CallFuncDoubleCallback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncDoubleCallback(func_ FuncDouble) float64 {
 	var __retVal float64
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1668,9 +1466,6 @@ func CallFuncDoubleCallback(func_ FuncDouble) float64 {
 	return __retVal
 }
 
-// CallFuncStringCallback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncStringCallback(func_ FuncString) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
@@ -1690,9 +1485,6 @@ func CallFuncStringCallback(func_ FuncString) string {
 	return __retVal
 }
 
-// CallFuncAnyCallback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncAnyCallback(func_ FuncAny) interface{} {
 	var __retVal interface{}
 	var __retVal_native plugify.PlgVariant
@@ -1712,9 +1504,6 @@ func CallFuncAnyCallback(func_ FuncAny) interface{} {
 	return __retVal
 }
 
-// CallFuncFunctionCallback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncFunctionCallback(func_ FuncFunction) uintptr {
 	var __retVal uintptr
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1722,9 +1511,6 @@ func CallFuncFunctionCallback(func_ FuncFunction) uintptr {
 	return __retVal
 }
 
-// CallFuncBoolVectorCallback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncBoolVectorCallback(func_ FuncBoolVector) []bool {
 	var __retVal []bool
 	var __retVal_native plugify.PlgVector
@@ -1744,9 +1530,6 @@ func CallFuncBoolVectorCallback(func_ FuncBoolVector) []bool {
 	return __retVal
 }
 
-// CallFuncChar8VectorCallback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncChar8VectorCallback(func_ FuncChar8Vector) []int8 {
 	var __retVal []int8
 	var __retVal_native plugify.PlgVector
@@ -1766,9 +1549,6 @@ func CallFuncChar8VectorCallback(func_ FuncChar8Vector) []int8 {
 	return __retVal
 }
 
-// CallFuncChar16VectorCallback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncChar16VectorCallback(func_ FuncChar16Vector) []uint16 {
 	var __retVal []uint16
 	var __retVal_native plugify.PlgVector
@@ -1788,9 +1568,6 @@ func CallFuncChar16VectorCallback(func_ FuncChar16Vector) []uint16 {
 	return __retVal
 }
 
-// CallFuncInt8VectorCallback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncInt8VectorCallback(func_ FuncInt8Vector) []int8 {
 	var __retVal []int8
 	var __retVal_native plugify.PlgVector
@@ -1810,9 +1587,6 @@ func CallFuncInt8VectorCallback(func_ FuncInt8Vector) []int8 {
 	return __retVal
 }
 
-// CallFuncInt16VectorCallback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncInt16VectorCallback(func_ FuncInt16Vector) []int16 {
 	var __retVal []int16
 	var __retVal_native plugify.PlgVector
@@ -1832,9 +1606,6 @@ func CallFuncInt16VectorCallback(func_ FuncInt16Vector) []int16 {
 	return __retVal
 }
 
-// CallFuncInt32VectorCallback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncInt32VectorCallback(func_ FuncInt32Vector) []int32 {
 	var __retVal []int32
 	var __retVal_native plugify.PlgVector
@@ -1854,9 +1625,6 @@ func CallFuncInt32VectorCallback(func_ FuncInt32Vector) []int32 {
 	return __retVal
 }
 
-// CallFuncInt64VectorCallback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncInt64VectorCallback(func_ FuncInt64Vector) []int64 {
 	var __retVal []int64
 	var __retVal_native plugify.PlgVector
@@ -1876,9 +1644,6 @@ func CallFuncInt64VectorCallback(func_ FuncInt64Vector) []int64 {
 	return __retVal
 }
 
-// CallFuncUInt8VectorCallback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncUInt8VectorCallback(func_ FuncUInt8Vector) []uint8 {
 	var __retVal []uint8
 	var __retVal_native plugify.PlgVector
@@ -1898,9 +1663,6 @@ func CallFuncUInt8VectorCallback(func_ FuncUInt8Vector) []uint8 {
 	return __retVal
 }
 
-// CallFuncUInt16VectorCallback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncUInt16VectorCallback(func_ FuncUInt16Vector) []uint16 {
 	var __retVal []uint16
 	var __retVal_native plugify.PlgVector
@@ -1920,9 +1682,6 @@ func CallFuncUInt16VectorCallback(func_ FuncUInt16Vector) []uint16 {
 	return __retVal
 }
 
-// CallFuncUInt32VectorCallback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncUInt32VectorCallback(func_ FuncUInt32Vector) []uint32 {
 	var __retVal []uint32
 	var __retVal_native plugify.PlgVector
@@ -1942,9 +1701,6 @@ func CallFuncUInt32VectorCallback(func_ FuncUInt32Vector) []uint32 {
 	return __retVal
 }
 
-// CallFuncUInt64VectorCallback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncUInt64VectorCallback(func_ FuncUInt64Vector) []uint64 {
 	var __retVal []uint64
 	var __retVal_native plugify.PlgVector
@@ -1964,9 +1720,6 @@ func CallFuncUInt64VectorCallback(func_ FuncUInt64Vector) []uint64 {
 	return __retVal
 }
 
-// CallFuncPtrVectorCallback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncPtrVectorCallback(func_ FuncPtrVector) []uintptr {
 	var __retVal []uintptr
 	var __retVal_native plugify.PlgVector
@@ -1986,9 +1739,6 @@ func CallFuncPtrVectorCallback(func_ FuncPtrVector) []uintptr {
 	return __retVal
 }
 
-// CallFuncFloatVectorCallback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncFloatVectorCallback(func_ FuncFloatVector) []float32 {
 	var __retVal []float32
 	var __retVal_native plugify.PlgVector
@@ -2008,9 +1758,6 @@ func CallFuncFloatVectorCallback(func_ FuncFloatVector) []float32 {
 	return __retVal
 }
 
-// CallFuncDoubleVectorCallback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncDoubleVectorCallback(func_ FuncDoubleVector) []float64 {
 	var __retVal []float64
 	var __retVal_native plugify.PlgVector
@@ -2030,9 +1777,6 @@ func CallFuncDoubleVectorCallback(func_ FuncDoubleVector) []float64 {
 	return __retVal
 }
 
-// CallFuncStringVectorCallback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncStringVectorCallback(func_ FuncStringVector) []string {
 	var __retVal []string
 	var __retVal_native plugify.PlgVector
@@ -2052,9 +1796,6 @@ func CallFuncStringVectorCallback(func_ FuncStringVector) []string {
 	return __retVal
 }
 
-// CallFuncAnyVectorCallback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncAnyVectorCallback(func_ FuncAnyVector) []interface{} {
 	var __retVal []interface{}
 	var __retVal_native plugify.PlgVector
@@ -2074,9 +1815,6 @@ func CallFuncAnyVectorCallback(func_ FuncAnyVector) []interface{} {
 	return __retVal
 }
 
-// CallFuncVec2VectorCallback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncVec2VectorCallback(func_ FuncVec2Vector) []plugify.Vector2 {
 	var __retVal []plugify.Vector2
 	var __retVal_native plugify.PlgVector
@@ -2096,9 +1834,6 @@ func CallFuncVec2VectorCallback(func_ FuncVec2Vector) []plugify.Vector2 {
 	return __retVal
 }
 
-// CallFuncVec3VectorCallback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncVec3VectorCallback(func_ FuncVec3Vector) []plugify.Vector3 {
 	var __retVal []plugify.Vector3
 	var __retVal_native plugify.PlgVector
@@ -2118,9 +1853,6 @@ func CallFuncVec3VectorCallback(func_ FuncVec3Vector) []plugify.Vector3 {
 	return __retVal
 }
 
-// CallFuncVec4VectorCallback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncVec4VectorCallback(func_ FuncVec4Vector) []plugify.Vector4 {
 	var __retVal []plugify.Vector4
 	var __retVal_native plugify.PlgVector
@@ -2140,9 +1872,6 @@ func CallFuncVec4VectorCallback(func_ FuncVec4Vector) []plugify.Vector4 {
 	return __retVal
 }
 
-// CallFuncMat4x4VectorCallback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncMat4x4VectorCallback(func_ FuncMat4x4Vector) []plugify.Matrix4x4 {
 	var __retVal []plugify.Matrix4x4
 	var __retVal_native plugify.PlgVector
@@ -2162,9 +1891,6 @@ func CallFuncMat4x4VectorCallback(func_ FuncMat4x4Vector) []plugify.Matrix4x4 {
 	return __retVal
 }
 
-// CallFuncVec2Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncVec2Callback(func_ FuncVec2) plugify.Vector2 {
 	var __retVal plugify.Vector2
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2173,9 +1899,6 @@ func CallFuncVec2Callback(func_ FuncVec2) plugify.Vector2 {
 	return __retVal
 }
 
-// CallFuncVec3Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncVec3Callback(func_ FuncVec3) plugify.Vector3 {
 	var __retVal plugify.Vector3
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2184,9 +1907,6 @@ func CallFuncVec3Callback(func_ FuncVec3) plugify.Vector3 {
 	return __retVal
 }
 
-// CallFuncVec4Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncVec4Callback(func_ FuncVec4) plugify.Vector4 {
 	var __retVal plugify.Vector4
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2195,9 +1915,6 @@ func CallFuncVec4Callback(func_ FuncVec4) plugify.Vector4 {
 	return __retVal
 }
 
-// CallFuncMat4x4Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncMat4x4Callback(func_ FuncMat4x4) plugify.Matrix4x4 {
 	var __retVal plugify.Matrix4x4
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2206,9 +1923,6 @@ func CallFuncMat4x4Callback(func_ FuncMat4x4) plugify.Matrix4x4 {
 	return __retVal
 }
 
-// CallFunc1Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFunc1Callback(func_ Func1) int32 {
 	var __retVal int32
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2216,9 +1930,6 @@ func CallFunc1Callback(func_ Func1) int32 {
 	return __retVal
 }
 
-// CallFunc2Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFunc2Callback(func_ Func2) int8 {
 	var __retVal int8
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2226,16 +1937,11 @@ func CallFunc2Callback(func_ Func2) int8 {
 	return __retVal
 }
 
-// CallFunc3Callback - No description provided.
-// @param func: No description available.
 func CallFunc3Callback(func_ Func3) {
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	C.CallFunc3Callback(__func_)
 }
 
-// CallFunc4Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFunc4Callback(func_ Func4) plugify.Vector4 {
 	var __retVal plugify.Vector4
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2244,9 +1950,6 @@ func CallFunc4Callback(func_ Func4) plugify.Vector4 {
 	return __retVal
 }
 
-// CallFunc5Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFunc5Callback(func_ Func5) bool {
 	var __retVal bool
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2254,9 +1957,6 @@ func CallFunc5Callback(func_ Func5) bool {
 	return __retVal
 }
 
-// CallFunc6Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFunc6Callback(func_ Func6) int64 {
 	var __retVal int64
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2264,9 +1964,6 @@ func CallFunc6Callback(func_ Func6) int64 {
 	return __retVal
 }
 
-// CallFunc7Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFunc7Callback(func_ Func7) float64 {
 	var __retVal float64
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2274,9 +1971,6 @@ func CallFunc7Callback(func_ Func7) float64 {
 	return __retVal
 }
 
-// CallFunc8Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFunc8Callback(func_ Func8) plugify.Matrix4x4 {
 	var __retVal plugify.Matrix4x4
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2285,16 +1979,11 @@ func CallFunc8Callback(func_ Func8) plugify.Matrix4x4 {
 	return __retVal
 }
 
-// CallFunc9Callback - No description provided.
-// @param func: No description available.
 func CallFunc9Callback(func_ Func9) {
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	C.CallFunc9Callback(__func_)
 }
 
-// CallFunc10Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFunc10Callback(func_ Func10) uint32 {
 	var __retVal uint32
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2302,9 +1991,6 @@ func CallFunc10Callback(func_ Func10) uint32 {
 	return __retVal
 }
 
-// CallFunc11Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFunc11Callback(func_ Func11) uintptr {
 	var __retVal uintptr
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2312,9 +1998,6 @@ func CallFunc11Callback(func_ Func11) uintptr {
 	return __retVal
 }
 
-// CallFunc12Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFunc12Callback(func_ Func12) bool {
 	var __retVal bool
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2322,9 +2005,6 @@ func CallFunc12Callback(func_ Func12) bool {
 	return __retVal
 }
 
-// CallFunc13Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFunc13Callback(func_ Func13) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
@@ -2344,9 +2024,6 @@ func CallFunc13Callback(func_ Func13) string {
 	return __retVal
 }
 
-// CallFunc14Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFunc14Callback(func_ Func14) []string {
 	var __retVal []string
 	var __retVal_native plugify.PlgVector
@@ -2366,9 +2043,6 @@ func CallFunc14Callback(func_ Func14) []string {
 	return __retVal
 }
 
-// CallFunc15Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFunc15Callback(func_ Func15) int16 {
 	var __retVal int16
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2376,9 +2050,6 @@ func CallFunc15Callback(func_ Func15) int16 {
 	return __retVal
 }
 
-// CallFunc16Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFunc16Callback(func_ Func16) uintptr {
 	var __retVal uintptr
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2386,9 +2057,6 @@ func CallFunc16Callback(func_ Func16) uintptr {
 	return __retVal
 }
 
-// CallFunc17Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFunc17Callback(func_ Func17) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
@@ -2408,9 +2076,6 @@ func CallFunc17Callback(func_ Func17) string {
 	return __retVal
 }
 
-// CallFunc18Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFunc18Callback(func_ Func18) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
@@ -2430,9 +2095,6 @@ func CallFunc18Callback(func_ Func18) string {
 	return __retVal
 }
 
-// CallFunc19Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFunc19Callback(func_ Func19) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
@@ -2452,9 +2114,6 @@ func CallFunc19Callback(func_ Func19) string {
 	return __retVal
 }
 
-// CallFunc20Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFunc20Callback(func_ Func20) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
@@ -2474,9 +2133,6 @@ func CallFunc20Callback(func_ Func20) string {
 	return __retVal
 }
 
-// CallFunc21Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFunc21Callback(func_ Func21) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
@@ -2496,9 +2152,6 @@ func CallFunc21Callback(func_ Func21) string {
 	return __retVal
 }
 
-// CallFunc22Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFunc22Callback(func_ Func22) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
@@ -2518,9 +2171,6 @@ func CallFunc22Callback(func_ Func22) string {
 	return __retVal
 }
 
-// CallFunc23Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFunc23Callback(func_ Func23) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
@@ -2540,9 +2190,6 @@ func CallFunc23Callback(func_ Func23) string {
 	return __retVal
 }
 
-// CallFunc24Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFunc24Callback(func_ Func24) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
@@ -2562,9 +2209,6 @@ func CallFunc24Callback(func_ Func24) string {
 	return __retVal
 }
 
-// CallFunc25Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFunc25Callback(func_ Func25) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
@@ -2584,9 +2228,6 @@ func CallFunc25Callback(func_ Func25) string {
 	return __retVal
 }
 
-// CallFunc26Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFunc26Callback(func_ Func26) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
@@ -2606,9 +2247,6 @@ func CallFunc26Callback(func_ Func26) string {
 	return __retVal
 }
 
-// CallFunc27Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFunc27Callback(func_ Func27) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
@@ -2628,9 +2266,6 @@ func CallFunc27Callback(func_ Func27) string {
 	return __retVal
 }
 
-// CallFunc28Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFunc28Callback(func_ Func28) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
@@ -2650,9 +2285,6 @@ func CallFunc28Callback(func_ Func28) string {
 	return __retVal
 }
 
-// CallFunc29Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFunc29Callback(func_ Func29) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
@@ -2672,9 +2304,6 @@ func CallFunc29Callback(func_ Func29) string {
 	return __retVal
 }
 
-// CallFunc30Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFunc30Callback(func_ Func30) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
@@ -2694,9 +2323,6 @@ func CallFunc30Callback(func_ Func30) string {
 	return __retVal
 }
 
-// CallFunc31Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFunc31Callback(func_ Func31) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
@@ -2716,9 +2342,6 @@ func CallFunc31Callback(func_ Func31) string {
 	return __retVal
 }
 
-// CallFunc32Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFunc32Callback(func_ Func32) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
@@ -2738,9 +2361,6 @@ func CallFunc32Callback(func_ Func32) string {
 	return __retVal
 }
 
-// CallFunc33Callback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFunc33Callback(func_ Func33) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
@@ -2760,9 +2380,6 @@ func CallFunc33Callback(func_ Func33) string {
 	return __retVal
 }
 
-// CallFuncEnumCallback - No description provided.
-// @param func: No description available.
-// @return No description available.
 func CallFuncEnumCallback(func_ FuncEnum) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
@@ -2780,4 +2397,484 @@ func CallFuncEnumCallback(func_ FuncEnum) string {
 		},
 	}.Do()
 	return __retVal
+}
+
+func ResourceHandleCreate(id int32, name string) uintptr {
+	var __retVal uintptr
+	__id := C.int32_t(id)
+	__name := plugify.ConstructString(name)
+	plugify.Block{
+		Try: func() {
+			__retVal = uintptr(C.ResourceHandleCreate(__id, (*C.String)(unsafe.Pointer(&__name))))
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyString(&__name)
+		},
+	}.Do()
+	return __retVal
+}
+
+func ResourceHandleCreateDefault() uintptr {
+	__retVal := uintptr(C.ResourceHandleCreateDefault())
+	return __retVal
+}
+
+func ResourceHandleDestroy(handle uintptr) {
+	__handle := C.uintptr_t(handle)
+	C.ResourceHandleDestroy(__handle)
+}
+
+func ResourceHandleGetId(handle uintptr) int32 {
+	var __retVal int32
+	__handle := C.uintptr_t(handle)
+	__retVal = int32(C.ResourceHandleGetId(__handle))
+	return __retVal
+}
+
+func ResourceHandleGetName(handle uintptr) string {
+	var __retVal string
+	var __retVal_native plugify.PlgString
+	__handle := C.uintptr_t(handle)
+	plugify.Block{
+		Try: func() {
+			__native := C.ResourceHandleGetName(__handle)
+			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetStringData(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyString(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+func ResourceHandleSetName(handle uintptr, name string) {
+	__handle := C.uintptr_t(handle)
+	__name := plugify.ConstructString(name)
+	plugify.Block{
+		Try: func() {
+			C.ResourceHandleSetName(__handle, (*C.String)(unsafe.Pointer(&__name)))
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyString(&__name)
+		},
+	}.Do()
+}
+
+func ResourceHandleIncrementCounter(handle uintptr) {
+	__handle := C.uintptr_t(handle)
+	C.ResourceHandleIncrementCounter(__handle)
+}
+
+func ResourceHandleGetCounter(handle uintptr) int32 {
+	var __retVal int32
+	__handle := C.uintptr_t(handle)
+	__retVal = int32(C.ResourceHandleGetCounter(__handle))
+	return __retVal
+}
+
+func ResourceHandleAddData(handle uintptr, value float32) {
+	__handle := C.uintptr_t(handle)
+	__value := C.float(value)
+	C.ResourceHandleAddData(__handle, __value)
+}
+
+func ResourceHandleGetData(handle uintptr) []float32 {
+	var __retVal []float32
+	var __retVal_native plugify.PlgVector
+	__handle := C.uintptr_t(handle)
+	plugify.Block{
+		Try: func() {
+			__native := C.ResourceHandleGetData(__handle)
+			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
+			// Unmarshal - Convert native data to managed data.
+			__retVal = plugify.GetVectorDataFloat(&__retVal_native)
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorFloat(&__retVal_native)
+		},
+	}.Do()
+	return __retVal
+}
+
+func ResourceHandleGetAliveCount() int32 {
+	__retVal := int32(C.ResourceHandleGetAliveCount())
+	return __retVal
+}
+
+func ResourceHandleGetTotalCreated() int32 {
+	__retVal := int32(C.ResourceHandleGetTotalCreated())
+	return __retVal
+}
+
+func ResourceHandleGetTotalDestroyed() int32 {
+	__retVal := int32(C.ResourceHandleGetTotalDestroyed())
+	return __retVal
+}
+
+func CounterCreate(initialValue int64) uintptr {
+	var __retVal uintptr
+	__initialValue := C.int64_t(initialValue)
+	__retVal = uintptr(C.CounterCreate(__initialValue))
+	return __retVal
+}
+
+func CounterCreateZero() uintptr {
+	__retVal := uintptr(C.CounterCreateZero())
+	return __retVal
+}
+
+func CounterGetValue(counter uintptr) int64 {
+	var __retVal int64
+	__counter := C.uintptr_t(counter)
+	__retVal = int64(C.CounterGetValue(__counter))
+	return __retVal
+}
+
+func CounterSetValue(counter uintptr, value int64) {
+	__counter := C.uintptr_t(counter)
+	__value := C.int64_t(value)
+	C.CounterSetValue(__counter, __value)
+}
+
+func CounterIncrement(counter uintptr) {
+	__counter := C.uintptr_t(counter)
+	C.CounterIncrement(__counter)
+}
+
+func CounterDecrement(counter uintptr) {
+	__counter := C.uintptr_t(counter)
+	C.CounterDecrement(__counter)
+}
+
+func CounterAdd(counter uintptr, amount int64) {
+	__counter := C.uintptr_t(counter)
+	__amount := C.int64_t(amount)
+	C.CounterAdd(__counter, __amount)
+}
+
+func CounterReset(counter uintptr) {
+	__counter := C.uintptr_t(counter)
+	C.CounterReset(__counter)
+}
+
+func CounterIsPositive(counter uintptr) bool {
+	var __retVal bool
+	__counter := C.uintptr_t(counter)
+	__retVal = bool(C.CounterIsPositive(__counter))
+	return __retVal
+}
+
+func CounterCompare(value1 int64, value2 int64) int32 {
+	var __retVal int32
+	__value1 := C.int64_t(value1)
+	__value2 := C.int64_t(value2)
+	__retVal = int32(C.CounterCompare(__value1, __value2))
+	return __retVal
+}
+
+func CounterSum(values []int64) int64 {
+	var __retVal int64
+	__values := plugify.ConstructVectorInt64(values)
+	plugify.Block{
+		Try: func() {
+			__retVal = int64(C.CounterSum((*C.Vector)(unsafe.Pointer(&__values))))
+		},
+		Finally: func() {
+			// Perform cleanup.
+			plugify.DestroyVectorInt64(&__values)
+		},
+	}.Do()
+	return __retVal
+}
+
+// noCopy prevents copying via go vet
+type noCopy struct{}
+
+func (*noCopy) Lock()   {}
+func (*noCopy) Unlock() {}
+
+// ownership indicates whether the instance owns the underlying handle
+type ownership bool
+
+const (
+	Owned    ownership = true
+	Borrowed ownership = false
+)
+
+var (
+	ResourceHandleErrEmptyHandle = errors.New("ResourceHandle: empty handle")
+)
+
+// ResourceHandle - RAII wrapper for ResourceHandle pointer
+type ResourceHandle struct {
+	handle    uintptr
+	cleanup   runtime.Cleanup
+	ownership ownership
+	noCopy    noCopy
+}
+
+func NewResourceHandleResourceHandleCreate(id int32, name string) *ResourceHandle {
+	return newResourceHandleOwned(ResourceHandleCreate(id, name))
+}
+
+func NewResourceHandleResourceHandleCreateDefault() *ResourceHandle {
+	return newResourceHandleOwned(ResourceHandleCreateDefault())
+}
+
+// newResourceHandleBorrowed creates a ResourceHandle from a borrowed handle (internal use)
+func newResourceHandleBorrowed(handle uintptr) *ResourceHandle {
+	if handle == 0 {
+		return &ResourceHandle{}
+	}
+	return &ResourceHandle{
+		handle:    handle,
+		ownership: Borrowed,
+	}
+}
+
+// newResourceHandleOwned creates a ResourceHandle from an owned handle (internal use)
+func newResourceHandleOwned(handle uintptr) *ResourceHandle {
+	if handle == 0 {
+		return &ResourceHandle{}
+	}
+	w := &ResourceHandle{
+		handle:    handle,
+		ownership: Owned,
+	}
+	w.cleanup = runtime.AddCleanup(w, w.finalize, struct{}{})
+	return w
+}
+
+// finalize is the finalizer function (like C++ destructor)
+func (w *ResourceHandle) finalize(_ struct{}) {
+	if plugify.Plugin.Loaded {
+		w.destroy()
+	}
+}
+
+// destroy cleans up owned handles
+func (w *ResourceHandle) destroy() {
+	if w.handle != 0 && w.ownership == Owned {
+		ResourceHandleDestroy(w.handle)
+	}
+}
+
+// nullify resets the handle
+func (w *ResourceHandle) nullify() {
+	w.handle = 0
+	w.ownership = Borrowed
+}
+
+// Close explicitly destroys the handle (like C++ destructor, but manual)
+func (w *ResourceHandle) Close() {
+	w.Reset()
+}
+
+// Get returns the underlying handle
+func (w *ResourceHandle) Get() uintptr {
+	return w.handle
+}
+
+// Release releases ownership and returns the handle
+func (w *ResourceHandle) Release() uintptr {
+	if w.ownership == Owned {
+		w.cleanup.Stop()
+	}
+	handle := w.handle
+	w.nullify()
+	return handle
+}
+
+// Reset destroys and resets the handle
+func (w *ResourceHandle) Reset() {
+	if w.ownership == Owned {
+		w.cleanup.Stop()
+	}
+	w.destroy()
+	w.nullify()
+}
+
+// IsValid returns true if handle is not nil
+func (w *ResourceHandle) IsValid() bool {
+	return w.handle != 0
+}
+
+func (w *ResourceHandle) GetId() (int32, error) {
+	if w.handle == 0 {
+		var zero int32
+		return zero, ResourceHandleErrEmptyHandle
+	}
+	return ResourceHandleGetId(w.handle), nil
+}
+
+func (w *ResourceHandle) GetName() (string, error) {
+	if w.handle == 0 {
+		var zero string
+		return zero, ResourceHandleErrEmptyHandle
+	}
+	return ResourceHandleGetName(w.handle), nil
+}
+
+func (w *ResourceHandle) SetName(name string) error {
+	if w.handle == 0 {
+		return ResourceHandleErrEmptyHandle
+	}
+	ResourceHandleSetName(w.handle, name)
+	return nil
+}
+
+func (w *ResourceHandle) IncrementCounter() error {
+	if w.handle == 0 {
+		return ResourceHandleErrEmptyHandle
+	}
+	ResourceHandleIncrementCounter(w.handle)
+	return nil
+}
+
+func (w *ResourceHandle) GetCounter() (int32, error) {
+	if w.handle == 0 {
+		var zero int32
+		return zero, ResourceHandleErrEmptyHandle
+	}
+	return ResourceHandleGetCounter(w.handle), nil
+}
+
+func (w *ResourceHandle) AddData(value float32) error {
+	if w.handle == 0 {
+		return ResourceHandleErrEmptyHandle
+	}
+	ResourceHandleAddData(w.handle, value)
+	return nil
+}
+
+func (w *ResourceHandle) GetData() ([]float32, error) {
+	if w.handle == 0 {
+		var zero []float32
+		return zero, ResourceHandleErrEmptyHandle
+	}
+	return ResourceHandleGetData(w.handle), nil
+}
+
+func (w *ResourceHandle) GetAliveCount() (int32, error) {
+	return ResourceHandleGetAliveCount(), nil
+}
+
+func (w *ResourceHandle) GetTotalCreated() (int32, error) {
+	return ResourceHandleGetTotalCreated(), nil
+}
+
+func (w *ResourceHandle) GetTotalDestroyed() (int32, error) {
+	return ResourceHandleGetTotalDestroyed(), nil
+}
+
+var (
+	CounterErrEmptyHandle = errors.New("Counter: empty handle")
+)
+
+type Counter struct {
+	handle uintptr
+}
+
+func NewCounterCounterCreate(initialValue int64) *Counter {
+	return &Counter{
+		handle: CounterCreate(initialValue),
+	}
+}
+
+func NewCounterCounterCreateZero() *Counter {
+	return &Counter{
+		handle: CounterCreateZero(),
+	}
+}
+
+// Get returns the underlying handle
+func (w *Counter) Get() uintptr {
+	return w.handle
+}
+
+// Release releases ownership and returns the handle
+func (w *Counter) Release() uintptr {
+	handle := w.handle
+	w.handle = 0
+	return handle
+}
+
+// Reset destroys and resets the handle
+func (w *Counter) Reset() {
+	w.handle = 0
+}
+
+// IsValid returns true if handle is not nil
+func (w *Counter) IsValid() bool {
+	return w.handle != 0
+}
+
+func (w *Counter) GetValue() (int64, error) {
+	if w.handle == 0 {
+		var zero int64
+		return zero, CounterErrEmptyHandle
+	}
+	return CounterGetValue(w.handle), nil
+}
+
+func (w *Counter) SetValue(value int64) error {
+	if w.handle == 0 {
+		return CounterErrEmptyHandle
+	}
+	CounterSetValue(w.handle, value)
+	return nil
+}
+
+func (w *Counter) Increment() error {
+	if w.handle == 0 {
+		return CounterErrEmptyHandle
+	}
+	CounterIncrement(w.handle)
+	return nil
+}
+
+func (w *Counter) Decrement() error {
+	if w.handle == 0 {
+		return CounterErrEmptyHandle
+	}
+	CounterDecrement(w.handle)
+	return nil
+}
+
+func (w *Counter) Add(amount int64) error {
+	if w.handle == 0 {
+		return CounterErrEmptyHandle
+	}
+	CounterAdd(w.handle, amount)
+	return nil
+}
+
+func (w *Counter) Reset2() error {
+	if w.handle == 0 {
+		return CounterErrEmptyHandle
+	}
+	CounterReset(w.handle)
+	return nil
+}
+
+func (w *Counter) IsPositive() (bool, error) {
+	if w.handle == 0 {
+		var zero bool
+		return zero, CounterErrEmptyHandle
+	}
+	return CounterIsPositive(w.handle), nil
+}
+
+func (w *Counter) Compare(value1 int64, value2 int64) (int32, error) {
+	return CounterCompare(value1, value2), nil
+}
+
+func (w *Counter) Sum(values []int64) (int64, error) {
+	return CounterSum(values), nil
 }

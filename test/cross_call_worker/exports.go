@@ -5,6 +5,7 @@ import (
 	"github.com/untrustedmodders/go-plugify"
 	"math"
 	"plugify-plugin/cross_call_master"
+	"runtime"
 	"strconv"
 	"strings"
 	"unsafe"
@@ -1877,16 +1878,16 @@ func ReverseParamAllPrimitives() string {
 
 // plugify:export ReverseParamEnum
 func ReverseParamEnum() string {
-	p1 := cross_call_master.Forth
-	p2 := []cross_call_master.Example{cross_call_master.First, cross_call_master.Second, cross_call_master.Third}
+	p1 := cross_call_master.Example_Forth
+	p2 := []cross_call_master.Example{cross_call_master.Example_First, cross_call_master.Example_Second, cross_call_master.Example_Third}
 	result := cross_call_master.ParamEnumCallback(p1, p2)
 	return fmt.Sprintf("%d", result)
 }
 
 // plugify:export ReverseParamEnumRef
 func ReverseParamEnumRef() string {
-	p1 := cross_call_master.First
-	p2 := []cross_call_master.Example{cross_call_master.First, cross_call_master.First, cross_call_master.Second}
+	p1 := cross_call_master.Example_First
+	p2 := []cross_call_master.Example{cross_call_master.Example_First, cross_call_master.Example_First, cross_call_master.Example_Second}
 	result := cross_call_master.ParamEnumRefCallback(&p1, &p2)
 	return fmt.Sprintf("%d|%d|%s", result, p1, formatArray(p2))
 }
@@ -2357,6 +2358,222 @@ func ReverseCallFuncEnum() string {
 	return result
 }
 
+func log(message string) {
+	// TODO Only logs in debug builds
+	// Use build tag: //go:build debug
+	fmt.Println(message)
+}
+
+func BasicLifecycle() string {
+	log("TEST 1: Basic Lifecycle")
+	log("_______________________")
+
+	initialAlive := cross_call_master.ResourceHandleGetAliveCount()
+	initialCreated := cross_call_master.ResourceHandleGetTotalCreated()
+
+	{
+		resource := cross_call_master.NewResourceHandleResourceHandleCreate(1, "Test1")
+		defer resource.Close()
+
+		id, _ := resource.GetId()
+		alive := cross_call_master.ResourceHandleGetAliveCount()
+
+		log(fmt.Sprintf("v Created ResourceHandle ID: %d", id))
+		log(fmt.Sprintf("v Alive count increased: %d", alive))
+	}
+
+	finalAlive := cross_call_master.ResourceHandleGetAliveCount()
+	finalCreated := cross_call_master.ResourceHandleGetTotalCreated()
+	finalDestroyed := cross_call_master.ResourceHandleGetTotalDestroyed()
+
+	log(fmt.Sprintf("v Destructor called, alive count: %d", finalAlive))
+	log(fmt.Sprintf("v Total created: %d", finalCreated-initialCreated))
+	log(fmt.Sprintf("v Total destroyed: %d", finalDestroyed))
+
+	if finalAlive == initialAlive && finalCreated == finalDestroyed {
+		log("v TEST 1 PASSED: Lifecycle working correctly\n")
+		return "true"
+	} else {
+		log("x TEST 1 FAILED: Lifecycle mismatch!\n")
+		return "false"
+	}
+}
+
+func StateManagement() string {
+	log("TEST 2: State Management")
+	log("________________________")
+
+	resource := cross_call_master.NewResourceHandleResourceHandleCreate(2, "StateTest")
+	defer resource.Close()
+
+	_ = resource.IncrementCounter()
+	_ = resource.IncrementCounter()
+	_ = resource.IncrementCounter()
+	counter, _ := resource.GetCounter()
+	log(fmt.Sprintf("v Counter incremented 3 times: %d", counter))
+
+	_ = resource.SetName("StateTestModified")
+	newName, _ := resource.GetName()
+	log(fmt.Sprintf("v Name changed to: %s", newName))
+
+	_ = resource.AddData(1.1)
+	_ = resource.AddData(2.2)
+	_ = resource.AddData(3.3)
+	data, _ := resource.GetData()
+	log(fmt.Sprintf("v Added %d data points", len(data)))
+
+	if counter == 3 && newName == "StateTestModified" && len(data) == 3 {
+		log("v TEST 2 PASSED: State management working\n")
+		return "true"
+	} else {
+		log("x TEST 2 FAILED: State not preserved!\n")
+		return "false"
+	}
+}
+
+func MultipleInstances() string {
+	log("TEST 3: Multiple Instances")
+	log("__________________________")
+
+	beforeAlive := cross_call_master.ResourceHandleGetAliveCount()
+
+	{
+		r1 := cross_call_master.NewResourceHandleResourceHandleCreate(10, "Instance1")
+		defer r1.Close()
+		r2 := cross_call_master.NewResourceHandleResourceHandleCreate(20, "Instance2")
+		defer r2.Close()
+		r3 := cross_call_master.NewResourceHandleResourceHandleCreateDefault()
+		defer r3.Close()
+
+		duringAlive := cross_call_master.ResourceHandleGetAliveCount()
+		id1, _ := r1.GetId()
+		id2, _ := r2.GetId()
+		id3, _ := r3.GetId()
+
+		log(fmt.Sprintf("v Created 3 instances, alive: %d", duringAlive))
+		log(fmt.Sprintf("v R1 ID: %d, R2 ID: %d, R3 ID: %d", id1, id2, id3))
+
+		if duringAlive-beforeAlive == 3 {
+			log("v All 3 instances tracked correctly")
+		}
+	}
+
+	afterAlive := cross_call_master.ResourceHandleGetAliveCount()
+
+	if afterAlive == beforeAlive {
+		log("v TEST 3 PASSED: All instances destroyed properly\n")
+		return "true"
+	} else {
+		log(fmt.Sprintf("x TEST 3 FAILED: Leak detected! Before: %d, After: %d\n", beforeAlive, afterAlive))
+		return "false"
+	}
+}
+
+func CounterWithoutDestructor() string {
+	log("TEST 4: Counter (No Destructor)")
+	log("________________________________")
+
+	counter := cross_call_master.NewCounterCounterCreate(100)
+	initialValue, _ := counter.GetValue()
+	log(fmt.Sprintf("v Created Counter with value: %d", initialValue))
+
+	_ = counter.Increment()
+	_ = counter.Increment()
+	_ = counter.Add(50)
+	value, _ := counter.GetValue()
+	log(fmt.Sprintf("v After operations, value: %d", value))
+
+	isPositive, _ := counter.IsPositive()
+	log(fmt.Sprintf("v Is positive: %t", isPositive))
+
+	if value == 152 && isPositive {
+		log("v TEST 4 PASSED: Counter operations working\n")
+		return "true"
+	} else {
+		log("x TEST 4 FAILED: Counter operations incorrect\n")
+		return "false"
+	}
+}
+
+func StaticMethods() string {
+	log("TEST 5: Static Methods")
+	log("______________________")
+
+	alive := cross_call_master.ResourceHandleGetAliveCount()
+	created := cross_call_master.ResourceHandleGetTotalCreated()
+	destroyed := cross_call_master.ResourceHandleGetTotalDestroyed()
+	log(fmt.Sprintf("v ResourceHandle stats - Alive: %d, Created: %d, Destroyed: %d", alive, created, destroyed))
+
+	cmp1 := cross_call_master.CounterCompare(100, 50)
+	cmp2 := cross_call_master.CounterCompare(50, 100)
+	cmp3 := cross_call_master.CounterCompare(50, 50)
+	log(fmt.Sprintf("v Counter.Compare(100, 50) = %d (expected 1)", cmp1))
+	log(fmt.Sprintf("v Counter.Compare(50, 100) = %d (expected -1)", cmp2))
+	log(fmt.Sprintf("v Counter.Compare(50, 50) = %d (expected 0)", cmp3))
+
+	sum := cross_call_master.CounterSum([]int64{1, 2, 3, 4, 5})
+	log(fmt.Sprintf("v Counter.Sum([1,2,3,4,5]) = %d (expected 15)", sum))
+
+	if cmp1 == 1 && cmp2 == -1 && cmp3 == 0 && sum == 15 {
+		log("v TEST 5 PASSED: Static methods working\n")
+		return "true"
+	} else {
+		log("x TEST 5 FAILED: Static methods incorrect\n")
+		return "false"
+	}
+}
+
+func MemoryLeakDetection() string {
+	log("TEST 6: Memory Leak Detection")
+	log("______________________________")
+
+	log("!   Creating resource and releasing ownership (intentional leak test)")
+
+	beforeAlive := cross_call_master.ResourceHandleGetAliveCount()
+
+	{
+		leaked := cross_call_master.NewResourceHandleResourceHandleCreate(999, "IntentionalLeak")
+		id, _ := leaked.GetId()
+		log(fmt.Sprintf("v Created resource ID: %d", id))
+		leaked = nil // Remove reference, let GC handle it
+	}
+
+	runtime.GC()
+	runtime.Gosched()
+
+	afterAlive := cross_call_master.ResourceHandleGetAliveCount()
+
+	log(fmt.Sprintf("v Before leak test: %d alive", beforeAlive))
+	log(fmt.Sprintf("v After release: %d alive", afterAlive))
+
+	if afterAlive == beforeAlive+1 {
+		log("!   TEST 6: Resource intentionally leaked\n")
+		log("    This is expected behavior - resource released without destruction\n")
+		return "true"
+	} else {
+		log("x TEST 6 FAILED: Unexpected alive count\n")
+		return "false"
+	}
+}
+
+func ExceptionHandling() string {
+	log("TEST 7: Exception Handling")
+	log("__________________________")
+
+	resource := cross_call_master.NewResourceHandleResourceHandleCreate(777, "ExceptionTest")
+	resource.Close()
+
+	_, err := resource.GetId()
+	if err != nil {
+		log(fmt.Sprintf("v Caught expected error: %v", err))
+		log("v TEST 7 PASSED: Exception handling working\n")
+		return "true"
+	} else {
+		log("x TEST 7 FAILED: No error thrown!\n")
+		return "false"
+	}
+}
+
 var ReverseTest = map[string]func() string{
 	"NoParamReturnVoid":         ReverseNoParamReturnVoid,
 	"NoParamReturnBool":         ReverseNoParamReturnBool,
@@ -2497,6 +2714,14 @@ var ReverseTest = map[string]func() string{
 	"CallFunc32":                ReverseCallFunc32,
 	"CallFunc33":                ReverseCallFunc33,
 	"CallFuncEnum":              ReverseCallFuncEnum,
+
+	"ClassBasicLifecycle":           BasicLifecycle,
+	"ClassStateManagement":          StateManagement,
+	"ClassMultipleInstances":        MultipleInstances,
+	"ClassCounterWithoutDestructor": CounterWithoutDestructor,
+	"ClassStaticMethods":            StaticMethods,
+	"ClassMemoryLeakDetection":      MemoryLeakDetection,
+	"ClassExceptionHandling":        ExceptionHandling,
 }
 
 // plugify:export ReverseCall
