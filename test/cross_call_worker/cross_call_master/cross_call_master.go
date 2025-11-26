@@ -175,11 +175,12 @@ package cross_call_master
 import "C"
 import (
 	"errors"
-	"github.com/untrustedmodders/go-plugify"
 	"reflect"
 	_ "reflect"
 	"runtime"
 	"unsafe"
+
+	"github.com/untrustedmodders/go-plugify"
 )
 
 // Generated with https://github.com/untrustedmodders/plugify-module-golang/blob/main/generator/generator.py from cross_call_master

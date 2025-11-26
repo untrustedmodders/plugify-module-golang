@@ -11,31 +11,31 @@ typedef struct Vector3 { float x, y, z; } Vector3;
 typedef struct Vector4 { float x, y, z, w; } Vector4;
 typedef struct Matrix4x4 { float m[4][4]; } Matrix4x4;
 typedef struct Variant {
-    union {
-        bool boolean;
-        char char8;
-        wchar_t char16;
-        int8_t int8;
-        int16_t int16;
-        int32_t int32;
-        int64_t int64;
-        uint8_t uint8;
-        uint16_t uint16;
-        uint32_t uint32;
-        uint64_t uint64;
-        void* ptr;
-        float flt;
-        double dbl;
-        String str;
-        Vector vec;
-        Vector2 vec2;
-        Vector3 vec3;
-        Vector4 vec4;
-    };
+	union {
+	bool boolean;
+	char char8;
+	wchar_t char16;
+	int8_t int8;
+	int16_t int16;
+	int32_t int32;
+	int64_t int64;
+	uint8_t uint8;
+	uint16_t uint16;
+	uint32_t uint32;
+	uint64_t uint64;
+	void* ptr;
+	float flt;
+	double dbl;
+	String str;
+	Vector vec;
+	Vector2 vec2;
+	Vector3 vec3;
+	Vector4 vec4;
+	};
 #if INTPTR_MAX == INT32_MAX
 	volatile char pad[8];
 #endif
-    uint8_t current;
+	uint8_t current;
 } Variant;
 
 extern void* Plugify_GetMethodPtr(const char* methodName);
@@ -1055,3 +1055,172 @@ static String CallFuncEnumCallback(void* func) {
 	if (__func == NULL) Plugify_GetMethodPtr2("cross_call_master.CallFuncEnumCallback", (void**)&__func);
 	return __func(func);
 }
+
+static uintptr_t ResourceHandleCreate(int32_t id, String* name) {
+	typedef uintptr_t (*ResourceHandleCreateFn)(int32_t, String*);
+	static ResourceHandleCreateFn __func = NULL;
+	if (__func == NULL) Plugify_GetMethodPtr2("cross_call_master.ResourceHandleCreate", (void**)&__func);
+	return __func(id, name);
+}
+
+static uintptr_t ResourceHandleCreateDefault() {
+	typedef uintptr_t (*ResourceHandleCreateDefaultFn)();
+	static ResourceHandleCreateDefaultFn __func = NULL;
+	if (__func == NULL) Plugify_GetMethodPtr2("cross_call_master.ResourceHandleCreateDefault", (void**)&__func);
+	return __func();
+}
+
+static void ResourceHandleDestroy(uintptr_t handle) {
+	typedef void (*ResourceHandleDestroyFn)(uintptr_t);
+	static ResourceHandleDestroyFn __func = NULL;
+	if (__func == NULL) Plugify_GetMethodPtr2("cross_call_master.ResourceHandleDestroy", (void**)&__func);
+	__func(handle);
+}
+
+static int32_t ResourceHandleGetId(uintptr_t handle) {
+	typedef int32_t (*ResourceHandleGetIdFn)(uintptr_t);
+	static ResourceHandleGetIdFn __func = NULL;
+	if (__func == NULL) Plugify_GetMethodPtr2("cross_call_master.ResourceHandleGetId", (void**)&__func);
+	return __func(handle);
+}
+
+static String ResourceHandleGetName(uintptr_t handle) {
+	typedef String (*ResourceHandleGetNameFn)(uintptr_t);
+	static ResourceHandleGetNameFn __func = NULL;
+	if (__func == NULL) Plugify_GetMethodPtr2("cross_call_master.ResourceHandleGetName", (void**)&__func);
+	return __func(handle);
+}
+
+static void ResourceHandleSetName(uintptr_t handle, String* name) {
+	typedef void (*ResourceHandleSetNameFn)(uintptr_t, String*);
+	static ResourceHandleSetNameFn __func = NULL;
+	if (__func == NULL) Plugify_GetMethodPtr2("cross_call_master.ResourceHandleSetName", (void**)&__func);
+	__func(handle, name);
+}
+
+static void ResourceHandleIncrementCounter(uintptr_t handle) {
+	typedef void (*ResourceHandleIncrementCounterFn)(uintptr_t);
+	static ResourceHandleIncrementCounterFn __func = NULL;
+	if (__func == NULL) Plugify_GetMethodPtr2("cross_call_master.ResourceHandleIncrementCounter", (void**)&__func);
+	__func(handle);
+}
+
+static int32_t ResourceHandleGetCounter(uintptr_t handle) {
+	typedef int32_t (*ResourceHandleGetCounterFn)(uintptr_t);
+	static ResourceHandleGetCounterFn __func = NULL;
+	if (__func == NULL) Plugify_GetMethodPtr2("cross_call_master.ResourceHandleGetCounter", (void**)&__func);
+	return __func(handle);
+}
+
+static void ResourceHandleAddData(uintptr_t handle, float value) {
+	typedef void (*ResourceHandleAddDataFn)(uintptr_t, float);
+	static ResourceHandleAddDataFn __func = NULL;
+	if (__func == NULL) Plugify_GetMethodPtr2("cross_call_master.ResourceHandleAddData", (void**)&__func);
+	__func(handle, value);
+}
+
+static Vector ResourceHandleGetData(uintptr_t handle) {
+	typedef Vector (*ResourceHandleGetDataFn)(uintptr_t);
+	static ResourceHandleGetDataFn __func = NULL;
+	if (__func == NULL) Plugify_GetMethodPtr2("cross_call_master.ResourceHandleGetData", (void**)&__func);
+	return __func(handle);
+}
+
+static int32_t ResourceHandleGetAliveCount() {
+	typedef int32_t (*ResourceHandleGetAliveCountFn)();
+	static ResourceHandleGetAliveCountFn __func = NULL;
+	if (__func == NULL) Plugify_GetMethodPtr2("cross_call_master.ResourceHandleGetAliveCount", (void**)&__func);
+	return __func();
+}
+
+static int32_t ResourceHandleGetTotalCreated() {
+	typedef int32_t (*ResourceHandleGetTotalCreatedFn)();
+	static ResourceHandleGetTotalCreatedFn __func = NULL;
+	if (__func == NULL) Plugify_GetMethodPtr2("cross_call_master.ResourceHandleGetTotalCreated", (void**)&__func);
+	return __func();
+}
+
+static int32_t ResourceHandleGetTotalDestroyed() {
+	typedef int32_t (*ResourceHandleGetTotalDestroyedFn)();
+	static ResourceHandleGetTotalDestroyedFn __func = NULL;
+	if (__func == NULL) Plugify_GetMethodPtr2("cross_call_master.ResourceHandleGetTotalDestroyed", (void**)&__func);
+	return __func();
+}
+
+static uintptr_t CounterCreate(int64_t initialValue) {
+	typedef uintptr_t (*CounterCreateFn)(int64_t);
+	static CounterCreateFn __func = NULL;
+	if (__func == NULL) Plugify_GetMethodPtr2("cross_call_master.CounterCreate", (void**)&__func);
+	return __func(initialValue);
+}
+
+static uintptr_t CounterCreateZero() {
+	typedef uintptr_t (*CounterCreateZeroFn)();
+	static CounterCreateZeroFn __func = NULL;
+	if (__func == NULL) Plugify_GetMethodPtr2("cross_call_master.CounterCreateZero", (void**)&__func);
+	return __func();
+}
+
+static int64_t CounterGetValue(uintptr_t counter) {
+	typedef int64_t (*CounterGetValueFn)(uintptr_t);
+	static CounterGetValueFn __func = NULL;
+	if (__func == NULL) Plugify_GetMethodPtr2("cross_call_master.CounterGetValue", (void**)&__func);
+	return __func(counter);
+}
+
+static void CounterSetValue(uintptr_t counter, int64_t value) {
+	typedef void (*CounterSetValueFn)(uintptr_t, int64_t);
+	static CounterSetValueFn __func = NULL;
+	if (__func == NULL) Plugify_GetMethodPtr2("cross_call_master.CounterSetValue", (void**)&__func);
+	__func(counter, value);
+}
+
+static void CounterIncrement(uintptr_t counter) {
+	typedef void (*CounterIncrementFn)(uintptr_t);
+	static CounterIncrementFn __func = NULL;
+	if (__func == NULL) Plugify_GetMethodPtr2("cross_call_master.CounterIncrement", (void**)&__func);
+	__func(counter);
+}
+
+static void CounterDecrement(uintptr_t counter) {
+	typedef void (*CounterDecrementFn)(uintptr_t);
+	static CounterDecrementFn __func = NULL;
+	if (__func == NULL) Plugify_GetMethodPtr2("cross_call_master.CounterDecrement", (void**)&__func);
+	__func(counter);
+}
+
+static void CounterAdd(uintptr_t counter, int64_t amount) {
+	typedef void (*CounterAddFn)(uintptr_t, int64_t);
+	static CounterAddFn __func = NULL;
+	if (__func == NULL) Plugify_GetMethodPtr2("cross_call_master.CounterAdd", (void**)&__func);
+	__func(counter, amount);
+}
+
+static void CounterReset(uintptr_t counter) {
+	typedef void (*CounterResetFn)(uintptr_t);
+	static CounterResetFn __func = NULL;
+	if (__func == NULL) Plugify_GetMethodPtr2("cross_call_master.CounterReset", (void**)&__func);
+	__func(counter);
+}
+
+static bool CounterIsPositive(uintptr_t counter) {
+	typedef bool (*CounterIsPositiveFn)(uintptr_t);
+	static CounterIsPositiveFn __func = NULL;
+	if (__func == NULL) Plugify_GetMethodPtr2("cross_call_master.CounterIsPositive", (void**)&__func);
+	return __func(counter);
+}
+
+static int32_t CounterCompare(int64_t value1, int64_t value2) {
+	typedef int32_t (*CounterCompareFn)(int64_t, int64_t);
+	static CounterCompareFn __func = NULL;
+	if (__func == NULL) Plugify_GetMethodPtr2("cross_call_master.CounterCompare", (void**)&__func);
+	return __func(value1, value2);
+}
+
+static int64_t CounterSum(Vector* values) {
+	typedef int64_t (*CounterSumFn)(Vector*);
+	static CounterSumFn __func = NULL;
+	if (__func == NULL) Plugify_GetMethodPtr2("cross_call_master.CounterSum", (void**)&__func);
+	return __func(values);
+}
+

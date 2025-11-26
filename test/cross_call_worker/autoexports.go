@@ -3,9 +3,13 @@ package main
 // #include "autoexports.h"
 import "C"
 import (
-	"github.com/untrustedmodders/go-plugify"
 	"reflect"
+	_ "reflect"
 	"unsafe"
+	_ "unsafe"
+
+	"github.com/untrustedmodders/go-plugify"
+	_ "github.com/untrustedmodders/go-plugify"
 )
 
 // Exported methods
@@ -129,14 +133,14 @@ func __NoParamReturnArrayBool() C.Vector {
 //export __NoParamReturnArrayChar8
 func __NoParamReturnArrayChar8() C.Vector {
 	__result := NoParamReturnArrayChar8()
-	__return := plugify.ConstructVectorChar8(__result)
+	__return := plugify.ConstructVectorInt8(__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
 //export __NoParamReturnArrayChar16
 func __NoParamReturnArrayChar16() C.Vector {
 	__result := NoParamReturnArrayChar16()
-	__return := plugify.ConstructVectorChar16(__result)
+	__return := plugify.ConstructVectorUInt16(__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
@@ -406,8 +410,8 @@ func __ParamRef10(a *int32, b *float32, c *float64, d *C.Vector4, e *C.Vector, f
 //export __ParamRefVectors
 func __ParamRefVectors(p1 *C.Vector, p2 *C.Vector, p3 *C.Vector, p4 *C.Vector, p5 *C.Vector, p6 *C.Vector, p7 *C.Vector, p8 *C.Vector, p9 *C.Vector, p10 *C.Vector, p11 *C.Vector, p12 *C.Vector, p13 *C.Vector, p14 *C.Vector, p15 *C.Vector) {
 	_p1 := plugify.GetVectorDataBool((*plugify.PlgVector)(unsafe.Pointer(p1)))
-	_p2 := plugify.GetVectorDataChar8((*plugify.PlgVector)(unsafe.Pointer(p2)))
-	_p3 := plugify.GetVectorDataChar16((*plugify.PlgVector)(unsafe.Pointer(p3)))
+	_p2 := plugify.GetVectorDataInt8((*plugify.PlgVector)(unsafe.Pointer(p2)))
+	_p3 := plugify.GetVectorDataUInt16((*plugify.PlgVector)(unsafe.Pointer(p3)))
 	_p4 := plugify.GetVectorDataInt8((*plugify.PlgVector)(unsafe.Pointer(p4)))
 	_p5 := plugify.GetVectorDataInt16((*plugify.PlgVector)(unsafe.Pointer(p5)))
 	_p6 := plugify.GetVectorDataInt32((*plugify.PlgVector)(unsafe.Pointer(p6)))
@@ -422,8 +426,8 @@ func __ParamRefVectors(p1 *C.Vector, p2 *C.Vector, p3 *C.Vector, p4 *C.Vector, p
 	_p15 := plugify.GetVectorDataString((*plugify.PlgVector)(unsafe.Pointer(p15)))
 	ParamRefVectors(&_p1, &_p2, &_p3, &_p4, &_p5, &_p6, &_p7, &_p8, &_p9, &_p10, &_p11, &_p12, &_p13, &_p14, &_p15)
 	plugify.AssignVectorBool((*plugify.PlgVector)(unsafe.Pointer(p1)), _p1)
-	plugify.AssignVectorChar8((*plugify.PlgVector)(unsafe.Pointer(p2)), _p2)
-	plugify.AssignVectorChar16((*plugify.PlgVector)(unsafe.Pointer(p3)), _p3)
+	plugify.AssignVectorInt8((*plugify.PlgVector)(unsafe.Pointer(p2)), _p2)
+	plugify.AssignVectorUInt16((*plugify.PlgVector)(unsafe.Pointer(p3)), _p3)
 	plugify.AssignVectorInt8((*plugify.PlgVector)(unsafe.Pointer(p4)), _p4)
 	plugify.AssignVectorInt16((*plugify.PlgVector)(unsafe.Pointer(p5)), _p5)
 	plugify.AssignVectorInt32((*plugify.PlgVector)(unsafe.Pointer(p6)), _p6)
@@ -444,11 +448,6 @@ func __ParamAllPrimitives(p1 bool, p2 int8, p3 uint16, p4 int8, p5 int16, p6 int
 	return __result
 }
 
-//export __ParamVariant
-func __ParamVariant(p1 *C.Variant, p2 *C.Vector) {
-	ParamVariant(plugify.GetVariantData((*plugify.PlgVariant)(unsafe.Pointer(p1))), plugify.GetVectorDataVariant((*plugify.PlgVector)(unsafe.Pointer(p2))))
-}
-
 //export __ParamEnum
 func __ParamEnum(p1 int32, p2 *C.Vector) int32 {
 	__result := ParamEnum(Example(p1), plugify.GetVectorDataInt32T[Example]((*plugify.PlgVector)(unsafe.Pointer(p2))))
@@ -461,6 +460,11 @@ func __ParamEnumRef(p1 *int32, p2 *C.Vector) int32 {
 	__result := ParamEnumRef((*Example)(p1), &_p2)
 	plugify.AssignVectorInt32((*plugify.PlgVector)(unsafe.Pointer(p2)), _p2)
 	return __result
+}
+
+//export __ParamVariant
+func __ParamVariant(p1 *C.Variant, p2 *C.Vector) {
+	ParamVariant(plugify.GetVariantData((*plugify.PlgVariant)(unsafe.Pointer(p1))), plugify.GetVectorDataVariant((*plugify.PlgVector)(unsafe.Pointer(p2))))
 }
 
 //export __ParamVariantRef
@@ -561,6 +565,12 @@ func __CallFuncDouble(func_ unsafe.Pointer) float64 {
 	return __result
 }
 
+//export __CallFuncFunction
+func __CallFuncFunction(func_ unsafe.Pointer) uintptr {
+	__result := CallFuncFunction(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncFunction(nil))).(FuncFunction))
+	return __result
+}
+
 //export __CallFuncString
 func __CallFuncString(func_ unsafe.Pointer) C.String {
 	__result := CallFuncString(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncString(nil))).(FuncString))
@@ -575,12 +585,6 @@ func __CallFuncAny(func_ unsafe.Pointer) C.Variant {
 	return *(*C.Variant)(unsafe.Pointer(&__return))
 }
 
-//export __CallFuncFunction
-func __CallFuncFunction(func_ unsafe.Pointer) uintptr {
-	__result := CallFuncFunction(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncFunction(nil))).(FuncFunction))
-	return __result
-}
-
 //export __CallFuncBoolVector
 func __CallFuncBoolVector(func_ unsafe.Pointer) C.Vector {
 	__result := CallFuncBoolVector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncBoolVector(nil))).(FuncBoolVector))
@@ -591,14 +595,14 @@ func __CallFuncBoolVector(func_ unsafe.Pointer) C.Vector {
 //export __CallFuncChar8Vector
 func __CallFuncChar8Vector(func_ unsafe.Pointer) C.Vector {
 	__result := CallFuncChar8Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncChar8Vector(nil))).(FuncChar8Vector))
-	__return := plugify.ConstructVectorChar8(__result)
+	__return := plugify.ConstructVectorInt8(__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
 //export __CallFuncChar16Vector
 func __CallFuncChar16Vector(func_ unsafe.Pointer) C.Vector {
 	__result := CallFuncChar16Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncChar16Vector(nil))).(FuncChar16Vector))
-	__return := plugify.ConstructVectorChar16(__result)
+	__return := plugify.ConstructVectorUInt16(__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
@@ -963,6 +967,979 @@ func __CallFunc33(func_ unsafe.Pointer) C.String {
 //export __CallFuncEnum
 func __CallFuncEnum(func_ unsafe.Pointer) C.String {
 	__result := CallFuncEnum(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncEnum(nil))).(FuncEnum))
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnVoid
+func __ReverseNoParamReturnVoid() C.String {
+	__result := ReverseNoParamReturnVoid()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnBool
+func __ReverseNoParamReturnBool() C.String {
+	__result := ReverseNoParamReturnBool()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnChar8
+func __ReverseNoParamReturnChar8() C.String {
+	__result := ReverseNoParamReturnChar8()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnChar16
+func __ReverseNoParamReturnChar16() C.String {
+	__result := ReverseNoParamReturnChar16()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnInt8
+func __ReverseNoParamReturnInt8() C.String {
+	__result := ReverseNoParamReturnInt8()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnInt16
+func __ReverseNoParamReturnInt16() C.String {
+	__result := ReverseNoParamReturnInt16()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnInt32
+func __ReverseNoParamReturnInt32() C.String {
+	__result := ReverseNoParamReturnInt32()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnInt64
+func __ReverseNoParamReturnInt64() C.String {
+	__result := ReverseNoParamReturnInt64()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnUInt8
+func __ReverseNoParamReturnUInt8() C.String {
+	__result := ReverseNoParamReturnUInt8()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnUInt16
+func __ReverseNoParamReturnUInt16() C.String {
+	__result := ReverseNoParamReturnUInt16()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnUInt32
+func __ReverseNoParamReturnUInt32() C.String {
+	__result := ReverseNoParamReturnUInt32()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnUInt64
+func __ReverseNoParamReturnUInt64() C.String {
+	__result := ReverseNoParamReturnUInt64()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnPointer
+func __ReverseNoParamReturnPointer() C.String {
+	__result := ReverseNoParamReturnPointer()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnFloat
+func __ReverseNoParamReturnFloat() C.String {
+	__result := ReverseNoParamReturnFloat()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnDouble
+func __ReverseNoParamReturnDouble() C.String {
+	__result := ReverseNoParamReturnDouble()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnFunction
+func __ReverseNoParamReturnFunction() C.String {
+	__result := ReverseNoParamReturnFunction()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnString
+func __ReverseNoParamReturnString() C.String {
+	__result := ReverseNoParamReturnString()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnAny
+func __ReverseNoParamReturnAny() C.String {
+	__result := ReverseNoParamReturnAny()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnArrayBool
+func __ReverseNoParamReturnArrayBool() C.String {
+	__result := ReverseNoParamReturnArrayBool()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnArrayChar8
+func __ReverseNoParamReturnArrayChar8() C.String {
+	__result := ReverseNoParamReturnArrayChar8()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnArrayChar16
+func __ReverseNoParamReturnArrayChar16() C.String {
+	__result := ReverseNoParamReturnArrayChar16()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnArrayInt8
+func __ReverseNoParamReturnArrayInt8() C.String {
+	__result := ReverseNoParamReturnArrayInt8()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnArrayInt16
+func __ReverseNoParamReturnArrayInt16() C.String {
+	__result := ReverseNoParamReturnArrayInt16()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnArrayInt32
+func __ReverseNoParamReturnArrayInt32() C.String {
+	__result := ReverseNoParamReturnArrayInt32()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnArrayInt64
+func __ReverseNoParamReturnArrayInt64() C.String {
+	__result := ReverseNoParamReturnArrayInt64()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnArrayUInt8
+func __ReverseNoParamReturnArrayUInt8() C.String {
+	__result := ReverseNoParamReturnArrayUInt8()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnArrayUInt16
+func __ReverseNoParamReturnArrayUInt16() C.String {
+	__result := ReverseNoParamReturnArrayUInt16()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnArrayUInt32
+func __ReverseNoParamReturnArrayUInt32() C.String {
+	__result := ReverseNoParamReturnArrayUInt32()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnArrayUInt64
+func __ReverseNoParamReturnArrayUInt64() C.String {
+	__result := ReverseNoParamReturnArrayUInt64()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnArrayPointer
+func __ReverseNoParamReturnArrayPointer() C.String {
+	__result := ReverseNoParamReturnArrayPointer()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnArrayFloat
+func __ReverseNoParamReturnArrayFloat() C.String {
+	__result := ReverseNoParamReturnArrayFloat()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnArrayDouble
+func __ReverseNoParamReturnArrayDouble() C.String {
+	__result := ReverseNoParamReturnArrayDouble()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnArrayString
+func __ReverseNoParamReturnArrayString() C.String {
+	__result := ReverseNoParamReturnArrayString()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnArrayAny
+func __ReverseNoParamReturnArrayAny() C.String {
+	__result := ReverseNoParamReturnArrayAny()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnVector2
+func __ReverseNoParamReturnVector2() C.String {
+	__result := ReverseNoParamReturnVector2()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnVector3
+func __ReverseNoParamReturnVector3() C.String {
+	__result := ReverseNoParamReturnVector3()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnVector4
+func __ReverseNoParamReturnVector4() C.String {
+	__result := ReverseNoParamReturnVector4()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseNoParamReturnMatrix4x4
+func __ReverseNoParamReturnMatrix4x4() C.String {
+	__result := ReverseNoParamReturnMatrix4x4()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseParam1
+func __ReverseParam1() C.String {
+	__result := ReverseParam1()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseParam2
+func __ReverseParam2() C.String {
+	__result := ReverseParam2()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseParam3
+func __ReverseParam3() C.String {
+	__result := ReverseParam3()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseParam4
+func __ReverseParam4() C.String {
+	__result := ReverseParam4()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseParam5
+func __ReverseParam5() C.String {
+	__result := ReverseParam5()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseParam6
+func __ReverseParam6() C.String {
+	__result := ReverseParam6()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseParam7
+func __ReverseParam7() C.String {
+	__result := ReverseParam7()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseParam8
+func __ReverseParam8() C.String {
+	__result := ReverseParam8()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseParam9
+func __ReverseParam9() C.String {
+	__result := ReverseParam9()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseParam10
+func __ReverseParam10() C.String {
+	__result := ReverseParam10()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseParamRef1
+func __ReverseParamRef1() C.String {
+	__result := ReverseParamRef1()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseParamRef2
+func __ReverseParamRef2() C.String {
+	__result := ReverseParamRef2()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseParamRef3
+func __ReverseParamRef3() C.String {
+	__result := ReverseParamRef3()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseParamRef4
+func __ReverseParamRef4() C.String {
+	__result := ReverseParamRef4()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseParamRef5
+func __ReverseParamRef5() C.String {
+	__result := ReverseParamRef5()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseParamRef6
+func __ReverseParamRef6() C.String {
+	__result := ReverseParamRef6()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseParamRef7
+func __ReverseParamRef7() C.String {
+	__result := ReverseParamRef7()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseParamRef8
+func __ReverseParamRef8() C.String {
+	__result := ReverseParamRef8()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseParamRef9
+func __ReverseParamRef9() C.String {
+	__result := ReverseParamRef9()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseParamRef10
+func __ReverseParamRef10() C.String {
+	__result := ReverseParamRef10()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseParamRefVectors
+func __ReverseParamRefVectors() C.String {
+	__result := ReverseParamRefVectors()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseParamAllPrimitives
+func __ReverseParamAllPrimitives() C.String {
+	__result := ReverseParamAllPrimitives()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseParamEnum
+func __ReverseParamEnum() C.String {
+	__result := ReverseParamEnum()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseParamEnumRef
+func __ReverseParamEnumRef() C.String {
+	__result := ReverseParamEnumRef()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseParamVariant
+func __ReverseParamVariant() C.String {
+	__result := ReverseParamVariant()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseParamVariantRef
+func __ReverseParamVariantRef() C.String {
+	__result := ReverseParamVariantRef()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncVoid
+func __ReverseCallFuncVoid() C.String {
+	__result := ReverseCallFuncVoid()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncBool
+func __ReverseCallFuncBool() C.String {
+	__result := ReverseCallFuncBool()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncChar8
+func __ReverseCallFuncChar8() C.String {
+	__result := ReverseCallFuncChar8()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncChar16
+func __ReverseCallFuncChar16() C.String {
+	__result := ReverseCallFuncChar16()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncInt8
+func __ReverseCallFuncInt8() C.String {
+	__result := ReverseCallFuncInt8()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncInt16
+func __ReverseCallFuncInt16() C.String {
+	__result := ReverseCallFuncInt16()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncInt32
+func __ReverseCallFuncInt32() C.String {
+	__result := ReverseCallFuncInt32()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncInt64
+func __ReverseCallFuncInt64() C.String {
+	__result := ReverseCallFuncInt64()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncUInt8
+func __ReverseCallFuncUInt8() C.String {
+	__result := ReverseCallFuncUInt8()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncUInt16
+func __ReverseCallFuncUInt16() C.String {
+	__result := ReverseCallFuncUInt16()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncUInt32
+func __ReverseCallFuncUInt32() C.String {
+	__result := ReverseCallFuncUInt32()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncUInt64
+func __ReverseCallFuncUInt64() C.String {
+	__result := ReverseCallFuncUInt64()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncPtr
+func __ReverseCallFuncPtr() C.String {
+	__result := ReverseCallFuncPtr()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncFloat
+func __ReverseCallFuncFloat() C.String {
+	__result := ReverseCallFuncFloat()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncDouble
+func __ReverseCallFuncDouble() C.String {
+	__result := ReverseCallFuncDouble()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncString
+func __ReverseCallFuncString() C.String {
+	__result := ReverseCallFuncString()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAny
+func __ReverseCallFuncAny() C.String {
+	__result := ReverseCallFuncAny()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncBoolVector
+func __ReverseCallFuncBoolVector() C.String {
+	__result := ReverseCallFuncBoolVector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncChar8Vector
+func __ReverseCallFuncChar8Vector() C.String {
+	__result := ReverseCallFuncChar8Vector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncChar16Vector
+func __ReverseCallFuncChar16Vector() C.String {
+	__result := ReverseCallFuncChar16Vector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncInt8Vector
+func __ReverseCallFuncInt8Vector() C.String {
+	__result := ReverseCallFuncInt8Vector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncInt16Vector
+func __ReverseCallFuncInt16Vector() C.String {
+	__result := ReverseCallFuncInt16Vector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncInt32Vector
+func __ReverseCallFuncInt32Vector() C.String {
+	__result := ReverseCallFuncInt32Vector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncInt64Vector
+func __ReverseCallFuncInt64Vector() C.String {
+	__result := ReverseCallFuncInt64Vector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncUInt8Vector
+func __ReverseCallFuncUInt8Vector() C.String {
+	__result := ReverseCallFuncUInt8Vector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncUInt16Vector
+func __ReverseCallFuncUInt16Vector() C.String {
+	__result := ReverseCallFuncUInt16Vector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncUInt32Vector
+func __ReverseCallFuncUInt32Vector() C.String {
+	__result := ReverseCallFuncUInt32Vector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncUInt64Vector
+func __ReverseCallFuncUInt64Vector() C.String {
+	__result := ReverseCallFuncUInt64Vector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncPtrVector
+func __ReverseCallFuncPtrVector() C.String {
+	__result := ReverseCallFuncPtrVector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncFloatVector
+func __ReverseCallFuncFloatVector() C.String {
+	__result := ReverseCallFuncFloatVector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncDoubleVector
+func __ReverseCallFuncDoubleVector() C.String {
+	__result := ReverseCallFuncDoubleVector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncStringVector
+func __ReverseCallFuncStringVector() C.String {
+	__result := ReverseCallFuncStringVector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAnyVector
+func __ReverseCallFuncAnyVector() C.String {
+	__result := ReverseCallFuncAnyVector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncVec2Vector
+func __ReverseCallFuncVec2Vector() C.String {
+	__result := ReverseCallFuncVec2Vector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncVec3Vector
+func __ReverseCallFuncVec3Vector() C.String {
+	__result := ReverseCallFuncVec3Vector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncVec4Vector
+func __ReverseCallFuncVec4Vector() C.String {
+	__result := ReverseCallFuncVec4Vector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncMat4x4Vector
+func __ReverseCallFuncMat4x4Vector() C.String {
+	__result := ReverseCallFuncMat4x4Vector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncVec2
+func __ReverseCallFuncVec2() C.String {
+	__result := ReverseCallFuncVec2()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncVec3
+func __ReverseCallFuncVec3() C.String {
+	__result := ReverseCallFuncVec3()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncVec4
+func __ReverseCallFuncVec4() C.String {
+	__result := ReverseCallFuncVec4()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncMat4x4
+func __ReverseCallFuncMat4x4() C.String {
+	__result := ReverseCallFuncMat4x4()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFunc1
+func __ReverseCallFunc1() C.String {
+	__result := ReverseCallFunc1()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFunc2
+func __ReverseCallFunc2() C.String {
+	__result := ReverseCallFunc2()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFunc3
+func __ReverseCallFunc3() C.String {
+	__result := ReverseCallFunc3()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFunc4
+func __ReverseCallFunc4() C.String {
+	__result := ReverseCallFunc4()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFunc5
+func __ReverseCallFunc5() C.String {
+	__result := ReverseCallFunc5()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFunc6
+func __ReverseCallFunc6() C.String {
+	__result := ReverseCallFunc6()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFunc7
+func __ReverseCallFunc7() C.String {
+	__result := ReverseCallFunc7()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFunc8
+func __ReverseCallFunc8() C.String {
+	__result := ReverseCallFunc8()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFunc9
+func __ReverseCallFunc9() C.String {
+	__result := ReverseCallFunc9()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFunc10
+func __ReverseCallFunc10() C.String {
+	__result := ReverseCallFunc10()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFunc11
+func __ReverseCallFunc11() C.String {
+	__result := ReverseCallFunc11()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFunc12
+func __ReverseCallFunc12() C.String {
+	__result := ReverseCallFunc12()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFunc13
+func __ReverseCallFunc13() C.String {
+	__result := ReverseCallFunc13()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFunc14
+func __ReverseCallFunc14() C.String {
+	__result := ReverseCallFunc14()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFunc15
+func __ReverseCallFunc15() C.String {
+	__result := ReverseCallFunc15()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFunc16
+func __ReverseCallFunc16() C.String {
+	__result := ReverseCallFunc16()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFunc17
+func __ReverseCallFunc17() C.String {
+	__result := ReverseCallFunc17()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFunc18
+func __ReverseCallFunc18() C.String {
+	__result := ReverseCallFunc18()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFunc19
+func __ReverseCallFunc19() C.String {
+	__result := ReverseCallFunc19()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFunc20
+func __ReverseCallFunc20() C.String {
+	__result := ReverseCallFunc20()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFunc21
+func __ReverseCallFunc21() C.String {
+	__result := ReverseCallFunc21()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFunc22
+func __ReverseCallFunc22() C.String {
+	__result := ReverseCallFunc22()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFunc23
+func __ReverseCallFunc23() C.String {
+	__result := ReverseCallFunc23()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFunc24
+func __ReverseCallFunc24() C.String {
+	__result := ReverseCallFunc24()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFunc25
+func __ReverseCallFunc25() C.String {
+	__result := ReverseCallFunc25()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFunc26
+func __ReverseCallFunc26() C.String {
+	__result := ReverseCallFunc26()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFunc27
+func __ReverseCallFunc27() C.String {
+	__result := ReverseCallFunc27()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFunc28
+func __ReverseCallFunc28() C.String {
+	__result := ReverseCallFunc28()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFunc29
+func __ReverseCallFunc29() C.String {
+	__result := ReverseCallFunc29()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFunc30
+func __ReverseCallFunc30() C.String {
+	__result := ReverseCallFunc30()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFunc31
+func __ReverseCallFunc31() C.String {
+	__result := ReverseCallFunc31()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFunc32
+func __ReverseCallFunc32() C.String {
+	__result := ReverseCallFunc32()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFunc33
+func __ReverseCallFunc33() C.String {
+	__result := ReverseCallFunc33()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncEnum
+func __ReverseCallFuncEnum() C.String {
+	__result := ReverseCallFuncEnum()
 	__return := plugify.ConstructString(__result)
 	return *(*C.String)(unsafe.Pointer(&__return))
 }

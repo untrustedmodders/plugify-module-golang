@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/untrustedmodders/go-plugify"
 	"plugify-plugin/cross_call_master"
 	"unsafe"
+
+	"github.com/untrustedmodders/go-plugify"
 )
 
 func MockVoid() {
@@ -588,6 +589,6 @@ func MockFunc33(variant *any) {
 }
 
 func MockFuncEnum(p1 cross_call_master.Example, p2 *[]cross_call_master.Example) []cross_call_master.Example {
-	*p2 = []cross_call_master.Example{cross_call_master.First, cross_call_master.Second, cross_call_master.Third}
-	return []cross_call_master.Example{p1, cross_call_master.Forth}
+	*p2 = []cross_call_master.Example{cross_call_master.Example_First, cross_call_master.Example_Second, cross_call_master.Example_Third}
+	return []cross_call_master.Example{p1, cross_call_master.Example_Forth}
 }

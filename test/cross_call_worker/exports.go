@@ -2,13 +2,14 @@ package main
 
 import (
 	"fmt"
-	"github.com/untrustedmodders/go-plugify"
 	"math"
 	"plugify-plugin/cross_call_master"
 	"runtime"
 	"strconv"
 	"strings"
 	"unsafe"
+
+	"github.com/untrustedmodders/go-plugify"
 )
 
 type Example = int32
@@ -2354,7 +2355,7 @@ func ReverseCallFunc33() string {
 
 // plugify:export ReverseCallFuncEnum
 func ReverseCallFuncEnum() string {
-	result := "" //cross_call_master.CallFuncEnumCallback(MockFuncEnum)
+	result := cross_call_master.CallFuncEnumCallback(MockFuncEnum)
 	return result
 }
 
@@ -2371,7 +2372,7 @@ func BasicLifecycle() string {
 	initialAlive := cross_call_master.ResourceHandleGetAliveCount()
 	initialCreated := cross_call_master.ResourceHandleGetTotalCreated()
 
-	{
+	func() {
 		resource := cross_call_master.NewResourceHandleResourceHandleCreate(1, "Test1")
 		defer resource.Close()
 
@@ -2380,7 +2381,7 @@ func BasicLifecycle() string {
 
 		log(fmt.Sprintf("v Created ResourceHandle ID: %d", id))
 		log(fmt.Sprintf("v Alive count increased: %d", alive))
-	}
+	}()
 
 	finalAlive := cross_call_master.ResourceHandleGetAliveCount()
 	finalCreated := cross_call_master.ResourceHandleGetTotalCreated()
@@ -2437,7 +2438,7 @@ func MultipleInstances() string {
 
 	beforeAlive := cross_call_master.ResourceHandleGetAliveCount()
 
-	{
+	func() {
 		r1 := cross_call_master.NewResourceHandleResourceHandleCreate(10, "Instance1")
 		defer r1.Close()
 		r2 := cross_call_master.NewResourceHandleResourceHandleCreate(20, "Instance2")
@@ -2456,7 +2457,7 @@ func MultipleInstances() string {
 		if duringAlive-beforeAlive == 3 {
 			log("v All 3 instances tracked correctly")
 		}
-	}
+	}()
 
 	afterAlive := cross_call_master.ResourceHandleGetAliveCount()
 
@@ -2527,15 +2528,13 @@ func MemoryLeakDetection() string {
 	log("TEST 6: Memory Leak Detection")
 	log("______________________________")
 
-	log("!   Creating resource and releasing ownership (intentional leak test)")
-
 	beforeAlive := cross_call_master.ResourceHandleGetAliveCount()
 
 	{
 		leaked := cross_call_master.NewResourceHandleResourceHandleCreate(999, "IntentionalLeak")
 		id, _ := leaked.GetId()
 		log(fmt.Sprintf("v Created resource ID: %d", id))
-		leaked = nil // Remove reference, let GC handle it
+		leaked = nil
 	}
 
 	runtime.GC()
@@ -2546,12 +2545,11 @@ func MemoryLeakDetection() string {
 	log(fmt.Sprintf("v Before leak test: %d alive", beforeAlive))
 	log(fmt.Sprintf("v After release: %d alive", afterAlive))
 
-	if afterAlive == beforeAlive+1 {
-		log("!   TEST 6: Resource intentionally leaked\n")
-		log("    This is expected behavior - resource released without destruction\n")
+	if afterAlive == beforeAlive {
+		log("v TEST 6 PASSED: Finalizer cleaned up leaked resource\n")
 		return "true"
 	} else {
-		log("x TEST 6 FAILED: Unexpected alive count\n")
+		log("x TEST 6 FAILED: Resource still alive (will be cleaned at plugin shutdown)\n")
 		return "false"
 	}
 }
@@ -2572,6 +2570,55 @@ func ExceptionHandling() string {
 		log("x TEST 7 FAILED: No error thrown!\n")
 		return "false"
 	}
+}
+
+func OwnershipTransfer() string {
+	log("TEST 7: Ownership Transfer (get + release)")
+	log("─────────────────────────────────────────")
+
+	initialAlive := cross_call_master.ResourceHandleGetAliveCount()
+	//initialCreated := cross_call_master.ResourceHandleGetTotalCreated()
+
+	resource := cross_call_master.NewResourceHandleResourceHandleCreate(42, "OwnershipTest")
+	id, _ := resource.GetId();
+	log(fmt.Sprintf("✓ Created ResourceHandle ID: %d", id))
+
+	// Get internal wrapper (simulate internal pointer access)
+	wrapper := resource.Get()
+	log(fmt.Sprintf("✓ get() returned internal wrapper: 0x%x", wrapper))
+
+	// Release ownership
+	handle := resource.Release()
+	log(fmt.Sprintf("✓ release() returned handle: 0x%x", handle))
+
+	if wrapper != handle {
+		log("✗ TEST 7 FAILED: get() did not return internal wrapper")
+		return "false"
+	}
+
+	// Check if resource is invalid after release
+	_, err := resource.GetId()
+
+	if err != nil {
+		log("✓ ResourceHandle is invalid after release()");
+	} else {
+		log("✗ TEST 7 FAILED: ResourceHandle still accessible after release()");
+		return "false";
+	}
+
+	// Check that handle is now owned externally and alive count updated correctly
+	aliveAfterRelease := cross_call_master.ResourceHandleGetAliveCount()
+	if aliveAfterRelease != initialAlive + 1 {
+		log(fmt.Sprintf("✗ TEST 7 FAILED: Alive count mismatch after release. " +
+			"Expected %d, got %d",
+			initialAlive + 1, aliveAfterRelease))
+		return "false"
+	}
+
+	cross_call_master.ResourceHandleDestroy(handle)
+
+	log("✓ TEST 7 PASSED: Ownership transfer working correctly\n")
+	return "true"
 }
 
 var ReverseTest = map[string]func() string{
@@ -2722,6 +2769,7 @@ var ReverseTest = map[string]func() string{
 	"ClassStaticMethods":            StaticMethods,
 	"ClassMemoryLeakDetection":      MemoryLeakDetection,
 	"ClassExceptionHandling":        ExceptionHandling,
+	"ClassOwnershipTransfer":        OwnershipTransfer,
 }
 
 // plugify:export ReverseCall
