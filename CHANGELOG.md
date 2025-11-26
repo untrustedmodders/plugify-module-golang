@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.6](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.0.5...v2.0.6) (2025-11-26)
+
+
+### Bug Fixes
+
+* add new class tests ([7fb8656](https://github.com/untrustedmodders/plugify-module-golang/commit/7fb8656a0c63d2d2746aa9aae1f6cdda0d10c1df))
+* some improvements for test ([2cdcc38](https://github.com/untrustedmodders/plugify-module-golang/commit/2cdcc3859683b371b2528d347403b0aebf85df1c))
+* update deps ([49afe72](https://github.com/untrustedmodders/plugify-module-golang/commit/49afe7271ddaf67a91fe8407a1583fd729785329))
+* update deps ([0b6d7ad](https://github.com/untrustedmodders/plugify-module-golang/commit/0b6d7ad64786eb3aec2c8195e70a6f3ace9be88e))
+* update notify ([ef25c62](https://github.com/untrustedmodders/plugify-module-golang/commit/ef25c627f4541293b09aa76c6e57f5666bca6baa))
+
 ## [2.0.5](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.0.4...v2.0.5) (2025-10-06)
 
 
