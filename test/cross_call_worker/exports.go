@@ -2581,18 +2581,18 @@ func OwnershipTransfer() string {
 
 	resource := cross_call_master.NewResourceHandleResourceHandleCreate(42, "OwnershipTest")
 	id, _ := resource.GetId();
-	log(fmt.Sprintf("✓ Created ResourceHandle ID: %d", id))
+	log(fmt.Sprintf("v Created ResourceHandle ID: %d", id))
 
 	// Get internal wrapper (simulate internal pointer access)
 	wrapper := resource.Get()
-	log(fmt.Sprintf("✓ get() returned internal wrapper: 0x%x", wrapper))
+	log(fmt.Sprintf("v get() returned internal wrapper: 0x%x", wrapper))
 
 	// Release ownership
 	handle := resource.Release()
-	log(fmt.Sprintf("✓ release() returned handle: 0x%x", handle))
+	log(fmt.Sprintf("v release() returned handle: 0x%x", handle))
 
 	if wrapper != handle {
-		log("✗ TEST 7 FAILED: get() did not return internal wrapper")
+		log("x TEST 7 FAILED: get() did not return internal wrapper")
 		return "false"
 	}
 
@@ -2600,16 +2600,16 @@ func OwnershipTransfer() string {
 	_, err := resource.GetId()
 
 	if err != nil {
-		log("✓ ResourceHandle is invalid after release()");
+		log("v ResourceHandle is invalid after release()");
 	} else {
-		log("✗ TEST 7 FAILED: ResourceHandle still accessible after release()");
+		log("x TEST 7 FAILED: ResourceHandle still accessible after release()");
 		return "false";
 	}
 
 	// Check that handle is now owned externally and alive count updated correctly
 	aliveAfterRelease := cross_call_master.ResourceHandleGetAliveCount()
 	if aliveAfterRelease != initialAlive + 1 {
-		log(fmt.Sprintf("✗ TEST 7 FAILED: Alive count mismatch after release. " +
+		log(fmt.Sprintf("x TEST 7 FAILED: Alive count mismatch after release. " +
 			"Expected %d, got %d",
 			initialAlive + 1, aliveAfterRelease))
 		return "false"
@@ -2617,7 +2617,7 @@ func OwnershipTransfer() string {
 
 	cross_call_master.ResourceHandleDestroy(handle)
 
-	log("✓ TEST 7 PASSED: Ownership transfer working correctly\n")
+	log("v TEST 7 PASSED: Ownership transfer working correctly\n")
 	return "true"
 }
 
