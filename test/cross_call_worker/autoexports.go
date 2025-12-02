@@ -4,13 +4,13 @@ package main
 import "C"
 import (
 	"reflect"
-	_ "reflect"
 	"unsafe"
-	_ "unsafe"
-
 	"github.com/untrustedmodders/go-plugify"
-	_ "github.com/untrustedmodders/go-plugify"
 )
+
+var _ = reflect.TypeOf(0)
+var _ = unsafe.Sizeof(0)
+var _ = plugify.Plugin.Loaded
 
 // Exported methods
 
