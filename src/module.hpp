@@ -110,7 +110,7 @@ namespace golm {
 
 		std::vector<MemAddr*> _addresses;
 
-		static const std::array<void*, 140> _pluginApi;
+		static const std::array<void*, 137> _pluginApi;
 	};
 
 	extern GoLanguageModule g_golm;

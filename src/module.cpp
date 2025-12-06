@@ -220,52 +220,28 @@ bool IsExtensionLoaded(GoString name, GoString constraint) {
 		return g_golm.GetProvider()->IsExtensionLoaded(name);
 }
 
-const char* GetBaseDir() {
-	const auto& source = plg::as_string(g_golm.GetProvider()->GetBaseDir());
-	size_t size = source.length() + 1;
-	char* dest = new char[size];
-	std::memcpy(dest, source.data(), size);
-	return dest;
+plg::string GetBaseDir() {
+	return plg::as_string(g_golm.GetProvider()->GetBaseDir());
 }
 
-const char* GetExtensionsDir() {
-	const auto& source = plg::as_string(g_golm.GetProvider()->GetExtensionsDir());
-	size_t size = source.length() + 1;
-	char* dest = new char[size];
-	std::memcpy(dest, source.data(), size);
-	return dest;
+plg::string GetExtensionsDir() {
+	return plg::as_string(g_golm.GetProvider()->GetExtensionsDir());
 }
 
-const char* GetConfigsDir() {
-	const auto& source = plg::as_string(g_golm.GetProvider()->GetConfigsDir());
-	size_t size = source.length() + 1;
-	char* dest = new char[size];
-	std::memcpy(dest, source.data(), size);
-	return dest;
+plg::string GetConfigsDir() {
+	return plg::as_string(g_golm.GetProvider()->GetConfigsDir());
 }
 
-const char* GetDataDir() {
-	const auto& source = plg::as_string(g_golm.GetProvider()->GetDataDir());
-	size_t size = source.length() + 1;
-	char* dest = new char[size];
-	std::memcpy(dest, source.data(), size);
-	return dest;
+plg::string GetDataDir() {
+	return plg::as_string(g_golm.GetProvider()->GetDataDir());
 }
 
-const char* GetLogsDir() {
-	const auto& source = plg::as_string(g_golm.GetProvider()->GetLogsDir());
-	size_t size = source.length() + 1;
-	char* dest = new char[size];
-	std::memcpy(dest, source.data(), size);
-	return dest;
+plg::string GetLogsDir() {
+	return plg::as_string(g_golm.GetProvider()->GetLogsDir());
 }
 
-const char* GetCacheDir() {
-	const auto& source = plg::as_string(g_golm.GetProvider()->GetCacheDir());
-	size_t size = source.length() + 1;
-	char* dest = new char[size];
-	std::memcpy(dest, source.data(), size);
-	return dest;
+plg::string GetCacheDir() {
+	return plg::as_string(g_golm.GetProvider()->GetCacheDir());
 }
 
 void PrintException(GoString message) {
@@ -282,57 +258,42 @@ ptrdiff_t GetPluginId(const Extension& plugin) {
 	return static_cast<ptrdiff_t>(plugin.GetId());
 }
 
-const char* GetPluginName(const Extension& plugin) {
-	return plugin.GetName().c_str();
+plg::string GetPluginName(const Extension& plugin) {
+	return plugin.GetName();
 }
 
-const char* GetPluginDescription(const Extension& plugin) {
-	return plugin.GetDescription().c_str();
+plg::string GetPluginDescription(const Extension& plugin) {
+	return plugin.GetDescription();
 }
 
-const char* GetPluginVersion(const Extension& plugin) {
-	return plugin.GetVersionString().c_str();
+plg::string GetPluginVersion(const Extension& plugin) {
+	return plugin.GetVersionString();
 }
 
-const char* GetPluginAuthor(const Extension& plugin) {
-	return plugin.GetAuthor().c_str();
+plg::string GetPluginAuthor(const Extension& plugin) {
+	return plugin.GetAuthor();
 }
 
-const char* GetPluginWebsite(const Extension& plugin) {
-	return plugin.GetWebsite().c_str();
+plg::string GetPluginWebsite(const Extension& plugin) {
+	return plugin.GetWebsite();
 }
 
-const char* GetPluginLicense(const Extension& plugin) {
-	return plugin.GetLicense().c_str();
+plg::string GetPluginLicense(const Extension& plugin) {
+	return plugin.GetLicense();
 }
 
-const char* GetPluginLocation(const Extension& plugin) {
-	const auto& source = plg::as_string(plugin.GetLocation());
-	size_t size = source.length() + 1;
-	char* dest = new char[size];
-	std::memcpy(dest, source.data(), size);
-	return dest;
+plg::string GetPluginLocation(const Extension& plugin) {
+	return plg::as_string(plugin.GetLocation());
 }
 
-const char** GetPluginDependencies(const Extension& plugin) {
+plg::vector<plg::string> GetPluginDependencies(const Extension& plugin) {
 	const std::vector<Dependency>& dependencies = plugin.GetDependencies();
-	auto* deps = new const char*[dependencies.size()];
-	for (size_t i = 0; i < dependencies.size(); ++i) {
-		deps[i] = dependencies[i].GetName().c_str();
+	plg::vector<plg::string> deps;
+	deps.reserve(dependencies.size());
+	for (const auto& dependencie : dependencies) {
+		deps.emplace_back(dependencie.GetName());
 	}
 	return deps;
-}
-
-ptrdiff_t GetPluginDependenciesSize(const Extension& plugin) {
-	return static_cast<ptrdiff_t>(plugin.GetDependencies().size());
-}
-
-void DeleteCStr(const char* str) {
-	delete str;
-}
-
-void DeleteCStrArr(const char** arr) {
-	delete[] arr;
 }
 
 // String Functions
@@ -633,7 +594,7 @@ const EnumObject& GetMethodEnum(const Method& handle, ptrdiff_t index) {
 	}
 }
 
-const std::array<void*, 140> GoLanguageModule::_pluginApi = {
+const std::array<void*, 137> GoLanguageModule::_pluginApi = {
 		reinterpret_cast<void*>(&::GetMethodPtr),
 		reinterpret_cast<void*>(&::GetMethodPtr2),
 		reinterpret_cast<void*>(&::GetBaseDir),
@@ -654,10 +615,6 @@ const std::array<void*, 140> GoLanguageModule::_pluginApi = {
 		reinterpret_cast<void*>(&::GetPluginLicense),
 		reinterpret_cast<void*>(&::GetPluginLocation),
 		reinterpret_cast<void*>(&::GetPluginDependencies),
-		reinterpret_cast<void*>(&::GetPluginDependenciesSize),
-
-		reinterpret_cast<void*>(&::DeleteCStr),
-		reinterpret_cast<void*>(&::DeleteCStrArr),
 
 		reinterpret_cast<void*>(&::ConstructString),
 		reinterpret_cast<void*>(&::DestroyString),
