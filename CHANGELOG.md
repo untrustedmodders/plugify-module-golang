@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.1.0](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.0.6...v2.1.0) (2025-12-06)
+
+
+### Features
+
+* remove c pointers for getters in api ([3676a7c](https://github.com/untrustedmodders/plugify-module-golang/commit/3676a7c544291be21577250bcd8b3556e4d928c1))
+
+
+### Bug Fixes
+
+* add missing gen task ([44dfb54](https://github.com/untrustedmodders/plugify-module-golang/commit/44dfb54a86d05cfdfeb65f4c25ad6b45918cedf8))
+* bump test ver ([29c56f8](https://github.com/untrustedmodders/plugify-module-golang/commit/29c56f82c8f5ef0e2dde9c7b49f638b15b99c8c0))
+* bump version ([23058a4](https://github.com/untrustedmodders/plugify-module-golang/commit/23058a4df61fb93c6a3d41a7429614cb9d6ef548))
+* update autogen file ([cdce536](https://github.com/untrustedmodders/plugify-module-golang/commit/cdce536fe7ec148b60f9d10a8533ea59a59a6319))
+* update generator ([68d226b](https://github.com/untrustedmodders/plugify-module-golang/commit/68d226b92a947afc6e98df02e817787b9ad4369b))
+
 ## [2.0.6](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.0.5...v2.0.6) (2025-11-26)
 
 
