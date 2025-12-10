@@ -91,7 +91,7 @@ go mod init example.com/my-go-plugin
 Обратите внимание, что версия должна начинаться с `v`.
 
 ```sh
-go get github.com/untrustedmodders/go-plugify@v1.0.0
+go get github.com/untrustedmodders/go-plugify
 ```
 
 ```go

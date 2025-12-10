@@ -88,10 +88,10 @@ go mod init example.com/my-go-plugin
 
 ### Get the go-plugify module
 
-Note that you need to include the v in the version tag.
+Note that you might to include the v in the version tag.
 
 ```sh
-go get github.com/untrustedmodders/go-plugify@v1.0.0
+go get github.com/untrustedmodders/go-plugify
 ```
 
 ```go
