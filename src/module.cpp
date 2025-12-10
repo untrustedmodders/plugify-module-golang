@@ -202,22 +202,21 @@ namespace golm {
 	GoLanguageModule g_golm;
 }
 
-MemAddr GetMethodPtr(const char* methodName) {
-	return g_golm.GetNativeMethod(methodName);
+void* GetMethodPtr(const char* name) {
+	return g_golm.GetNativeMethod(name);
 }
 
-void GetMethodPtr2(const char* methodName, MemAddr* addressDest) {
-	g_golm.GetNativeMethod(methodName, addressDest);
+void GetMethodPtr2(const char* name, MemAddr* dest) {
+	g_golm.GetNativeMethod(name, dest);
 }
 
 bool IsExtensionLoaded(GoString name, GoString constraint) {
-	if (constraint) {
-		plg::range_set<> range;
-		plg::parse(constraint, range);
-		return g_golm.GetProvider()->IsExtensionLoaded(name, std::move(range));
-	}
-	else
+	if (!constraint) {
 		return g_golm.GetProvider()->IsExtensionLoaded(name);
+	}
+	plg::range_set<> range;
+	plg::parse(constraint, range);
+	return g_golm.GetProvider()->IsExtensionLoaded(name, std::move(range));
 }
 
 plg::string GetBaseDir() {
@@ -290,8 +289,8 @@ plg::vector<plg::string> GetPluginDependencies(const Extension& plugin) {
 	const std::vector<Dependency>& dependencies = plugin.GetDependencies();
 	plg::vector<plg::string> deps;
 	deps.reserve(dependencies.size());
-	for (const auto& dependencie : dependencies) {
-		deps.emplace_back(dependencie.GetName());
+	for (const auto& dependency : dependencies) {
+		deps.emplace_back(dependency.GetName());
 	}
 	return deps;
 }
