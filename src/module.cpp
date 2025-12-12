@@ -53,11 +53,15 @@ Result<InitData> GoLanguageModule::Initialize(const Provider& provider, [[maybe_
 }
 
 void GoLanguageModule::Shutdown() {
-	for (MemAddr* addr : _addresses) {
+	_nativesMap.clear();
+	for (const auto& addr : _addresses) {
 		*addr = nullptr;
 	}
-	_nativesMap.clear();
+	for (const auto& cleanup : _cleanups) {
+		cleanup();
+	}
 	_addresses.clear();
+	_cleanups.clear();
 	_assemblies.clear();
 	_provider.reset();
 }
@@ -167,21 +171,28 @@ void GoLanguageModule::OnPluginEnd(const Extension& plugin) {
 	plugin.GetUserData().RCast<AssemblyHolder*>()->endFunc();
 }
 
-MemAddr GoLanguageModule::GetNativeMethod(std::string_view methodName) const {
-	if (const auto it = _nativesMap.find(methodName); it != _nativesMap.end()) {
+MemAddr GoLanguageModule::GetNativeMethod(std::string_view method, CleanupFunc cleanup) {
+	if (const auto it = _nativesMap.find(method); it != _nativesMap.end()) {
+		{
+			std::scoped_lock lock(_mutex);
+			_cleanups.emplace_back(cleanup);
+		}
 		return std::get<MemAddr>(*it);
 	}
-	_provider->Log(std::format(LOG_PREFIX "GetNativeMethod failed to find: '{}'", methodName), Severity::Fatal);
+	_provider->Log(std::format(LOG_PREFIX "GetNativeMethod failed to find {}", method), Severity::Fatal);
 	return nullptr;
 }
 
-void GoLanguageModule::GetNativeMethod(std::string_view methodName, MemAddr* addressDest) {
-	if (const auto it = _nativesMap.find(methodName); it != _nativesMap.end()) {
-		*addressDest = std::get<MemAddr>(*it);
-		_addresses.emplace_back(addressDest);
+void GoLanguageModule::GetNativeMethod(std::string_view method, MemAddr* address) {
+	if (const auto it = _nativesMap.find(method); it != _nativesMap.end()) {
+		{
+			std::scoped_lock lock(_mutex);
+			_addresses.emplace_back(address);
+		}
+		*address = std::get<MemAddr>(*it);
 		return;
 	}
-	_provider->Log(std::format(LOG_PREFIX "GetNativeMethod failed to find: '{}'", methodName), Severity::Fatal);
+	_provider->Log(std::format(LOG_PREFIX "GetNativeMethod failed to find: '{}'", method), Severity::Fatal);
 }
 
 std::shared_ptr<Method> GoLanguageModule::FindMethod(std::string_view name) {

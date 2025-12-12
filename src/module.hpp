@@ -70,6 +70,7 @@ namespace golm {
 	using UpdateFunc = void (*)(float);
 	using EndFunc = void (*)();
 	using ContextFunc = PluginContext* (*)();
+	using CleanupFunc = void (*)();
 
 	struct AssemblyHolder {
 		std::shared_ptr<IAssembly> assembly;
@@ -98,8 +99,8 @@ namespace golm {
 
 		const std::unique_ptr<Provider>& GetProvider() { return _provider; }
 
-		MemAddr GetNativeMethod(std::string_view methodName) const;
-		void GetNativeMethod(std::string_view methodName, MemAddr* addressDest);
+		MemAddr GetNativeMethod(std::string_view method, CleanupFunc cleanup);
+		void GetNativeMethod(std::string_view method, MemAddr* address);
 		std::shared_ptr<Method> FindMethod(std::string_view name);
 
 	private:
@@ -108,7 +109,9 @@ namespace golm {
 		std::vector<std::unique_ptr<AssemblyHolder>> _assemblies;
 		std::unordered_map<std::string, MemAddr, plg::string_hash, std::equal_to<>> _nativesMap;
 
+		std::vector<CleanupFunc> _cleanups;
 		std::vector<MemAddr*> _addresses;
+		std::mutex _mutex;
 
 		static const std::array<void*, 137> _pluginApi;
 	};
