@@ -53,15 +53,6 @@ Result<InitData> GoLanguageModule::Initialize(const Provider& provider, [[maybe_
 }
 
 void GoLanguageModule::Shutdown() {
-	_nativesMap.clear();
-	for (const auto& addr : _addresses) {
-		*addr = nullptr;
-	}
-	for (const auto& cleanup : _cleanups) {
-		cleanup();
-	}
-	_addresses.clear();
-	_cleanups.clear();
 	_assemblies.clear();
 	_provider.reset();
 }
@@ -74,10 +65,13 @@ bool GoLanguageModule::IsDebugBuild() {
 }
 
 void GoLanguageModule::OnMethodExport(const Extension& plugin) {
-	const auto& methods = plugin.GetMethodsData();
-	_nativesMap.reserve(_nativesMap.size() + methods.size());
-	for (const auto& [method, addr] :methods) {
-		_nativesMap.try_emplace(std::format("{}.{}", plugin.GetName(), method.GetName()), addr);
+	for (const auto& [method, addr] : plugin.GetMethodsData()) {
+		auto variableName = std::format("__{}_{}", plugin.GetName(), method.GetName());
+		for (const auto& assembly : _assemblies) {
+			if (auto function = assembly->assembly->GetSymbol(variableName)) {
+				*function->RCast<MemAddr*>() = addr;
+			}
+		}
 	}
 }
 
@@ -171,30 +165,6 @@ void GoLanguageModule::OnPluginEnd(const Extension& plugin) {
 	plugin.GetUserData().RCast<AssemblyHolder*>()->endFunc();
 }
 
-MemAddr GoLanguageModule::GetNativeMethod(std::string_view method, CleanupFunc cleanup) {
-	if (const auto it = _nativesMap.find(method); it != _nativesMap.end()) {
-		{
-			std::scoped_lock lock(_mutex);
-			_cleanups.emplace_back(cleanup);
-		}
-		return std::get<MemAddr>(*it);
-	}
-	_provider->Log(std::format(LOG_PREFIX "GetNativeMethod failed to find {}", method), Severity::Fatal);
-	return nullptr;
-}
-
-void GoLanguageModule::GetNativeMethod(std::string_view method, MemAddr* address) {
-	if (const auto it = _nativesMap.find(method); it != _nativesMap.end()) {
-		{
-			std::scoped_lock lock(_mutex);
-			_addresses.emplace_back(address);
-		}
-		*address = std::get<MemAddr>(*it);
-		return;
-	}
-	_provider->Log(std::format(LOG_PREFIX "GetNativeMethod failed to find: '{}'", method), Severity::Fatal);
-}
-
 std::shared_ptr<Method> GoLanguageModule::FindMethod(std::string_view name) {
 	if (auto separated = Split(name, "."); separated.size() == 2) {
 		if (auto plugin = _provider->FindExtension(separated[0])) {
@@ -211,14 +181,6 @@ std::shared_ptr<Method> GoLanguageModule::FindMethod(std::string_view name) {
 
 namespace golm {
 	GoLanguageModule g_golm;
-}
-
-void* GetMethodPtr(const char* name) {
-	return g_golm.GetNativeMethod(name);
-}
-
-void GetMethodPtr2(const char* name, MemAddr* dest) {
-	g_golm.GetNativeMethod(name, dest);
 }
 
 bool IsExtensionLoaded(GoString name, GoString constraint) {
@@ -604,9 +566,7 @@ const EnumObject& GetMethodEnum(const Method& handle, ptrdiff_t index) {
 	}
 }
 
-const std::array<void*, 137> GoLanguageModule::_pluginApi = {
-		reinterpret_cast<void*>(&::GetMethodPtr),
-		reinterpret_cast<void*>(&::GetMethodPtr2),
+const std::array<void*, 135> GoLanguageModule::_pluginApi = {
 		reinterpret_cast<void*>(&::GetBaseDir),
 		reinterpret_cast<void*>(&::GetExtensionsDir),
 		reinterpret_cast<void*>(&::GetConfigsDir),
