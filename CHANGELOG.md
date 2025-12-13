@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.2.0](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.1.0...v2.2.0) (2025-12-13)
+
+
+### Features
+
+* rework native system ([cca7341](https://github.com/untrustedmodders/plugify-module-golang/commit/cca73414cff58c8c98b8ae2041d16dea5e838f23))
+
+
+### Bug Fixes
+
+* initial natives rework ([e4e5ea9](https://github.com/untrustedmodders/plugify-module-golang/commit/e4e5ea91a6da3374d190888848358d676a94bcc3))
+* update tests ([d98c618](https://github.com/untrustedmodders/plugify-module-golang/commit/d98c61863b57c4768db2c95924e6e0cd9a64bcfb))
+
 ## [2.1.0](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.0.6...v2.1.0) (2025-12-06)
 
 
