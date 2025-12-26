@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.0](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.2.0...v2.3.0) (2025-12-26)
+
+
+### Features
+
+* update export names for new version ([90995c7](https://github.com/untrustedmodders/plugify-module-golang/commit/90995c717862b2ceba30c9c5e4cc7151ad549937))
+
 ## [2.2.0](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.1.0...v2.2.0) (2025-12-13)
 
 
