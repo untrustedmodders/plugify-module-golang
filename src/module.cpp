@@ -87,27 +87,27 @@ Result<LoadData> GoLanguageModule::OnPluginLoad(const Extension& plugin) {
 
 	auto& assembly = *assemblyResult;
 
-	auto initResult = assembly->GetSymbol("Plugify_Init");
+	auto initResult = assembly->GetSymbol("plugify_Init");
 	if (!initResult) {
 		return MakeError(std::move(initResult.error()));
 	}
-	auto callResult = assembly->GetSymbol("Plugify_InternalCall");
+	auto callResult = assembly->GetSymbol("plugify_InternalCall");
 	if (!callResult) {
 		return MakeError(std::move(callResult.error()));
 	}
-	auto startResult = assembly->GetSymbol("Plugify_PluginStart");
+	auto startResult = assembly->GetSymbol("plugify_PluginStart");
 	if (!startResult) {
 		return MakeError(std::move(startResult.error()));
 	}
-	auto updateResult = assembly->GetSymbol("Plugify_PluginUpdate");
+	auto updateResult = assembly->GetSymbol("plugify_PluginUpdate");
 	if (!updateResult) {
 		return MakeError(std::move(updateResult.error()));
 	}
-	auto endResult = assembly->GetSymbol("Plugify_PluginEnd");
+	auto endResult = assembly->GetSymbol("plugify_PluginEnd");
 	if (!endResult) {
 		return MakeError(std::move(endResult.error()));
 	}
-	auto contextResult = assembly->GetSymbol("Plugify_PluginContext");
+	auto contextResult = assembly->GetSymbol("plugify_PluginContext");
 	if (!contextResult) {
 		return MakeError(std::move(contextResult.error()));
 	}
