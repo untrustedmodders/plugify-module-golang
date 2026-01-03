@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.3.1](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.3.0...v2.3.1) (2026-01-03)
+
+
+### Bug Fixes
+
+* add build type to configure step ([1c8a790](https://github.com/untrustedmodders/plugify-module-golang/commit/1c8a790e9bdc83f187eca6f200b092b95c60cdce))
+* update tests and fix typo ([9f7d9a2](https://github.com/untrustedmodders/plugify-module-golang/commit/9f7d9a24db74f6c993c64cb444c2c7cdde32904d))
+
 ## [2.3.0](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.2.0...v2.3.0) (2025-12-26)
 
 
