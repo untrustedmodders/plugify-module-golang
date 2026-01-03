@@ -151,10 +151,10 @@ package cross_call_master
 import "C"
 import (
 	"errors"
+	"github.com/untrustedmodders/go-plugify"
 	"reflect"
 	"runtime"
 	"unsafe"
-	"github.com/untrustedmodders/go-plugify"
 )
 
 var _ = errors.New("")
@@ -167,7 +167,7 @@ var _ = plugify.Plugin.Loaded
 
 func ReverseReturn(returnString string) {
 	__returnString := plugify.ConstructString(returnString)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			C.ReverseReturn((*C.String)(unsafe.Pointer(&__returnString)))
 		},
@@ -260,7 +260,7 @@ func NoParamReturnFunctionCallback() NoParamReturnFunctionCallbackFunc {
 func NoParamReturnStringCallback() string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.NoParamReturnStringCallback()
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
@@ -278,7 +278,7 @@ func NoParamReturnStringCallback() string {
 func NoParamReturnAnyCallback() any {
 	var __retVal any
 	var __retVal_native plugify.PlgVariant
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.NoParamReturnAnyCallback()
 			__retVal_native = *(*plugify.PlgVariant)(unsafe.Pointer(&__native))
@@ -296,7 +296,7 @@ func NoParamReturnAnyCallback() any {
 func NoParamReturnArrayBoolCallback() []bool {
 	var __retVal []bool
 	var __retVal_native plugify.PlgVector
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.NoParamReturnArrayBoolCallback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -314,7 +314,7 @@ func NoParamReturnArrayBoolCallback() []bool {
 func NoParamReturnArrayChar8Callback() []int8 {
 	var __retVal []int8
 	var __retVal_native plugify.PlgVector
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.NoParamReturnArrayChar8Callback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -332,7 +332,7 @@ func NoParamReturnArrayChar8Callback() []int8 {
 func NoParamReturnArrayChar16Callback() []uint16 {
 	var __retVal []uint16
 	var __retVal_native plugify.PlgVector
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.NoParamReturnArrayChar16Callback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -350,7 +350,7 @@ func NoParamReturnArrayChar16Callback() []uint16 {
 func NoParamReturnArrayInt8Callback() []int8 {
 	var __retVal []int8
 	var __retVal_native plugify.PlgVector
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.NoParamReturnArrayInt8Callback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -368,7 +368,7 @@ func NoParamReturnArrayInt8Callback() []int8 {
 func NoParamReturnArrayInt16Callback() []int16 {
 	var __retVal []int16
 	var __retVal_native plugify.PlgVector
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.NoParamReturnArrayInt16Callback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -386,7 +386,7 @@ func NoParamReturnArrayInt16Callback() []int16 {
 func NoParamReturnArrayInt32Callback() []int32 {
 	var __retVal []int32
 	var __retVal_native plugify.PlgVector
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.NoParamReturnArrayInt32Callback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -404,7 +404,7 @@ func NoParamReturnArrayInt32Callback() []int32 {
 func NoParamReturnArrayInt64Callback() []int64 {
 	var __retVal []int64
 	var __retVal_native plugify.PlgVector
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.NoParamReturnArrayInt64Callback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -422,7 +422,7 @@ func NoParamReturnArrayInt64Callback() []int64 {
 func NoParamReturnArrayUInt8Callback() []uint8 {
 	var __retVal []uint8
 	var __retVal_native plugify.PlgVector
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.NoParamReturnArrayUInt8Callback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -440,7 +440,7 @@ func NoParamReturnArrayUInt8Callback() []uint8 {
 func NoParamReturnArrayUInt16Callback() []uint16 {
 	var __retVal []uint16
 	var __retVal_native plugify.PlgVector
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.NoParamReturnArrayUInt16Callback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -458,7 +458,7 @@ func NoParamReturnArrayUInt16Callback() []uint16 {
 func NoParamReturnArrayUInt32Callback() []uint32 {
 	var __retVal []uint32
 	var __retVal_native plugify.PlgVector
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.NoParamReturnArrayUInt32Callback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -476,7 +476,7 @@ func NoParamReturnArrayUInt32Callback() []uint32 {
 func NoParamReturnArrayUInt64Callback() []uint64 {
 	var __retVal []uint64
 	var __retVal_native plugify.PlgVector
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.NoParamReturnArrayUInt64Callback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -494,7 +494,7 @@ func NoParamReturnArrayUInt64Callback() []uint64 {
 func NoParamReturnArrayPointerCallback() []uintptr {
 	var __retVal []uintptr
 	var __retVal_native plugify.PlgVector
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.NoParamReturnArrayPointerCallback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -512,7 +512,7 @@ func NoParamReturnArrayPointerCallback() []uintptr {
 func NoParamReturnArrayFloatCallback() []float32 {
 	var __retVal []float32
 	var __retVal_native plugify.PlgVector
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.NoParamReturnArrayFloatCallback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -530,7 +530,7 @@ func NoParamReturnArrayFloatCallback() []float32 {
 func NoParamReturnArrayDoubleCallback() []float64 {
 	var __retVal []float64
 	var __retVal_native plugify.PlgVector
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.NoParamReturnArrayDoubleCallback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -548,7 +548,7 @@ func NoParamReturnArrayDoubleCallback() []float64 {
 func NoParamReturnArrayStringCallback() []string {
 	var __retVal []string
 	var __retVal_native plugify.PlgVector
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.NoParamReturnArrayStringCallback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -566,7 +566,7 @@ func NoParamReturnArrayStringCallback() []string {
 func NoParamReturnArrayAnyCallback() []any {
 	var __retVal []any
 	var __retVal_native plugify.PlgVector
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.NoParamReturnArrayAnyCallback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -584,7 +584,7 @@ func NoParamReturnArrayAnyCallback() []any {
 func NoParamReturnArrayVector2Callback() []plugify.Vector2 {
 	var __retVal []plugify.Vector2
 	var __retVal_native plugify.PlgVector
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.NoParamReturnArrayVector2Callback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -602,7 +602,7 @@ func NoParamReturnArrayVector2Callback() []plugify.Vector2 {
 func NoParamReturnArrayVector3Callback() []plugify.Vector3 {
 	var __retVal []plugify.Vector3
 	var __retVal_native plugify.PlgVector
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.NoParamReturnArrayVector3Callback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -620,7 +620,7 @@ func NoParamReturnArrayVector3Callback() []plugify.Vector3 {
 func NoParamReturnArrayVector4Callback() []plugify.Vector4 {
 	var __retVal []plugify.Vector4
 	var __retVal_native plugify.PlgVector
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.NoParamReturnArrayVector4Callback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -638,7 +638,7 @@ func NoParamReturnArrayVector4Callback() []plugify.Vector4 {
 func NoParamReturnArrayMatrix4x4Callback() []plugify.Matrix4x4 {
 	var __retVal []plugify.Matrix4x4
 	var __retVal_native plugify.PlgVector
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.NoParamReturnArrayMatrix4x4Callback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -709,7 +709,7 @@ func Param5Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64)
 	__c := C.double(c)
 	__d := *(*C.Vector4)(unsafe.Pointer(&d))
 	__e := plugify.ConstructVectorInt64(e)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			C.Param5Callback(__a, __b, __c, &__d, (*C.Vector)(unsafe.Pointer(&__e)))
 		},
@@ -727,7 +727,7 @@ func Param6Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64,
 	__d := *(*C.Vector4)(unsafe.Pointer(&d))
 	__e := plugify.ConstructVectorInt64(e)
 	__f := C.int8_t(f)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			C.Param6Callback(__a, __b, __c, &__d, (*C.Vector)(unsafe.Pointer(&__e)), __f)
 		},
@@ -746,7 +746,7 @@ func Param7Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64,
 	__e := plugify.ConstructVectorInt64(e)
 	__f := C.int8_t(f)
 	__g := plugify.ConstructString(g)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			C.Param7Callback(__a, __b, __c, &__d, (*C.Vector)(unsafe.Pointer(&__e)), __f, (*C.String)(unsafe.Pointer(&__g)))
 		},
@@ -767,7 +767,7 @@ func Param8Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64,
 	__f := C.int8_t(f)
 	__g := plugify.ConstructString(g)
 	__h := C.uint16_t(h)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			C.Param8Callback(__a, __b, __c, &__d, (*C.Vector)(unsafe.Pointer(&__e)), __f, (*C.String)(unsafe.Pointer(&__g)), __h)
 		},
@@ -789,7 +789,7 @@ func Param9Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64,
 	__g := plugify.ConstructString(g)
 	__h := C.uint16_t(h)
 	__k := C.int16_t(k)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			C.Param9Callback(__a, __b, __c, &__d, (*C.Vector)(unsafe.Pointer(&__e)), __f, (*C.String)(unsafe.Pointer(&__g)), __h, __k)
 		},
@@ -812,7 +812,7 @@ func Param10Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64
 	__h := C.uint16_t(h)
 	__k := C.int16_t(k)
 	__l := C.uintptr_t(l)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			C.Param10Callback(__a, __b, __c, &__d, (*C.Vector)(unsafe.Pointer(&__e)), __f, (*C.String)(unsafe.Pointer(&__g)), __h, __k, __l)
 		},
@@ -870,7 +870,7 @@ func ParamRef5Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *
 	__c := C.double(*c)
 	__d := *(*C.Vector4)(unsafe.Pointer(d))
 	__e := plugify.ConstructVectorInt64(*e)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			C.ParamRef5Callback(&__a, &__b, &__c, &__d, (*C.Vector)(unsafe.Pointer(&__e)))
 			// Unmarshal - Convert native data to managed data.
@@ -894,7 +894,7 @@ func ParamRef6Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *
 	__d := *(*C.Vector4)(unsafe.Pointer(d))
 	__e := plugify.ConstructVectorInt64(*e)
 	__f := C.int8_t(*f)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			C.ParamRef6Callback(&__a, &__b, &__c, &__d, (*C.Vector)(unsafe.Pointer(&__e)), &__f)
 			// Unmarshal - Convert native data to managed data.
@@ -920,7 +920,7 @@ func ParamRef7Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *
 	__e := plugify.ConstructVectorInt64(*e)
 	__f := C.int8_t(*f)
 	__g := plugify.ConstructString(*g)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			C.ParamRef7Callback(&__a, &__b, &__c, &__d, (*C.Vector)(unsafe.Pointer(&__e)), &__f, (*C.String)(unsafe.Pointer(&__g)))
 			// Unmarshal - Convert native data to managed data.
@@ -949,7 +949,7 @@ func ParamRef8Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *
 	__f := C.int8_t(*f)
 	__g := plugify.ConstructString(*g)
 	__h := C.uint16_t(*h)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			C.ParamRef8Callback(&__a, &__b, &__c, &__d, (*C.Vector)(unsafe.Pointer(&__e)), &__f, (*C.String)(unsafe.Pointer(&__g)), &__h)
 			// Unmarshal - Convert native data to managed data.
@@ -980,7 +980,7 @@ func ParamRef9Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *
 	__g := plugify.ConstructString(*g)
 	__h := C.uint16_t(*h)
 	__k := C.int16_t(*k)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			C.ParamRef9Callback(&__a, &__b, &__c, &__d, (*C.Vector)(unsafe.Pointer(&__e)), &__f, (*C.String)(unsafe.Pointer(&__g)), &__h, &__k)
 			// Unmarshal - Convert native data to managed data.
@@ -1013,7 +1013,7 @@ func ParamRef10Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e 
 	__h := C.uint16_t(*h)
 	__k := C.int16_t(*k)
 	__l := C.uintptr_t(*l)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			C.ParamRef10Callback(&__a, &__b, &__c, &__d, (*C.Vector)(unsafe.Pointer(&__e)), &__f, (*C.String)(unsafe.Pointer(&__g)), &__h, &__k, &__l)
 			// Unmarshal - Convert native data to managed data.
@@ -1052,7 +1052,7 @@ func ParamRefVectorsCallback(p1 *[]bool, p2 *[]int8, p3 *[]uint16, p4 *[]int8, p
 	__p13 := plugify.ConstructVectorFloat(*p13)
 	__p14 := plugify.ConstructVectorDouble(*p14)
 	__p15 := plugify.ConstructVectorString(*p15)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			C.ParamRefVectorsCallback((*C.Vector)(unsafe.Pointer(&__p1)), (*C.Vector)(unsafe.Pointer(&__p2)), (*C.Vector)(unsafe.Pointer(&__p3)), (*C.Vector)(unsafe.Pointer(&__p4)), (*C.Vector)(unsafe.Pointer(&__p5)), (*C.Vector)(unsafe.Pointer(&__p6)), (*C.Vector)(unsafe.Pointer(&__p7)), (*C.Vector)(unsafe.Pointer(&__p8)), (*C.Vector)(unsafe.Pointer(&__p9)), (*C.Vector)(unsafe.Pointer(&__p10)), (*C.Vector)(unsafe.Pointer(&__p11)), (*C.Vector)(unsafe.Pointer(&__p12)), (*C.Vector)(unsafe.Pointer(&__p13)), (*C.Vector)(unsafe.Pointer(&__p14)), (*C.Vector)(unsafe.Pointer(&__p15)))
 			// Unmarshal - Convert native data to managed data.
@@ -1117,7 +1117,7 @@ func ParamEnumCallback(p1 Example, p2 []Example) int32 {
 	var __retVal int32
 	__p1 := C.int32_t(p1)
 	__p2 := plugify.ConstructVectorInt32(p2)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__retVal = int32(C.ParamEnumCallback(__p1, (*C.Vector)(unsafe.Pointer(&__p2))))
 		},
@@ -1133,7 +1133,7 @@ func ParamEnumRefCallback(p1 *Example, p2 *[]Example) int32 {
 	var __retVal int32
 	__p1 := C.int32_t(*p1)
 	__p2 := plugify.ConstructVectorInt32(*p2)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__retVal = int32(C.ParamEnumRefCallback(&__p1, (*C.Vector)(unsafe.Pointer(&__p2))))
 			// Unmarshal - Convert native data to managed data.
@@ -1151,7 +1151,7 @@ func ParamEnumRefCallback(p1 *Example, p2 *[]Example) int32 {
 func ParamVariantCallback(p1 any, p2 []any) {
 	__p1 := plugify.ConstructVariant(p1)
 	__p2 := plugify.ConstructVectorVariant(p2)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			C.ParamVariantCallback((*C.Variant)(unsafe.Pointer(&__p1)), (*C.Vector)(unsafe.Pointer(&__p2)))
 		},
@@ -1166,7 +1166,7 @@ func ParamVariantCallback(p1 any, p2 []any) {
 func ParamVariantRefCallback(p1 *any, p2 *[]any) {
 	__p1 := plugify.ConstructVariant(*p1)
 	__p2 := plugify.ConstructVectorVariant(*p2)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			C.ParamVariantRefCallback((*C.Variant)(unsafe.Pointer(&__p1)), (*C.Vector)(unsafe.Pointer(&__p2)))
 			// Unmarshal - Convert native data to managed data.
@@ -1288,7 +1288,7 @@ func CallFuncStringCallback(func_ FuncString) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFuncStringCallback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
@@ -1307,7 +1307,7 @@ func CallFuncAnyCallback(func_ FuncAny) any {
 	var __retVal any
 	var __retVal_native plugify.PlgVariant
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFuncAnyCallback(__func_)
 			__retVal_native = *(*plugify.PlgVariant)(unsafe.Pointer(&__native))
@@ -1333,7 +1333,7 @@ func CallFuncBoolVectorCallback(func_ FuncBoolVector) []bool {
 	var __retVal []bool
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFuncBoolVectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -1352,7 +1352,7 @@ func CallFuncChar8VectorCallback(func_ FuncChar8Vector) []int8 {
 	var __retVal []int8
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFuncChar8VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -1371,7 +1371,7 @@ func CallFuncChar16VectorCallback(func_ FuncChar16Vector) []uint16 {
 	var __retVal []uint16
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFuncChar16VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -1390,7 +1390,7 @@ func CallFuncInt8VectorCallback(func_ FuncInt8Vector) []int8 {
 	var __retVal []int8
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFuncInt8VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -1409,7 +1409,7 @@ func CallFuncInt16VectorCallback(func_ FuncInt16Vector) []int16 {
 	var __retVal []int16
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFuncInt16VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -1428,7 +1428,7 @@ func CallFuncInt32VectorCallback(func_ FuncInt32Vector) []int32 {
 	var __retVal []int32
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFuncInt32VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -1447,7 +1447,7 @@ func CallFuncInt64VectorCallback(func_ FuncInt64Vector) []int64 {
 	var __retVal []int64
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFuncInt64VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -1466,7 +1466,7 @@ func CallFuncUInt8VectorCallback(func_ FuncUInt8Vector) []uint8 {
 	var __retVal []uint8
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFuncUInt8VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -1485,7 +1485,7 @@ func CallFuncUInt16VectorCallback(func_ FuncUInt16Vector) []uint16 {
 	var __retVal []uint16
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFuncUInt16VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -1504,7 +1504,7 @@ func CallFuncUInt32VectorCallback(func_ FuncUInt32Vector) []uint32 {
 	var __retVal []uint32
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFuncUInt32VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -1523,7 +1523,7 @@ func CallFuncUInt64VectorCallback(func_ FuncUInt64Vector) []uint64 {
 	var __retVal []uint64
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFuncUInt64VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -1542,7 +1542,7 @@ func CallFuncPtrVectorCallback(func_ FuncPtrVector) []uintptr {
 	var __retVal []uintptr
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFuncPtrVectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -1561,7 +1561,7 @@ func CallFuncFloatVectorCallback(func_ FuncFloatVector) []float32 {
 	var __retVal []float32
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFuncFloatVectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -1580,7 +1580,7 @@ func CallFuncDoubleVectorCallback(func_ FuncDoubleVector) []float64 {
 	var __retVal []float64
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFuncDoubleVectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -1599,7 +1599,7 @@ func CallFuncStringVectorCallback(func_ FuncStringVector) []string {
 	var __retVal []string
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFuncStringVectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -1618,7 +1618,7 @@ func CallFuncAnyVectorCallback(func_ FuncAnyVector) []any {
 	var __retVal []any
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFuncAnyVectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -1637,7 +1637,7 @@ func CallFuncVec2VectorCallback(func_ FuncVec2Vector) []plugify.Vector2 {
 	var __retVal []plugify.Vector2
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFuncVec2VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -1656,7 +1656,7 @@ func CallFuncVec3VectorCallback(func_ FuncVec3Vector) []plugify.Vector3 {
 	var __retVal []plugify.Vector3
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFuncVec3VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -1675,7 +1675,7 @@ func CallFuncVec4VectorCallback(func_ FuncVec4Vector) []plugify.Vector4 {
 	var __retVal []plugify.Vector4
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFuncVec4VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -1694,7 +1694,7 @@ func CallFuncMat4x4VectorCallback(func_ FuncMat4x4Vector) []plugify.Matrix4x4 {
 	var __retVal []plugify.Matrix4x4
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFuncMat4x4VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -1827,7 +1827,7 @@ func CallFunc13Callback(func_ Func13) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFunc13Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
@@ -1846,7 +1846,7 @@ func CallFunc14Callback(func_ Func14) []string {
 	var __retVal []string
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFunc14Callback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -1879,7 +1879,7 @@ func CallFunc17Callback(func_ Func17) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFunc17Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
@@ -1898,7 +1898,7 @@ func CallFunc18Callback(func_ Func18) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFunc18Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
@@ -1917,7 +1917,7 @@ func CallFunc19Callback(func_ Func19) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFunc19Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
@@ -1936,7 +1936,7 @@ func CallFunc20Callback(func_ Func20) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFunc20Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
@@ -1955,7 +1955,7 @@ func CallFunc21Callback(func_ Func21) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFunc21Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
@@ -1974,7 +1974,7 @@ func CallFunc22Callback(func_ Func22) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFunc22Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
@@ -1993,7 +1993,7 @@ func CallFunc23Callback(func_ Func23) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFunc23Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
@@ -2012,7 +2012,7 @@ func CallFunc24Callback(func_ Func24) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFunc24Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
@@ -2031,7 +2031,7 @@ func CallFunc25Callback(func_ Func25) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFunc25Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
@@ -2050,7 +2050,7 @@ func CallFunc26Callback(func_ Func26) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFunc26Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
@@ -2069,7 +2069,7 @@ func CallFunc27Callback(func_ Func27) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFunc27Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
@@ -2088,7 +2088,7 @@ func CallFunc28Callback(func_ Func28) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFunc28Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
@@ -2107,7 +2107,7 @@ func CallFunc29Callback(func_ Func29) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFunc29Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
@@ -2126,7 +2126,7 @@ func CallFunc30Callback(func_ Func30) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFunc30Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
@@ -2145,7 +2145,7 @@ func CallFunc31Callback(func_ Func31) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFunc31Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
@@ -2164,7 +2164,7 @@ func CallFunc32Callback(func_ Func32) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFunc32Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
@@ -2183,7 +2183,7 @@ func CallFunc33Callback(func_ Func33) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFunc33Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
@@ -2202,7 +2202,7 @@ func CallFuncEnumCallback(func_ FuncEnum) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	plugify.Block {
+	plugify.Block{
 		Try: func() {
 			__native := C.CallFuncEnumCallback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
@@ -2388,7 +2388,7 @@ var (
 )
 
 type Counter struct {
-	handle    uintptr
+	handle uintptr
 }
 
 func NewCounterCounterCreate(initialValue int64) *Counter {
@@ -2406,7 +2406,7 @@ func NewCounterCounterCreateZero() *Counter {
 // NewCounter creates a Counter from a handle
 func NewCounter(handle uintptr) *Counter {
 	return &Counter{
-		handle:    handle,
+		handle: handle,
 	}
 }
 
@@ -2472,7 +2472,7 @@ func (w *Counter) Add(amount int64) error {
 	return nil
 }
 
-func (w *Counter) Reset() error {
+func (w *Counter) Reset2() error {
 	if w.handle == 0 {
 		return CounterErrEmptyHandle
 	}
@@ -2495,4 +2495,3 @@ func (w *Counter) Compare(value1 int64, value2 int64) int32 {
 func (w *Counter) Sum(values []int64) int64 {
 	return CounterSum(values)
 }
-

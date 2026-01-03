@@ -1,5 +1,7 @@
 package cross_call_master
 
+import "github.com/untrustedmodders/go-plugify"
+
 // Generated from cross_call_master
 
 type NoParamReturnFunctionCallbackFunc func() int32
@@ -38,7 +40,7 @@ type FuncString func() string
 
 type FuncAny func() any
 
-type FuncFunction func() FuncFunctionInner
+type FuncFunction func() uintptr
 
 type FuncBoolVector func() []bool
 
@@ -155,4 +157,3 @@ type Func32 func(p1 *int32, p2 *uint16, p3 *[]int8, p4 *plugify.Vector4, p5 *uin
 type Func33 func(variant *any)
 
 type FuncEnum func(p1 Example, p2 *[]Example) []Example
-

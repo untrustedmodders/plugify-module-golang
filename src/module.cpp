@@ -476,7 +476,7 @@ struct ManagedType {
 	bool ref{};
 };
 
-static_assert(sizeof(ManagedType) == 2, "ManagedType size mismatch with C#");
+static_assert(sizeof(ManagedType) == 2, "ManagedType size mismatch with Go");
 
 JitCall* NewCall(void* target, ManagedType* params, ptrdiff_t count, ManagedType ret) {
 	if (target == nullptr)
