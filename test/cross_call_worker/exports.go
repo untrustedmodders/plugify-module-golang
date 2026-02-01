@@ -526,37 +526,37 @@ func ParamAllPrimitives(p1 bool, p2 int8, p3 uint16, p4 int8, p5 int16, p6 int32
 
 // plugify:export ParamAllAliases
 func ParamAllAliases(
-	aBool bool,
-	aChar8 int8,
-	aChar16 uint16,
-	aInt8 int8,
-	aInt16 int16,
-	aInt32 int32,
-	aInt64 int64,
-	aPtr uintptr,
-	aFloat float32,
-	aDouble float64,
-	aString string,
-	aAny any,
-	aVec2 plugify.Vector2,
-	aVec3 plugify.Vector3,
-	aVec4 plugify.Vector4,
+	aBool cross_call_master.AliasBool,
+	aChar8 cross_call_master.AliasChar8,
+	aChar16 cross_call_master.AliasChar16,
+	aInt8 cross_call_master.AliasInt8,
+	aInt16 cross_call_master.AliasInt16,
+	aInt32 cross_call_master.AliasInt32,
+	aInt64 cross_call_master.AliasInt64,
+	aPtr cross_call_master.AliasPtr,
+	aFloat cross_call_master.AliasFloat,
+	aDouble cross_call_master.AliasDouble,
+	aString cross_call_master.AliasString,
+	aAny cross_call_master.AliasAny,
+	aVec2 cross_call_master.AliasVec2,
+	aVec3 cross_call_master.AliasVec3,
+	aVec4 cross_call_master.AliasVec4,
 	aMat4x4 plugify.Matrix4x4,
-	aBoolVec []bool,
-	aChar8Vec []int8,
-	aChar16Vec []uint16,
-	aInt8Vec []int8,
-	aInt16Vec []int16,
-	aInt32Vec []int32,
-	aInt64Vec []int64,
-	aPtrVec []uintptr,
-	aFloatVec []float32,
-	aDoubleVec []float64,
-	aStringVec []string,
-	aAnyVec []any,
-	aVec2Vec []plugify.Vector2,
-	aVec3Vec []plugify.Vector3,
-	aVec4Vec []plugify.Vector4,
+	aBoolVec cross_call_master.AliasBoolVector,
+	aChar8Vec cross_call_master.AliasChar8Vector,
+	aChar16Vec cross_call_master.AliasChar16Vector,
+	aInt8Vec cross_call_master.AliasInt8Vector,
+	aInt16Vec cross_call_master.AliasInt16Vector,
+	aInt32Vec cross_call_master.AliasInt32Vector,
+	aInt64Vec cross_call_master.AliasInt64Vector,
+	aPtrVec cross_call_master.AliasPtrVector,
+	aFloatVec cross_call_master.AliasFloatVector,
+	aDoubleVec cross_call_master.AliasDoubleVector,
+	aStringVec cross_call_master.AliasStringVector,
+	aAnyVec cross_call_master.AliasAnyVector,
+	aVec2Vec cross_call_master.AliasVec2Vector,
+	aVec3Vec cross_call_master.AliasVec3Vector,
+	aVec4Vec cross_call_master.AliasVec4Vector,
 ) int32 {
 	buffer := fmt.Sprintf(
 		"%v|%c|%d|%d|%d|%d|%d|%v|%v|%v|%s|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v",
@@ -598,37 +598,37 @@ func ParamAllAliases(
 
 // plugify:export ParamAllRefAliases
 func ParamAllRefAliases(
-	aBool *bool,
-	aChar8 *int8,
-	aChar16 *uint16,
-	aInt8 *int8,
-	aInt16 *int16,
-	aInt32 *int32,
-	aInt64 *int64,
-	aPtr *uintptr,
-	aFloat *float32,
-	aDouble *float64,
-	aString *string,
-	aAny *any,
-	aVec2 *plugify.Vector2,
-	aVec3 *plugify.Vector3,
-	aVec4 *plugify.Vector4,
+	aBool *cross_call_master.AliasBool,
+	aChar8 *cross_call_master.AliasChar8,
+	aChar16 *cross_call_master.AliasChar16,
+	aInt8 *cross_call_master.AliasInt8,
+	aInt16 *cross_call_master.AliasInt16,
+	aInt32 *cross_call_master.AliasInt32,
+	aInt64 *cross_call_master.AliasInt64,
+	aPtr *cross_call_master.AliasPtr,
+	aFloat *cross_call_master.AliasFloat,
+	aDouble *cross_call_master.AliasDouble,
+	aString *cross_call_master.AliasString,
+	aAny *cross_call_master.AliasAny,
+	aVec2 *cross_call_master.AliasVec2,
+	aVec3 *cross_call_master.AliasVec3,
+	aVec4 *cross_call_master.AliasVec4,
 	aMat4x4 *plugify.Matrix4x4,
-	aBoolVec *[]bool,
-	aChar8Vec *[]int8,
-	aChar16Vec *[]uint16,
-	aInt8Vec *[]int8,
-	aInt16Vec *[]int16,
-	aInt32Vec *[]int32,
-	aInt64Vec *[]int64,
-	aPtrVec *[]uintptr,
-	aFloatVec *[]float32,
-	aDoubleVec *[]float64,
-	aStringVec *[]string,
-	aAnyVec *[]any,
-	aVec2Vec *[]plugify.Vector2,
-	aVec3Vec *[]plugify.Vector3,
-	aVec4Vec *[]plugify.Vector4,
+	aBoolVec *cross_call_master.AliasBoolVector,
+	aChar8Vec *cross_call_master.AliasChar8Vector,
+	aChar16Vec *cross_call_master.AliasChar16Vector,
+	aInt8Vec *cross_call_master.AliasInt8Vector,
+	aInt16Vec *cross_call_master.AliasInt16Vector,
+	aInt32Vec *cross_call_master.AliasInt32Vector,
+	aInt64Vec *cross_call_master.AliasInt64Vector,
+	aPtrVec *cross_call_master.AliasPtrVector,
+	aFloatVec *cross_call_master.AliasFloatVector,
+	aDoubleVec *cross_call_master.AliasDoubleVector,
+	aStringVec *cross_call_master.AliasStringVector,
+	aAnyVec *cross_call_master.AliasAnyVector,
+	aVec2Vec *cross_call_master.AliasVec2Vector,
+	aVec3Vec *cross_call_master.AliasVec3Vector,
+	aVec4Vec *cross_call_master.AliasVec4Vector,
 ) int64 {
 	*aBool = true
 	*aChar8 = 'A'
@@ -642,10 +642,10 @@ func ParamAllRefAliases(
 	*aDouble = 5.0
 	*aString = "seven"
 	*aAny = "six"
-	*aVec2 = plugify.Vector2{X: 0.1, Y: 0.2}
-	*aVec3 = plugify.Vector3{X: 0.3, Y: 0.4, Z: 0.5}
-	*aVec4 = plugify.Vector4{X: 0.6, Y: 0.7, Z: 0.8, W: 0.9}
-	*aMat4x4 = plugify.Matrix4x4{
+	*aVec2 = cross_call_master.AliasVec2{X: 0.1, Y: 0.2}
+	*aVec3 = cross_call_master.AliasVec3{X: 0.3, Y: 0.4, Z: 0.5}
+	*aVec4 = cross_call_master.AliasVec4{X: 0.6, Y: 0.7, Z: 0.8, W: 0.9}
+	*aMat4x4 = cross_call_master.AliasMat4x4{
 		M: [4][4]float32{
 			{1.4, 1.1, 1.2, 1.3},
 			{2.4, 2.1, 2.2, 2.3},
@@ -653,21 +653,21 @@ func ParamAllRefAliases(
 			{4.4, 4.1, 4.2, 4.3},
 		},
 	}
-	*aBoolVec = []bool{*aBool}
-	*aChar8Vec = []int8{*aChar8}
-	*aChar16Vec = []uint16{*aChar16}
-	*aInt8Vec = []int8{*aInt8}
-	*aInt16Vec = []int16{*aInt16}
-	*aInt32Vec = []int32{*aInt32}
-	*aInt64Vec = []int64{*aInt64}
-	*aPtrVec = []uintptr{*aPtr}
-	*aFloatVec = []float32{*aFloat}
-	*aDoubleVec = []float64{*aDouble}
-	*aStringVec = []string{*aString}
-	*aAnyVec = []any{*aAny}
-	*aVec2Vec = []plugify.Vector2{*aVec2}
-	*aVec3Vec = []plugify.Vector3{*aVec3}
-	*aVec4Vec = []plugify.Vector4{*aVec4}
+	*aBoolVec = cross_call_master.AliasBoolVector{*aBool}
+	*aChar8Vec = cross_call_master.AliasChar8Vector{*aChar8}
+	*aChar16Vec = cross_call_master.AliasChar16Vector{*aChar16}
+	*aInt8Vec = cross_call_master.AliasInt8Vector{*aInt8}
+	*aInt16Vec = cross_call_master.AliasInt16Vector{*aInt16}
+	*aInt32Vec = cross_call_master.AliasInt32Vector{*aInt32}
+	*aInt64Vec = cross_call_master.AliasInt64Vector{*aInt64}
+	*aPtrVec = cross_call_master.AliasPtrVector{*aPtr}
+	*aFloatVec = cross_call_master.AliasFloatVector{*aFloat}
+	*aDoubleVec = cross_call_master.AliasDoubleVector{*aDouble}
+	*aStringVec = cross_call_master.AliasStringVector{*aString}
+	*aAnyVec = cross_call_master.AliasAnyVector{*aAny}
+	*aVec2Vec = cross_call_master.AliasVec2Vector{*aVec2}
+	*aVec3Vec = cross_call_master.AliasVec3Vector{*aVec3}
+	*aVec4Vec = cross_call_master.AliasVec4Vector{*aVec4}
 	return 24
 }
 
