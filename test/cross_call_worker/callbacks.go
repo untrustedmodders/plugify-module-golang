@@ -8,64 +8,64 @@ import (
 	"github.com/untrustedmodders/go-plugify"
 )
 
-func MockVoid() {
+func MockFuncVoid() {
 	// fmt.Println("Void function called")
 }
 
 // Functions returning primitive types
-func MockBool() bool {
+func MockFuncBool() bool {
 	return true
 }
 
-func MockChar8() int8 {
+func MockFuncChar8() int8 {
 	return 'A'
 }
 
-func MockChar16() uint16 {
+func MockFuncChar16() uint16 {
 	return 'Z'
 }
 
-func MockInt8() int8 {
+func MockFuncInt8() int8 {
 	return 10
 }
 
-func MockInt16() int16 {
+func MockFuncInt16() int16 {
 	return 100
 }
 
-func MockInt32() int32 {
+func MockFuncInt32() int32 {
 	return 1000
 }
 
-func MockInt64() int64 {
+func MockFuncInt64() int64 {
 	return 10000
 }
 
-func MockUInt8() uint8 {
+func MockFuncUInt8() uint8 {
 	return 20
 }
 
-func MockUInt16() uint16 {
+func MockFuncUInt16() uint16 {
 	return 200
 }
 
-func MockUInt32() uint32 {
+func MockFuncUInt32() uint32 {
 	return 2000
 }
 
-func MockUInt64() uint64 {
+func MockFuncUInt64() uint64 {
 	return 20000
 }
 
-func MockPtr() uintptr {
+func MockFuncPtr() uintptr {
 	return uintptr(0)
 }
 
-func MockFloat() float32 {
+func MockFuncFloat() float32 {
 	return 3.14
 }
 
-func MockDouble() float64 {
+func MockFuncDouble() float64 {
 	return 6.28
 }
 
@@ -73,80 +73,80 @@ func MockFunction() uintptr {
 	return uintptr(2)
 }
 
-func MockString() string {
+func MockFuncString() string {
 	return "Test string"
 }
 
-func MockAny() any {
+func MockFuncAny() any {
 	return uint16('A')
 }
 
 // Functions returning arrays
-func MockBoolArray() []bool {
+func MockFuncBoolVector() []bool {
 	return []bool{true, false}
 }
 
-func MockChar8Array() []int8 {
+func MockFuncChar8Vector() []int8 {
 	return []int8{'A', 'B'}
 }
 
-func MockChar16Array() []uint16 {
+func MockFuncChar16Vector() []uint16 {
 	return []uint16{'A', 'B'}
 }
 
-func MockInt8Array() []int8 {
+func MockFuncInt8Vector() []int8 {
 	return []int8{10, 20}
 }
 
-func MockInt16Array() []int16 {
+func MockFuncInt16Vector() []int16 {
 	return []int16{100, 200}
 }
 
-func MockInt32Array() []int32 {
+func MockFuncInt32Vector() []int32 {
 	return []int32{1000, 2000}
 }
 
-func MockInt64Array() []int64 {
+func MockFuncInt64Vector() []int64 {
 	return []int64{10000, 20000}
 }
 
-func MockUInt8Array() []uint8 {
+func MockFuncUInt8Vector() []uint8 {
 	return []uint8{20, 30}
 }
 
-func MockUInt16Array() []uint16 {
+func MockFuncUInt16Vector() []uint16 {
 	return []uint16{200, 300}
 }
 
-func MockUInt32Array() []uint32 {
+func MockFuncUInt32Vector() []uint32 {
 	return []uint32{2000, 3000}
 }
 
-func MockUInt64Array() []uint64 {
+func MockFuncUInt64Vector() []uint64 {
 	return []uint64{20000, 30000}
 }
 
-func MockPtrArray() []uintptr {
+func MockFuncPtrVector() []uintptr {
 	return []uintptr{uintptr(0), uintptr(1)}
 }
 
-func MockFloatArray() []float32 {
+func MockFuncFloatVector() []float32 {
 	return []float32{1.1, 2.2}
 }
 
-func MockDoubleArray() []float64 {
+func MockFuncDoubleVector() []float64 {
 	return []float64{3.3, 4.4}
 }
 
-func MockStringArray() []string {
+func MockFuncStringVector() []string {
 	return []string{"Hello", "World"}
 }
 
-func MockAnyArray() []any {
+func MockFuncAnyVector() []any {
 	return []any{"Hello", 3.14, 6.28, 1, 0xDEADBEAF}
 }
 
-func MockVec2Array() []plugify.Vector2 {
+func MockFuncVec2Vector() []plugify.Vector2 {
 	return []plugify.Vector2{
 		{0.5, -1.2},
 		{3.4, 7.8},
@@ -156,7 +156,7 @@ func MockVec2Array() []plugify.Vector2 {
 	}
 }
 
-func MockVec3Array() []plugify.Vector3 {
+func MockFuncVec3Vector() []plugify.Vector3 {
 	return []plugify.Vector3{
 		{2.1, 3.2, 4.3},
 		{-5.4, 6.5, -7.6},
@@ -166,7 +166,7 @@ func MockVec3Array() []plugify.Vector3 {
 	}
 }
 
-func MockVec4Array() []plugify.Vector4 {
+func MockFuncVec4Vector() []plugify.Vector4 {
 	return []plugify.Vector4{
 		{0.1, 1.2, 2.3, 3.4},
 		{-4.5, 5.6, 6.7, -7.8},
@@ -176,7 +176,7 @@ func MockVec4Array() []plugify.Vector4 {
 	}
 }
 
-func MockMat4x4Array() []plugify.Matrix4x4 {
+func MockFuncMat4x4Vector() []plugify.Matrix4x4 {
 	return []plugify.Matrix4x4{
 		// Identity matrix
 		{
@@ -214,19 +214,19 @@ func MockMat4x4Array() []plugify.Matrix4x4 {
 }
 
 // Functions returning plugify.Vectors and matrices
-func MockVec2() plugify.Vector2 {
+func MockFuncVec2() plugify.Vector2 {
 	return plugify.Vector2{1.0, 2.0}
 }
 
-func MockVec3() plugify.Vector3 {
+func MockFuncVec3() plugify.Vector3 {
 	return plugify.Vector3{1.0, 2.0, 3.0}
 }
 
-func MockVec4() plugify.Vector4 {
+func MockFuncVec4() plugify.Vector4 {
 	return plugify.Vector4{1.0, 2.0, 3.0, 4.0}
 }
 
-func MockMat4x4() plugify.Matrix4x4 {
+func MockFuncMat4x4() plugify.Matrix4x4 {
 	return plugify.Matrix4x4{
 		M: [4][4]float32{
 			{1.0, 0.0, 0.0, 0.0},
@@ -235,6 +235,307 @@ func MockMat4x4() plugify.Matrix4x4 {
 			{0.0, 0.0, 0.0, 0.0},
 		},
 	}
+}
+
+func MockFuncAliasBool() cross_call_master.AliasBool {
+	return true
+}
+
+func MockFuncAliasChar8() cross_call_master.AliasChar8 {
+	return 'A'
+}
+
+func MockFuncAliasChar16() cross_call_master.AliasChar16 {
+	return 'Z'
+}
+
+func MockFuncAliasInt8() cross_call_master.AliasInt8 {
+	return 10
+}
+
+func MockFuncAliasInt16() cross_call_master.AliasInt16 {
+	return 100
+}
+
+func MockFuncAliasInt32() cross_call_master.AliasInt32 {
+	return 1000
+}
+
+func MockFuncAliasInt64() cross_call_master.AliasInt64 {
+	return 10000
+}
+
+func MockFuncAliasUInt8() cross_call_master.AliasUInt8 {
+	return 20
+}
+
+func MockFuncAliasUInt16() cross_call_master.AliasUInt16 {
+	return 200
+}
+
+func MockFuncAliasUInt32() cross_call_master.AliasUInt32 {
+	return 2000
+}
+
+func MockFuncAliasUInt64() cross_call_master.AliasUInt64 {
+	return 20000
+}
+
+func MockFuncAliasPtr() cross_call_master.AliasPtr {
+	return 0
+}
+
+func MockFuncAliasFloat() cross_call_master.AliasFloat {
+	return 3.14
+}
+
+func MockFuncAliasDouble() cross_call_master.AliasDouble {
+	return 6.28
+}
+
+func MockFuncAliasFunction() cross_call_master.AliasFunction {
+	return 0
+}
+
+func MockFuncAliasString() cross_call_master.AliasString {
+	return "Test string"
+}
+
+func MockFuncAliasAny() cross_call_master.AliasAny {
+	return cross_call_master.AliasChar16('A')
+}
+
+func MockFuncAliasBoolVector() cross_call_master.AliasBoolVector {
+	return cross_call_master.AliasBoolVector{true, false}
+}
+
+func MockFuncAliasChar8Vector() cross_call_master.AliasChar8Vector {
+	return cross_call_master.AliasChar8Vector{'A', 'B'}
+}
+
+func MockFuncAliasChar16Vector() cross_call_master.AliasChar16Vector {
+	return cross_call_master.AliasChar16Vector{'A', 'B'}
+}
+
+func MockFuncAliasInt8Vector() cross_call_master.AliasInt8Vector {
+	return cross_call_master.AliasInt8Vector{10, 20}
+}
+
+func MockFuncAliasInt16Vector() cross_call_master.AliasInt16Vector {
+	return cross_call_master.AliasInt16Vector{100, 200}
+}
+
+func MockFuncAliasInt32Vector() cross_call_master.AliasInt32Vector {
+	return cross_call_master.AliasInt32Vector{1000, 2000}
+}
+
+func MockFuncAliasInt64Vector() cross_call_master.AliasInt64Vector {
+	return cross_call_master.AliasInt64Vector{10000, 20000}
+}
+
+func MockFuncAliasUInt8Vector() cross_call_master.AliasUInt8Vector {
+	return cross_call_master.AliasUInt8Vector{20, 30}
+}
+
+func MockFuncAliasUInt16Vector() cross_call_master.AliasUInt16Vector {
+	return cross_call_master.AliasUInt16Vector{200, 300}
+}
+
+func MockFuncAliasUInt32Vector() cross_call_master.AliasUInt32Vector {
+	return cross_call_master.AliasUInt32Vector{2000, 3000}
+}
+
+func MockFuncAliasUInt64Vector() cross_call_master.AliasUInt64Vector {
+	return cross_call_master.AliasUInt64Vector{20000, 30000}
+}
+
+func MockFuncAliasPtrVector() cross_call_master.AliasPtrVector {
+	return cross_call_master.AliasPtrVector{0, 1}
+}
+
+func MockFuncAliasFloatVector() cross_call_master.AliasFloatVector {
+	return cross_call_master.AliasFloatVector{1.1, 2.2}
+}
+
+func MockFuncAliasDoubleVector() cross_call_master.AliasDoubleVector {
+	return cross_call_master.AliasDoubleVector{3.3, 4.4}
+}
+
+func MockFuncAliasStringVector() cross_call_master.AliasStringVector {
+	return cross_call_master.AliasStringVector{"Hello", "World"}
+}
+
+func MockFuncAliasAnyVector() cross_call_master.AliasAnyVector {
+	return cross_call_master.AliasAnyVector{
+		"Hello",
+		cross_call_master.AliasFloat(3.14),
+		cross_call_master.AliasDouble(6.28),
+		cross_call_master.AliasInt32(1),
+		cross_call_master.AliasPtr(0xDEADBEAF),
+	}
+}
+
+func MockFuncAliasVec2Vector() cross_call_master.AliasVec2Vector {
+	return cross_call_master.AliasVec2Vector{
+		{0.5, -1.2},
+		{3.4, 7.8},
+		{-6.7, 2.3},
+		{8.9, -4.5},
+		{0.0, 0.0},
+	}
+}
+
+func MockFuncAliasVec3Vector() cross_call_master.AliasVec3Vector {
+	return cross_call_master.AliasVec3Vector{
+		{2.1, 3.2, 4.3},
+		{-5.4, 6.5, -7.6},
+		{8.7, 9.8, 0.1},
+		{1.2, -3.3, 4.4},
+		{-5.5, 6.6, -7.7},
+	}
+}
+
+func MockFuncAliasVec4Vector() cross_call_master.AliasVec4Vector {
+	return cross_call_master.AliasVec4Vector{
+		{0.1, 1.2, 2.3, 3.4},
+		{-4.5, 5.6, 6.7, -7.8},
+		{8.9, -9.0, 10.1, -11.2},
+		{12.3, 13.4, 14.5, 15.6},
+		{-16.7, 17.8, 18.9, -19.0},
+	}
+}
+
+func MockFuncAliasMat4x4Vector() cross_call_master.AliasMat4x4Vector {
+	return cross_call_master.AliasMat4x4Vector{
+		// Identity matrix
+		{
+			M: [4][4]float32{
+				{1.0, 0.0, 0.0, 0.0},
+				{0.0, 1.0, 0.0, 0.0},
+				{0.0, 0.0, 1.0, 0.0},
+				{0.0, 0.0, 0.0, 1.0},
+			},
+		},
+		// Random matrix #1
+		{
+			M: [4][4]float32{
+				{0.5, 1.0, 1.5, 2.0},
+				{2.5, 3.0, 3.5, 4.0},
+				{4.5, 5.0, 5.5, 6.0},
+				{6.5, 7.0, 7.5, 8.0},
+			},
+		},
+		// Random matrix #2
+		{
+			M: [4][4]float32{
+				{-1.0, -2.0, -3.0, -4.0},
+				{-5.0, -6.0, -7.0, -8.0},
+				{-9.0, -10.0, -11.0, -12.0},
+				{-13.0, -14.0, -15.0, -16.0},
+			},
+		},
+		// Random matrix #3
+		{
+			M: [4][4]float32{
+				{1.1, 2.2, 3.3, 4.4},
+				{5.5, 6.6, 7.7, 8.8},
+				{9.9, 10.0, 11.1, 12.2},
+				{13.3, 14.4, 15.5, 16.6},
+			},
+		},
+	}
+}
+
+func MockFuncAliasVec2() cross_call_master.AliasVec2 {
+	return plugify.Vector2{X: 1.0, Y: 2.0}
+}
+
+func MockFuncAliasVec3() cross_call_master.AliasVec3 {
+	return plugify.Vector3{X: 1.0, Y: 2.0, Z: 3.0}
+}
+
+func MockFuncAliasVec4() cross_call_master.AliasVec4 {
+	return plugify.Vector4{X: 1.0, Y: 2.0, Z: 3.0, W: 4.0}
+}
+
+func MockFuncAliasMat4x4() cross_call_master.AliasMat4x4 {
+	return plugify.Matrix4x4{
+		M: [4][4]float32{
+			{1, 0, 0, 0},
+			{0, 0, 0, 0},
+			{0, 0, 0, 0},
+			{0, 0, 0, 0},
+		},
+	}
+}
+
+func MockFuncAliasAll(
+	aBool cross_call_master.AliasBool,
+	aChar8 cross_call_master.AliasChar8,
+	aChar16 cross_call_master.AliasChar16,
+	aInt8 cross_call_master.AliasInt8,
+	aInt16 cross_call_master.AliasInt16,
+	aInt32 cross_call_master.AliasInt32,
+	aInt64 cross_call_master.AliasInt64,
+	aPtr cross_call_master.AliasPtr,
+	aFloat cross_call_master.AliasFloat,
+	aDouble cross_call_master.AliasDouble,
+	aString cross_call_master.AliasString,
+	aAny cross_call_master.AliasAny,
+	aVec2 cross_call_master.AliasVec2,
+	aVec3 cross_call_master.AliasVec3,
+	aVec4 cross_call_master.AliasVec4,
+	aMat4x4 cross_call_master.AliasMat4x4,
+	aBoolVec cross_call_master.AliasBoolVector,
+	aChar8Vec cross_call_master.AliasChar8Vector,
+	aChar16Vec cross_call_master.AliasChar16Vector,
+	aInt8Vec cross_call_master.AliasInt8Vector,
+	aInt16Vec cross_call_master.AliasInt16Vector,
+	aInt32Vec cross_call_master.AliasInt32Vector,
+	aInt64Vec cross_call_master.AliasInt64Vector,
+	aPtrVec cross_call_master.AliasPtrVector,
+	aFloatVec cross_call_master.AliasFloatVector,
+	aDoubleVec cross_call_master.AliasDoubleVector,
+	aStringVec cross_call_master.AliasStringVector,
+	aAnyVec cross_call_master.AliasAnyVector,
+	aVec2Vec cross_call_master.AliasVec2Vector,
+	aVec3Vec cross_call_master.AliasVec3Vector,
+	aVec4Vec cross_call_master.AliasVec4Vector,
+) cross_call_master.AliasString {
+	return fmt.Sprintf(
+		"%v|%c|%d|%d|%d|%d|%d|%v|%v|%v|%s|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v",
+		aBool,
+		aChar8,
+		aChar16,
+		aInt8,
+		aInt16,
+		aInt32,
+		aInt64,
+		aPtr,
+		aFloat,
+		aDouble,
+		aString,
+		aAny,
+		aVec2,
+		aVec3,
+		aVec4,
+		aMat4x4,
+		aBoolVec,
+		aChar8Vec,
+		aChar16Vec,
+		aInt8Vec,
+		aInt16Vec,
+		aInt32Vec,
+		aInt64Vec,
+		aPtrVec,
+		aFloatVec,
+		aDoubleVec,
+		aStringVec,
+		aAnyVec,
+		aVec2Vec,
+		aVec3Vec,
+		aVec4Vec,
+	)
 }
 
 func MockFunc1(v plugify.Vector3) int32 {

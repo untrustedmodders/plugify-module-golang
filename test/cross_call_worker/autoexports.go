@@ -3,9 +3,10 @@ package main
 // #include "autoexports.h"
 import "C"
 import (
+	"github.com/untrustedmodders/go-plugify"
+	"plugify-plugin/cross_call_master"
 	"reflect"
 	"unsafe"
-	"github.com/untrustedmodders/go-plugify"
 )
 
 var _ = reflect.TypeOf(0)
@@ -448,6 +449,52 @@ func __ParamAllPrimitives(p1 bool, p2 int8, p3 uint16, p4 int8, p5 int16, p6 int
 	return __result
 }
 
+//export __ParamAllAliases
+func __ParamAllAliases(aBool bool, aChar8 int8, aChar16 uint16, aInt8 int8, aInt16 int16, aInt32 int32, aInt64 int64, aPtr uintptr, aFloat float32, aDouble float64, aString *C.String, aAny *C.Variant, aVec2 *C.Vector2, aVec3 *C.Vector3, aVec4 *C.Vector4, aMat4x4 *C.Matrix4x4, aBoolVec *C.Vector, aChar8Vec *C.Vector, aChar16Vec *C.Vector, aInt8Vec *C.Vector, aInt16Vec *C.Vector, aInt32Vec *C.Vector, aInt64Vec *C.Vector, aPtrVec *C.Vector, aFloatVec *C.Vector, aDoubleVec *C.Vector, aStringVec *C.Vector, aAnyVec *C.Vector, aVec2Vec *C.Vector, aVec3Vec *C.Vector, aVec4Vec *C.Vector) int32 {
+	__result := ParamAllAliases(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble, plugify.GetStringData((*plugify.PlgString)(unsafe.Pointer(aString))), plugify.GetVariantData((*plugify.PlgVariant)(unsafe.Pointer(aAny))), *(*plugify.Vector2)(unsafe.Pointer(aVec2)), *(*plugify.Vector3)(unsafe.Pointer(aVec3)), *(*plugify.Vector4)(unsafe.Pointer(aVec4)), *(*plugify.Matrix4x4)(unsafe.Pointer(aMat4x4)), plugify.GetVectorDataBool((*plugify.PlgVector)(unsafe.Pointer(aBoolVec))), plugify.GetVectorDataInt8((*plugify.PlgVector)(unsafe.Pointer(aChar8Vec))), plugify.GetVectorDataUInt16((*plugify.PlgVector)(unsafe.Pointer(aChar16Vec))), plugify.GetVectorDataInt8((*plugify.PlgVector)(unsafe.Pointer(aInt8Vec))), plugify.GetVectorDataInt16((*plugify.PlgVector)(unsafe.Pointer(aInt16Vec))), plugify.GetVectorDataInt32((*plugify.PlgVector)(unsafe.Pointer(aInt32Vec))), plugify.GetVectorDataInt64((*plugify.PlgVector)(unsafe.Pointer(aInt64Vec))), plugify.GetVectorDataPointer((*plugify.PlgVector)(unsafe.Pointer(aPtrVec))), plugify.GetVectorDataFloat((*plugify.PlgVector)(unsafe.Pointer(aFloatVec))), plugify.GetVectorDataDouble((*plugify.PlgVector)(unsafe.Pointer(aDoubleVec))), plugify.GetVectorDataString((*plugify.PlgVector)(unsafe.Pointer(aStringVec))), plugify.GetVectorDataVariant((*plugify.PlgVector)(unsafe.Pointer(aAnyVec))), plugify.GetVectorDataVector2((*plugify.PlgVector)(unsafe.Pointer(aVec2Vec))), plugify.GetVectorDataVector3((*plugify.PlgVector)(unsafe.Pointer(aVec3Vec))), plugify.GetVectorDataVector4((*plugify.PlgVector)(unsafe.Pointer(aVec4Vec))))
+	return __result
+}
+
+//export __ParamAllRefAliases
+func __ParamAllRefAliases(aBool *bool, aChar8 *int8, aChar16 *uint16, aInt8 *int8, aInt16 *int16, aInt32 *int32, aInt64 *int64, aPtr *uintptr, aFloat *float32, aDouble *float64, aString *C.String, aAny *C.Variant, aVec2 *C.Vector2, aVec3 *C.Vector3, aVec4 *C.Vector4, aMat4x4 *C.Matrix4x4, aBoolVec *C.Vector, aChar8Vec *C.Vector, aChar16Vec *C.Vector, aInt8Vec *C.Vector, aInt16Vec *C.Vector, aInt32Vec *C.Vector, aInt64Vec *C.Vector, aPtrVec *C.Vector, aFloatVec *C.Vector, aDoubleVec *C.Vector, aStringVec *C.Vector, aAnyVec *C.Vector, aVec2Vec *C.Vector, aVec3Vec *C.Vector, aVec4Vec *C.Vector) int64 {
+	_aString := plugify.GetStringData((*plugify.PlgString)(unsafe.Pointer(aString)))
+	_aAny := plugify.GetVariantData((*plugify.PlgVariant)(unsafe.Pointer(aAny)))
+	_aBoolVec := plugify.GetVectorDataBool((*plugify.PlgVector)(unsafe.Pointer(aBoolVec)))
+	_aChar8Vec := plugify.GetVectorDataInt8((*plugify.PlgVector)(unsafe.Pointer(aChar8Vec)))
+	_aChar16Vec := plugify.GetVectorDataUInt16((*plugify.PlgVector)(unsafe.Pointer(aChar16Vec)))
+	_aInt8Vec := plugify.GetVectorDataInt8((*plugify.PlgVector)(unsafe.Pointer(aInt8Vec)))
+	_aInt16Vec := plugify.GetVectorDataInt16((*plugify.PlgVector)(unsafe.Pointer(aInt16Vec)))
+	_aInt32Vec := plugify.GetVectorDataInt32((*plugify.PlgVector)(unsafe.Pointer(aInt32Vec)))
+	_aInt64Vec := plugify.GetVectorDataInt64((*plugify.PlgVector)(unsafe.Pointer(aInt64Vec)))
+	_aPtrVec := plugify.GetVectorDataPointer((*plugify.PlgVector)(unsafe.Pointer(aPtrVec)))
+	_aFloatVec := plugify.GetVectorDataFloat((*plugify.PlgVector)(unsafe.Pointer(aFloatVec)))
+	_aDoubleVec := plugify.GetVectorDataDouble((*plugify.PlgVector)(unsafe.Pointer(aDoubleVec)))
+	_aStringVec := plugify.GetVectorDataString((*plugify.PlgVector)(unsafe.Pointer(aStringVec)))
+	_aAnyVec := plugify.GetVectorDataVariant((*plugify.PlgVector)(unsafe.Pointer(aAnyVec)))
+	_aVec2Vec := plugify.GetVectorDataVector2((*plugify.PlgVector)(unsafe.Pointer(aVec2Vec)))
+	_aVec3Vec := plugify.GetVectorDataVector3((*plugify.PlgVector)(unsafe.Pointer(aVec3Vec)))
+	_aVec4Vec := plugify.GetVectorDataVector4((*plugify.PlgVector)(unsafe.Pointer(aVec4Vec)))
+	__result := ParamAllRefAliases(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble, &_aString, &_aAny, (*plugify.Vector2)(unsafe.Pointer(aVec2)), (*plugify.Vector3)(unsafe.Pointer(aVec3)), (*plugify.Vector4)(unsafe.Pointer(aVec4)), (*plugify.Matrix4x4)(unsafe.Pointer(aMat4x4)), &_aBoolVec, &_aChar8Vec, &_aChar16Vec, &_aInt8Vec, &_aInt16Vec, &_aInt32Vec, &_aInt64Vec, &_aPtrVec, &_aFloatVec, &_aDoubleVec, &_aStringVec, &_aAnyVec, &_aVec2Vec, &_aVec3Vec, &_aVec4Vec)
+	plugify.AssignString((*plugify.PlgString)(unsafe.Pointer(aString)), _aString)
+	plugify.AssignVariant((*plugify.PlgVariant)(unsafe.Pointer(aAny)), _aAny)
+	plugify.AssignVectorBool((*plugify.PlgVector)(unsafe.Pointer(aBoolVec)), _aBoolVec)
+	plugify.AssignVectorInt8((*plugify.PlgVector)(unsafe.Pointer(aChar8Vec)), _aChar8Vec)
+	plugify.AssignVectorUInt16((*plugify.PlgVector)(unsafe.Pointer(aChar16Vec)), _aChar16Vec)
+	plugify.AssignVectorInt8((*plugify.PlgVector)(unsafe.Pointer(aInt8Vec)), _aInt8Vec)
+	plugify.AssignVectorInt16((*plugify.PlgVector)(unsafe.Pointer(aInt16Vec)), _aInt16Vec)
+	plugify.AssignVectorInt32((*plugify.PlgVector)(unsafe.Pointer(aInt32Vec)), _aInt32Vec)
+	plugify.AssignVectorInt64((*plugify.PlgVector)(unsafe.Pointer(aInt64Vec)), _aInt64Vec)
+	plugify.AssignVectorPointer((*plugify.PlgVector)(unsafe.Pointer(aPtrVec)), _aPtrVec)
+	plugify.AssignVectorFloat((*plugify.PlgVector)(unsafe.Pointer(aFloatVec)), _aFloatVec)
+	plugify.AssignVectorDouble((*plugify.PlgVector)(unsafe.Pointer(aDoubleVec)), _aDoubleVec)
+	plugify.AssignVectorString((*plugify.PlgVector)(unsafe.Pointer(aStringVec)), _aStringVec)
+	plugify.AssignVectorVariant((*plugify.PlgVector)(unsafe.Pointer(aAnyVec)), _aAnyVec)
+	plugify.AssignVectorVector2((*plugify.PlgVector)(unsafe.Pointer(aVec2Vec)), _aVec2Vec)
+	plugify.AssignVectorVector3((*plugify.PlgVector)(unsafe.Pointer(aVec3Vec)), _aVec3Vec)
+	plugify.AssignVectorVector4((*plugify.PlgVector)(unsafe.Pointer(aVec4Vec)), _aVec4Vec)
+	return __result
+}
+
 //export __ParamEnum
 func __ParamEnum(p1 int32, p2 *C.Vector) int32 {
 	__result := ParamEnum(Example(p1), plugify.GetVectorDataInt32T[Example]((*plugify.PlgVector)(unsafe.Pointer(p2))))
@@ -478,495 +525,770 @@ func __ParamVariantRef(p1 *C.Variant, p2 *C.Vector) {
 
 //export __CallFuncVoid
 func __CallFuncVoid(func_ unsafe.Pointer) {
-	CallFuncVoid(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncVoid(nil))).(FuncVoid))
+	CallFuncVoid(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncVoid(nil))).(cross_call_master.FuncVoid))
 }
 
 //export __CallFuncBool
 func __CallFuncBool(func_ unsafe.Pointer) bool {
-	__result := CallFuncBool(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncBool(nil))).(FuncBool))
+	__result := CallFuncBool(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncBool(nil))).(cross_call_master.FuncBool))
 	return __result
 }
 
 //export __CallFuncChar8
 func __CallFuncChar8(func_ unsafe.Pointer) int8 {
-	__result := CallFuncChar8(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncChar8(nil))).(FuncChar8))
+	__result := CallFuncChar8(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncChar8(nil))).(cross_call_master.FuncChar8))
 	return __result
 }
 
 //export __CallFuncChar16
 func __CallFuncChar16(func_ unsafe.Pointer) uint16 {
-	__result := CallFuncChar16(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncChar16(nil))).(FuncChar16))
+	__result := CallFuncChar16(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncChar16(nil))).(cross_call_master.FuncChar16))
 	return __result
 }
 
 //export __CallFuncInt8
 func __CallFuncInt8(func_ unsafe.Pointer) int8 {
-	__result := CallFuncInt8(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncInt8(nil))).(FuncInt8))
+	__result := CallFuncInt8(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncInt8(nil))).(cross_call_master.FuncInt8))
 	return __result
 }
 
 //export __CallFuncInt16
 func __CallFuncInt16(func_ unsafe.Pointer) int16 {
-	__result := CallFuncInt16(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncInt16(nil))).(FuncInt16))
+	__result := CallFuncInt16(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncInt16(nil))).(cross_call_master.FuncInt16))
 	return __result
 }
 
 //export __CallFuncInt32
 func __CallFuncInt32(func_ unsafe.Pointer) int32 {
-	__result := CallFuncInt32(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncInt32(nil))).(FuncInt32))
+	__result := CallFuncInt32(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncInt32(nil))).(cross_call_master.FuncInt32))
 	return __result
 }
 
 //export __CallFuncInt64
 func __CallFuncInt64(func_ unsafe.Pointer) int64 {
-	__result := CallFuncInt64(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncInt64(nil))).(FuncInt64))
+	__result := CallFuncInt64(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncInt64(nil))).(cross_call_master.FuncInt64))
 	return __result
 }
 
 //export __CallFuncUInt8
 func __CallFuncUInt8(func_ unsafe.Pointer) uint8 {
-	__result := CallFuncUInt8(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncUInt8(nil))).(FuncUInt8))
+	__result := CallFuncUInt8(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncUInt8(nil))).(cross_call_master.FuncUInt8))
 	return __result
 }
 
 //export __CallFuncUInt16
 func __CallFuncUInt16(func_ unsafe.Pointer) uint16 {
-	__result := CallFuncUInt16(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncUInt16(nil))).(FuncUInt16))
+	__result := CallFuncUInt16(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncUInt16(nil))).(cross_call_master.FuncUInt16))
 	return __result
 }
 
 //export __CallFuncUInt32
 func __CallFuncUInt32(func_ unsafe.Pointer) uint32 {
-	__result := CallFuncUInt32(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncUInt32(nil))).(FuncUInt32))
+	__result := CallFuncUInt32(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncUInt32(nil))).(cross_call_master.FuncUInt32))
 	return __result
 }
 
 //export __CallFuncUInt64
 func __CallFuncUInt64(func_ unsafe.Pointer) uint64 {
-	__result := CallFuncUInt64(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncUInt64(nil))).(FuncUInt64))
+	__result := CallFuncUInt64(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncUInt64(nil))).(cross_call_master.FuncUInt64))
 	return __result
 }
 
 //export __CallFuncPtr
 func __CallFuncPtr(func_ unsafe.Pointer) uintptr {
-	__result := CallFuncPtr(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncPtr(nil))).(FuncPtr))
+	__result := CallFuncPtr(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncPtr(nil))).(cross_call_master.FuncPtr))
 	return __result
 }
 
 //export __CallFuncFloat
 func __CallFuncFloat(func_ unsafe.Pointer) float32 {
-	__result := CallFuncFloat(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncFloat(nil))).(FuncFloat))
+	__result := CallFuncFloat(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncFloat(nil))).(cross_call_master.FuncFloat))
 	return __result
 }
 
 //export __CallFuncDouble
 func __CallFuncDouble(func_ unsafe.Pointer) float64 {
-	__result := CallFuncDouble(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncDouble(nil))).(FuncDouble))
+	__result := CallFuncDouble(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncDouble(nil))).(cross_call_master.FuncDouble))
 	return __result
 }
 
 //export __CallFuncFunction
-func __CallFuncFunction(func_ unsafe.Pointer) uintptr {
-	__result := CallFuncFunction(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncFunction(nil))).(FuncFunction))
-	return __result
+func __CallFuncFunction(func_ unsafe.Pointer) unsafe.Pointer {
+	__result := CallFuncFunction(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncFunction(nil))).(cross_call_master.FuncFunction))
+	return plugify.GetFunctionPointerForDelegate(__result)
 }
 
 //export __CallFuncString
 func __CallFuncString(func_ unsafe.Pointer) C.String {
-	__result := CallFuncString(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncString(nil))).(FuncString))
+	__result := CallFuncString(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncString(nil))).(cross_call_master.FuncString))
 	__return := plugify.ConstructString(__result)
 	return *(*C.String)(unsafe.Pointer(&__return))
 }
 
 //export __CallFuncAny
 func __CallFuncAny(func_ unsafe.Pointer) C.Variant {
-	__result := CallFuncAny(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncAny(nil))).(FuncAny))
+	__result := CallFuncAny(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAny(nil))).(cross_call_master.FuncAny))
 	__return := plugify.ConstructVariant(__result)
 	return *(*C.Variant)(unsafe.Pointer(&__return))
 }
 
 //export __CallFuncBoolVector
 func __CallFuncBoolVector(func_ unsafe.Pointer) C.Vector {
-	__result := CallFuncBoolVector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncBoolVector(nil))).(FuncBoolVector))
+	__result := CallFuncBoolVector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncBoolVector(nil))).(cross_call_master.FuncBoolVector))
 	__return := plugify.ConstructVectorBool(__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
 //export __CallFuncChar8Vector
 func __CallFuncChar8Vector(func_ unsafe.Pointer) C.Vector {
-	__result := CallFuncChar8Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncChar8Vector(nil))).(FuncChar8Vector))
+	__result := CallFuncChar8Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncChar8Vector(nil))).(cross_call_master.FuncChar8Vector))
 	__return := plugify.ConstructVectorInt8(__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
 //export __CallFuncChar16Vector
 func __CallFuncChar16Vector(func_ unsafe.Pointer) C.Vector {
-	__result := CallFuncChar16Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncChar16Vector(nil))).(FuncChar16Vector))
+	__result := CallFuncChar16Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncChar16Vector(nil))).(cross_call_master.FuncChar16Vector))
 	__return := plugify.ConstructVectorUInt16(__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
 //export __CallFuncInt8Vector
 func __CallFuncInt8Vector(func_ unsafe.Pointer) C.Vector {
-	__result := CallFuncInt8Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncInt8Vector(nil))).(FuncInt8Vector))
+	__result := CallFuncInt8Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncInt8Vector(nil))).(cross_call_master.FuncInt8Vector))
 	__return := plugify.ConstructVectorInt8(__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
 //export __CallFuncInt16Vector
 func __CallFuncInt16Vector(func_ unsafe.Pointer) C.Vector {
-	__result := CallFuncInt16Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncInt16Vector(nil))).(FuncInt16Vector))
+	__result := CallFuncInt16Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncInt16Vector(nil))).(cross_call_master.FuncInt16Vector))
 	__return := plugify.ConstructVectorInt16(__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
 //export __CallFuncInt32Vector
 func __CallFuncInt32Vector(func_ unsafe.Pointer) C.Vector {
-	__result := CallFuncInt32Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncInt32Vector(nil))).(FuncInt32Vector))
+	__result := CallFuncInt32Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncInt32Vector(nil))).(cross_call_master.FuncInt32Vector))
 	__return := plugify.ConstructVectorInt32(__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
 //export __CallFuncInt64Vector
 func __CallFuncInt64Vector(func_ unsafe.Pointer) C.Vector {
-	__result := CallFuncInt64Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncInt64Vector(nil))).(FuncInt64Vector))
+	__result := CallFuncInt64Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncInt64Vector(nil))).(cross_call_master.FuncInt64Vector))
 	__return := plugify.ConstructVectorInt64(__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
 //export __CallFuncUInt8Vector
 func __CallFuncUInt8Vector(func_ unsafe.Pointer) C.Vector {
-	__result := CallFuncUInt8Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncUInt8Vector(nil))).(FuncUInt8Vector))
+	__result := CallFuncUInt8Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncUInt8Vector(nil))).(cross_call_master.FuncUInt8Vector))
 	__return := plugify.ConstructVectorUInt8(__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
 //export __CallFuncUInt16Vector
 func __CallFuncUInt16Vector(func_ unsafe.Pointer) C.Vector {
-	__result := CallFuncUInt16Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncUInt16Vector(nil))).(FuncUInt16Vector))
+	__result := CallFuncUInt16Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncUInt16Vector(nil))).(cross_call_master.FuncUInt16Vector))
 	__return := plugify.ConstructVectorUInt16(__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
 //export __CallFuncUInt32Vector
 func __CallFuncUInt32Vector(func_ unsafe.Pointer) C.Vector {
-	__result := CallFuncUInt32Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncUInt32Vector(nil))).(FuncUInt32Vector))
+	__result := CallFuncUInt32Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncUInt32Vector(nil))).(cross_call_master.FuncUInt32Vector))
 	__return := plugify.ConstructVectorUInt32(__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
 //export __CallFuncUInt64Vector
 func __CallFuncUInt64Vector(func_ unsafe.Pointer) C.Vector {
-	__result := CallFuncUInt64Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncUInt64Vector(nil))).(FuncUInt64Vector))
+	__result := CallFuncUInt64Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncUInt64Vector(nil))).(cross_call_master.FuncUInt64Vector))
 	__return := plugify.ConstructVectorUInt64(__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
 //export __CallFuncPtrVector
 func __CallFuncPtrVector(func_ unsafe.Pointer) C.Vector {
-	__result := CallFuncPtrVector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncPtrVector(nil))).(FuncPtrVector))
+	__result := CallFuncPtrVector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncPtrVector(nil))).(cross_call_master.FuncPtrVector))
 	__return := plugify.ConstructVectorPointer(__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
 //export __CallFuncFloatVector
 func __CallFuncFloatVector(func_ unsafe.Pointer) C.Vector {
-	__result := CallFuncFloatVector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncFloatVector(nil))).(FuncFloatVector))
+	__result := CallFuncFloatVector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncFloatVector(nil))).(cross_call_master.FuncFloatVector))
 	__return := plugify.ConstructVectorFloat(__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
 //export __CallFuncDoubleVector
 func __CallFuncDoubleVector(func_ unsafe.Pointer) C.Vector {
-	__result := CallFuncDoubleVector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncDoubleVector(nil))).(FuncDoubleVector))
+	__result := CallFuncDoubleVector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncDoubleVector(nil))).(cross_call_master.FuncDoubleVector))
 	__return := plugify.ConstructVectorDouble(__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
 //export __CallFuncStringVector
 func __CallFuncStringVector(func_ unsafe.Pointer) C.Vector {
-	__result := CallFuncStringVector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncStringVector(nil))).(FuncStringVector))
+	__result := CallFuncStringVector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncStringVector(nil))).(cross_call_master.FuncStringVector))
 	__return := plugify.ConstructVectorString(__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
 //export __CallFuncAnyVector
 func __CallFuncAnyVector(func_ unsafe.Pointer) C.Vector {
-	__result := CallFuncAnyVector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncAnyVector(nil))).(FuncAnyVector))
+	__result := CallFuncAnyVector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAnyVector(nil))).(cross_call_master.FuncAnyVector))
 	__return := plugify.ConstructVectorVariant(__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
 //export __CallFuncVec2Vector
 func __CallFuncVec2Vector(func_ unsafe.Pointer) C.Vector {
-	__result := CallFuncVec2Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncVec2Vector(nil))).(FuncVec2Vector))
+	__result := CallFuncVec2Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncVec2Vector(nil))).(cross_call_master.FuncVec2Vector))
 	__return := plugify.ConstructVectorVector2(__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
 //export __CallFuncVec3Vector
 func __CallFuncVec3Vector(func_ unsafe.Pointer) C.Vector {
-	__result := CallFuncVec3Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncVec3Vector(nil))).(FuncVec3Vector))
+	__result := CallFuncVec3Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncVec3Vector(nil))).(cross_call_master.FuncVec3Vector))
 	__return := plugify.ConstructVectorVector3(__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
 //export __CallFuncVec4Vector
 func __CallFuncVec4Vector(func_ unsafe.Pointer) C.Vector {
-	__result := CallFuncVec4Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncVec4Vector(nil))).(FuncVec4Vector))
+	__result := CallFuncVec4Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncVec4Vector(nil))).(cross_call_master.FuncVec4Vector))
 	__return := plugify.ConstructVectorVector4(__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
 //export __CallFuncMat4x4Vector
 func __CallFuncMat4x4Vector(func_ unsafe.Pointer) C.Vector {
-	__result := CallFuncMat4x4Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncMat4x4Vector(nil))).(FuncMat4x4Vector))
+	__result := CallFuncMat4x4Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncMat4x4Vector(nil))).(cross_call_master.FuncMat4x4Vector))
 	__return := plugify.ConstructVectorMatrix4x4(__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
 //export __CallFuncVec2
 func __CallFuncVec2(func_ unsafe.Pointer) C.Vector2 {
-	__result := CallFuncVec2(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncVec2(nil))).(FuncVec2))
+	__result := CallFuncVec2(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncVec2(nil))).(cross_call_master.FuncVec2))
 	return *(*C.Vector2)(unsafe.Pointer(&__result))
 }
 
 //export __CallFuncVec3
 func __CallFuncVec3(func_ unsafe.Pointer) C.Vector3 {
-	__result := CallFuncVec3(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncVec3(nil))).(FuncVec3))
+	__result := CallFuncVec3(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncVec3(nil))).(cross_call_master.FuncVec3))
 	return *(*C.Vector3)(unsafe.Pointer(&__result))
 }
 
 //export __CallFuncVec4
 func __CallFuncVec4(func_ unsafe.Pointer) C.Vector4 {
-	__result := CallFuncVec4(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncVec4(nil))).(FuncVec4))
+	__result := CallFuncVec4(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncVec4(nil))).(cross_call_master.FuncVec4))
 	return *(*C.Vector4)(unsafe.Pointer(&__result))
 }
 
 //export __CallFuncMat4x4
 func __CallFuncMat4x4(func_ unsafe.Pointer) C.Matrix4x4 {
-	__result := CallFuncMat4x4(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncMat4x4(nil))).(FuncMat4x4))
+	__result := CallFuncMat4x4(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncMat4x4(nil))).(cross_call_master.FuncMat4x4))
 	return *(*C.Matrix4x4)(unsafe.Pointer(&__result))
 }
 
 //export __CallFunc1
 func __CallFunc1(func_ unsafe.Pointer) int32 {
-	__result := CallFunc1(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(Func1(nil))).(Func1))
+	__result := CallFunc1(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.Func1(nil))).(cross_call_master.Func1))
 	return __result
 }
 
 //export __CallFunc2
 func __CallFunc2(func_ unsafe.Pointer) int8 {
-	__result := CallFunc2(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(Func2(nil))).(Func2))
+	__result := CallFunc2(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.Func2(nil))).(cross_call_master.Func2))
 	return __result
 }
 
 //export __CallFunc3
 func __CallFunc3(func_ unsafe.Pointer) {
-	CallFunc3(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(Func3(nil))).(Func3))
+	CallFunc3(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.Func3(nil))).(cross_call_master.Func3))
 }
 
 //export __CallFunc4
 func __CallFunc4(func_ unsafe.Pointer) C.Vector4 {
-	__result := CallFunc4(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(Func4(nil))).(Func4))
+	__result := CallFunc4(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.Func4(nil))).(cross_call_master.Func4))
 	return *(*C.Vector4)(unsafe.Pointer(&__result))
 }
 
 //export __CallFunc5
 func __CallFunc5(func_ unsafe.Pointer) bool {
-	__result := CallFunc5(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(Func5(nil))).(Func5))
+	__result := CallFunc5(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.Func5(nil))).(cross_call_master.Func5))
 	return __result
 }
 
 //export __CallFunc6
 func __CallFunc6(func_ unsafe.Pointer) int64 {
-	__result := CallFunc6(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(Func6(nil))).(Func6))
+	__result := CallFunc6(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.Func6(nil))).(cross_call_master.Func6))
 	return __result
 }
 
 //export __CallFunc7
 func __CallFunc7(func_ unsafe.Pointer) float64 {
-	__result := CallFunc7(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(Func7(nil))).(Func7))
+	__result := CallFunc7(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.Func7(nil))).(cross_call_master.Func7))
 	return __result
 }
 
 //export __CallFunc8
 func __CallFunc8(func_ unsafe.Pointer) C.Matrix4x4 {
-	__result := CallFunc8(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(Func8(nil))).(Func8))
+	__result := CallFunc8(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.Func8(nil))).(cross_call_master.Func8))
 	return *(*C.Matrix4x4)(unsafe.Pointer(&__result))
 }
 
 //export __CallFunc9
 func __CallFunc9(func_ unsafe.Pointer) {
-	CallFunc9(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(Func9(nil))).(Func9))
+	CallFunc9(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.Func9(nil))).(cross_call_master.Func9))
 }
 
 //export __CallFunc10
 func __CallFunc10(func_ unsafe.Pointer) uint32 {
-	__result := CallFunc10(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(Func10(nil))).(Func10))
+	__result := CallFunc10(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.Func10(nil))).(cross_call_master.Func10))
 	return __result
 }
 
 //export __CallFunc11
 func __CallFunc11(func_ unsafe.Pointer) uintptr {
-	__result := CallFunc11(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(Func11(nil))).(Func11))
+	__result := CallFunc11(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.Func11(nil))).(cross_call_master.Func11))
 	return __result
 }
 
 //export __CallFunc12
 func __CallFunc12(func_ unsafe.Pointer) bool {
-	__result := CallFunc12(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(Func12(nil))).(Func12))
+	__result := CallFunc12(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.Func12(nil))).(cross_call_master.Func12))
 	return __result
 }
 
 //export __CallFunc13
 func __CallFunc13(func_ unsafe.Pointer) C.String {
-	__result := CallFunc13(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(Func13(nil))).(Func13))
+	__result := CallFunc13(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.Func13(nil))).(cross_call_master.Func13))
 	__return := plugify.ConstructString(__result)
 	return *(*C.String)(unsafe.Pointer(&__return))
 }
 
 //export __CallFunc14
 func __CallFunc14(func_ unsafe.Pointer) C.Vector {
-	__result := CallFunc14(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(Func14(nil))).(Func14))
+	__result := CallFunc14(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.Func14(nil))).(cross_call_master.Func14))
 	__return := plugify.ConstructVectorString(__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
 //export __CallFunc15
 func __CallFunc15(func_ unsafe.Pointer) int16 {
-	__result := CallFunc15(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(Func15(nil))).(Func15))
+	__result := CallFunc15(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.Func15(nil))).(cross_call_master.Func15))
 	return __result
 }
 
 //export __CallFunc16
 func __CallFunc16(func_ unsafe.Pointer) uintptr {
-	__result := CallFunc16(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(Func16(nil))).(Func16))
+	__result := CallFunc16(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.Func16(nil))).(cross_call_master.Func16))
 	return __result
 }
 
 //export __CallFunc17
 func __CallFunc17(func_ unsafe.Pointer) C.String {
-	__result := CallFunc17(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(Func17(nil))).(Func17))
+	__result := CallFunc17(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.Func17(nil))).(cross_call_master.Func17))
 	__return := plugify.ConstructString(__result)
 	return *(*C.String)(unsafe.Pointer(&__return))
 }
 
 //export __CallFunc18
 func __CallFunc18(func_ unsafe.Pointer) C.String {
-	__result := CallFunc18(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(Func18(nil))).(Func18))
+	__result := CallFunc18(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.Func18(nil))).(cross_call_master.Func18))
 	__return := plugify.ConstructString(__result)
 	return *(*C.String)(unsafe.Pointer(&__return))
 }
 
 //export __CallFunc19
 func __CallFunc19(func_ unsafe.Pointer) C.String {
-	__result := CallFunc19(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(Func19(nil))).(Func19))
+	__result := CallFunc19(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.Func19(nil))).(cross_call_master.Func19))
 	__return := plugify.ConstructString(__result)
 	return *(*C.String)(unsafe.Pointer(&__return))
 }
 
 //export __CallFunc20
 func __CallFunc20(func_ unsafe.Pointer) C.String {
-	__result := CallFunc20(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(Func20(nil))).(Func20))
+	__result := CallFunc20(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.Func20(nil))).(cross_call_master.Func20))
 	__return := plugify.ConstructString(__result)
 	return *(*C.String)(unsafe.Pointer(&__return))
 }
 
 //export __CallFunc21
 func __CallFunc21(func_ unsafe.Pointer) C.String {
-	__result := CallFunc21(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(Func21(nil))).(Func21))
+	__result := CallFunc21(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.Func21(nil))).(cross_call_master.Func21))
 	__return := plugify.ConstructString(__result)
 	return *(*C.String)(unsafe.Pointer(&__return))
 }
 
 //export __CallFunc22
 func __CallFunc22(func_ unsafe.Pointer) C.String {
-	__result := CallFunc22(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(Func22(nil))).(Func22))
+	__result := CallFunc22(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.Func22(nil))).(cross_call_master.Func22))
 	__return := plugify.ConstructString(__result)
 	return *(*C.String)(unsafe.Pointer(&__return))
 }
 
 //export __CallFunc23
 func __CallFunc23(func_ unsafe.Pointer) C.String {
-	__result := CallFunc23(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(Func23(nil))).(Func23))
+	__result := CallFunc23(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.Func23(nil))).(cross_call_master.Func23))
 	__return := plugify.ConstructString(__result)
 	return *(*C.String)(unsafe.Pointer(&__return))
 }
 
 //export __CallFunc24
 func __CallFunc24(func_ unsafe.Pointer) C.String {
-	__result := CallFunc24(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(Func24(nil))).(Func24))
+	__result := CallFunc24(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.Func24(nil))).(cross_call_master.Func24))
 	__return := plugify.ConstructString(__result)
 	return *(*C.String)(unsafe.Pointer(&__return))
 }
 
 //export __CallFunc25
 func __CallFunc25(func_ unsafe.Pointer) C.String {
-	__result := CallFunc25(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(Func25(nil))).(Func25))
+	__result := CallFunc25(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.Func25(nil))).(cross_call_master.Func25))
 	__return := plugify.ConstructString(__result)
 	return *(*C.String)(unsafe.Pointer(&__return))
 }
 
 //export __CallFunc26
 func __CallFunc26(func_ unsafe.Pointer) C.String {
-	__result := CallFunc26(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(Func26(nil))).(Func26))
+	__result := CallFunc26(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.Func26(nil))).(cross_call_master.Func26))
 	__return := plugify.ConstructString(__result)
 	return *(*C.String)(unsafe.Pointer(&__return))
 }
 
 //export __CallFunc27
 func __CallFunc27(func_ unsafe.Pointer) C.String {
-	__result := CallFunc27(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(Func27(nil))).(Func27))
+	__result := CallFunc27(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.Func27(nil))).(cross_call_master.Func27))
 	__return := plugify.ConstructString(__result)
 	return *(*C.String)(unsafe.Pointer(&__return))
 }
 
 //export __CallFunc28
 func __CallFunc28(func_ unsafe.Pointer) C.String {
-	__result := CallFunc28(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(Func28(nil))).(Func28))
+	__result := CallFunc28(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.Func28(nil))).(cross_call_master.Func28))
 	__return := plugify.ConstructString(__result)
 	return *(*C.String)(unsafe.Pointer(&__return))
 }
 
 //export __CallFunc29
 func __CallFunc29(func_ unsafe.Pointer) C.String {
-	__result := CallFunc29(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(Func29(nil))).(Func29))
+	__result := CallFunc29(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.Func29(nil))).(cross_call_master.Func29))
 	__return := plugify.ConstructString(__result)
 	return *(*C.String)(unsafe.Pointer(&__return))
 }
 
 //export __CallFunc30
 func __CallFunc30(func_ unsafe.Pointer) C.String {
-	__result := CallFunc30(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(Func30(nil))).(Func30))
+	__result := CallFunc30(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.Func30(nil))).(cross_call_master.Func30))
 	__return := plugify.ConstructString(__result)
 	return *(*C.String)(unsafe.Pointer(&__return))
 }
 
 //export __CallFunc31
 func __CallFunc31(func_ unsafe.Pointer) C.String {
-	__result := CallFunc31(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(Func31(nil))).(Func31))
+	__result := CallFunc31(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.Func31(nil))).(cross_call_master.Func31))
 	__return := plugify.ConstructString(__result)
 	return *(*C.String)(unsafe.Pointer(&__return))
 }
 
 //export __CallFunc32
 func __CallFunc32(func_ unsafe.Pointer) C.String {
-	__result := CallFunc32(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(Func32(nil))).(Func32))
+	__result := CallFunc32(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.Func32(nil))).(cross_call_master.Func32))
 	__return := plugify.ConstructString(__result)
 	return *(*C.String)(unsafe.Pointer(&__return))
 }
 
 //export __CallFunc33
 func __CallFunc33(func_ unsafe.Pointer) C.String {
-	__result := CallFunc33(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(Func33(nil))).(Func33))
+	__result := CallFunc33(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.Func33(nil))).(cross_call_master.Func33))
 	__return := plugify.ConstructString(__result)
 	return *(*C.String)(unsafe.Pointer(&__return))
 }
 
 //export __CallFuncEnum
 func __CallFuncEnum(func_ unsafe.Pointer) C.String {
-	__result := CallFuncEnum(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(FuncEnum(nil))).(FuncEnum))
+	__result := CallFuncEnum(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncEnum(nil))).(cross_call_master.FuncEnum))
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __CallFuncAliasBool
+func __CallFuncAliasBool(func_ unsafe.Pointer) bool {
+	__result := CallFuncAliasBool(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasBool(nil))).(cross_call_master.FuncAliasBool))
+	return __result
+}
+
+//export __CallFuncAliasChar8
+func __CallFuncAliasChar8(func_ unsafe.Pointer) int8 {
+	__result := CallFuncAliasChar8(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasChar8(nil))).(cross_call_master.FuncAliasChar8))
+	return __result
+}
+
+//export __CallFuncAliasChar16
+func __CallFuncAliasChar16(func_ unsafe.Pointer) uint16 {
+	__result := CallFuncAliasChar16(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasChar16(nil))).(cross_call_master.FuncAliasChar16))
+	return __result
+}
+
+//export __CallFuncAliasInt8
+func __CallFuncAliasInt8(func_ unsafe.Pointer) int8 {
+	__result := CallFuncAliasInt8(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasInt8(nil))).(cross_call_master.FuncAliasInt8))
+	return __result
+}
+
+//export __CallFuncAliasInt16
+func __CallFuncAliasInt16(func_ unsafe.Pointer) int16 {
+	__result := CallFuncAliasInt16(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasInt16(nil))).(cross_call_master.FuncAliasInt16))
+	return __result
+}
+
+//export __CallFuncAliasInt32
+func __CallFuncAliasInt32(func_ unsafe.Pointer) int32 {
+	__result := CallFuncAliasInt32(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasInt32(nil))).(cross_call_master.FuncAliasInt32))
+	return __result
+}
+
+//export __CallFuncAliasInt64
+func __CallFuncAliasInt64(func_ unsafe.Pointer) int64 {
+	__result := CallFuncAliasInt64(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasInt64(nil))).(cross_call_master.FuncAliasInt64))
+	return __result
+}
+
+//export __CallFuncAliasUInt8
+func __CallFuncAliasUInt8(func_ unsafe.Pointer) uint8 {
+	__result := CallFuncAliasUInt8(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasUInt8(nil))).(cross_call_master.FuncAliasUInt8))
+	return __result
+}
+
+//export __CallFuncAliasUInt16
+func __CallFuncAliasUInt16(func_ unsafe.Pointer) uint16 {
+	__result := CallFuncAliasUInt16(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasUInt16(nil))).(cross_call_master.FuncAliasUInt16))
+	return __result
+}
+
+//export __CallFuncAliasUInt32
+func __CallFuncAliasUInt32(func_ unsafe.Pointer) uint32 {
+	__result := CallFuncAliasUInt32(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasUInt32(nil))).(cross_call_master.FuncAliasUInt32))
+	return __result
+}
+
+//export __CallFuncAliasUInt64
+func __CallFuncAliasUInt64(func_ unsafe.Pointer) uint64 {
+	__result := CallFuncAliasUInt64(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasUInt64(nil))).(cross_call_master.FuncAliasUInt64))
+	return __result
+}
+
+//export __CallFuncAliasPtr
+func __CallFuncAliasPtr(func_ unsafe.Pointer) uintptr {
+	__result := CallFuncAliasPtr(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasPtr(nil))).(cross_call_master.FuncAliasPtr))
+	return __result
+}
+
+//export __CallFuncAliasFloat
+func __CallFuncAliasFloat(func_ unsafe.Pointer) float32 {
+	__result := CallFuncAliasFloat(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasFloat(nil))).(cross_call_master.FuncAliasFloat))
+	return __result
+}
+
+//export __CallFuncAliasDouble
+func __CallFuncAliasDouble(func_ unsafe.Pointer) float64 {
+	__result := CallFuncAliasDouble(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasDouble(nil))).(cross_call_master.FuncAliasDouble))
+	return __result
+}
+
+//export __CallFuncAliasFunction
+func __CallFuncAliasFunction(func_ unsafe.Pointer) uintptr {
+	__result := CallFuncAliasFunction(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasFunction(nil))).(cross_call_master.FuncAliasFunction))
+	return __result
+}
+
+//export __CallFuncAliasString
+func __CallFuncAliasString(func_ unsafe.Pointer) C.String {
+	__result := CallFuncAliasString(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasString(nil))).(cross_call_master.FuncAliasString))
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __CallFuncAliasAny
+func __CallFuncAliasAny(func_ unsafe.Pointer) C.Variant {
+	__result := CallFuncAliasAny(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasAny(nil))).(cross_call_master.FuncAliasAny))
+	__return := plugify.ConstructVariant(__result)
+	return *(*C.Variant)(unsafe.Pointer(&__return))
+}
+
+//export __CallFuncAliasBoolVector
+func __CallFuncAliasBoolVector(func_ unsafe.Pointer) C.Vector {
+	__result := CallFuncAliasBoolVector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasBoolVector(nil))).(cross_call_master.FuncAliasBoolVector))
+	__return := plugify.ConstructVectorBool(__result)
+	return *(*C.Vector)(unsafe.Pointer(&__return))
+}
+
+//export __CallFuncAliasChar8Vector
+func __CallFuncAliasChar8Vector(func_ unsafe.Pointer) C.Vector {
+	__result := CallFuncAliasChar8Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasChar8Vector(nil))).(cross_call_master.FuncAliasChar8Vector))
+	__return := plugify.ConstructVectorInt8(__result)
+	return *(*C.Vector)(unsafe.Pointer(&__return))
+}
+
+//export __CallFuncAliasChar16Vector
+func __CallFuncAliasChar16Vector(func_ unsafe.Pointer) C.Vector {
+	__result := CallFuncAliasChar16Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasChar16Vector(nil))).(cross_call_master.FuncAliasChar16Vector))
+	__return := plugify.ConstructVectorUInt16(__result)
+	return *(*C.Vector)(unsafe.Pointer(&__return))
+}
+
+//export __CallFuncAliasInt8Vector
+func __CallFuncAliasInt8Vector(func_ unsafe.Pointer) C.Vector {
+	__result := CallFuncAliasInt8Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasInt8Vector(nil))).(cross_call_master.FuncAliasInt8Vector))
+	__return := plugify.ConstructVectorInt8(__result)
+	return *(*C.Vector)(unsafe.Pointer(&__return))
+}
+
+//export __CallFuncAliasInt16Vector
+func __CallFuncAliasInt16Vector(func_ unsafe.Pointer) C.Vector {
+	__result := CallFuncAliasInt16Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasInt16Vector(nil))).(cross_call_master.FuncAliasInt16Vector))
+	__return := plugify.ConstructVectorInt16(__result)
+	return *(*C.Vector)(unsafe.Pointer(&__return))
+}
+
+//export __CallFuncAliasInt32Vector
+func __CallFuncAliasInt32Vector(func_ unsafe.Pointer) C.Vector {
+	__result := CallFuncAliasInt32Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasInt32Vector(nil))).(cross_call_master.FuncAliasInt32Vector))
+	__return := plugify.ConstructVectorInt32(__result)
+	return *(*C.Vector)(unsafe.Pointer(&__return))
+}
+
+//export __CallFuncAliasInt64Vector
+func __CallFuncAliasInt64Vector(func_ unsafe.Pointer) C.Vector {
+	__result := CallFuncAliasInt64Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasInt64Vector(nil))).(cross_call_master.FuncAliasInt64Vector))
+	__return := plugify.ConstructVectorInt64(__result)
+	return *(*C.Vector)(unsafe.Pointer(&__return))
+}
+
+//export __CallFuncAliasUInt8Vector
+func __CallFuncAliasUInt8Vector(func_ unsafe.Pointer) C.Vector {
+	__result := CallFuncAliasUInt8Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasUInt8Vector(nil))).(cross_call_master.FuncAliasUInt8Vector))
+	__return := plugify.ConstructVectorUInt8(__result)
+	return *(*C.Vector)(unsafe.Pointer(&__return))
+}
+
+//export __CallFuncAliasUInt16Vector
+func __CallFuncAliasUInt16Vector(func_ unsafe.Pointer) C.Vector {
+	__result := CallFuncAliasUInt16Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasUInt16Vector(nil))).(cross_call_master.FuncAliasUInt16Vector))
+	__return := plugify.ConstructVectorUInt16(__result)
+	return *(*C.Vector)(unsafe.Pointer(&__return))
+}
+
+//export __CallFuncAliasUInt32Vector
+func __CallFuncAliasUInt32Vector(func_ unsafe.Pointer) C.Vector {
+	__result := CallFuncAliasUInt32Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasUInt32Vector(nil))).(cross_call_master.FuncAliasUInt32Vector))
+	__return := plugify.ConstructVectorUInt32(__result)
+	return *(*C.Vector)(unsafe.Pointer(&__return))
+}
+
+//export __CallFuncAliasUInt64Vector
+func __CallFuncAliasUInt64Vector(func_ unsafe.Pointer) C.Vector {
+	__result := CallFuncAliasUInt64Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasUInt64Vector(nil))).(cross_call_master.FuncAliasUInt64Vector))
+	__return := plugify.ConstructVectorUInt64(__result)
+	return *(*C.Vector)(unsafe.Pointer(&__return))
+}
+
+//export __CallFuncAliasPtrVector
+func __CallFuncAliasPtrVector(func_ unsafe.Pointer) C.Vector {
+	__result := CallFuncAliasPtrVector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasPtrVector(nil))).(cross_call_master.FuncAliasPtrVector))
+	__return := plugify.ConstructVectorPointer(__result)
+	return *(*C.Vector)(unsafe.Pointer(&__return))
+}
+
+//export __CallFuncAliasFloatVector
+func __CallFuncAliasFloatVector(func_ unsafe.Pointer) C.Vector {
+	__result := CallFuncAliasFloatVector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasFloatVector(nil))).(cross_call_master.FuncAliasFloatVector))
+	__return := plugify.ConstructVectorFloat(__result)
+	return *(*C.Vector)(unsafe.Pointer(&__return))
+}
+
+//export __CallFuncAliasDoubleVector
+func __CallFuncAliasDoubleVector(func_ unsafe.Pointer) C.Vector {
+	__result := CallFuncAliasDoubleVector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasDoubleVector(nil))).(cross_call_master.FuncAliasDoubleVector))
+	__return := plugify.ConstructVectorDouble(__result)
+	return *(*C.Vector)(unsafe.Pointer(&__return))
+}
+
+//export __CallFuncAliasStringVector
+func __CallFuncAliasStringVector(func_ unsafe.Pointer) C.Vector {
+	__result := CallFuncAliasStringVector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasStringVector(nil))).(cross_call_master.FuncAliasStringVector))
+	__return := plugify.ConstructVectorString(__result)
+	return *(*C.Vector)(unsafe.Pointer(&__return))
+}
+
+//export __CallFuncAliasAnyVector
+func __CallFuncAliasAnyVector(func_ unsafe.Pointer) C.Vector {
+	__result := CallFuncAliasAnyVector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasAnyVector(nil))).(cross_call_master.FuncAliasAnyVector))
+	__return := plugify.ConstructVectorVariant(__result)
+	return *(*C.Vector)(unsafe.Pointer(&__return))
+}
+
+//export __CallFuncAliasVec2Vector
+func __CallFuncAliasVec2Vector(func_ unsafe.Pointer) C.Vector {
+	__result := CallFuncAliasVec2Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasVec2Vector(nil))).(cross_call_master.FuncAliasVec2Vector))
+	__return := plugify.ConstructVectorVector2(__result)
+	return *(*C.Vector)(unsafe.Pointer(&__return))
+}
+
+//export __CallFuncAliasVec3Vector
+func __CallFuncAliasVec3Vector(func_ unsafe.Pointer) C.Vector {
+	__result := CallFuncAliasVec3Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasVec3Vector(nil))).(cross_call_master.FuncAliasVec3Vector))
+	__return := plugify.ConstructVectorVector3(__result)
+	return *(*C.Vector)(unsafe.Pointer(&__return))
+}
+
+//export __CallFuncAliasVec4Vector
+func __CallFuncAliasVec4Vector(func_ unsafe.Pointer) C.Vector {
+	__result := CallFuncAliasVec4Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasVec4Vector(nil))).(cross_call_master.FuncAliasVec4Vector))
+	__return := plugify.ConstructVectorVector4(__result)
+	return *(*C.Vector)(unsafe.Pointer(&__return))
+}
+
+//export __CallFuncAliasMat4x4Vector
+func __CallFuncAliasMat4x4Vector(func_ unsafe.Pointer) C.Vector {
+	__result := CallFuncAliasMat4x4Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasMat4x4Vector(nil))).(cross_call_master.FuncAliasMat4x4Vector))
+	__return := plugify.ConstructVectorMatrix4x4(__result)
+	return *(*C.Vector)(unsafe.Pointer(&__return))
+}
+
+//export __CallFuncAliasVec2
+func __CallFuncAliasVec2(func_ unsafe.Pointer) C.Vector2 {
+	__result := CallFuncAliasVec2(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasVec2(nil))).(cross_call_master.FuncAliasVec2))
+	return *(*C.Vector2)(unsafe.Pointer(&__result))
+}
+
+//export __CallFuncAliasVec3
+func __CallFuncAliasVec3(func_ unsafe.Pointer) C.Vector3 {
+	__result := CallFuncAliasVec3(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasVec3(nil))).(cross_call_master.FuncAliasVec3))
+	return *(*C.Vector3)(unsafe.Pointer(&__result))
+}
+
+//export __CallFuncAliasVec4
+func __CallFuncAliasVec4(func_ unsafe.Pointer) C.Vector4 {
+	__result := CallFuncAliasVec4(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasVec4(nil))).(cross_call_master.FuncAliasVec4))
+	return *(*C.Vector4)(unsafe.Pointer(&__result))
+}
+
+//export __CallFuncAliasMat4x4
+func __CallFuncAliasMat4x4(func_ unsafe.Pointer) C.Matrix4x4 {
+	__result := CallFuncAliasMat4x4(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasMat4x4(nil))).(cross_call_master.FuncAliasMat4x4))
+	return *(*C.Matrix4x4)(unsafe.Pointer(&__result))
+}
+
+//export __CallFuncAliasAll
+func __CallFuncAliasAll(func_ unsafe.Pointer) C.String {
+	__result := CallFuncAliasAll(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasAll(nil))).(cross_call_master.FuncAliasAll))
 	__return := plugify.ConstructString(__result)
 	return *(*C.String)(unsafe.Pointer(&__return))
 }
@@ -1391,6 +1713,20 @@ func __ReverseParamAllPrimitives() C.String {
 	return *(*C.String)(unsafe.Pointer(&__return))
 }
 
+//export __ReverseParamAllAliases
+func __ReverseParamAllAliases() C.String {
+	__result := ReverseParamAllAliases()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseParamAllRefAliases
+func __ReverseParamAllRefAliases() C.String {
+	__result := ReverseParamAllRefAliases()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
 //export __ReverseParamEnum
 func __ReverseParamEnum() C.String {
 	__result := ReverseParamEnum()
@@ -1702,6 +2038,293 @@ func __ReverseCallFuncVec4() C.String {
 //export __ReverseCallFuncMat4x4
 func __ReverseCallFuncMat4x4() C.String {
 	__result := ReverseCallFuncMat4x4()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasBool
+func __ReverseCallFuncAliasBool() C.String {
+	__result := ReverseCallFuncAliasBool()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasChar8
+func __ReverseCallFuncAliasChar8() C.String {
+	__result := ReverseCallFuncAliasChar8()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasChar16
+func __ReverseCallFuncAliasChar16() C.String {
+	__result := ReverseCallFuncAliasChar16()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasInt8
+func __ReverseCallFuncAliasInt8() C.String {
+	__result := ReverseCallFuncAliasInt8()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasInt16
+func __ReverseCallFuncAliasInt16() C.String {
+	__result := ReverseCallFuncAliasInt16()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasInt32
+func __ReverseCallFuncAliasInt32() C.String {
+	__result := ReverseCallFuncAliasInt32()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasInt64
+func __ReverseCallFuncAliasInt64() C.String {
+	__result := ReverseCallFuncAliasInt64()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasUInt8
+func __ReverseCallFuncAliasUInt8() C.String {
+	__result := ReverseCallFuncAliasUInt8()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasUInt16
+func __ReverseCallFuncAliasUInt16() C.String {
+	__result := ReverseCallFuncAliasUInt16()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasUInt32
+func __ReverseCallFuncAliasUInt32() C.String {
+	__result := ReverseCallFuncAliasUInt32()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasUInt64
+func __ReverseCallFuncAliasUInt64() C.String {
+	__result := ReverseCallFuncAliasUInt64()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasPtr
+func __ReverseCallFuncAliasPtr() C.String {
+	__result := ReverseCallFuncAliasPtr()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasFloat
+func __ReverseCallFuncAliasFloat() C.String {
+	__result := ReverseCallFuncAliasFloat()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasDouble
+func __ReverseCallFuncAliasDouble() C.String {
+	__result := ReverseCallFuncAliasDouble()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasString
+func __ReverseCallFuncAliasString() C.String {
+	__result := ReverseCallFuncAliasString()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasAny
+func __ReverseCallFuncAliasAny() C.String {
+	__result := ReverseCallFuncAliasAny()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasBoolVector
+func __ReverseCallFuncAliasBoolVector() C.String {
+	__result := ReverseCallFuncAliasBoolVector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasChar8Vector
+func __ReverseCallFuncAliasChar8Vector() C.String {
+	__result := ReverseCallFuncAliasChar8Vector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasChar16Vector
+func __ReverseCallFuncAliasChar16Vector() C.String {
+	__result := ReverseCallFuncAliasChar16Vector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasInt8Vector
+func __ReverseCallFuncAliasInt8Vector() C.String {
+	__result := ReverseCallFuncAliasInt8Vector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasInt16Vector
+func __ReverseCallFuncAliasInt16Vector() C.String {
+	__result := ReverseCallFuncAliasInt16Vector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasInt32Vector
+func __ReverseCallFuncAliasInt32Vector() C.String {
+	__result := ReverseCallFuncAliasInt32Vector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasInt64Vector
+func __ReverseCallFuncAliasInt64Vector() C.String {
+	__result := ReverseCallFuncAliasInt64Vector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasUInt8Vector
+func __ReverseCallFuncAliasUInt8Vector() C.String {
+	__result := ReverseCallFuncAliasUInt8Vector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasUInt16Vector
+func __ReverseCallFuncAliasUInt16Vector() C.String {
+	__result := ReverseCallFuncAliasUInt16Vector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasUInt32Vector
+func __ReverseCallFuncAliasUInt32Vector() C.String {
+	__result := ReverseCallFuncAliasUInt32Vector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasUInt64Vector
+func __ReverseCallFuncAliasUInt64Vector() C.String {
+	__result := ReverseCallFuncAliasUInt64Vector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasPtrVector
+func __ReverseCallFuncAliasPtrVector() C.String {
+	__result := ReverseCallFuncAliasPtrVector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasFloatVector
+func __ReverseCallFuncAliasFloatVector() C.String {
+	__result := ReverseCallFuncAliasFloatVector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasDoubleVector
+func __ReverseCallFuncAliasDoubleVector() C.String {
+	__result := ReverseCallFuncAliasDoubleVector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasStringVector
+func __ReverseCallFuncAliasStringVector() C.String {
+	__result := ReverseCallFuncAliasStringVector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasAnyVector
+func __ReverseCallFuncAliasAnyVector() C.String {
+	__result := ReverseCallFuncAliasAnyVector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasVec2Vector
+func __ReverseCallFuncAliasVec2Vector() C.String {
+	__result := ReverseCallFuncAliasVec2Vector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasVec3Vector
+func __ReverseCallFuncAliasVec3Vector() C.String {
+	__result := ReverseCallFuncAliasVec3Vector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasVec4Vector
+func __ReverseCallFuncAliasVec4Vector() C.String {
+	__result := ReverseCallFuncAliasVec4Vector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasMat4x4Vector
+func __ReverseCallFuncAliasMat4x4Vector() C.String {
+	__result := ReverseCallFuncAliasMat4x4Vector()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasVec2
+func __ReverseCallFuncAliasVec2() C.String {
+	__result := ReverseCallFuncAliasVec2()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasVec3
+func __ReverseCallFuncAliasVec3() C.String {
+	__result := ReverseCallFuncAliasVec3()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasVec4
+func __ReverseCallFuncAliasVec4() C.String {
+	__result := ReverseCallFuncAliasVec4()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasMat4x4
+func __ReverseCallFuncAliasMat4x4() C.String {
+	__result := ReverseCallFuncAliasMat4x4()
+	__return := plugify.ConstructString(__result)
+	return *(*C.String)(unsafe.Pointer(&__return))
+}
+
+//export __ReverseCallFuncAliasAll
+func __ReverseCallFuncAliasAll() C.String {
+	__result := ReverseCallFuncAliasAll()
 	__return := plugify.ConstructString(__result)
 	return *(*C.String)(unsafe.Pointer(&__return))
 }

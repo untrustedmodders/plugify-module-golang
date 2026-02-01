@@ -33,6 +33,7 @@ var _ = plugify.Plugin.Loaded
 
 // Generated from cross_call_master (group: resource)
 
+// ResourceHandleCreate 
 func ResourceHandleCreate(id int32, name string) uintptr {
 	var __retVal uintptr
 	__id := C.int32_t(id)
@@ -49,16 +50,19 @@ func ResourceHandleCreate(id int32, name string) uintptr {
 	return __retVal
 }
 
+// ResourceHandleCreateDefault 
 func ResourceHandleCreateDefault() uintptr {
 	__retVal := uintptr(C.ResourceHandleCreateDefault())
 	return __retVal
 }
 
+// ResourceHandleDestroy 
 func ResourceHandleDestroy(handle uintptr) {
 	__handle := C.uintptr_t(handle)
 	C.ResourceHandleDestroy(__handle)
 }
 
+// ResourceHandleGetId 
 func ResourceHandleGetId(handle uintptr) int32 {
 	var __retVal int32
 	__handle := C.uintptr_t(handle)
@@ -66,6 +70,7 @@ func ResourceHandleGetId(handle uintptr) int32 {
 	return __retVal
 }
 
+// ResourceHandleGetName 
 func ResourceHandleGetName(handle uintptr) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
@@ -85,6 +90,7 @@ func ResourceHandleGetName(handle uintptr) string {
 	return __retVal
 }
 
+// ResourceHandleSetName 
 func ResourceHandleSetName(handle uintptr, name string) {
 	__handle := C.uintptr_t(handle)
 	__name := plugify.ConstructString(name)
@@ -99,11 +105,13 @@ func ResourceHandleSetName(handle uintptr, name string) {
 	}.Do()
 }
 
+// ResourceHandleIncrementCounter 
 func ResourceHandleIncrementCounter(handle uintptr) {
 	__handle := C.uintptr_t(handle)
 	C.ResourceHandleIncrementCounter(__handle)
 }
 
+// ResourceHandleGetCounter 
 func ResourceHandleGetCounter(handle uintptr) int32 {
 	var __retVal int32
 	__handle := C.uintptr_t(handle)
@@ -111,12 +119,14 @@ func ResourceHandleGetCounter(handle uintptr) int32 {
 	return __retVal
 }
 
+// ResourceHandleAddData 
 func ResourceHandleAddData(handle uintptr, value float32) {
 	__handle := C.uintptr_t(handle)
 	__value := C.float(value)
 	C.ResourceHandleAddData(__handle, __value)
 }
 
+// ResourceHandleGetData 
 func ResourceHandleGetData(handle uintptr) []float32 {
 	var __retVal []float32
 	var __retVal_native plugify.PlgVector
@@ -136,16 +146,19 @@ func ResourceHandleGetData(handle uintptr) []float32 {
 	return __retVal
 }
 
+// ResourceHandleGetAliveCount 
 func ResourceHandleGetAliveCount() int32 {
 	__retVal := int32(C.ResourceHandleGetAliveCount())
 	return __retVal
 }
 
+// ResourceHandleGetTotalCreated 
 func ResourceHandleGetTotalCreated() int32 {
 	__retVal := int32(C.ResourceHandleGetTotalCreated())
 	return __retVal
 }
 
+// ResourceHandleGetTotalDestroyed 
 func ResourceHandleGetTotalDestroyed() int32 {
 	__retVal := int32(C.ResourceHandleGetTotalDestroyed())
 	return __retVal

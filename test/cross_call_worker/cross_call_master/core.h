@@ -392,6 +392,18 @@ static int64_t ParamAllPrimitivesCallback(bool p1, int8_t p2, uint16_t p3, int8_
 	return __cross_call_master_ParamAllPrimitivesCallback(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14);
 }
 
+extern int32_t (*__cross_call_master_ParamAllAliasesCallback)(bool, int8_t, uint16_t, int8_t, int16_t, int32_t, int64_t, uintptr_t, float, double, String*, Variant*, Vector2*, Vector3*, Vector4*, Matrix4x4*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*);
+
+static int32_t ParamAllAliasesCallback(bool aBool, int8_t aChar8, uint16_t aChar16, int8_t aInt8, int16_t aInt16, int32_t aInt32, int64_t aInt64, uintptr_t aPtr, float aFloat, double aDouble, String* aString, Variant* aAny, Vector2* aVec2, Vector3* aVec3, Vector4* aVec4, Matrix4x4* aMat4x4, Vector* aBoolVec, Vector* aChar8Vec, Vector* aChar16Vec, Vector* aInt8Vec, Vector* aInt16Vec, Vector* aInt32Vec, Vector* aInt64Vec, Vector* aPtrVec, Vector* aFloatVec, Vector* aDoubleVec, Vector* aStringVec, Vector* aAnyVec, Vector* aVec2Vec, Vector* aVec3Vec, Vector* aVec4Vec) {
+	return __cross_call_master_ParamAllAliasesCallback(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble, aString, aAny, aVec2, aVec3, aVec4, aMat4x4, aBoolVec, aChar8Vec, aChar16Vec, aInt8Vec, aInt16Vec, aInt32Vec, aInt64Vec, aPtrVec, aFloatVec, aDoubleVec, aStringVec, aAnyVec, aVec2Vec, aVec3Vec, aVec4Vec);
+}
+
+extern int64_t (*__cross_call_master_ParamAllRefAliasesCallback)(bool*, int8_t*, uint16_t*, int8_t*, int16_t*, int32_t*, int64_t*, uintptr_t*, float*, double*, String*, Variant*, Vector2*, Vector3*, Vector4*, Matrix4x4*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*);
+
+static int64_t ParamAllRefAliasesCallback(bool* aBool, int8_t* aChar8, uint16_t* aChar16, int8_t* aInt8, int16_t* aInt16, int32_t* aInt32, int64_t* aInt64, uintptr_t* aPtr, float* aFloat, double* aDouble, String* aString, Variant* aAny, Vector2* aVec2, Vector3* aVec3, Vector4* aVec4, Matrix4x4* aMat4x4, Vector* aBoolVec, Vector* aChar8Vec, Vector* aChar16Vec, Vector* aInt8Vec, Vector* aInt16Vec, Vector* aInt32Vec, Vector* aInt64Vec, Vector* aPtrVec, Vector* aFloatVec, Vector* aDoubleVec, Vector* aStringVec, Vector* aAnyVec, Vector* aVec2Vec, Vector* aVec3Vec, Vector* aVec4Vec) {
+	return __cross_call_master_ParamAllRefAliasesCallback(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble, aString, aAny, aVec2, aVec3, aVec4, aMat4x4, aBoolVec, aChar8Vec, aChar16Vec, aInt8Vec, aInt16Vec, aInt32Vec, aInt64Vec, aPtrVec, aFloatVec, aDoubleVec, aStringVec, aAnyVec, aVec2Vec, aVec3Vec, aVec4Vec);
+}
+
 extern int32_t (*__cross_call_master_ParamEnumCallback)(int32_t, Vector*);
 
 static int32_t ParamEnumCallback(int32_t p1, Vector* p2) {
@@ -418,457 +430,709 @@ static void ParamVariantRefCallback(Variant* p1, Vector* p2) {
 
 extern void (*__cross_call_master_CallFuncVoidCallback)(void*);
 
-static void CallFuncVoidCallback(void* func) {
-	__cross_call_master_CallFuncVoidCallback(func);
+static void CallFuncVoidCallback(void* func_) {
+	__cross_call_master_CallFuncVoidCallback(func_);
 }
 
 extern bool (*__cross_call_master_CallFuncBoolCallback)(void*);
 
-static bool CallFuncBoolCallback(void* func) {
-	return __cross_call_master_CallFuncBoolCallback(func);
+static bool CallFuncBoolCallback(void* func_) {
+	return __cross_call_master_CallFuncBoolCallback(func_);
 }
 
 extern int8_t (*__cross_call_master_CallFuncChar8Callback)(void*);
 
-static int8_t CallFuncChar8Callback(void* func) {
-	return __cross_call_master_CallFuncChar8Callback(func);
+static int8_t CallFuncChar8Callback(void* func_) {
+	return __cross_call_master_CallFuncChar8Callback(func_);
 }
 
 extern uint16_t (*__cross_call_master_CallFuncChar16Callback)(void*);
 
-static uint16_t CallFuncChar16Callback(void* func) {
-	return __cross_call_master_CallFuncChar16Callback(func);
+static uint16_t CallFuncChar16Callback(void* func_) {
+	return __cross_call_master_CallFuncChar16Callback(func_);
 }
 
 extern int8_t (*__cross_call_master_CallFuncInt8Callback)(void*);
 
-static int8_t CallFuncInt8Callback(void* func) {
-	return __cross_call_master_CallFuncInt8Callback(func);
+static int8_t CallFuncInt8Callback(void* func_) {
+	return __cross_call_master_CallFuncInt8Callback(func_);
 }
 
 extern int16_t (*__cross_call_master_CallFuncInt16Callback)(void*);
 
-static int16_t CallFuncInt16Callback(void* func) {
-	return __cross_call_master_CallFuncInt16Callback(func);
+static int16_t CallFuncInt16Callback(void* func_) {
+	return __cross_call_master_CallFuncInt16Callback(func_);
 }
 
 extern int32_t (*__cross_call_master_CallFuncInt32Callback)(void*);
 
-static int32_t CallFuncInt32Callback(void* func) {
-	return __cross_call_master_CallFuncInt32Callback(func);
+static int32_t CallFuncInt32Callback(void* func_) {
+	return __cross_call_master_CallFuncInt32Callback(func_);
 }
 
 extern int64_t (*__cross_call_master_CallFuncInt64Callback)(void*);
 
-static int64_t CallFuncInt64Callback(void* func) {
-	return __cross_call_master_CallFuncInt64Callback(func);
+static int64_t CallFuncInt64Callback(void* func_) {
+	return __cross_call_master_CallFuncInt64Callback(func_);
 }
 
 extern uint8_t (*__cross_call_master_CallFuncUInt8Callback)(void*);
 
-static uint8_t CallFuncUInt8Callback(void* func) {
-	return __cross_call_master_CallFuncUInt8Callback(func);
+static uint8_t CallFuncUInt8Callback(void* func_) {
+	return __cross_call_master_CallFuncUInt8Callback(func_);
 }
 
 extern uint16_t (*__cross_call_master_CallFuncUInt16Callback)(void*);
 
-static uint16_t CallFuncUInt16Callback(void* func) {
-	return __cross_call_master_CallFuncUInt16Callback(func);
+static uint16_t CallFuncUInt16Callback(void* func_) {
+	return __cross_call_master_CallFuncUInt16Callback(func_);
 }
 
 extern uint32_t (*__cross_call_master_CallFuncUInt32Callback)(void*);
 
-static uint32_t CallFuncUInt32Callback(void* func) {
-	return __cross_call_master_CallFuncUInt32Callback(func);
+static uint32_t CallFuncUInt32Callback(void* func_) {
+	return __cross_call_master_CallFuncUInt32Callback(func_);
 }
 
 extern uint64_t (*__cross_call_master_CallFuncUInt64Callback)(void*);
 
-static uint64_t CallFuncUInt64Callback(void* func) {
-	return __cross_call_master_CallFuncUInt64Callback(func);
+static uint64_t CallFuncUInt64Callback(void* func_) {
+	return __cross_call_master_CallFuncUInt64Callback(func_);
 }
 
 extern uintptr_t (*__cross_call_master_CallFuncPtrCallback)(void*);
 
-static uintptr_t CallFuncPtrCallback(void* func) {
-	return __cross_call_master_CallFuncPtrCallback(func);
+static uintptr_t CallFuncPtrCallback(void* func_) {
+	return __cross_call_master_CallFuncPtrCallback(func_);
 }
 
 extern float (*__cross_call_master_CallFuncFloatCallback)(void*);
 
-static float CallFuncFloatCallback(void* func) {
-	return __cross_call_master_CallFuncFloatCallback(func);
+static float CallFuncFloatCallback(void* func_) {
+	return __cross_call_master_CallFuncFloatCallback(func_);
 }
 
 extern double (*__cross_call_master_CallFuncDoubleCallback)(void*);
 
-static double CallFuncDoubleCallback(void* func) {
-	return __cross_call_master_CallFuncDoubleCallback(func);
+static double CallFuncDoubleCallback(void* func_) {
+	return __cross_call_master_CallFuncDoubleCallback(func_);
 }
 
 extern String (*__cross_call_master_CallFuncStringCallback)(void*);
 
-static String CallFuncStringCallback(void* func) {
-	return __cross_call_master_CallFuncStringCallback(func);
+static String CallFuncStringCallback(void* func_) {
+	return __cross_call_master_CallFuncStringCallback(func_);
 }
 
 extern Variant (*__cross_call_master_CallFuncAnyCallback)(void*);
 
-static Variant CallFuncAnyCallback(void* func) {
-	return __cross_call_master_CallFuncAnyCallback(func);
+static Variant CallFuncAnyCallback(void* func_) {
+	return __cross_call_master_CallFuncAnyCallback(func_);
 }
 
 extern uintptr_t (*__cross_call_master_CallFuncFunctionCallback)(void*);
 
-static uintptr_t CallFuncFunctionCallback(void* func) {
-	return __cross_call_master_CallFuncFunctionCallback(func);
+static uintptr_t CallFuncFunctionCallback(void* func_) {
+	return __cross_call_master_CallFuncFunctionCallback(func_);
 }
 
 extern Vector (*__cross_call_master_CallFuncBoolVectorCallback)(void*);
 
-static Vector CallFuncBoolVectorCallback(void* func) {
-	return __cross_call_master_CallFuncBoolVectorCallback(func);
+static Vector CallFuncBoolVectorCallback(void* func_) {
+	return __cross_call_master_CallFuncBoolVectorCallback(func_);
 }
 
 extern Vector (*__cross_call_master_CallFuncChar8VectorCallback)(void*);
 
-static Vector CallFuncChar8VectorCallback(void* func) {
-	return __cross_call_master_CallFuncChar8VectorCallback(func);
+static Vector CallFuncChar8VectorCallback(void* func_) {
+	return __cross_call_master_CallFuncChar8VectorCallback(func_);
 }
 
 extern Vector (*__cross_call_master_CallFuncChar16VectorCallback)(void*);
 
-static Vector CallFuncChar16VectorCallback(void* func) {
-	return __cross_call_master_CallFuncChar16VectorCallback(func);
+static Vector CallFuncChar16VectorCallback(void* func_) {
+	return __cross_call_master_CallFuncChar16VectorCallback(func_);
 }
 
 extern Vector (*__cross_call_master_CallFuncInt8VectorCallback)(void*);
 
-static Vector CallFuncInt8VectorCallback(void* func) {
-	return __cross_call_master_CallFuncInt8VectorCallback(func);
+static Vector CallFuncInt8VectorCallback(void* func_) {
+	return __cross_call_master_CallFuncInt8VectorCallback(func_);
 }
 
 extern Vector (*__cross_call_master_CallFuncInt16VectorCallback)(void*);
 
-static Vector CallFuncInt16VectorCallback(void* func) {
-	return __cross_call_master_CallFuncInt16VectorCallback(func);
+static Vector CallFuncInt16VectorCallback(void* func_) {
+	return __cross_call_master_CallFuncInt16VectorCallback(func_);
 }
 
 extern Vector (*__cross_call_master_CallFuncInt32VectorCallback)(void*);
 
-static Vector CallFuncInt32VectorCallback(void* func) {
-	return __cross_call_master_CallFuncInt32VectorCallback(func);
+static Vector CallFuncInt32VectorCallback(void* func_) {
+	return __cross_call_master_CallFuncInt32VectorCallback(func_);
 }
 
 extern Vector (*__cross_call_master_CallFuncInt64VectorCallback)(void*);
 
-static Vector CallFuncInt64VectorCallback(void* func) {
-	return __cross_call_master_CallFuncInt64VectorCallback(func);
+static Vector CallFuncInt64VectorCallback(void* func_) {
+	return __cross_call_master_CallFuncInt64VectorCallback(func_);
 }
 
 extern Vector (*__cross_call_master_CallFuncUInt8VectorCallback)(void*);
 
-static Vector CallFuncUInt8VectorCallback(void* func) {
-	return __cross_call_master_CallFuncUInt8VectorCallback(func);
+static Vector CallFuncUInt8VectorCallback(void* func_) {
+	return __cross_call_master_CallFuncUInt8VectorCallback(func_);
 }
 
 extern Vector (*__cross_call_master_CallFuncUInt16VectorCallback)(void*);
 
-static Vector CallFuncUInt16VectorCallback(void* func) {
-	return __cross_call_master_CallFuncUInt16VectorCallback(func);
+static Vector CallFuncUInt16VectorCallback(void* func_) {
+	return __cross_call_master_CallFuncUInt16VectorCallback(func_);
 }
 
 extern Vector (*__cross_call_master_CallFuncUInt32VectorCallback)(void*);
 
-static Vector CallFuncUInt32VectorCallback(void* func) {
-	return __cross_call_master_CallFuncUInt32VectorCallback(func);
+static Vector CallFuncUInt32VectorCallback(void* func_) {
+	return __cross_call_master_CallFuncUInt32VectorCallback(func_);
 }
 
 extern Vector (*__cross_call_master_CallFuncUInt64VectorCallback)(void*);
 
-static Vector CallFuncUInt64VectorCallback(void* func) {
-	return __cross_call_master_CallFuncUInt64VectorCallback(func);
+static Vector CallFuncUInt64VectorCallback(void* func_) {
+	return __cross_call_master_CallFuncUInt64VectorCallback(func_);
 }
 
 extern Vector (*__cross_call_master_CallFuncPtrVectorCallback)(void*);
 
-static Vector CallFuncPtrVectorCallback(void* func) {
-	return __cross_call_master_CallFuncPtrVectorCallback(func);
+static Vector CallFuncPtrVectorCallback(void* func_) {
+	return __cross_call_master_CallFuncPtrVectorCallback(func_);
 }
 
 extern Vector (*__cross_call_master_CallFuncFloatVectorCallback)(void*);
 
-static Vector CallFuncFloatVectorCallback(void* func) {
-	return __cross_call_master_CallFuncFloatVectorCallback(func);
+static Vector CallFuncFloatVectorCallback(void* func_) {
+	return __cross_call_master_CallFuncFloatVectorCallback(func_);
 }
 
 extern Vector (*__cross_call_master_CallFuncDoubleVectorCallback)(void*);
 
-static Vector CallFuncDoubleVectorCallback(void* func) {
-	return __cross_call_master_CallFuncDoubleVectorCallback(func);
+static Vector CallFuncDoubleVectorCallback(void* func_) {
+	return __cross_call_master_CallFuncDoubleVectorCallback(func_);
 }
 
 extern Vector (*__cross_call_master_CallFuncStringVectorCallback)(void*);
 
-static Vector CallFuncStringVectorCallback(void* func) {
-	return __cross_call_master_CallFuncStringVectorCallback(func);
+static Vector CallFuncStringVectorCallback(void* func_) {
+	return __cross_call_master_CallFuncStringVectorCallback(func_);
 }
 
 extern Vector (*__cross_call_master_CallFuncAnyVectorCallback)(void*);
 
-static Vector CallFuncAnyVectorCallback(void* func) {
-	return __cross_call_master_CallFuncAnyVectorCallback(func);
+static Vector CallFuncAnyVectorCallback(void* func_) {
+	return __cross_call_master_CallFuncAnyVectorCallback(func_);
 }
 
 extern Vector (*__cross_call_master_CallFuncVec2VectorCallback)(void*);
 
-static Vector CallFuncVec2VectorCallback(void* func) {
-	return __cross_call_master_CallFuncVec2VectorCallback(func);
+static Vector CallFuncVec2VectorCallback(void* func_) {
+	return __cross_call_master_CallFuncVec2VectorCallback(func_);
 }
 
 extern Vector (*__cross_call_master_CallFuncVec3VectorCallback)(void*);
 
-static Vector CallFuncVec3VectorCallback(void* func) {
-	return __cross_call_master_CallFuncVec3VectorCallback(func);
+static Vector CallFuncVec3VectorCallback(void* func_) {
+	return __cross_call_master_CallFuncVec3VectorCallback(func_);
 }
 
 extern Vector (*__cross_call_master_CallFuncVec4VectorCallback)(void*);
 
-static Vector CallFuncVec4VectorCallback(void* func) {
-	return __cross_call_master_CallFuncVec4VectorCallback(func);
+static Vector CallFuncVec4VectorCallback(void* func_) {
+	return __cross_call_master_CallFuncVec4VectorCallback(func_);
 }
 
 extern Vector (*__cross_call_master_CallFuncMat4x4VectorCallback)(void*);
 
-static Vector CallFuncMat4x4VectorCallback(void* func) {
-	return __cross_call_master_CallFuncMat4x4VectorCallback(func);
+static Vector CallFuncMat4x4VectorCallback(void* func_) {
+	return __cross_call_master_CallFuncMat4x4VectorCallback(func_);
 }
 
 extern Vector2 (*__cross_call_master_CallFuncVec2Callback)(void*);
 
-static Vector2 CallFuncVec2Callback(void* func) {
-	return __cross_call_master_CallFuncVec2Callback(func);
+static Vector2 CallFuncVec2Callback(void* func_) {
+	return __cross_call_master_CallFuncVec2Callback(func_);
 }
 
 extern Vector3 (*__cross_call_master_CallFuncVec3Callback)(void*);
 
-static Vector3 CallFuncVec3Callback(void* func) {
-	return __cross_call_master_CallFuncVec3Callback(func);
+static Vector3 CallFuncVec3Callback(void* func_) {
+	return __cross_call_master_CallFuncVec3Callback(func_);
 }
 
 extern Vector4 (*__cross_call_master_CallFuncVec4Callback)(void*);
 
-static Vector4 CallFuncVec4Callback(void* func) {
-	return __cross_call_master_CallFuncVec4Callback(func);
+static Vector4 CallFuncVec4Callback(void* func_) {
+	return __cross_call_master_CallFuncVec4Callback(func_);
 }
 
 extern Matrix4x4 (*__cross_call_master_CallFuncMat4x4Callback)(void*);
 
-static Matrix4x4 CallFuncMat4x4Callback(void* func) {
-	return __cross_call_master_CallFuncMat4x4Callback(func);
+static Matrix4x4 CallFuncMat4x4Callback(void* func_) {
+	return __cross_call_master_CallFuncMat4x4Callback(func_);
+}
+
+extern bool (*__cross_call_master_CallFuncAliasBoolCallback)(void*);
+
+static bool CallFuncAliasBoolCallback(void* func_) {
+	return __cross_call_master_CallFuncAliasBoolCallback(func_);
+}
+
+extern int8_t (*__cross_call_master_CallFuncAliasChar8Callback)(void*);
+
+static int8_t CallFuncAliasChar8Callback(void* func_) {
+	return __cross_call_master_CallFuncAliasChar8Callback(func_);
+}
+
+extern uint16_t (*__cross_call_master_CallFuncAliasChar16Callback)(void*);
+
+static uint16_t CallFuncAliasChar16Callback(void* func_) {
+	return __cross_call_master_CallFuncAliasChar16Callback(func_);
+}
+
+extern int8_t (*__cross_call_master_CallFuncAliasInt8Callback)(void*);
+
+static int8_t CallFuncAliasInt8Callback(void* func_) {
+	return __cross_call_master_CallFuncAliasInt8Callback(func_);
+}
+
+extern int16_t (*__cross_call_master_CallFuncAliasInt16Callback)(void*);
+
+static int16_t CallFuncAliasInt16Callback(void* func_) {
+	return __cross_call_master_CallFuncAliasInt16Callback(func_);
+}
+
+extern int32_t (*__cross_call_master_CallFuncAliasInt32Callback)(void*);
+
+static int32_t CallFuncAliasInt32Callback(void* func_) {
+	return __cross_call_master_CallFuncAliasInt32Callback(func_);
+}
+
+extern int64_t (*__cross_call_master_CallFuncAliasInt64Callback)(void*);
+
+static int64_t CallFuncAliasInt64Callback(void* func_) {
+	return __cross_call_master_CallFuncAliasInt64Callback(func_);
+}
+
+extern uint8_t (*__cross_call_master_CallFuncAliasUInt8Callback)(void*);
+
+static uint8_t CallFuncAliasUInt8Callback(void* func_) {
+	return __cross_call_master_CallFuncAliasUInt8Callback(func_);
+}
+
+extern uint16_t (*__cross_call_master_CallFuncAliasUInt16Callback)(void*);
+
+static uint16_t CallFuncAliasUInt16Callback(void* func_) {
+	return __cross_call_master_CallFuncAliasUInt16Callback(func_);
+}
+
+extern uint32_t (*__cross_call_master_CallFuncAliasUInt32Callback)(void*);
+
+static uint32_t CallFuncAliasUInt32Callback(void* func_) {
+	return __cross_call_master_CallFuncAliasUInt32Callback(func_);
+}
+
+extern uint64_t (*__cross_call_master_CallFuncAliasUInt64Callback)(void*);
+
+static uint64_t CallFuncAliasUInt64Callback(void* func_) {
+	return __cross_call_master_CallFuncAliasUInt64Callback(func_);
+}
+
+extern uintptr_t (*__cross_call_master_CallFuncAliasPtrCallback)(void*);
+
+static uintptr_t CallFuncAliasPtrCallback(void* func_) {
+	return __cross_call_master_CallFuncAliasPtrCallback(func_);
+}
+
+extern float (*__cross_call_master_CallFuncAliasFloatCallback)(void*);
+
+static float CallFuncAliasFloatCallback(void* func_) {
+	return __cross_call_master_CallFuncAliasFloatCallback(func_);
+}
+
+extern double (*__cross_call_master_CallFuncAliasDoubleCallback)(void*);
+
+static double CallFuncAliasDoubleCallback(void* func_) {
+	return __cross_call_master_CallFuncAliasDoubleCallback(func_);
+}
+
+extern String (*__cross_call_master_CallFuncAliasStringCallback)(void*);
+
+static String CallFuncAliasStringCallback(void* func_) {
+	return __cross_call_master_CallFuncAliasStringCallback(func_);
+}
+
+extern Variant (*__cross_call_master_CallFuncAliasAnyCallback)(void*);
+
+static Variant CallFuncAliasAnyCallback(void* func_) {
+	return __cross_call_master_CallFuncAliasAnyCallback(func_);
+}
+
+extern uintptr_t (*__cross_call_master_CallFuncAliasFunctionCallback)(void*);
+
+static uintptr_t CallFuncAliasFunctionCallback(void* func_) {
+	return __cross_call_master_CallFuncAliasFunctionCallback(func_);
+}
+
+extern Vector (*__cross_call_master_CallFuncAliasBoolVectorCallback)(void*);
+
+static Vector CallFuncAliasBoolVectorCallback(void* func_) {
+	return __cross_call_master_CallFuncAliasBoolVectorCallback(func_);
+}
+
+extern Vector (*__cross_call_master_CallFuncAliasChar8VectorCallback)(void*);
+
+static Vector CallFuncAliasChar8VectorCallback(void* func_) {
+	return __cross_call_master_CallFuncAliasChar8VectorCallback(func_);
+}
+
+extern Vector (*__cross_call_master_CallFuncAliasChar16VectorCallback)(void*);
+
+static Vector CallFuncAliasChar16VectorCallback(void* func_) {
+	return __cross_call_master_CallFuncAliasChar16VectorCallback(func_);
+}
+
+extern Vector (*__cross_call_master_CallFuncAliasInt8VectorCallback)(void*);
+
+static Vector CallFuncAliasInt8VectorCallback(void* func_) {
+	return __cross_call_master_CallFuncAliasInt8VectorCallback(func_);
+}
+
+extern Vector (*__cross_call_master_CallFuncAliasInt16VectorCallback)(void*);
+
+static Vector CallFuncAliasInt16VectorCallback(void* func_) {
+	return __cross_call_master_CallFuncAliasInt16VectorCallback(func_);
+}
+
+extern Vector (*__cross_call_master_CallFuncAliasInt32VectorCallback)(void*);
+
+static Vector CallFuncAliasInt32VectorCallback(void* func_) {
+	return __cross_call_master_CallFuncAliasInt32VectorCallback(func_);
+}
+
+extern Vector (*__cross_call_master_CallFuncAliasInt64VectorCallback)(void*);
+
+static Vector CallFuncAliasInt64VectorCallback(void* func_) {
+	return __cross_call_master_CallFuncAliasInt64VectorCallback(func_);
+}
+
+extern Vector (*__cross_call_master_CallFuncAliasUInt8VectorCallback)(void*);
+
+static Vector CallFuncAliasUInt8VectorCallback(void* func_) {
+	return __cross_call_master_CallFuncAliasUInt8VectorCallback(func_);
+}
+
+extern Vector (*__cross_call_master_CallFuncAliasUInt16VectorCallback)(void*);
+
+static Vector CallFuncAliasUInt16VectorCallback(void* func_) {
+	return __cross_call_master_CallFuncAliasUInt16VectorCallback(func_);
+}
+
+extern Vector (*__cross_call_master_CallFuncAliasUInt32VectorCallback)(void*);
+
+static Vector CallFuncAliasUInt32VectorCallback(void* func_) {
+	return __cross_call_master_CallFuncAliasUInt32VectorCallback(func_);
+}
+
+extern Vector (*__cross_call_master_CallFuncAliasUInt64VectorCallback)(void*);
+
+static Vector CallFuncAliasUInt64VectorCallback(void* func_) {
+	return __cross_call_master_CallFuncAliasUInt64VectorCallback(func_);
+}
+
+extern Vector (*__cross_call_master_CallFuncAliasPtrVectorCallback)(void*);
+
+static Vector CallFuncAliasPtrVectorCallback(void* func_) {
+	return __cross_call_master_CallFuncAliasPtrVectorCallback(func_);
+}
+
+extern Vector (*__cross_call_master_CallFuncAliasFloatVectorCallback)(void*);
+
+static Vector CallFuncAliasFloatVectorCallback(void* func_) {
+	return __cross_call_master_CallFuncAliasFloatVectorCallback(func_);
+}
+
+extern Vector (*__cross_call_master_CallFuncAliasDoubleVectorCallback)(void*);
+
+static Vector CallFuncAliasDoubleVectorCallback(void* func_) {
+	return __cross_call_master_CallFuncAliasDoubleVectorCallback(func_);
+}
+
+extern Vector (*__cross_call_master_CallFuncAliasStringVectorCallback)(void*);
+
+static Vector CallFuncAliasStringVectorCallback(void* func_) {
+	return __cross_call_master_CallFuncAliasStringVectorCallback(func_);
+}
+
+extern Vector (*__cross_call_master_CallFuncAliasAnyVectorCallback)(void*);
+
+static Vector CallFuncAliasAnyVectorCallback(void* func_) {
+	return __cross_call_master_CallFuncAliasAnyVectorCallback(func_);
+}
+
+extern Vector (*__cross_call_master_CallFuncAliasVec2VectorCallback)(void*);
+
+static Vector CallFuncAliasVec2VectorCallback(void* func_) {
+	return __cross_call_master_CallFuncAliasVec2VectorCallback(func_);
+}
+
+extern Vector (*__cross_call_master_CallFuncAliasVec3VectorCallback)(void*);
+
+static Vector CallFuncAliasVec3VectorCallback(void* func_) {
+	return __cross_call_master_CallFuncAliasVec3VectorCallback(func_);
+}
+
+extern Vector (*__cross_call_master_CallFuncAliasVec4VectorCallback)(void*);
+
+static Vector CallFuncAliasVec4VectorCallback(void* func_) {
+	return __cross_call_master_CallFuncAliasVec4VectorCallback(func_);
+}
+
+extern Vector (*__cross_call_master_CallFuncAliasMat4x4VectorCallback)(void*);
+
+static Vector CallFuncAliasMat4x4VectorCallback(void* func_) {
+	return __cross_call_master_CallFuncAliasMat4x4VectorCallback(func_);
+}
+
+extern Vector2 (*__cross_call_master_CallFuncAliasVec2Callback)(void*);
+
+static Vector2 CallFuncAliasVec2Callback(void* func_) {
+	return __cross_call_master_CallFuncAliasVec2Callback(func_);
+}
+
+extern Vector3 (*__cross_call_master_CallFuncAliasVec3Callback)(void*);
+
+static Vector3 CallFuncAliasVec3Callback(void* func_) {
+	return __cross_call_master_CallFuncAliasVec3Callback(func_);
+}
+
+extern Vector4 (*__cross_call_master_CallFuncAliasVec4Callback)(void*);
+
+static Vector4 CallFuncAliasVec4Callback(void* func_) {
+	return __cross_call_master_CallFuncAliasVec4Callback(func_);
+}
+
+extern Matrix4x4 (*__cross_call_master_CallFuncAliasMat4x4Callback)(void*);
+
+static Matrix4x4 CallFuncAliasMat4x4Callback(void* func_) {
+	return __cross_call_master_CallFuncAliasMat4x4Callback(func_);
+}
+
+extern String (*__cross_call_master_CallFuncAliasAllCallback)(void*);
+
+static String CallFuncAliasAllCallback(void* func_) {
+	return __cross_call_master_CallFuncAliasAllCallback(func_);
 }
 
 extern int32_t (*__cross_call_master_CallFunc1Callback)(void*);
 
-static int32_t CallFunc1Callback(void* func) {
-	return __cross_call_master_CallFunc1Callback(func);
+static int32_t CallFunc1Callback(void* func_) {
+	return __cross_call_master_CallFunc1Callback(func_);
 }
 
 extern int8_t (*__cross_call_master_CallFunc2Callback)(void*);
 
-static int8_t CallFunc2Callback(void* func) {
-	return __cross_call_master_CallFunc2Callback(func);
+static int8_t CallFunc2Callback(void* func_) {
+	return __cross_call_master_CallFunc2Callback(func_);
 }
 
 extern void (*__cross_call_master_CallFunc3Callback)(void*);
 
-static void CallFunc3Callback(void* func) {
-	__cross_call_master_CallFunc3Callback(func);
+static void CallFunc3Callback(void* func_) {
+	__cross_call_master_CallFunc3Callback(func_);
 }
 
 extern Vector4 (*__cross_call_master_CallFunc4Callback)(void*);
 
-static Vector4 CallFunc4Callback(void* func) {
-	return __cross_call_master_CallFunc4Callback(func);
+static Vector4 CallFunc4Callback(void* func_) {
+	return __cross_call_master_CallFunc4Callback(func_);
 }
 
 extern bool (*__cross_call_master_CallFunc5Callback)(void*);
 
-static bool CallFunc5Callback(void* func) {
-	return __cross_call_master_CallFunc5Callback(func);
+static bool CallFunc5Callback(void* func_) {
+	return __cross_call_master_CallFunc5Callback(func_);
 }
 
 extern int64_t (*__cross_call_master_CallFunc6Callback)(void*);
 
-static int64_t CallFunc6Callback(void* func) {
-	return __cross_call_master_CallFunc6Callback(func);
+static int64_t CallFunc6Callback(void* func_) {
+	return __cross_call_master_CallFunc6Callback(func_);
 }
 
 extern double (*__cross_call_master_CallFunc7Callback)(void*);
 
-static double CallFunc7Callback(void* func) {
-	return __cross_call_master_CallFunc7Callback(func);
+static double CallFunc7Callback(void* func_) {
+	return __cross_call_master_CallFunc7Callback(func_);
 }
 
 extern Matrix4x4 (*__cross_call_master_CallFunc8Callback)(void*);
 
-static Matrix4x4 CallFunc8Callback(void* func) {
-	return __cross_call_master_CallFunc8Callback(func);
+static Matrix4x4 CallFunc8Callback(void* func_) {
+	return __cross_call_master_CallFunc8Callback(func_);
 }
 
 extern void (*__cross_call_master_CallFunc9Callback)(void*);
 
-static void CallFunc9Callback(void* func) {
-	__cross_call_master_CallFunc9Callback(func);
+static void CallFunc9Callback(void* func_) {
+	__cross_call_master_CallFunc9Callback(func_);
 }
 
 extern uint32_t (*__cross_call_master_CallFunc10Callback)(void*);
 
-static uint32_t CallFunc10Callback(void* func) {
-	return __cross_call_master_CallFunc10Callback(func);
+static uint32_t CallFunc10Callback(void* func_) {
+	return __cross_call_master_CallFunc10Callback(func_);
 }
 
 extern uintptr_t (*__cross_call_master_CallFunc11Callback)(void*);
 
-static uintptr_t CallFunc11Callback(void* func) {
-	return __cross_call_master_CallFunc11Callback(func);
+static uintptr_t CallFunc11Callback(void* func_) {
+	return __cross_call_master_CallFunc11Callback(func_);
 }
 
 extern bool (*__cross_call_master_CallFunc12Callback)(void*);
 
-static bool CallFunc12Callback(void* func) {
-	return __cross_call_master_CallFunc12Callback(func);
+static bool CallFunc12Callback(void* func_) {
+	return __cross_call_master_CallFunc12Callback(func_);
 }
 
 extern String (*__cross_call_master_CallFunc13Callback)(void*);
 
-static String CallFunc13Callback(void* func) {
-	return __cross_call_master_CallFunc13Callback(func);
+static String CallFunc13Callback(void* func_) {
+	return __cross_call_master_CallFunc13Callback(func_);
 }
 
 extern Vector (*__cross_call_master_CallFunc14Callback)(void*);
 
-static Vector CallFunc14Callback(void* func) {
-	return __cross_call_master_CallFunc14Callback(func);
+static Vector CallFunc14Callback(void* func_) {
+	return __cross_call_master_CallFunc14Callback(func_);
 }
 
 extern int16_t (*__cross_call_master_CallFunc15Callback)(void*);
 
-static int16_t CallFunc15Callback(void* func) {
-	return __cross_call_master_CallFunc15Callback(func);
+static int16_t CallFunc15Callback(void* func_) {
+	return __cross_call_master_CallFunc15Callback(func_);
 }
 
 extern uintptr_t (*__cross_call_master_CallFunc16Callback)(void*);
 
-static uintptr_t CallFunc16Callback(void* func) {
-	return __cross_call_master_CallFunc16Callback(func);
+static uintptr_t CallFunc16Callback(void* func_) {
+	return __cross_call_master_CallFunc16Callback(func_);
 }
 
 extern String (*__cross_call_master_CallFunc17Callback)(void*);
 
-static String CallFunc17Callback(void* func) {
-	return __cross_call_master_CallFunc17Callback(func);
+static String CallFunc17Callback(void* func_) {
+	return __cross_call_master_CallFunc17Callback(func_);
 }
 
 extern String (*__cross_call_master_CallFunc18Callback)(void*);
 
-static String CallFunc18Callback(void* func) {
-	return __cross_call_master_CallFunc18Callback(func);
+static String CallFunc18Callback(void* func_) {
+	return __cross_call_master_CallFunc18Callback(func_);
 }
 
 extern String (*__cross_call_master_CallFunc19Callback)(void*);
 
-static String CallFunc19Callback(void* func) {
-	return __cross_call_master_CallFunc19Callback(func);
+static String CallFunc19Callback(void* func_) {
+	return __cross_call_master_CallFunc19Callback(func_);
 }
 
 extern String (*__cross_call_master_CallFunc20Callback)(void*);
 
-static String CallFunc20Callback(void* func) {
-	return __cross_call_master_CallFunc20Callback(func);
+static String CallFunc20Callback(void* func_) {
+	return __cross_call_master_CallFunc20Callback(func_);
 }
 
 extern String (*__cross_call_master_CallFunc21Callback)(void*);
 
-static String CallFunc21Callback(void* func) {
-	return __cross_call_master_CallFunc21Callback(func);
+static String CallFunc21Callback(void* func_) {
+	return __cross_call_master_CallFunc21Callback(func_);
 }
 
 extern String (*__cross_call_master_CallFunc22Callback)(void*);
 
-static String CallFunc22Callback(void* func) {
-	return __cross_call_master_CallFunc22Callback(func);
+static String CallFunc22Callback(void* func_) {
+	return __cross_call_master_CallFunc22Callback(func_);
 }
 
 extern String (*__cross_call_master_CallFunc23Callback)(void*);
 
-static String CallFunc23Callback(void* func) {
-	return __cross_call_master_CallFunc23Callback(func);
+static String CallFunc23Callback(void* func_) {
+	return __cross_call_master_CallFunc23Callback(func_);
 }
 
 extern String (*__cross_call_master_CallFunc24Callback)(void*);
 
-static String CallFunc24Callback(void* func) {
-	return __cross_call_master_CallFunc24Callback(func);
+static String CallFunc24Callback(void* func_) {
+	return __cross_call_master_CallFunc24Callback(func_);
 }
 
 extern String (*__cross_call_master_CallFunc25Callback)(void*);
 
-static String CallFunc25Callback(void* func) {
-	return __cross_call_master_CallFunc25Callback(func);
+static String CallFunc25Callback(void* func_) {
+	return __cross_call_master_CallFunc25Callback(func_);
 }
 
 extern String (*__cross_call_master_CallFunc26Callback)(void*);
 
-static String CallFunc26Callback(void* func) {
-	return __cross_call_master_CallFunc26Callback(func);
+static String CallFunc26Callback(void* func_) {
+	return __cross_call_master_CallFunc26Callback(func_);
 }
 
 extern String (*__cross_call_master_CallFunc27Callback)(void*);
 
-static String CallFunc27Callback(void* func) {
-	return __cross_call_master_CallFunc27Callback(func);
+static String CallFunc27Callback(void* func_) {
+	return __cross_call_master_CallFunc27Callback(func_);
 }
 
 extern String (*__cross_call_master_CallFunc28Callback)(void*);
 
-static String CallFunc28Callback(void* func) {
-	return __cross_call_master_CallFunc28Callback(func);
+static String CallFunc28Callback(void* func_) {
+	return __cross_call_master_CallFunc28Callback(func_);
 }
 
 extern String (*__cross_call_master_CallFunc29Callback)(void*);
 
-static String CallFunc29Callback(void* func) {
-	return __cross_call_master_CallFunc29Callback(func);
+static String CallFunc29Callback(void* func_) {
+	return __cross_call_master_CallFunc29Callback(func_);
 }
 
 extern String (*__cross_call_master_CallFunc30Callback)(void*);
 
-static String CallFunc30Callback(void* func) {
-	return __cross_call_master_CallFunc30Callback(func);
+static String CallFunc30Callback(void* func_) {
+	return __cross_call_master_CallFunc30Callback(func_);
 }
 
 extern String (*__cross_call_master_CallFunc31Callback)(void*);
 
-static String CallFunc31Callback(void* func) {
-	return __cross_call_master_CallFunc31Callback(func);
+static String CallFunc31Callback(void* func_) {
+	return __cross_call_master_CallFunc31Callback(func_);
 }
 
 extern String (*__cross_call_master_CallFunc32Callback)(void*);
 
-static String CallFunc32Callback(void* func) {
-	return __cross_call_master_CallFunc32Callback(func);
+static String CallFunc32Callback(void* func_) {
+	return __cross_call_master_CallFunc32Callback(func_);
 }
 
 extern String (*__cross_call_master_CallFunc33Callback)(void*);
 
-static String CallFunc33Callback(void* func) {
-	return __cross_call_master_CallFunc33Callback(func);
+static String CallFunc33Callback(void* func_) {
+	return __cross_call_master_CallFunc33Callback(func_);
 }
 
 extern String (*__cross_call_master_CallFuncEnumCallback)(void*);
 
-static String CallFuncEnumCallback(void* func) {
-	return __cross_call_master_CallFuncEnumCallback(func);
+static String CallFuncEnumCallback(void* func_) {
+	return __cross_call_master_CallFuncEnumCallback(func_);
 }
 

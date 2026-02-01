@@ -195,6 +195,12 @@ PLUGIFY_EXPORT void (*__cross_call_master_ParamRefVectorsCallback)(Vector*, Vect
 PLUGIFY_EXPORT int64_t (*__cross_call_master_ParamAllPrimitivesCallback)(bool, int8_t, uint16_t, int8_t, int16_t, int32_t, int64_t, uint8_t, uint16_t, uint32_t, uint64_t, uintptr_t, float, double) = NULL;
 
 
+PLUGIFY_EXPORT int32_t (*__cross_call_master_ParamAllAliasesCallback)(bool, int8_t, uint16_t, int8_t, int16_t, int32_t, int64_t, uintptr_t, float, double, String*, Variant*, Vector2*, Vector3*, Vector4*, Matrix4x4*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*) = NULL;
+
+
+PLUGIFY_EXPORT int64_t (*__cross_call_master_ParamAllRefAliasesCallback)(bool*, int8_t*, uint16_t*, int8_t*, int16_t*, int32_t*, int64_t*, uintptr_t*, float*, double*, String*, Variant*, Vector2*, Vector3*, Vector4*, Matrix4x4*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*, Vector*) = NULL;
+
+
 PLUGIFY_EXPORT int32_t (*__cross_call_master_ParamEnumCallback)(int32_t, Vector*) = NULL;
 
 
@@ -331,6 +337,132 @@ PLUGIFY_EXPORT Vector4 (*__cross_call_master_CallFuncVec4Callback)(void*) = NULL
 
 
 PLUGIFY_EXPORT Matrix4x4 (*__cross_call_master_CallFuncMat4x4Callback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT bool (*__cross_call_master_CallFuncAliasBoolCallback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT int8_t (*__cross_call_master_CallFuncAliasChar8Callback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT uint16_t (*__cross_call_master_CallFuncAliasChar16Callback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT int8_t (*__cross_call_master_CallFuncAliasInt8Callback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT int16_t (*__cross_call_master_CallFuncAliasInt16Callback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT int32_t (*__cross_call_master_CallFuncAliasInt32Callback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT int64_t (*__cross_call_master_CallFuncAliasInt64Callback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT uint8_t (*__cross_call_master_CallFuncAliasUInt8Callback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT uint16_t (*__cross_call_master_CallFuncAliasUInt16Callback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT uint32_t (*__cross_call_master_CallFuncAliasUInt32Callback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT uint64_t (*__cross_call_master_CallFuncAliasUInt64Callback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT uintptr_t (*__cross_call_master_CallFuncAliasPtrCallback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT float (*__cross_call_master_CallFuncAliasFloatCallback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT double (*__cross_call_master_CallFuncAliasDoubleCallback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT String (*__cross_call_master_CallFuncAliasStringCallback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT Variant (*__cross_call_master_CallFuncAliasAnyCallback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT uintptr_t (*__cross_call_master_CallFuncAliasFunctionCallback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT Vector (*__cross_call_master_CallFuncAliasBoolVectorCallback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT Vector (*__cross_call_master_CallFuncAliasChar8VectorCallback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT Vector (*__cross_call_master_CallFuncAliasChar16VectorCallback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT Vector (*__cross_call_master_CallFuncAliasInt8VectorCallback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT Vector (*__cross_call_master_CallFuncAliasInt16VectorCallback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT Vector (*__cross_call_master_CallFuncAliasInt32VectorCallback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT Vector (*__cross_call_master_CallFuncAliasInt64VectorCallback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT Vector (*__cross_call_master_CallFuncAliasUInt8VectorCallback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT Vector (*__cross_call_master_CallFuncAliasUInt16VectorCallback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT Vector (*__cross_call_master_CallFuncAliasUInt32VectorCallback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT Vector (*__cross_call_master_CallFuncAliasUInt64VectorCallback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT Vector (*__cross_call_master_CallFuncAliasPtrVectorCallback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT Vector (*__cross_call_master_CallFuncAliasFloatVectorCallback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT Vector (*__cross_call_master_CallFuncAliasDoubleVectorCallback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT Vector (*__cross_call_master_CallFuncAliasStringVectorCallback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT Vector (*__cross_call_master_CallFuncAliasAnyVectorCallback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT Vector (*__cross_call_master_CallFuncAliasVec2VectorCallback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT Vector (*__cross_call_master_CallFuncAliasVec3VectorCallback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT Vector (*__cross_call_master_CallFuncAliasVec4VectorCallback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT Vector (*__cross_call_master_CallFuncAliasMat4x4VectorCallback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT Vector2 (*__cross_call_master_CallFuncAliasVec2Callback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT Vector3 (*__cross_call_master_CallFuncAliasVec3Callback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT Vector4 (*__cross_call_master_CallFuncAliasVec4Callback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT Matrix4x4 (*__cross_call_master_CallFuncAliasMat4x4Callback)(void*) = NULL;
+
+
+PLUGIFY_EXPORT String (*__cross_call_master_CallFuncAliasAllCallback)(void*) = NULL;
 
 
 PLUGIFY_EXPORT int32_t (*__cross_call_master_CallFunc1Callback)(void*) = NULL;

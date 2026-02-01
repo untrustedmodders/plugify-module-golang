@@ -76,7 +76,7 @@ void GoLanguageModule::OnMethodExport(const Extension& plugin) {
 }
 
 Result<LoadData> GoLanguageModule::OnPluginLoad(const Extension& plugin) {
-	fs::path assemblyPath(plugin.GetLocation());
+	std::filesystem::path assemblyPath(plugin.GetLocation());
 	assemblyPath /= std::format("{}" GOLM_LIBRARY_SUFFIX, plugin.GetEntry());
 
 	LoadFlag flags = LoadFlag::LazyBinding | LoadFlag::NoUnload;
