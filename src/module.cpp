@@ -211,7 +211,7 @@ bool IsExtensionLoaded(GoString name, GoString constraint) {
 
 void Log(GoString message, Severity severity, ptrdiff_t line, GoString file, GoString function, GoString module) {
 	if (const auto& logger = g_golm.GetLogger()) {
-		logger->Log(message, severity, Location(line, 0, file, function, module));
+		logger->Log(message, severity, Location(static_cast<size_t>(line), 0, file, function, module));
 	}
 }
 
