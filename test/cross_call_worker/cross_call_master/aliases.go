@@ -2,6 +2,8 @@ package cross_call_master
 
 import "github.com/untrustedmodders/go-plugify"
 
+var _ = plugify.Plugin.Loaded
+
 // Generated from cross_call_master
 
 type AliasBool = bool
@@ -85,3 +87,5 @@ type AliasUInt32Vector = []uint32
 type AliasUInt64Vector = []uint64
 
 type AliasMat4x4Vector = []plugify.Matrix4x4
+
+

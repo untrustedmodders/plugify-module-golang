@@ -2,7 +2,7 @@ module plugify-plugin
 
 go 1.25.0
 
-require github.com/untrustedmodders/go-plugify v1.4.9
+require github.com/untrustedmodders/go-plugify v1.6.2
 
 require (
 	golang.org/x/mod v0.31.0 // indirect

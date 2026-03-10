@@ -1,6 +1,5 @@
 #include "module.hpp"
 
-#include <plugify/logger.hpp>
 #include <plugify/provider.hpp>
 #include <plugify/call.hpp>
 
@@ -8,15 +7,6 @@
 #include <plg/any.hpp>
 #include <plg/string.hpp>
 #include <plg/numerics.hpp>
-
-#include <plugify/assembly_loader.hpp>
-
-#if __has_include(<stacktrace>)
-#include <stacktrace>
-#define HAS_STACKTRACE 1
-#else
-#define HAS_STACKTRACE 0
-#endif
 
 #define LOG_PREFIX "[GOLM] "
 
@@ -46,14 +36,17 @@ namespace {
 
 Result<InitData> GoLanguageModule::Initialize(const Provider& provider, [[maybe_unused]] const Extension& module) {
 	_provider = std::make_unique<Provider>(provider);
-
-	_provider->Log(LOG_PREFIX "Inited!", Severity::Debug);
+	_logger = _provider->Resolve<ILogger>();
+	_loader = _provider->Resolve<IAssemblyLoader>();
+	_logger->Log(LOG_PREFIX "Inited!", Severity::Debug);
 
 	return InitData{{ .hasUpdate = false }};
 }
 
 void GoLanguageModule::Shutdown() {
 	_assemblies.clear();
+	_loader.reset();
+	_logger.reset();
 	_provider.reset();
 }
 
@@ -175,21 +168,12 @@ std::shared_ptr<Method> GoLanguageModule::FindMethod(std::string_view name) {
 			}
 		}
 	}
-	_provider->Log(std::format(LOG_PREFIX "FindMethod failed to find: '{}'", name), Severity::Error);
+	_logger->Log(std::format(LOG_PREFIX "FindMethod failed to find: '{}'", name), Severity::Error);
 	return {};
 }
 
 namespace golm {
 	GoLanguageModule g_golm;
-}
-
-bool IsExtensionLoaded(GoString name, GoString constraint) {
-	if (!constraint) {
-		return g_golm.GetProvider()->IsExtensionLoaded(name);
-	}
-	plg::range_set<> range;
-	plg::parse(constraint, range);
-	return g_golm.GetProvider()->IsExtensionLoaded(name, std::move(range));
 }
 
 plg::string GetBaseDir() {
@@ -216,13 +200,18 @@ plg::string GetCacheDir() {
 	return plg::as_string(g_golm.GetProvider()->GetCacheDir());
 }
 
-void PrintException(GoString message) {
-	if (const auto& provider = g_golm.GetProvider()) {
-		provider->Log(std::format(LOG_PREFIX "[Exception] {}", std::string_view(message)), Severity::Error);
-#if HAS_STACKTRACE
-		auto trace = std::stacktrace::current();
-		provider->Log(std::to_string(trace), Severity::Error);
-#endif
+bool IsExtensionLoaded(GoString name, GoString constraint) {
+	if (!constraint) {
+		return g_golm.GetProvider()->IsExtensionLoaded(name);
+	}
+	plg::range_set<> range;
+	plg::parse(constraint, range);
+	return g_golm.GetProvider()->IsExtensionLoaded(name, std::move(range));
+}
+
+void Log(GoString message, Severity severity, ptrdiff_t line, GoString file, GoString function, GoString module) {
+	if (const auto& logger = g_golm.GetLogger()) {
+		logger->Log(message, severity, Location(line, 0, file, function, module));
 	}
 }
 
@@ -574,7 +563,7 @@ const std::array<void*, 135> GoLanguageModule::_pluginApi = {
 		reinterpret_cast<void*>(&::GetLogsDir),
 		reinterpret_cast<void*>(&::GetCacheDir),
 		reinterpret_cast<void*>(&::IsExtensionLoaded),
-		reinterpret_cast<void*>(&::PrintException),
+		reinterpret_cast<void*>(&::Log),
 
 		reinterpret_cast<void*>(&::GetPluginId),
 		reinterpret_cast<void*>(&::GetPluginName),

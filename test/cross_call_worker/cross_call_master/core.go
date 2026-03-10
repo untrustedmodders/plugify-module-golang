@@ -195,11 +195,10 @@ package cross_call_master
 import "C"
 import (
 	"errors"
+	"github.com/untrustedmodders/go-plugify"
 	"reflect"
 	"runtime"
 	"unsafe"
-
-	"github.com/untrustedmodders/go-plugify"
 )
 
 var _ = errors.New("")
@@ -212,6 +211,7 @@ var _ = plugify.Plugin.Loaded
 
 // ReverseReturn
 func ReverseReturn(returnString string) {
+	plugify.Log("cross_call_master::ReverseReturn", plugify.Trace, 2)
 	__returnString := plugify.ConstructString(returnString)
 	plugify.Block{
 		Try: func() {
@@ -226,101 +226,118 @@ func ReverseReturn(returnString string) {
 
 // NoParamReturnVoidCallback
 func NoParamReturnVoidCallback() {
+	plugify.Log("cross_call_master::NoParamReturnVoidCallback", plugify.Trace, 2)
 	C.NoParamReturnVoidCallback()
 }
 
 // NoParamReturnBoolCallback
 func NoParamReturnBoolCallback() bool {
+	plugify.Log("cross_call_master::NoParamReturnBoolCallback", plugify.Trace, 2)
 	__retVal := bool(C.NoParamReturnBoolCallback())
 	return __retVal
 }
 
 // NoParamReturnChar8Callback
 func NoParamReturnChar8Callback() int8 {
+	plugify.Log("cross_call_master::NoParamReturnChar8Callback", plugify.Trace, 2)
 	__retVal := int8(C.NoParamReturnChar8Callback())
 	return __retVal
 }
 
 // NoParamReturnChar16Callback
 func NoParamReturnChar16Callback() uint16 {
+	plugify.Log("cross_call_master::NoParamReturnChar16Callback", plugify.Trace, 2)
 	__retVal := uint16(C.NoParamReturnChar16Callback())
 	return __retVal
 }
 
 // NoParamReturnInt8Callback
 func NoParamReturnInt8Callback() int8 {
+	plugify.Log("cross_call_master::NoParamReturnInt8Callback", plugify.Trace, 2)
 	__retVal := int8(C.NoParamReturnInt8Callback())
 	return __retVal
 }
 
 // NoParamReturnInt16Callback
 func NoParamReturnInt16Callback() int16 {
+	plugify.Log("cross_call_master::NoParamReturnInt16Callback", plugify.Trace, 2)
 	__retVal := int16(C.NoParamReturnInt16Callback())
 	return __retVal
 }
 
 // NoParamReturnInt32Callback
 func NoParamReturnInt32Callback() int32 {
+	plugify.Log("cross_call_master::NoParamReturnInt32Callback", plugify.Trace, 2)
 	__retVal := int32(C.NoParamReturnInt32Callback())
 	return __retVal
 }
 
 // NoParamReturnInt64Callback
 func NoParamReturnInt64Callback() int64 {
+	plugify.Log("cross_call_master::NoParamReturnInt64Callback", plugify.Trace, 2)
 	__retVal := int64(C.NoParamReturnInt64Callback())
 	return __retVal
 }
 
 // NoParamReturnUInt8Callback
 func NoParamReturnUInt8Callback() uint8 {
+	plugify.Log("cross_call_master::NoParamReturnUInt8Callback", plugify.Trace, 2)
 	__retVal := uint8(C.NoParamReturnUInt8Callback())
 	return __retVal
 }
 
 // NoParamReturnUInt16Callback
 func NoParamReturnUInt16Callback() uint16 {
+	plugify.Log("cross_call_master::NoParamReturnUInt16Callback", plugify.Trace, 2)
 	__retVal := uint16(C.NoParamReturnUInt16Callback())
 	return __retVal
 }
 
 // NoParamReturnUInt32Callback
 func NoParamReturnUInt32Callback() uint32 {
+	plugify.Log("cross_call_master::NoParamReturnUInt32Callback", plugify.Trace, 2)
 	__retVal := uint32(C.NoParamReturnUInt32Callback())
 	return __retVal
 }
 
 // NoParamReturnUInt64Callback
 func NoParamReturnUInt64Callback() uint64 {
+	plugify.Log("cross_call_master::NoParamReturnUInt64Callback", plugify.Trace, 2)
 	__retVal := uint64(C.NoParamReturnUInt64Callback())
 	return __retVal
 }
 
 // NoParamReturnPointerCallback
 func NoParamReturnPointerCallback() uintptr {
+	plugify.Log("cross_call_master::NoParamReturnPointerCallback", plugify.Trace, 2)
 	__retVal := uintptr(C.NoParamReturnPointerCallback())
 	return __retVal
 }
 
 // NoParamReturnFloatCallback
 func NoParamReturnFloatCallback() float32 {
+	plugify.Log("cross_call_master::NoParamReturnFloatCallback", plugify.Trace, 2)
 	__retVal := float32(C.NoParamReturnFloatCallback())
 	return __retVal
 }
 
 // NoParamReturnDoubleCallback
 func NoParamReturnDoubleCallback() float64 {
+	plugify.Log("cross_call_master::NoParamReturnDoubleCallback", plugify.Trace, 2)
 	__retVal := float64(C.NoParamReturnDoubleCallback())
 	return __retVal
 }
 
 // NoParamReturnFunctionCallback
 func NoParamReturnFunctionCallback() NoParamReturnFunctionCallbackFunc {
+	plugify.Log("cross_call_master::NoParamReturnFunctionCallback", plugify.Trace, 2)
 	__retVal := plugify.GetDelegateForFunctionPointer(C.NoParamReturnFunctionCallback(), reflect.TypeOf(NoParamReturnFunctionCallbackFunc(nil))).(NoParamReturnFunctionCallbackFunc)
 	return __retVal
 }
 
 // NoParamReturnStringCallback
 func NoParamReturnStringCallback() string {
+	plugify.Log("cross_call_master::NoParamReturnStringCallback", plugify.Trace, 2)
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	plugify.Block{
@@ -340,6 +357,7 @@ func NoParamReturnStringCallback() string {
 
 // NoParamReturnAnyCallback
 func NoParamReturnAnyCallback() any {
+	plugify.Log("cross_call_master::NoParamReturnAnyCallback", plugify.Trace, 2)
 	var __retVal any
 	var __retVal_native plugify.PlgVariant
 	plugify.Block{
@@ -359,6 +377,7 @@ func NoParamReturnAnyCallback() any {
 
 // NoParamReturnArrayBoolCallback
 func NoParamReturnArrayBoolCallback() []bool {
+	plugify.Log("cross_call_master::NoParamReturnArrayBoolCallback", plugify.Trace, 2)
 	var __retVal []bool
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -378,6 +397,7 @@ func NoParamReturnArrayBoolCallback() []bool {
 
 // NoParamReturnArrayChar8Callback
 func NoParamReturnArrayChar8Callback() []int8 {
+	plugify.Log("cross_call_master::NoParamReturnArrayChar8Callback", plugify.Trace, 2)
 	var __retVal []int8
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -397,6 +417,7 @@ func NoParamReturnArrayChar8Callback() []int8 {
 
 // NoParamReturnArrayChar16Callback
 func NoParamReturnArrayChar16Callback() []uint16 {
+	plugify.Log("cross_call_master::NoParamReturnArrayChar16Callback", plugify.Trace, 2)
 	var __retVal []uint16
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -416,6 +437,7 @@ func NoParamReturnArrayChar16Callback() []uint16 {
 
 // NoParamReturnArrayInt8Callback
 func NoParamReturnArrayInt8Callback() []int8 {
+	plugify.Log("cross_call_master::NoParamReturnArrayInt8Callback", plugify.Trace, 2)
 	var __retVal []int8
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -435,6 +457,7 @@ func NoParamReturnArrayInt8Callback() []int8 {
 
 // NoParamReturnArrayInt16Callback
 func NoParamReturnArrayInt16Callback() []int16 {
+	plugify.Log("cross_call_master::NoParamReturnArrayInt16Callback", plugify.Trace, 2)
 	var __retVal []int16
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -454,6 +477,7 @@ func NoParamReturnArrayInt16Callback() []int16 {
 
 // NoParamReturnArrayInt32Callback
 func NoParamReturnArrayInt32Callback() []int32 {
+	plugify.Log("cross_call_master::NoParamReturnArrayInt32Callback", plugify.Trace, 2)
 	var __retVal []int32
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -473,6 +497,7 @@ func NoParamReturnArrayInt32Callback() []int32 {
 
 // NoParamReturnArrayInt64Callback
 func NoParamReturnArrayInt64Callback() []int64 {
+	plugify.Log("cross_call_master::NoParamReturnArrayInt64Callback", plugify.Trace, 2)
 	var __retVal []int64
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -492,6 +517,7 @@ func NoParamReturnArrayInt64Callback() []int64 {
 
 // NoParamReturnArrayUInt8Callback
 func NoParamReturnArrayUInt8Callback() []uint8 {
+	plugify.Log("cross_call_master::NoParamReturnArrayUInt8Callback", plugify.Trace, 2)
 	var __retVal []uint8
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -511,6 +537,7 @@ func NoParamReturnArrayUInt8Callback() []uint8 {
 
 // NoParamReturnArrayUInt16Callback
 func NoParamReturnArrayUInt16Callback() []uint16 {
+	plugify.Log("cross_call_master::NoParamReturnArrayUInt16Callback", plugify.Trace, 2)
 	var __retVal []uint16
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -530,6 +557,7 @@ func NoParamReturnArrayUInt16Callback() []uint16 {
 
 // NoParamReturnArrayUInt32Callback
 func NoParamReturnArrayUInt32Callback() []uint32 {
+	plugify.Log("cross_call_master::NoParamReturnArrayUInt32Callback", plugify.Trace, 2)
 	var __retVal []uint32
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -549,6 +577,7 @@ func NoParamReturnArrayUInt32Callback() []uint32 {
 
 // NoParamReturnArrayUInt64Callback
 func NoParamReturnArrayUInt64Callback() []uint64 {
+	plugify.Log("cross_call_master::NoParamReturnArrayUInt64Callback", plugify.Trace, 2)
 	var __retVal []uint64
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -568,6 +597,7 @@ func NoParamReturnArrayUInt64Callback() []uint64 {
 
 // NoParamReturnArrayPointerCallback
 func NoParamReturnArrayPointerCallback() []uintptr {
+	plugify.Log("cross_call_master::NoParamReturnArrayPointerCallback", plugify.Trace, 2)
 	var __retVal []uintptr
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -587,6 +617,7 @@ func NoParamReturnArrayPointerCallback() []uintptr {
 
 // NoParamReturnArrayFloatCallback
 func NoParamReturnArrayFloatCallback() []float32 {
+	plugify.Log("cross_call_master::NoParamReturnArrayFloatCallback", plugify.Trace, 2)
 	var __retVal []float32
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -606,6 +637,7 @@ func NoParamReturnArrayFloatCallback() []float32 {
 
 // NoParamReturnArrayDoubleCallback
 func NoParamReturnArrayDoubleCallback() []float64 {
+	plugify.Log("cross_call_master::NoParamReturnArrayDoubleCallback", plugify.Trace, 2)
 	var __retVal []float64
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -625,6 +657,7 @@ func NoParamReturnArrayDoubleCallback() []float64 {
 
 // NoParamReturnArrayStringCallback
 func NoParamReturnArrayStringCallback() []string {
+	plugify.Log("cross_call_master::NoParamReturnArrayStringCallback", plugify.Trace, 2)
 	var __retVal []string
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -644,6 +677,7 @@ func NoParamReturnArrayStringCallback() []string {
 
 // NoParamReturnArrayAnyCallback
 func NoParamReturnArrayAnyCallback() []any {
+	plugify.Log("cross_call_master::NoParamReturnArrayAnyCallback", plugify.Trace, 2)
 	var __retVal []any
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -663,6 +697,7 @@ func NoParamReturnArrayAnyCallback() []any {
 
 // NoParamReturnArrayVector2Callback
 func NoParamReturnArrayVector2Callback() []plugify.Vector2 {
+	plugify.Log("cross_call_master::NoParamReturnArrayVector2Callback", plugify.Trace, 2)
 	var __retVal []plugify.Vector2
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -682,6 +717,7 @@ func NoParamReturnArrayVector2Callback() []plugify.Vector2 {
 
 // NoParamReturnArrayVector3Callback
 func NoParamReturnArrayVector3Callback() []plugify.Vector3 {
+	plugify.Log("cross_call_master::NoParamReturnArrayVector3Callback", plugify.Trace, 2)
 	var __retVal []plugify.Vector3
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -701,6 +737,7 @@ func NoParamReturnArrayVector3Callback() []plugify.Vector3 {
 
 // NoParamReturnArrayVector4Callback
 func NoParamReturnArrayVector4Callback() []plugify.Vector4 {
+	plugify.Log("cross_call_master::NoParamReturnArrayVector4Callback", plugify.Trace, 2)
 	var __retVal []plugify.Vector4
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -720,6 +757,7 @@ func NoParamReturnArrayVector4Callback() []plugify.Vector4 {
 
 // NoParamReturnArrayMatrix4x4Callback
 func NoParamReturnArrayMatrix4x4Callback() []plugify.Matrix4x4 {
+	plugify.Log("cross_call_master::NoParamReturnArrayMatrix4x4Callback", plugify.Trace, 2)
 	var __retVal []plugify.Matrix4x4
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -739,6 +777,7 @@ func NoParamReturnArrayMatrix4x4Callback() []plugify.Matrix4x4 {
 
 // NoParamReturnVector2Callback
 func NoParamReturnVector2Callback() plugify.Vector2 {
+	plugify.Log("cross_call_master::NoParamReturnVector2Callback", plugify.Trace, 2)
 	__native := C.NoParamReturnVector2Callback()
 	__retVal := *(*plugify.Vector2)(unsafe.Pointer(&__native))
 	return __retVal
@@ -746,6 +785,7 @@ func NoParamReturnVector2Callback() plugify.Vector2 {
 
 // NoParamReturnVector3Callback
 func NoParamReturnVector3Callback() plugify.Vector3 {
+	plugify.Log("cross_call_master::NoParamReturnVector3Callback", plugify.Trace, 2)
 	__native := C.NoParamReturnVector3Callback()
 	__retVal := *(*plugify.Vector3)(unsafe.Pointer(&__native))
 	return __retVal
@@ -753,6 +793,7 @@ func NoParamReturnVector3Callback() plugify.Vector3 {
 
 // NoParamReturnVector4Callback
 func NoParamReturnVector4Callback() plugify.Vector4 {
+	plugify.Log("cross_call_master::NoParamReturnVector4Callback", plugify.Trace, 2)
 	__native := C.NoParamReturnVector4Callback()
 	__retVal := *(*plugify.Vector4)(unsafe.Pointer(&__native))
 	return __retVal
@@ -760,6 +801,7 @@ func NoParamReturnVector4Callback() plugify.Vector4 {
 
 // NoParamReturnMatrix4x4Callback
 func NoParamReturnMatrix4x4Callback() plugify.Matrix4x4 {
+	plugify.Log("cross_call_master::NoParamReturnMatrix4x4Callback", plugify.Trace, 2)
 	__native := C.NoParamReturnMatrix4x4Callback()
 	__retVal := *(*plugify.Matrix4x4)(unsafe.Pointer(&__native))
 	return __retVal
@@ -767,12 +809,14 @@ func NoParamReturnMatrix4x4Callback() plugify.Matrix4x4 {
 
 // Param1Callback
 func Param1Callback(a int32) {
+	plugify.Log("cross_call_master::Param1Callback", plugify.Trace, 2)
 	__a := C.int32_t(a)
 	C.Param1Callback(__a)
 }
 
 // Param2Callback
 func Param2Callback(a int32, b float32) {
+	plugify.Log("cross_call_master::Param2Callback", plugify.Trace, 2)
 	__a := C.int32_t(a)
 	__b := C.float(b)
 	C.Param2Callback(__a, __b)
@@ -780,6 +824,7 @@ func Param2Callback(a int32, b float32) {
 
 // Param3Callback
 func Param3Callback(a int32, b float32, c float64) {
+	plugify.Log("cross_call_master::Param3Callback", plugify.Trace, 2)
 	__a := C.int32_t(a)
 	__b := C.float(b)
 	__c := C.double(c)
@@ -788,6 +833,7 @@ func Param3Callback(a int32, b float32, c float64) {
 
 // Param4Callback
 func Param4Callback(a int32, b float32, c float64, d plugify.Vector4) {
+	plugify.Log("cross_call_master::Param4Callback", plugify.Trace, 2)
 	__a := C.int32_t(a)
 	__b := C.float(b)
 	__c := C.double(c)
@@ -797,6 +843,7 @@ func Param4Callback(a int32, b float32, c float64, d plugify.Vector4) {
 
 // Param5Callback
 func Param5Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64) {
+	plugify.Log("cross_call_master::Param5Callback", plugify.Trace, 2)
 	__a := C.int32_t(a)
 	__b := C.float(b)
 	__c := C.double(c)
@@ -815,6 +862,7 @@ func Param5Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64)
 
 // Param6Callback
 func Param6Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8) {
+	plugify.Log("cross_call_master::Param6Callback", plugify.Trace, 2)
 	__a := C.int32_t(a)
 	__b := C.float(b)
 	__c := C.double(c)
@@ -834,6 +882,7 @@ func Param6Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64,
 
 // Param7Callback
 func Param7Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8, g string) {
+	plugify.Log("cross_call_master::Param7Callback", plugify.Trace, 2)
 	__a := C.int32_t(a)
 	__b := C.float(b)
 	__c := C.double(c)
@@ -855,6 +904,7 @@ func Param7Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64,
 
 // Param8Callback
 func Param8Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8, g string, h uint16) {
+	plugify.Log("cross_call_master::Param8Callback", plugify.Trace, 2)
 	__a := C.int32_t(a)
 	__b := C.float(b)
 	__c := C.double(c)
@@ -877,6 +927,7 @@ func Param8Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64,
 
 // Param9Callback
 func Param9Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8, g string, h uint16, k int16) {
+	plugify.Log("cross_call_master::Param9Callback", plugify.Trace, 2)
 	__a := C.int32_t(a)
 	__b := C.float(b)
 	__c := C.double(c)
@@ -900,6 +951,7 @@ func Param9Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64,
 
 // Param10Callback
 func Param10Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8, g string, h uint16, k int16, l uintptr) {
+	plugify.Log("cross_call_master::Param10Callback", plugify.Trace, 2)
 	__a := C.int32_t(a)
 	__b := C.float(b)
 	__c := C.double(c)
@@ -924,6 +976,7 @@ func Param10Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64
 
 // ParamRef1Callback
 func ParamRef1Callback(a *int32) {
+	plugify.Log("cross_call_master::ParamRef1Callback", plugify.Trace, 2)
 	__a := C.int32_t(*a)
 	C.ParamRef1Callback(&__a)
 	// Unmarshal - Convert native data to managed data.
@@ -932,6 +985,7 @@ func ParamRef1Callback(a *int32) {
 
 // ParamRef2Callback
 func ParamRef2Callback(a *int32, b *float32) {
+	plugify.Log("cross_call_master::ParamRef2Callback", plugify.Trace, 2)
 	__a := C.int32_t(*a)
 	__b := C.float(*b)
 	C.ParamRef2Callback(&__a, &__b)
@@ -942,6 +996,7 @@ func ParamRef2Callback(a *int32, b *float32) {
 
 // ParamRef3Callback
 func ParamRef3Callback(a *int32, b *float32, c *float64) {
+	plugify.Log("cross_call_master::ParamRef3Callback", plugify.Trace, 2)
 	__a := C.int32_t(*a)
 	__b := C.float(*b)
 	__c := C.double(*c)
@@ -954,6 +1009,7 @@ func ParamRef3Callback(a *int32, b *float32, c *float64) {
 
 // ParamRef4Callback
 func ParamRef4Callback(a *int32, b *float32, c *float64, d *plugify.Vector4) {
+	plugify.Log("cross_call_master::ParamRef4Callback", plugify.Trace, 2)
 	__a := C.int32_t(*a)
 	__b := C.float(*b)
 	__c := C.double(*c)
@@ -968,6 +1024,7 @@ func ParamRef4Callback(a *int32, b *float32, c *float64, d *plugify.Vector4) {
 
 // ParamRef5Callback
 func ParamRef5Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64) {
+	plugify.Log("cross_call_master::ParamRef5Callback", plugify.Trace, 2)
 	__a := C.int32_t(*a)
 	__b := C.float(*b)
 	__c := C.double(*c)
@@ -992,6 +1049,7 @@ func ParamRef5Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *
 
 // ParamRef6Callback
 func ParamRef6Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8) {
+	plugify.Log("cross_call_master::ParamRef6Callback", plugify.Trace, 2)
 	__a := C.int32_t(*a)
 	__b := C.float(*b)
 	__c := C.double(*c)
@@ -1018,6 +1076,7 @@ func ParamRef6Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *
 
 // ParamRef7Callback
 func ParamRef7Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8, g *string) {
+	plugify.Log("cross_call_master::ParamRef7Callback", plugify.Trace, 2)
 	__a := C.int32_t(*a)
 	__b := C.float(*b)
 	__c := C.double(*c)
@@ -1047,6 +1106,7 @@ func ParamRef7Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *
 
 // ParamRef8Callback
 func ParamRef8Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8, g *string, h *uint16) {
+	plugify.Log("cross_call_master::ParamRef8Callback", plugify.Trace, 2)
 	__a := C.int32_t(*a)
 	__b := C.float(*b)
 	__c := C.double(*c)
@@ -1078,6 +1138,7 @@ func ParamRef8Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *
 
 // ParamRef9Callback
 func ParamRef9Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8, g *string, h *uint16, k *int16) {
+	plugify.Log("cross_call_master::ParamRef9Callback", plugify.Trace, 2)
 	__a := C.int32_t(*a)
 	__b := C.float(*b)
 	__c := C.double(*c)
@@ -1111,6 +1172,7 @@ func ParamRef9Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *
 
 // ParamRef10Callback
 func ParamRef10Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8, g *string, h *uint16, k *int16, l *uintptr) {
+	plugify.Log("cross_call_master::ParamRef10Callback", plugify.Trace, 2)
 	__a := C.int32_t(*a)
 	__b := C.float(*b)
 	__c := C.double(*c)
@@ -1146,6 +1208,7 @@ func ParamRef10Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e 
 
 // ParamRefVectorsCallback
 func ParamRefVectorsCallback(p1 *[]bool, p2 *[]int8, p3 *[]uint16, p4 *[]int8, p5 *[]int16, p6 *[]int32, p7 *[]int64, p8 *[]uint8, p9 *[]uint16, p10 *[]uint32, p11 *[]uint64, p12 *[]uintptr, p13 *[]float32, p14 *[]float64, p15 *[]string) {
+	plugify.Log("cross_call_master::ParamRefVectorsCallback", plugify.Trace, 2)
 	__p1 := plugify.ConstructVectorBool(*p1)
 	__p2 := plugify.ConstructVectorChar8(*p2)
 	__p3 := plugify.ConstructVectorChar16(*p3)
@@ -1204,6 +1267,7 @@ func ParamRefVectorsCallback(p1 *[]bool, p2 *[]int8, p3 *[]uint16, p4 *[]int8, p
 
 // ParamAllPrimitivesCallback
 func ParamAllPrimitivesCallback(p1 bool, p2 int8, p3 uint16, p4 int8, p5 int16, p6 int32, p7 int64, p8 uint8, p9 uint16, p10 uint32, p11 uint64, p12 uintptr, p13 float32, p14 float64) int64 {
+	plugify.Log("cross_call_master::ParamAllPrimitivesCallback", plugify.Trace, 2)
 	var __retVal int64
 	__p1 := C.bool(p1)
 	__p2 := C.int8_t(p2)
@@ -1225,6 +1289,7 @@ func ParamAllPrimitivesCallback(p1 bool, p2 int8, p3 uint16, p4 int8, p5 int16, 
 
 // ParamAllAliasesCallback
 func ParamAllAliasesCallback(aBool AliasBool, aChar8 AliasChar8, aChar16 AliasChar16, aInt8 AliasInt8, aInt16 AliasInt16, aInt32 AliasInt32, aInt64 AliasInt64, aPtr AliasPtr, aFloat AliasFloat, aDouble AliasDouble, aString AliasString, aAny AliasAny, aVec2 AliasVec2, aVec3 AliasVec3, aVec4 AliasVec4, aMat4x4 AliasMat4x4, aBoolVec AliasBoolVector, aChar8Vec AliasChar8Vector, aChar16Vec AliasChar16Vector, aInt8Vec AliasInt8Vector, aInt16Vec AliasInt16Vector, aInt32Vec AliasInt32Vector, aInt64Vec AliasInt64Vector, aPtrVec AliasPtrVector, aFloatVec AliasFloatVector, aDoubleVec AliasDoubleVector, aStringVec AliasStringVector, aAnyVec AliasAnyVector, aVec2Vec AliasVec2Vector, aVec3Vec AliasVec3Vector, aVec4Vec AliasVec4Vector) int32 {
+	plugify.Log("cross_call_master::ParamAllAliasesCallback", plugify.Trace, 2)
 	var __retVal int32
 	__aBool := C.bool(aBool)
 	__aChar8 := C.int8_t(aChar8)
@@ -1287,6 +1352,7 @@ func ParamAllAliasesCallback(aBool AliasBool, aChar8 AliasChar8, aChar16 AliasCh
 
 // ParamAllRefAliasesCallback
 func ParamAllRefAliasesCallback(aBool *AliasBool, aChar8 *AliasChar8, aChar16 *AliasChar16, aInt8 *AliasInt8, aInt16 *AliasInt16, aInt32 *AliasInt32, aInt64 *AliasInt64, aPtr *AliasPtr, aFloat *AliasFloat, aDouble *AliasDouble, aString *AliasString, aAny *AliasAny, aVec2 *AliasVec2, aVec3 *AliasVec3, aVec4 *AliasVec4, aMat4x4 *AliasMat4x4, aBoolVec *AliasBoolVector, aChar8Vec *AliasChar8Vector, aChar16Vec *AliasChar16Vector, aInt8Vec *AliasInt8Vector, aInt16Vec *AliasInt16Vector, aInt32Vec *AliasInt32Vector, aInt64Vec *AliasInt64Vector, aPtrVec *AliasPtrVector, aFloatVec *AliasFloatVector, aDoubleVec *AliasDoubleVector, aStringVec *AliasStringVector, aAnyVec *AliasAnyVector, aVec2Vec *AliasVec2Vector, aVec3Vec *AliasVec3Vector, aVec4Vec *AliasVec4Vector) int64 {
+	plugify.Log("cross_call_master::ParamAllRefAliasesCallback", plugify.Trace, 2)
 	var __retVal int64
 	__aBool := C.bool(*aBool)
 	__aChar8 := C.int8_t(*aChar8)
@@ -1381,6 +1447,7 @@ func ParamAllRefAliasesCallback(aBool *AliasBool, aChar8 *AliasChar8, aChar16 *A
 
 // ParamEnumCallback
 func ParamEnumCallback(p1 Example, p2 []Example) int32 {
+	plugify.Log("cross_call_master::ParamEnumCallback", plugify.Trace, 2)
 	var __retVal int32
 	__p1 := C.int32_t(p1)
 	__p2 := plugify.ConstructVectorInt32(p2)
@@ -1398,6 +1465,7 @@ func ParamEnumCallback(p1 Example, p2 []Example) int32 {
 
 // ParamEnumRefCallback
 func ParamEnumRefCallback(p1 *Example, p2 *[]Example) int32 {
+	plugify.Log("cross_call_master::ParamEnumRefCallback", plugify.Trace, 2)
 	var __retVal int32
 	__p1 := C.int32_t(*p1)
 	__p2 := plugify.ConstructVectorInt32(*p2)
@@ -1418,6 +1486,7 @@ func ParamEnumRefCallback(p1 *Example, p2 *[]Example) int32 {
 
 // ParamVariantCallback
 func ParamVariantCallback(p1 any, p2 []any) {
+	plugify.Log("cross_call_master::ParamVariantCallback", plugify.Trace, 2)
 	__p1 := plugify.ConstructVariant(p1)
 	__p2 := plugify.ConstructVectorVariant(p2)
 	plugify.Block{
@@ -1434,6 +1503,7 @@ func ParamVariantCallback(p1 any, p2 []any) {
 
 // ParamVariantRefCallback
 func ParamVariantRefCallback(p1 *any, p2 *[]any) {
+	plugify.Log("cross_call_master::ParamVariantRefCallback", plugify.Trace, 2)
 	__p1 := plugify.ConstructVariant(*p1)
 	__p2 := plugify.ConstructVectorVariant(*p2)
 	plugify.Block{
@@ -1453,12 +1523,14 @@ func ParamVariantRefCallback(p1 *any, p2 *[]any) {
 
 // CallFuncVoidCallback
 func CallFuncVoidCallback(func_ FuncVoid) {
+	plugify.Log("cross_call_master::CallFuncVoidCallback", plugify.Trace, 2)
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	C.CallFuncVoidCallback(__func_)
 }
 
 // CallFuncBoolCallback
 func CallFuncBoolCallback(func_ FuncBool) bool {
+	plugify.Log("cross_call_master::CallFuncBoolCallback", plugify.Trace, 2)
 	var __retVal bool
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = bool(C.CallFuncBoolCallback(__func_))
@@ -1467,6 +1539,7 @@ func CallFuncBoolCallback(func_ FuncBool) bool {
 
 // CallFuncChar8Callback
 func CallFuncChar8Callback(func_ FuncChar8) int8 {
+	plugify.Log("cross_call_master::CallFuncChar8Callback", plugify.Trace, 2)
 	var __retVal int8
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = int8(C.CallFuncChar8Callback(__func_))
@@ -1475,6 +1548,7 @@ func CallFuncChar8Callback(func_ FuncChar8) int8 {
 
 // CallFuncChar16Callback
 func CallFuncChar16Callback(func_ FuncChar16) uint16 {
+	plugify.Log("cross_call_master::CallFuncChar16Callback", plugify.Trace, 2)
 	var __retVal uint16
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = uint16(C.CallFuncChar16Callback(__func_))
@@ -1483,6 +1557,7 @@ func CallFuncChar16Callback(func_ FuncChar16) uint16 {
 
 // CallFuncInt8Callback
 func CallFuncInt8Callback(func_ FuncInt8) int8 {
+	plugify.Log("cross_call_master::CallFuncInt8Callback", plugify.Trace, 2)
 	var __retVal int8
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = int8(C.CallFuncInt8Callback(__func_))
@@ -1491,6 +1566,7 @@ func CallFuncInt8Callback(func_ FuncInt8) int8 {
 
 // CallFuncInt16Callback
 func CallFuncInt16Callback(func_ FuncInt16) int16 {
+	plugify.Log("cross_call_master::CallFuncInt16Callback", plugify.Trace, 2)
 	var __retVal int16
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = int16(C.CallFuncInt16Callback(__func_))
@@ -1499,6 +1575,7 @@ func CallFuncInt16Callback(func_ FuncInt16) int16 {
 
 // CallFuncInt32Callback
 func CallFuncInt32Callback(func_ FuncInt32) int32 {
+	plugify.Log("cross_call_master::CallFuncInt32Callback", plugify.Trace, 2)
 	var __retVal int32
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = int32(C.CallFuncInt32Callback(__func_))
@@ -1507,6 +1584,7 @@ func CallFuncInt32Callback(func_ FuncInt32) int32 {
 
 // CallFuncInt64Callback
 func CallFuncInt64Callback(func_ FuncInt64) int64 {
+	plugify.Log("cross_call_master::CallFuncInt64Callback", plugify.Trace, 2)
 	var __retVal int64
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = int64(C.CallFuncInt64Callback(__func_))
@@ -1515,6 +1593,7 @@ func CallFuncInt64Callback(func_ FuncInt64) int64 {
 
 // CallFuncUInt8Callback
 func CallFuncUInt8Callback(func_ FuncUInt8) uint8 {
+	plugify.Log("cross_call_master::CallFuncUInt8Callback", plugify.Trace, 2)
 	var __retVal uint8
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = uint8(C.CallFuncUInt8Callback(__func_))
@@ -1523,6 +1602,7 @@ func CallFuncUInt8Callback(func_ FuncUInt8) uint8 {
 
 // CallFuncUInt16Callback
 func CallFuncUInt16Callback(func_ FuncUInt16) uint16 {
+	plugify.Log("cross_call_master::CallFuncUInt16Callback", plugify.Trace, 2)
 	var __retVal uint16
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = uint16(C.CallFuncUInt16Callback(__func_))
@@ -1531,6 +1611,7 @@ func CallFuncUInt16Callback(func_ FuncUInt16) uint16 {
 
 // CallFuncUInt32Callback
 func CallFuncUInt32Callback(func_ FuncUInt32) uint32 {
+	plugify.Log("cross_call_master::CallFuncUInt32Callback", plugify.Trace, 2)
 	var __retVal uint32
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = uint32(C.CallFuncUInt32Callback(__func_))
@@ -1539,6 +1620,7 @@ func CallFuncUInt32Callback(func_ FuncUInt32) uint32 {
 
 // CallFuncUInt64Callback
 func CallFuncUInt64Callback(func_ FuncUInt64) uint64 {
+	plugify.Log("cross_call_master::CallFuncUInt64Callback", plugify.Trace, 2)
 	var __retVal uint64
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = uint64(C.CallFuncUInt64Callback(__func_))
@@ -1547,6 +1629,7 @@ func CallFuncUInt64Callback(func_ FuncUInt64) uint64 {
 
 // CallFuncPtrCallback
 func CallFuncPtrCallback(func_ FuncPtr) uintptr {
+	plugify.Log("cross_call_master::CallFuncPtrCallback", plugify.Trace, 2)
 	var __retVal uintptr
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = uintptr(C.CallFuncPtrCallback(__func_))
@@ -1555,6 +1638,7 @@ func CallFuncPtrCallback(func_ FuncPtr) uintptr {
 
 // CallFuncFloatCallback
 func CallFuncFloatCallback(func_ FuncFloat) float32 {
+	plugify.Log("cross_call_master::CallFuncFloatCallback", plugify.Trace, 2)
 	var __retVal float32
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = float32(C.CallFuncFloatCallback(__func_))
@@ -1563,6 +1647,7 @@ func CallFuncFloatCallback(func_ FuncFloat) float32 {
 
 // CallFuncDoubleCallback
 func CallFuncDoubleCallback(func_ FuncDouble) float64 {
+	plugify.Log("cross_call_master::CallFuncDoubleCallback", plugify.Trace, 2)
 	var __retVal float64
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = float64(C.CallFuncDoubleCallback(__func_))
@@ -1571,6 +1656,7 @@ func CallFuncDoubleCallback(func_ FuncDouble) float64 {
 
 // CallFuncStringCallback
 func CallFuncStringCallback(func_ FuncString) string {
+	plugify.Log("cross_call_master::CallFuncStringCallback", plugify.Trace, 2)
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1591,6 +1677,7 @@ func CallFuncStringCallback(func_ FuncString) string {
 
 // CallFuncAnyCallback
 func CallFuncAnyCallback(func_ FuncAny) any {
+	plugify.Log("cross_call_master::CallFuncAnyCallback", plugify.Trace, 2)
 	var __retVal any
 	var __retVal_native plugify.PlgVariant
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1611,6 +1698,7 @@ func CallFuncAnyCallback(func_ FuncAny) any {
 
 // CallFuncFunctionCallback
 func CallFuncFunctionCallback(func_ FuncFunction) uintptr {
+	plugify.Log("cross_call_master::CallFuncFunctionCallback", plugify.Trace, 2)
 	var __retVal uintptr
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = uintptr(C.CallFuncFunctionCallback(__func_))
@@ -1619,6 +1707,7 @@ func CallFuncFunctionCallback(func_ FuncFunction) uintptr {
 
 // CallFuncBoolVectorCallback
 func CallFuncBoolVectorCallback(func_ FuncBoolVector) []bool {
+	plugify.Log("cross_call_master::CallFuncBoolVectorCallback", plugify.Trace, 2)
 	var __retVal []bool
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1639,6 +1728,7 @@ func CallFuncBoolVectorCallback(func_ FuncBoolVector) []bool {
 
 // CallFuncChar8VectorCallback
 func CallFuncChar8VectorCallback(func_ FuncChar8Vector) []int8 {
+	plugify.Log("cross_call_master::CallFuncChar8VectorCallback", plugify.Trace, 2)
 	var __retVal []int8
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1659,6 +1749,7 @@ func CallFuncChar8VectorCallback(func_ FuncChar8Vector) []int8 {
 
 // CallFuncChar16VectorCallback
 func CallFuncChar16VectorCallback(func_ FuncChar16Vector) []uint16 {
+	plugify.Log("cross_call_master::CallFuncChar16VectorCallback", plugify.Trace, 2)
 	var __retVal []uint16
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1679,6 +1770,7 @@ func CallFuncChar16VectorCallback(func_ FuncChar16Vector) []uint16 {
 
 // CallFuncInt8VectorCallback
 func CallFuncInt8VectorCallback(func_ FuncInt8Vector) []int8 {
+	plugify.Log("cross_call_master::CallFuncInt8VectorCallback", plugify.Trace, 2)
 	var __retVal []int8
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1699,6 +1791,7 @@ func CallFuncInt8VectorCallback(func_ FuncInt8Vector) []int8 {
 
 // CallFuncInt16VectorCallback
 func CallFuncInt16VectorCallback(func_ FuncInt16Vector) []int16 {
+	plugify.Log("cross_call_master::CallFuncInt16VectorCallback", plugify.Trace, 2)
 	var __retVal []int16
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1719,6 +1812,7 @@ func CallFuncInt16VectorCallback(func_ FuncInt16Vector) []int16 {
 
 // CallFuncInt32VectorCallback
 func CallFuncInt32VectorCallback(func_ FuncInt32Vector) []int32 {
+	plugify.Log("cross_call_master::CallFuncInt32VectorCallback", plugify.Trace, 2)
 	var __retVal []int32
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1739,6 +1833,7 @@ func CallFuncInt32VectorCallback(func_ FuncInt32Vector) []int32 {
 
 // CallFuncInt64VectorCallback
 func CallFuncInt64VectorCallback(func_ FuncInt64Vector) []int64 {
+	plugify.Log("cross_call_master::CallFuncInt64VectorCallback", plugify.Trace, 2)
 	var __retVal []int64
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1759,6 +1854,7 @@ func CallFuncInt64VectorCallback(func_ FuncInt64Vector) []int64 {
 
 // CallFuncUInt8VectorCallback
 func CallFuncUInt8VectorCallback(func_ FuncUInt8Vector) []uint8 {
+	plugify.Log("cross_call_master::CallFuncUInt8VectorCallback", plugify.Trace, 2)
 	var __retVal []uint8
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1779,6 +1875,7 @@ func CallFuncUInt8VectorCallback(func_ FuncUInt8Vector) []uint8 {
 
 // CallFuncUInt16VectorCallback
 func CallFuncUInt16VectorCallback(func_ FuncUInt16Vector) []uint16 {
+	plugify.Log("cross_call_master::CallFuncUInt16VectorCallback", plugify.Trace, 2)
 	var __retVal []uint16
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1799,6 +1896,7 @@ func CallFuncUInt16VectorCallback(func_ FuncUInt16Vector) []uint16 {
 
 // CallFuncUInt32VectorCallback
 func CallFuncUInt32VectorCallback(func_ FuncUInt32Vector) []uint32 {
+	plugify.Log("cross_call_master::CallFuncUInt32VectorCallback", plugify.Trace, 2)
 	var __retVal []uint32
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1819,6 +1917,7 @@ func CallFuncUInt32VectorCallback(func_ FuncUInt32Vector) []uint32 {
 
 // CallFuncUInt64VectorCallback
 func CallFuncUInt64VectorCallback(func_ FuncUInt64Vector) []uint64 {
+	plugify.Log("cross_call_master::CallFuncUInt64VectorCallback", plugify.Trace, 2)
 	var __retVal []uint64
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1839,6 +1938,7 @@ func CallFuncUInt64VectorCallback(func_ FuncUInt64Vector) []uint64 {
 
 // CallFuncPtrVectorCallback
 func CallFuncPtrVectorCallback(func_ FuncPtrVector) []uintptr {
+	plugify.Log("cross_call_master::CallFuncPtrVectorCallback", plugify.Trace, 2)
 	var __retVal []uintptr
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1859,6 +1959,7 @@ func CallFuncPtrVectorCallback(func_ FuncPtrVector) []uintptr {
 
 // CallFuncFloatVectorCallback
 func CallFuncFloatVectorCallback(func_ FuncFloatVector) []float32 {
+	plugify.Log("cross_call_master::CallFuncFloatVectorCallback", plugify.Trace, 2)
 	var __retVal []float32
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1879,6 +1980,7 @@ func CallFuncFloatVectorCallback(func_ FuncFloatVector) []float32 {
 
 // CallFuncDoubleVectorCallback
 func CallFuncDoubleVectorCallback(func_ FuncDoubleVector) []float64 {
+	plugify.Log("cross_call_master::CallFuncDoubleVectorCallback", plugify.Trace, 2)
 	var __retVal []float64
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1899,6 +2001,7 @@ func CallFuncDoubleVectorCallback(func_ FuncDoubleVector) []float64 {
 
 // CallFuncStringVectorCallback
 func CallFuncStringVectorCallback(func_ FuncStringVector) []string {
+	plugify.Log("cross_call_master::CallFuncStringVectorCallback", plugify.Trace, 2)
 	var __retVal []string
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1919,6 +2022,7 @@ func CallFuncStringVectorCallback(func_ FuncStringVector) []string {
 
 // CallFuncAnyVectorCallback
 func CallFuncAnyVectorCallback(func_ FuncAnyVector) []any {
+	plugify.Log("cross_call_master::CallFuncAnyVectorCallback", plugify.Trace, 2)
 	var __retVal []any
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1939,6 +2043,7 @@ func CallFuncAnyVectorCallback(func_ FuncAnyVector) []any {
 
 // CallFuncVec2VectorCallback
 func CallFuncVec2VectorCallback(func_ FuncVec2Vector) []plugify.Vector2 {
+	plugify.Log("cross_call_master::CallFuncVec2VectorCallback", plugify.Trace, 2)
 	var __retVal []plugify.Vector2
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1959,6 +2064,7 @@ func CallFuncVec2VectorCallback(func_ FuncVec2Vector) []plugify.Vector2 {
 
 // CallFuncVec3VectorCallback
 func CallFuncVec3VectorCallback(func_ FuncVec3Vector) []plugify.Vector3 {
+	plugify.Log("cross_call_master::CallFuncVec3VectorCallback", plugify.Trace, 2)
 	var __retVal []plugify.Vector3
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1979,6 +2085,7 @@ func CallFuncVec3VectorCallback(func_ FuncVec3Vector) []plugify.Vector3 {
 
 // CallFuncVec4VectorCallback
 func CallFuncVec4VectorCallback(func_ FuncVec4Vector) []plugify.Vector4 {
+	plugify.Log("cross_call_master::CallFuncVec4VectorCallback", plugify.Trace, 2)
 	var __retVal []plugify.Vector4
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -1999,6 +2106,7 @@ func CallFuncVec4VectorCallback(func_ FuncVec4Vector) []plugify.Vector4 {
 
 // CallFuncMat4x4VectorCallback
 func CallFuncMat4x4VectorCallback(func_ FuncMat4x4Vector) []plugify.Matrix4x4 {
+	plugify.Log("cross_call_master::CallFuncMat4x4VectorCallback", plugify.Trace, 2)
 	var __retVal []plugify.Matrix4x4
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2019,6 +2127,7 @@ func CallFuncMat4x4VectorCallback(func_ FuncMat4x4Vector) []plugify.Matrix4x4 {
 
 // CallFuncVec2Callback
 func CallFuncVec2Callback(func_ FuncVec2) plugify.Vector2 {
+	plugify.Log("cross_call_master::CallFuncVec2Callback", plugify.Trace, 2)
 	var __retVal plugify.Vector2
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__native := C.CallFuncVec2Callback(__func_)
@@ -2028,6 +2137,7 @@ func CallFuncVec2Callback(func_ FuncVec2) plugify.Vector2 {
 
 // CallFuncVec3Callback
 func CallFuncVec3Callback(func_ FuncVec3) plugify.Vector3 {
+	plugify.Log("cross_call_master::CallFuncVec3Callback", plugify.Trace, 2)
 	var __retVal plugify.Vector3
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__native := C.CallFuncVec3Callback(__func_)
@@ -2037,6 +2147,7 @@ func CallFuncVec3Callback(func_ FuncVec3) plugify.Vector3 {
 
 // CallFuncVec4Callback
 func CallFuncVec4Callback(func_ FuncVec4) plugify.Vector4 {
+	plugify.Log("cross_call_master::CallFuncVec4Callback", plugify.Trace, 2)
 	var __retVal plugify.Vector4
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__native := C.CallFuncVec4Callback(__func_)
@@ -2046,6 +2157,7 @@ func CallFuncVec4Callback(func_ FuncVec4) plugify.Vector4 {
 
 // CallFuncMat4x4Callback
 func CallFuncMat4x4Callback(func_ FuncMat4x4) plugify.Matrix4x4 {
+	plugify.Log("cross_call_master::CallFuncMat4x4Callback", plugify.Trace, 2)
 	var __retVal plugify.Matrix4x4
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__native := C.CallFuncMat4x4Callback(__func_)
@@ -2055,6 +2167,7 @@ func CallFuncMat4x4Callback(func_ FuncMat4x4) plugify.Matrix4x4 {
 
 // CallFuncAliasBoolCallback
 func CallFuncAliasBoolCallback(func_ FuncAliasBool) AliasBool {
+	plugify.Log("cross_call_master::CallFuncAliasBoolCallback", plugify.Trace, 2)
 	var __retVal AliasBool
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = bool(C.CallFuncAliasBoolCallback(__func_))
@@ -2063,6 +2176,7 @@ func CallFuncAliasBoolCallback(func_ FuncAliasBool) AliasBool {
 
 // CallFuncAliasChar8Callback
 func CallFuncAliasChar8Callback(func_ FuncAliasChar8) AliasChar8 {
+	plugify.Log("cross_call_master::CallFuncAliasChar8Callback", plugify.Trace, 2)
 	var __retVal AliasChar8
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = int8(C.CallFuncAliasChar8Callback(__func_))
@@ -2071,6 +2185,7 @@ func CallFuncAliasChar8Callback(func_ FuncAliasChar8) AliasChar8 {
 
 // CallFuncAliasChar16Callback
 func CallFuncAliasChar16Callback(func_ FuncAliasChar16) AliasChar16 {
+	plugify.Log("cross_call_master::CallFuncAliasChar16Callback", plugify.Trace, 2)
 	var __retVal AliasChar16
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = uint16(C.CallFuncAliasChar16Callback(__func_))
@@ -2079,6 +2194,7 @@ func CallFuncAliasChar16Callback(func_ FuncAliasChar16) AliasChar16 {
 
 // CallFuncAliasInt8Callback
 func CallFuncAliasInt8Callback(func_ FuncAliasInt8) AliasInt8 {
+	plugify.Log("cross_call_master::CallFuncAliasInt8Callback", plugify.Trace, 2)
 	var __retVal AliasInt8
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = int8(C.CallFuncAliasInt8Callback(__func_))
@@ -2087,6 +2203,7 @@ func CallFuncAliasInt8Callback(func_ FuncAliasInt8) AliasInt8 {
 
 // CallFuncAliasInt16Callback
 func CallFuncAliasInt16Callback(func_ FuncAliasInt16) AliasInt16 {
+	plugify.Log("cross_call_master::CallFuncAliasInt16Callback", plugify.Trace, 2)
 	var __retVal AliasInt16
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = int16(C.CallFuncAliasInt16Callback(__func_))
@@ -2095,6 +2212,7 @@ func CallFuncAliasInt16Callback(func_ FuncAliasInt16) AliasInt16 {
 
 // CallFuncAliasInt32Callback
 func CallFuncAliasInt32Callback(func_ FuncAliasInt32) AliasInt32 {
+	plugify.Log("cross_call_master::CallFuncAliasInt32Callback", plugify.Trace, 2)
 	var __retVal AliasInt32
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = int32(C.CallFuncAliasInt32Callback(__func_))
@@ -2103,6 +2221,7 @@ func CallFuncAliasInt32Callback(func_ FuncAliasInt32) AliasInt32 {
 
 // CallFuncAliasInt64Callback
 func CallFuncAliasInt64Callback(func_ FuncAliasInt64) AliasInt64 {
+	plugify.Log("cross_call_master::CallFuncAliasInt64Callback", plugify.Trace, 2)
 	var __retVal AliasInt64
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = int64(C.CallFuncAliasInt64Callback(__func_))
@@ -2111,6 +2230,7 @@ func CallFuncAliasInt64Callback(func_ FuncAliasInt64) AliasInt64 {
 
 // CallFuncAliasUInt8Callback
 func CallFuncAliasUInt8Callback(func_ FuncAliasUInt8) AliasUInt8 {
+	plugify.Log("cross_call_master::CallFuncAliasUInt8Callback", plugify.Trace, 2)
 	var __retVal AliasUInt8
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = uint8(C.CallFuncAliasUInt8Callback(__func_))
@@ -2119,6 +2239,7 @@ func CallFuncAliasUInt8Callback(func_ FuncAliasUInt8) AliasUInt8 {
 
 // CallFuncAliasUInt16Callback
 func CallFuncAliasUInt16Callback(func_ FuncAliasUInt16) AliasUInt16 {
+	plugify.Log("cross_call_master::CallFuncAliasUInt16Callback", plugify.Trace, 2)
 	var __retVal AliasUInt16
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = uint16(C.CallFuncAliasUInt16Callback(__func_))
@@ -2127,6 +2248,7 @@ func CallFuncAliasUInt16Callback(func_ FuncAliasUInt16) AliasUInt16 {
 
 // CallFuncAliasUInt32Callback
 func CallFuncAliasUInt32Callback(func_ FuncAliasUInt32) AliasUInt32 {
+	plugify.Log("cross_call_master::CallFuncAliasUInt32Callback", plugify.Trace, 2)
 	var __retVal AliasUInt32
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = uint32(C.CallFuncAliasUInt32Callback(__func_))
@@ -2135,6 +2257,7 @@ func CallFuncAliasUInt32Callback(func_ FuncAliasUInt32) AliasUInt32 {
 
 // CallFuncAliasUInt64Callback
 func CallFuncAliasUInt64Callback(func_ FuncAliasUInt64) AliasUInt64 {
+	plugify.Log("cross_call_master::CallFuncAliasUInt64Callback", plugify.Trace, 2)
 	var __retVal AliasUInt64
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = uint64(C.CallFuncAliasUInt64Callback(__func_))
@@ -2143,6 +2266,7 @@ func CallFuncAliasUInt64Callback(func_ FuncAliasUInt64) AliasUInt64 {
 
 // CallFuncAliasPtrCallback
 func CallFuncAliasPtrCallback(func_ FuncAliasPtr) AliasPtr {
+	plugify.Log("cross_call_master::CallFuncAliasPtrCallback", plugify.Trace, 2)
 	var __retVal AliasPtr
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = uintptr(C.CallFuncAliasPtrCallback(__func_))
@@ -2151,6 +2275,7 @@ func CallFuncAliasPtrCallback(func_ FuncAliasPtr) AliasPtr {
 
 // CallFuncAliasFloatCallback
 func CallFuncAliasFloatCallback(func_ FuncAliasFloat) AliasFloat {
+	plugify.Log("cross_call_master::CallFuncAliasFloatCallback", plugify.Trace, 2)
 	var __retVal AliasFloat
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = float32(C.CallFuncAliasFloatCallback(__func_))
@@ -2159,6 +2284,7 @@ func CallFuncAliasFloatCallback(func_ FuncAliasFloat) AliasFloat {
 
 // CallFuncAliasDoubleCallback
 func CallFuncAliasDoubleCallback(func_ FuncAliasDouble) AliasDouble {
+	plugify.Log("cross_call_master::CallFuncAliasDoubleCallback", plugify.Trace, 2)
 	var __retVal AliasDouble
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = float64(C.CallFuncAliasDoubleCallback(__func_))
@@ -2167,6 +2293,7 @@ func CallFuncAliasDoubleCallback(func_ FuncAliasDouble) AliasDouble {
 
 // CallFuncAliasStringCallback
 func CallFuncAliasStringCallback(func_ FuncAliasString) AliasString {
+	plugify.Log("cross_call_master::CallFuncAliasStringCallback", plugify.Trace, 2)
 	var __retVal AliasString
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2187,6 +2314,7 @@ func CallFuncAliasStringCallback(func_ FuncAliasString) AliasString {
 
 // CallFuncAliasAnyCallback
 func CallFuncAliasAnyCallback(func_ FuncAliasAny) AliasAny {
+	plugify.Log("cross_call_master::CallFuncAliasAnyCallback", plugify.Trace, 2)
 	var __retVal AliasAny
 	var __retVal_native plugify.PlgVariant
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2207,6 +2335,7 @@ func CallFuncAliasAnyCallback(func_ FuncAliasAny) AliasAny {
 
 // CallFuncAliasFunctionCallback
 func CallFuncAliasFunctionCallback(func_ FuncAliasFunction) AliasFunction {
+	plugify.Log("cross_call_master::CallFuncAliasFunctionCallback", plugify.Trace, 2)
 	var __retVal AliasFunction
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = uintptr(C.CallFuncAliasFunctionCallback(__func_))
@@ -2215,6 +2344,7 @@ func CallFuncAliasFunctionCallback(func_ FuncAliasFunction) AliasFunction {
 
 // CallFuncAliasBoolVectorCallback
 func CallFuncAliasBoolVectorCallback(func_ FuncAliasBoolVector) AliasBoolVector {
+	plugify.Log("cross_call_master::CallFuncAliasBoolVectorCallback", plugify.Trace, 2)
 	var __retVal AliasBoolVector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2235,6 +2365,7 @@ func CallFuncAliasBoolVectorCallback(func_ FuncAliasBoolVector) AliasBoolVector 
 
 // CallFuncAliasChar8VectorCallback
 func CallFuncAliasChar8VectorCallback(func_ FuncAliasChar8Vector) AliasChar8Vector {
+	plugify.Log("cross_call_master::CallFuncAliasChar8VectorCallback", plugify.Trace, 2)
 	var __retVal AliasChar8Vector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2255,6 +2386,7 @@ func CallFuncAliasChar8VectorCallback(func_ FuncAliasChar8Vector) AliasChar8Vect
 
 // CallFuncAliasChar16VectorCallback
 func CallFuncAliasChar16VectorCallback(func_ FuncAliasChar16Vector) AliasChar16Vector {
+	plugify.Log("cross_call_master::CallFuncAliasChar16VectorCallback", plugify.Trace, 2)
 	var __retVal AliasChar16Vector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2275,6 +2407,7 @@ func CallFuncAliasChar16VectorCallback(func_ FuncAliasChar16Vector) AliasChar16V
 
 // CallFuncAliasInt8VectorCallback
 func CallFuncAliasInt8VectorCallback(func_ FuncAliasInt8Vector) AliasInt8Vector {
+	plugify.Log("cross_call_master::CallFuncAliasInt8VectorCallback", plugify.Trace, 2)
 	var __retVal AliasInt8Vector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2295,6 +2428,7 @@ func CallFuncAliasInt8VectorCallback(func_ FuncAliasInt8Vector) AliasInt8Vector 
 
 // CallFuncAliasInt16VectorCallback
 func CallFuncAliasInt16VectorCallback(func_ FuncAliasInt16Vector) AliasInt16Vector {
+	plugify.Log("cross_call_master::CallFuncAliasInt16VectorCallback", plugify.Trace, 2)
 	var __retVal AliasInt16Vector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2315,6 +2449,7 @@ func CallFuncAliasInt16VectorCallback(func_ FuncAliasInt16Vector) AliasInt16Vect
 
 // CallFuncAliasInt32VectorCallback
 func CallFuncAliasInt32VectorCallback(func_ FuncAliasInt32Vector) AliasInt32Vector {
+	plugify.Log("cross_call_master::CallFuncAliasInt32VectorCallback", plugify.Trace, 2)
 	var __retVal AliasInt32Vector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2335,6 +2470,7 @@ func CallFuncAliasInt32VectorCallback(func_ FuncAliasInt32Vector) AliasInt32Vect
 
 // CallFuncAliasInt64VectorCallback
 func CallFuncAliasInt64VectorCallback(func_ FuncAliasInt64Vector) AliasInt64Vector {
+	plugify.Log("cross_call_master::CallFuncAliasInt64VectorCallback", plugify.Trace, 2)
 	var __retVal AliasInt64Vector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2355,6 +2491,7 @@ func CallFuncAliasInt64VectorCallback(func_ FuncAliasInt64Vector) AliasInt64Vect
 
 // CallFuncAliasUInt8VectorCallback
 func CallFuncAliasUInt8VectorCallback(func_ FuncAliasUInt8Vector) AliasUInt8Vector {
+	plugify.Log("cross_call_master::CallFuncAliasUInt8VectorCallback", plugify.Trace, 2)
 	var __retVal AliasUInt8Vector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2375,6 +2512,7 @@ func CallFuncAliasUInt8VectorCallback(func_ FuncAliasUInt8Vector) AliasUInt8Vect
 
 // CallFuncAliasUInt16VectorCallback
 func CallFuncAliasUInt16VectorCallback(func_ FuncAliasUInt16Vector) AliasUInt16Vector {
+	plugify.Log("cross_call_master::CallFuncAliasUInt16VectorCallback", plugify.Trace, 2)
 	var __retVal AliasUInt16Vector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2395,6 +2533,7 @@ func CallFuncAliasUInt16VectorCallback(func_ FuncAliasUInt16Vector) AliasUInt16V
 
 // CallFuncAliasUInt32VectorCallback
 func CallFuncAliasUInt32VectorCallback(func_ FuncAliasUInt32Vector) AliasUInt32Vector {
+	plugify.Log("cross_call_master::CallFuncAliasUInt32VectorCallback", plugify.Trace, 2)
 	var __retVal AliasUInt32Vector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2415,6 +2554,7 @@ func CallFuncAliasUInt32VectorCallback(func_ FuncAliasUInt32Vector) AliasUInt32V
 
 // CallFuncAliasUInt64VectorCallback
 func CallFuncAliasUInt64VectorCallback(func_ FuncAliasUInt64Vector) AliasUInt64Vector {
+	plugify.Log("cross_call_master::CallFuncAliasUInt64VectorCallback", plugify.Trace, 2)
 	var __retVal AliasUInt64Vector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2435,6 +2575,7 @@ func CallFuncAliasUInt64VectorCallback(func_ FuncAliasUInt64Vector) AliasUInt64V
 
 // CallFuncAliasPtrVectorCallback
 func CallFuncAliasPtrVectorCallback(func_ FuncAliasPtrVector) AliasPtrVector {
+	plugify.Log("cross_call_master::CallFuncAliasPtrVectorCallback", plugify.Trace, 2)
 	var __retVal AliasPtrVector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2455,6 +2596,7 @@ func CallFuncAliasPtrVectorCallback(func_ FuncAliasPtrVector) AliasPtrVector {
 
 // CallFuncAliasFloatVectorCallback
 func CallFuncAliasFloatVectorCallback(func_ FuncAliasFloatVector) AliasFloatVector {
+	plugify.Log("cross_call_master::CallFuncAliasFloatVectorCallback", plugify.Trace, 2)
 	var __retVal AliasFloatVector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2475,6 +2617,7 @@ func CallFuncAliasFloatVectorCallback(func_ FuncAliasFloatVector) AliasFloatVect
 
 // CallFuncAliasDoubleVectorCallback
 func CallFuncAliasDoubleVectorCallback(func_ FuncAliasDoubleVector) AliasDoubleVector {
+	plugify.Log("cross_call_master::CallFuncAliasDoubleVectorCallback", plugify.Trace, 2)
 	var __retVal AliasDoubleVector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2495,6 +2638,7 @@ func CallFuncAliasDoubleVectorCallback(func_ FuncAliasDoubleVector) AliasDoubleV
 
 // CallFuncAliasStringVectorCallback
 func CallFuncAliasStringVectorCallback(func_ FuncAliasStringVector) AliasStringVector {
+	plugify.Log("cross_call_master::CallFuncAliasStringVectorCallback", plugify.Trace, 2)
 	var __retVal AliasStringVector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2515,6 +2659,7 @@ func CallFuncAliasStringVectorCallback(func_ FuncAliasStringVector) AliasStringV
 
 // CallFuncAliasAnyVectorCallback
 func CallFuncAliasAnyVectorCallback(func_ FuncAliasAnyVector) AliasAnyVector {
+	plugify.Log("cross_call_master::CallFuncAliasAnyVectorCallback", plugify.Trace, 2)
 	var __retVal AliasAnyVector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2535,6 +2680,7 @@ func CallFuncAliasAnyVectorCallback(func_ FuncAliasAnyVector) AliasAnyVector {
 
 // CallFuncAliasVec2VectorCallback
 func CallFuncAliasVec2VectorCallback(func_ FuncAliasVec2Vector) AliasVec2Vector {
+	plugify.Log("cross_call_master::CallFuncAliasVec2VectorCallback", plugify.Trace, 2)
 	var __retVal AliasVec2Vector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2555,6 +2701,7 @@ func CallFuncAliasVec2VectorCallback(func_ FuncAliasVec2Vector) AliasVec2Vector 
 
 // CallFuncAliasVec3VectorCallback
 func CallFuncAliasVec3VectorCallback(func_ FuncAliasVec3Vector) AliasVec3Vector {
+	plugify.Log("cross_call_master::CallFuncAliasVec3VectorCallback", plugify.Trace, 2)
 	var __retVal AliasVec3Vector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2575,6 +2722,7 @@ func CallFuncAliasVec3VectorCallback(func_ FuncAliasVec3Vector) AliasVec3Vector 
 
 // CallFuncAliasVec4VectorCallback
 func CallFuncAliasVec4VectorCallback(func_ FuncAliasVec4Vector) AliasVec4Vector {
+	plugify.Log("cross_call_master::CallFuncAliasVec4VectorCallback", plugify.Trace, 2)
 	var __retVal AliasVec4Vector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2595,6 +2743,7 @@ func CallFuncAliasVec4VectorCallback(func_ FuncAliasVec4Vector) AliasVec4Vector 
 
 // CallFuncAliasMat4x4VectorCallback
 func CallFuncAliasMat4x4VectorCallback(func_ FuncAliasMat4x4Vector) AliasMat4x4Vector {
+	plugify.Log("cross_call_master::CallFuncAliasMat4x4VectorCallback", plugify.Trace, 2)
 	var __retVal AliasMat4x4Vector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2615,6 +2764,7 @@ func CallFuncAliasMat4x4VectorCallback(func_ FuncAliasMat4x4Vector) AliasMat4x4V
 
 // CallFuncAliasVec2Callback
 func CallFuncAliasVec2Callback(func_ FuncAliasVec2) AliasVec2 {
+	plugify.Log("cross_call_master::CallFuncAliasVec2Callback", plugify.Trace, 2)
 	var __retVal AliasVec2
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__native := C.CallFuncAliasVec2Callback(__func_)
@@ -2624,6 +2774,7 @@ func CallFuncAliasVec2Callback(func_ FuncAliasVec2) AliasVec2 {
 
 // CallFuncAliasVec3Callback
 func CallFuncAliasVec3Callback(func_ FuncAliasVec3) AliasVec3 {
+	plugify.Log("cross_call_master::CallFuncAliasVec3Callback", plugify.Trace, 2)
 	var __retVal AliasVec3
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__native := C.CallFuncAliasVec3Callback(__func_)
@@ -2633,6 +2784,7 @@ func CallFuncAliasVec3Callback(func_ FuncAliasVec3) AliasVec3 {
 
 // CallFuncAliasVec4Callback
 func CallFuncAliasVec4Callback(func_ FuncAliasVec4) AliasVec4 {
+	plugify.Log("cross_call_master::CallFuncAliasVec4Callback", plugify.Trace, 2)
 	var __retVal AliasVec4
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__native := C.CallFuncAliasVec4Callback(__func_)
@@ -2642,6 +2794,7 @@ func CallFuncAliasVec4Callback(func_ FuncAliasVec4) AliasVec4 {
 
 // CallFuncAliasMat4x4Callback
 func CallFuncAliasMat4x4Callback(func_ FuncAliasMat4x4) AliasMat4x4 {
+	plugify.Log("cross_call_master::CallFuncAliasMat4x4Callback", plugify.Trace, 2)
 	var __retVal AliasMat4x4
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__native := C.CallFuncAliasMat4x4Callback(__func_)
@@ -2651,6 +2804,7 @@ func CallFuncAliasMat4x4Callback(func_ FuncAliasMat4x4) AliasMat4x4 {
 
 // CallFuncAliasAllCallback
 func CallFuncAliasAllCallback(func_ FuncAliasAll) string {
+	plugify.Log("cross_call_master::CallFuncAliasAllCallback", plugify.Trace, 2)
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2671,6 +2825,7 @@ func CallFuncAliasAllCallback(func_ FuncAliasAll) string {
 
 // CallFunc1Callback
 func CallFunc1Callback(func_ Func1) int32 {
+	plugify.Log("cross_call_master::CallFunc1Callback", plugify.Trace, 2)
 	var __retVal int32
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = int32(C.CallFunc1Callback(__func_))
@@ -2679,6 +2834,7 @@ func CallFunc1Callback(func_ Func1) int32 {
 
 // CallFunc2Callback
 func CallFunc2Callback(func_ Func2) int8 {
+	plugify.Log("cross_call_master::CallFunc2Callback", plugify.Trace, 2)
 	var __retVal int8
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = int8(C.CallFunc2Callback(__func_))
@@ -2687,12 +2843,14 @@ func CallFunc2Callback(func_ Func2) int8 {
 
 // CallFunc3Callback
 func CallFunc3Callback(func_ Func3) {
+	plugify.Log("cross_call_master::CallFunc3Callback", plugify.Trace, 2)
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	C.CallFunc3Callback(__func_)
 }
 
 // CallFunc4Callback
 func CallFunc4Callback(func_ Func4) plugify.Vector4 {
+	plugify.Log("cross_call_master::CallFunc4Callback", plugify.Trace, 2)
 	var __retVal plugify.Vector4
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__native := C.CallFunc4Callback(__func_)
@@ -2702,6 +2860,7 @@ func CallFunc4Callback(func_ Func4) plugify.Vector4 {
 
 // CallFunc5Callback
 func CallFunc5Callback(func_ Func5) bool {
+	plugify.Log("cross_call_master::CallFunc5Callback", plugify.Trace, 2)
 	var __retVal bool
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = bool(C.CallFunc5Callback(__func_))
@@ -2710,6 +2869,7 @@ func CallFunc5Callback(func_ Func5) bool {
 
 // CallFunc6Callback
 func CallFunc6Callback(func_ Func6) int64 {
+	plugify.Log("cross_call_master::CallFunc6Callback", plugify.Trace, 2)
 	var __retVal int64
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = int64(C.CallFunc6Callback(__func_))
@@ -2718,6 +2878,7 @@ func CallFunc6Callback(func_ Func6) int64 {
 
 // CallFunc7Callback
 func CallFunc7Callback(func_ Func7) float64 {
+	plugify.Log("cross_call_master::CallFunc7Callback", plugify.Trace, 2)
 	var __retVal float64
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = float64(C.CallFunc7Callback(__func_))
@@ -2726,6 +2887,7 @@ func CallFunc7Callback(func_ Func7) float64 {
 
 // CallFunc8Callback
 func CallFunc8Callback(func_ Func8) plugify.Matrix4x4 {
+	plugify.Log("cross_call_master::CallFunc8Callback", plugify.Trace, 2)
 	var __retVal plugify.Matrix4x4
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__native := C.CallFunc8Callback(__func_)
@@ -2735,12 +2897,14 @@ func CallFunc8Callback(func_ Func8) plugify.Matrix4x4 {
 
 // CallFunc9Callback
 func CallFunc9Callback(func_ Func9) {
+	plugify.Log("cross_call_master::CallFunc9Callback", plugify.Trace, 2)
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	C.CallFunc9Callback(__func_)
 }
 
 // CallFunc10Callback
 func CallFunc10Callback(func_ Func10) uint32 {
+	plugify.Log("cross_call_master::CallFunc10Callback", plugify.Trace, 2)
 	var __retVal uint32
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = uint32(C.CallFunc10Callback(__func_))
@@ -2749,6 +2913,7 @@ func CallFunc10Callback(func_ Func10) uint32 {
 
 // CallFunc11Callback
 func CallFunc11Callback(func_ Func11) uintptr {
+	plugify.Log("cross_call_master::CallFunc11Callback", plugify.Trace, 2)
 	var __retVal uintptr
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = uintptr(C.CallFunc11Callback(__func_))
@@ -2757,6 +2922,7 @@ func CallFunc11Callback(func_ Func11) uintptr {
 
 // CallFunc12Callback
 func CallFunc12Callback(func_ Func12) bool {
+	plugify.Log("cross_call_master::CallFunc12Callback", plugify.Trace, 2)
 	var __retVal bool
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = bool(C.CallFunc12Callback(__func_))
@@ -2765,6 +2931,7 @@ func CallFunc12Callback(func_ Func12) bool {
 
 // CallFunc13Callback
 func CallFunc13Callback(func_ Func13) string {
+	plugify.Log("cross_call_master::CallFunc13Callback", plugify.Trace, 2)
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2785,6 +2952,7 @@ func CallFunc13Callback(func_ Func13) string {
 
 // CallFunc14Callback
 func CallFunc14Callback(func_ Func14) []string {
+	plugify.Log("cross_call_master::CallFunc14Callback", plugify.Trace, 2)
 	var __retVal []string
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2805,6 +2973,7 @@ func CallFunc14Callback(func_ Func14) []string {
 
 // CallFunc15Callback
 func CallFunc15Callback(func_ Func15) int16 {
+	plugify.Log("cross_call_master::CallFunc15Callback", plugify.Trace, 2)
 	var __retVal int16
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = int16(C.CallFunc15Callback(__func_))
@@ -2813,6 +2982,7 @@ func CallFunc15Callback(func_ Func15) int16 {
 
 // CallFunc16Callback
 func CallFunc16Callback(func_ Func16) uintptr {
+	plugify.Log("cross_call_master::CallFunc16Callback", plugify.Trace, 2)
 	var __retVal uintptr
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = uintptr(C.CallFunc16Callback(__func_))
@@ -2821,6 +2991,7 @@ func CallFunc16Callback(func_ Func16) uintptr {
 
 // CallFunc17Callback
 func CallFunc17Callback(func_ Func17) string {
+	plugify.Log("cross_call_master::CallFunc17Callback", plugify.Trace, 2)
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2841,6 +3012,7 @@ func CallFunc17Callback(func_ Func17) string {
 
 // CallFunc18Callback
 func CallFunc18Callback(func_ Func18) string {
+	plugify.Log("cross_call_master::CallFunc18Callback", plugify.Trace, 2)
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2861,6 +3033,7 @@ func CallFunc18Callback(func_ Func18) string {
 
 // CallFunc19Callback
 func CallFunc19Callback(func_ Func19) string {
+	plugify.Log("cross_call_master::CallFunc19Callback", plugify.Trace, 2)
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2881,6 +3054,7 @@ func CallFunc19Callback(func_ Func19) string {
 
 // CallFunc20Callback
 func CallFunc20Callback(func_ Func20) string {
+	plugify.Log("cross_call_master::CallFunc20Callback", plugify.Trace, 2)
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2901,6 +3075,7 @@ func CallFunc20Callback(func_ Func20) string {
 
 // CallFunc21Callback
 func CallFunc21Callback(func_ Func21) string {
+	plugify.Log("cross_call_master::CallFunc21Callback", plugify.Trace, 2)
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2921,6 +3096,7 @@ func CallFunc21Callback(func_ Func21) string {
 
 // CallFunc22Callback
 func CallFunc22Callback(func_ Func22) string {
+	plugify.Log("cross_call_master::CallFunc22Callback", plugify.Trace, 2)
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2941,6 +3117,7 @@ func CallFunc22Callback(func_ Func22) string {
 
 // CallFunc23Callback
 func CallFunc23Callback(func_ Func23) string {
+	plugify.Log("cross_call_master::CallFunc23Callback", plugify.Trace, 2)
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2961,6 +3138,7 @@ func CallFunc23Callback(func_ Func23) string {
 
 // CallFunc24Callback
 func CallFunc24Callback(func_ Func24) string {
+	plugify.Log("cross_call_master::CallFunc24Callback", plugify.Trace, 2)
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2981,6 +3159,7 @@ func CallFunc24Callback(func_ Func24) string {
 
 // CallFunc25Callback
 func CallFunc25Callback(func_ Func25) string {
+	plugify.Log("cross_call_master::CallFunc25Callback", plugify.Trace, 2)
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3001,6 +3180,7 @@ func CallFunc25Callback(func_ Func25) string {
 
 // CallFunc26Callback
 func CallFunc26Callback(func_ Func26) string {
+	plugify.Log("cross_call_master::CallFunc26Callback", plugify.Trace, 2)
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3021,6 +3201,7 @@ func CallFunc26Callback(func_ Func26) string {
 
 // CallFunc27Callback
 func CallFunc27Callback(func_ Func27) string {
+	plugify.Log("cross_call_master::CallFunc27Callback", plugify.Trace, 2)
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3041,6 +3222,7 @@ func CallFunc27Callback(func_ Func27) string {
 
 // CallFunc28Callback
 func CallFunc28Callback(func_ Func28) string {
+	plugify.Log("cross_call_master::CallFunc28Callback", plugify.Trace, 2)
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3061,6 +3243,7 @@ func CallFunc28Callback(func_ Func28) string {
 
 // CallFunc29Callback
 func CallFunc29Callback(func_ Func29) string {
+	plugify.Log("cross_call_master::CallFunc29Callback", plugify.Trace, 2)
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3081,6 +3264,7 @@ func CallFunc29Callback(func_ Func29) string {
 
 // CallFunc30Callback
 func CallFunc30Callback(func_ Func30) string {
+	plugify.Log("cross_call_master::CallFunc30Callback", plugify.Trace, 2)
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3101,6 +3285,7 @@ func CallFunc30Callback(func_ Func30) string {
 
 // CallFunc31Callback
 func CallFunc31Callback(func_ Func31) string {
+	plugify.Log("cross_call_master::CallFunc31Callback", plugify.Trace, 2)
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3121,6 +3306,7 @@ func CallFunc31Callback(func_ Func31) string {
 
 // CallFunc32Callback
 func CallFunc32Callback(func_ Func32) string {
+	plugify.Log("cross_call_master::CallFunc32Callback", plugify.Trace, 2)
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3141,6 +3327,7 @@ func CallFunc32Callback(func_ Func32) string {
 
 // CallFunc33Callback
 func CallFunc33Callback(func_ Func33) string {
+	plugify.Log("cross_call_master::CallFunc33Callback", plugify.Trace, 2)
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3161,6 +3348,7 @@ func CallFunc33Callback(func_ Func33) string {
 
 // CallFuncEnumCallback
 func CallFuncEnumCallback(func_ FuncEnum) string {
+	plugify.Log("cross_call_master::CallFuncEnumCallback", plugify.Trace, 2)
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)

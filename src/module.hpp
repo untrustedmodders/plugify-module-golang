@@ -3,6 +3,8 @@
 #include <plugify/assembly.hpp>
 #include <plugify/callback.hpp>
 #include <plugify/language_module.hpp>
+#include <plugify/logger.hpp>
+#include <plugify/assembly_loader.hpp>
 #include <plugify/extension.hpp>
 
 #include <module_export.h>
@@ -27,8 +29,8 @@ using GoFloat32 = float;
 using GoFloat64 = double;
 
 struct GoString {
-	const char* p;
-	GoInt n;
+	const char* p{};
+	GoInt n{};
 
 	operator std::string_view() const { return {p, static_cast<size_t>(n)};  }
 	operator bool() const { return n > 0;  }
@@ -38,14 +40,14 @@ using GoMap = void*;
 using GoChan = void*;
 
 struct GoInterface {
-	void* t;
-	void* v;
+	void* t{};
+	void* v{};
 };
 
 struct GoSlice {
-	void* data;
-	GoInt len;
-	GoInt cap;
+	void* data{};
+	GoInt len{};
+	GoInt cap{};
 
 	template<typename T>
 	operator std::span<T>() const { return { static_cast<T*>(data), static_cast<size_t>(len)}; }
@@ -97,11 +99,14 @@ namespace golm {
 		bool IsDebugBuild() override;
 
 		const std::unique_ptr<Provider>& GetProvider() { return _provider; }
+		const std::shared_ptr<ILogger>& GetLogger() { return _logger; }
 
 		std::shared_ptr<Method> FindMethod(std::string_view name);
 
 	private:
 		std::unique_ptr<Provider> _provider;
+		std::shared_ptr<ILogger> _logger;
+		std::shared_ptr<IAssemblyLoader> _loader;
 		std::vector<std::unique_ptr<AssemblyHolder>> _assemblies;
 
 		static const std::array<void*, 135> _pluginApi;

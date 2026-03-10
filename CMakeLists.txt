@@ -88,10 +88,6 @@ if(PLUGIFY_USE_SANITIZER)
     endif()
 endif()
 
-if(LINUX)
-    target_link_libraries(${PROJECT_NAME} PRIVATE -lstdc++exp)
-endif()
-
 include(GenerateExportHeader)
 generate_export_header(${PROJECT_NAME} EXPORT_MACRO_NAME GOLM_EXPORT EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/exports/module_export.h)
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_BINARY_DIR}/exports)
@@ -102,6 +98,7 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
         GOLM_PLATFORM_LINUX=$<BOOL:${LINUX}>
         GOLM_ARCH_ARM=$<BOOL:${PLUGIFY_USE_ARM}>
         GOLM_IS_DEBUG=$<STREQUAL:${CMAKE_BUILD_TYPE},Debug>
+        GOLM_IS_RELEASE=$<STREQUAL:${CMAKE_BUILD_TYPE},Release>
         GOLM_LIBRARY_SUFFIX="${CMAKE_SHARED_LIBRARY_SUFFIX}"
         GOLM_LIBRARY_PREFIX="${CMAKE_SHARED_LIBRARY_PREFIX}"
 )
