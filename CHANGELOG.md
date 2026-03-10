@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.4.0](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.3.1...v2.4.0) (2026-03-10)
+
+
+### Features
+
+* add new call logging ([f010718](https://github.com/untrustedmodders/plugify-module-golang/commit/f0107184c9e0056361eb87bb562cc6a4408df260))
+
+
+### Bug Fixes
+
+* add missing aliases to some funcs ([d85300f](https://github.com/untrustedmodders/plugify-module-golang/commit/d85300f0a1f57be4523f88aecf98a7e6d961e053))
+* add new alias tests ([ff23d7d](https://github.com/untrustedmodders/plugify-module-golang/commit/ff23d7d8311d1681d05435d91b4a877839356c8d))
+
 ## [2.3.1](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.3.0...v2.3.1) (2026-01-03)
 
 
