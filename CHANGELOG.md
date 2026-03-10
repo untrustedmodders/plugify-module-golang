@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.1](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.4.0...v2.4.1) (2026-03-10)
+
+
+### Bug Fixes
+
+* mac build ([d0f7fd6](https://github.com/untrustedmodders/plugify-module-golang/commit/d0f7fd67f5a50e24b0264d957e964456bcb7858e))
+
 ## [2.4.0](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.3.1...v2.4.0) (2026-03-10)
 
 
