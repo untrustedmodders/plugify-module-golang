@@ -101,7 +101,7 @@ namespace golm {
 		const std::unique_ptr<Provider>& GetProvider() { return _provider; }
 		const std::shared_ptr<ILogger>& GetLogger() { return _logger; }
 
-		std::shared_ptr<Method> FindMethod(std::string_view name);
+		std::shared_ptr<Method> FindMethod(std::string_view name) const;
 
 	private:
 		std::unique_ptr<Provider> _provider;

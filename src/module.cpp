@@ -158,7 +158,7 @@ void GoLanguageModule::OnPluginEnd(const Extension& plugin) {
 	plugin.GetUserData().RCast<AssemblyHolder*>()->endFunc();
 }
 
-std::shared_ptr<Method> GoLanguageModule::FindMethod(std::string_view name) {
+std::shared_ptr<Method> GoLanguageModule::FindMethod(std::string_view name) const {
 	if (auto separated = Split(name, "."); separated.size() == 2) {
 		if (auto plugin = _provider->FindExtension(separated[0])) {
 			for (const auto& method : plugin->GetMethods()) {
