@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.0](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.4.1...v2.5.0) (2026-04-03)
+
+
+### Features
+
+* add new severity function ([37746ad](https://github.com/untrustedmodders/plugify-module-golang/commit/37746adb912493997adea06528e14a85ca003c25))
+
 ## [2.4.1](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.4.0...v2.4.1) (2026-03-10)
 
 
