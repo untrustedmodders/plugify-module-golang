@@ -215,6 +215,13 @@ void Log(GoString message, Severity severity, ptrdiff_t line, GoString file, GoS
 	}
 }
 
+Severity GetSeverity() {
+	if (const auto& logger = g_golm.GetLogger()) {
+		return logger->GetLogLevel();
+	}
+	return Severity::Unknown;
+}
+
 ptrdiff_t GetPluginId(const Extension& plugin) {
 	return static_cast<ptrdiff_t>(plugin.GetId());
 }
@@ -555,7 +562,7 @@ const EnumObject& GetMethodEnum(const Method& handle, ptrdiff_t index) {
 	}
 }
 
-const std::array<void*, 135> GoLanguageModule::_pluginApi = {
+const std::array<void*, 136> GoLanguageModule::_pluginApi = {
 		reinterpret_cast<void*>(&::GetBaseDir),
 		reinterpret_cast<void*>(&::GetExtensionsDir),
 		reinterpret_cast<void*>(&::GetConfigsDir),
@@ -564,6 +571,7 @@ const std::array<void*, 135> GoLanguageModule::_pluginApi = {
 		reinterpret_cast<void*>(&::GetCacheDir),
 		reinterpret_cast<void*>(&::IsExtensionLoaded),
 		reinterpret_cast<void*>(&::Log),
+		reinterpret_cast<void*>(&::GetSeverity),
 
 		reinterpret_cast<void*>(&::GetPluginId),
 		reinterpret_cast<void*>(&::GetPluginName),

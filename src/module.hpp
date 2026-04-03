@@ -109,7 +109,7 @@ namespace golm {
 		std::shared_ptr<IAssemblyLoader> _loader;
 		std::vector<std::unique_ptr<AssemblyHolder>> _assemblies;
 
-		static const std::array<void*, 135> _pluginApi;
+		static const std::array<void*, 136> _pluginApi;
 	};
 
 	extern GoLanguageModule g_golm;
