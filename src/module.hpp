@@ -4,6 +4,7 @@
 #include <plugify/callback.hpp>
 #include <plugify/language_module.hpp>
 #include <plugify/logger.hpp>
+#include <plugify/profiler.hpp>
 #include <plugify/assembly_loader.hpp>
 #include <plugify/extension.hpp>
 
@@ -100,6 +101,7 @@ namespace golm {
 
 		const std::unique_ptr<Provider>& GetProvider() { return _provider; }
 		const std::shared_ptr<ILogger>& GetLogger() { return _logger; }
+		const std::shared_ptr<IProfiler>& GetProfiler() const { return _profiler; }
 
 		std::shared_ptr<Method> FindMethod(std::string_view name) const;
 
@@ -107,9 +109,10 @@ namespace golm {
 		std::unique_ptr<Provider> _provider;
 		std::shared_ptr<ILogger> _logger;
 		std::shared_ptr<IAssemblyLoader> _loader;
+		std::shared_ptr<IProfiler> _profiler;
 		std::vector<std::unique_ptr<AssemblyHolder>> _assemblies;
 
-		static const std::array<void*, 136> _pluginApi;
+		static const std::array<void*, 139> _pluginApi;
 	};
 
 	extern GoLanguageModule g_golm;

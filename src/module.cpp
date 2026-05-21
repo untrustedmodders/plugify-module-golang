@@ -38,6 +38,8 @@ Result<InitData> GoLanguageModule::Initialize(const Provider& provider, [[maybe_
 	_provider = std::make_unique<Provider>(provider);
 	_logger = _provider->Resolve<ILogger>();
 	_loader = _provider->Resolve<IAssemblyLoader>();
+	_profiler = _provider->TryResolve<IProfiler>();
+
 	_logger->Log(LOG_PREFIX "Inited!", Severity::Debug);
 
 	return InitData{{ .hasUpdate = false }};
@@ -45,6 +47,7 @@ Result<InitData> GoLanguageModule::Initialize(const Provider& provider, [[maybe_
 
 void GoLanguageModule::Shutdown() {
 	_assemblies.clear();
+	_profiler.reset();
 	_loader.reset();
 	_logger.reset();
 	_provider.reset();
@@ -200,7 +203,7 @@ plg::string GetCacheDir() {
 	return plg::as_string(g_golm.GetProvider()->GetCacheDir());
 }
 
-bool IsExtensionLoaded(GoString name, GoString constraint) {
+bool IsLoaded(GoString name, GoString constraint) {
 	if (!constraint) {
 		return g_golm.GetProvider()->IsExtensionLoaded(name);
 	}
@@ -215,11 +218,31 @@ void Log(GoString message, Severity severity, ptrdiff_t line, GoString file, GoS
 	}
 }
 
-Severity GetSeverity() {
+bool IsLogging() {
 	if (const auto& logger = g_golm.GetLogger()) {
-		return logger->GetLogLevel();
+		return logger->GetLogLevel() <= Severity::Info;
 	}
-	return Severity::Unknown;
+	return false;
+}
+
+ZoneHandle BeginZone(GoString name, int line, GoString file, GoString function) {
+	if (const auto& profiler = g_golm.GetProfiler()) {
+		return profiler->BeginZone(ZoneInfo{name, function, file, static_cast<size_t>(line), 0});
+	}
+	return {};
+}
+
+void EndZone(ZoneHandle handle) {
+	if (const auto& profiler = g_golm.GetProfiler()) {
+		profiler->EndZone(handle);
+	}
+}
+
+bool IsProfiling() {
+	if (const auto& profiler = g_golm.GetProfiler()) {
+		return profiler->IsActive();
+	}
+	return false;
 }
 
 ptrdiff_t GetPluginId(const Extension& plugin) {
@@ -562,16 +585,19 @@ const EnumObject& GetMethodEnum(const Method& handle, ptrdiff_t index) {
 	}
 }
 
-const std::array<void*, 136> GoLanguageModule::_pluginApi = {
+const std::array<void*, 139> GoLanguageModule::_pluginApi = {
 		reinterpret_cast<void*>(&::GetBaseDir),
 		reinterpret_cast<void*>(&::GetExtensionsDir),
 		reinterpret_cast<void*>(&::GetConfigsDir),
 		reinterpret_cast<void*>(&::GetDataDir),
 		reinterpret_cast<void*>(&::GetLogsDir),
 		reinterpret_cast<void*>(&::GetCacheDir),
-		reinterpret_cast<void*>(&::IsExtensionLoaded),
+		reinterpret_cast<void*>(&::IsLoaded),
 		reinterpret_cast<void*>(&::Log),
-		reinterpret_cast<void*>(&::GetSeverity),
+		reinterpret_cast<void*>(&::IsLogging),
+		reinterpret_cast<void*>(&::BeginZone),
+		reinterpret_cast<void*>(&::EndZone),
+		reinterpret_cast<void*>(&::IsProfiling),
 
 		reinterpret_cast<void*>(&::GetPluginId),
 		reinterpret_cast<void*>(&::GetPluginName),
