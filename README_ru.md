@@ -103,16 +103,19 @@ import (
 )
 
 func init() {
-	plugify.OnPluginStart(func() {
+	plugify.OnPluginStart(func() error {
 		fmt.Println("Go: OnPluginStart")
+		return nil
 	})
 
-	plugify.OnPluginUpdate(func(dt float32) {
+	plugify.OnPluginUpdate(func(dt float32) error {
 		fmt.Println("Go: OnPluginUpdate")
+		return nil
 	})
 
-	plugify.OnPluginEnd(func() {
+	plugify.OnPluginEnd(func() error {
 		fmt.Println("Go: OnPluginEnd")
+		return nil
 	})
 }
 

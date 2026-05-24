@@ -45,22 +45,25 @@ Result<InitData> GoLanguageModule::Initialize(const Provider& provider, [[maybe_
 	return InitData{{ .hasUpdate = false }};
 }
 
-void GoLanguageModule::Shutdown() {
+Result<void> GoLanguageModule::Shutdown() {
 	_assemblies.clear();
 	_profiler.reset();
 	_loader.reset();
 	_logger.reset();
 	_provider.reset();
+
+	return {};
 }
 
-void GoLanguageModule::OnUpdate([[maybe_unused]] std::chrono::milliseconds dt) {
+Result<void> GoLanguageModule::OnUpdate([[maybe_unused]] std::chrono::milliseconds dt) {
+	return {};
 }
 
-bool GoLanguageModule::IsDebugBuild() {
+bool GoLanguageModule::IsDebugBuild() const noexcept {
 	return GOLM_IS_DEBUG;
 }
 
-void GoLanguageModule::OnMethodExport(const Extension& plugin) {
+Result<void> GoLanguageModule::OnMethodExport(const Extension& plugin) {
 	for (const auto& [method, addr] : plugin.GetMethodsData()) {
 		auto variableName = std::format("__{}_{}", plugin.GetName(), method.GetName());
 		for (const auto& assembly : _assemblies) {
@@ -69,6 +72,7 @@ void GoLanguageModule::OnMethodExport(const Extension& plugin) {
 			}
 		}
 	}
+	return {};
 }
 
 Result<LoadData> GoLanguageModule::OnPluginLoad(const Extension& plugin) {
@@ -83,13 +87,9 @@ Result<LoadData> GoLanguageModule::OnPluginLoad(const Extension& plugin) {
 
 	auto& assembly = *assemblyResult;
 
-	auto initResult = assembly->GetSymbol("plugify_Init");
+	auto initResult = assembly->GetSymbol("plugify_PluginInit");
 	if (!initResult) {
 		return MakeError(std::move(initResult.error()));
-	}
-	auto callResult = assembly->GetSymbol("plugify_InternalCall");
-	if (!callResult) {
-		return MakeError(std::move(callResult.error()));
 	}
 	auto startResult = assembly->GetSymbol("plugify_PluginStart");
 	if (!startResult) {
@@ -107,13 +107,17 @@ Result<LoadData> GoLanguageModule::OnPluginLoad(const Extension& plugin) {
 	if (!contextResult) {
 		return MakeError(std::move(contextResult.error()));
 	}
+	auto callResult = assembly->GetSymbol("plugify_InternalCall");
+	if (!callResult) {
+		return MakeError(std::move(callResult.error()));
+	}
 
 	auto* initFunc = initResult->RCast<InitFunc>();
-	auto* callFunc = callResult->RCast<CallFunc>();
 	auto* startFunc = startResult->RCast<StartFunc>();
 	auto* updateFunc = updateResult->RCast<UpdateFunc>();
 	auto* endFunc = endResult->RCast<EndFunc>();
 	auto* contextFunc = contextResult->RCast<ContextFunc>();
+	auto* callFunc = callResult->RCast<CallFunc>();
 
 	std::vector<std::string> errors;
 
@@ -143,22 +147,37 @@ Result<LoadData> GoLanguageModule::OnPluginLoad(const Extension& plugin) {
 		return MakeError("Not supported plugin api {}, max supported {}", resultVersion, kApiVersion);
 	}
 
-	const auto& [hasUpdate, hasStart, hasEnd, _] = contextFunc ? *(contextFunc()) : PluginContext{};
+	const auto& [hasUpdate, hasStart, hasEnd] = contextFunc ? *(contextFunc()) : PluginContext{};
 
 	auto data = _assemblies.emplace_back(std::make_unique<AssemblyHolder>(std::move(assembly), updateFunc, startFunc, endFunc, contextFunc, callFunc)).get();
 	return LoadData{ std::move(methods), data, { hasUpdate, hasStart, hasEnd, !exportedMethods.empty() } };
 }
 
-void GoLanguageModule::OnPluginStart(const Extension& plugin) {
-	plugin.GetUserData().RCast<AssemblyHolder*>()->startFunc();
+Result<void> GoLanguageModule::OnPluginStart(const Extension& plugin) {
+	auto result = plugin.GetUserData().RCast<AssemblyHolder*>()->startFunc();
+	if (!result) {
+		_logger->Log(std::format(LOG_PREFIX "{}: call of 'OnPluginStart' failed\n{}", plugin.GetName(), result.message), Severity::Error);
+		return MakeError(std::string(result));
+	}
+	return {};
 }
 
-void GoLanguageModule::OnPluginUpdate(const Extension& plugin, std::chrono::milliseconds dt) {
-	plugin.GetUserData().RCast<AssemblyHolder*>()->updateFunc(std::chrono::duration<float>(dt).count());
+Result<void> GoLanguageModule::OnPluginUpdate(const Extension& plugin, std::chrono::milliseconds dt) {
+	auto result = plugin.GetUserData().RCast<AssemblyHolder*>()->updateFunc(std::chrono::duration<float>(dt).count());
+	if (!result) {
+		_logger->Log(std::format(LOG_PREFIX "{}: call of 'OnPluginUpdate' failed\n{}", plugin.GetName(), result.message), Severity::Error);
+		return MakeError(std::string(result));
+	}
+	return {};
 }
 
-void GoLanguageModule::OnPluginEnd(const Extension& plugin) {
-	plugin.GetUserData().RCast<AssemblyHolder*>()->endFunc();
+Result<void> GoLanguageModule::OnPluginEnd(const Extension& plugin) {
+	auto result = plugin.GetUserData().RCast<AssemblyHolder*>()->endFunc();
+	if (!result) {
+		_logger->Log(std::format(LOG_PREFIX "{}: call of 'OnPluginEnd' failed\n{}", plugin.GetName(), result.message), Severity::Error);
+		return MakeError(std::string(result));
+	}
+	return {};
 }
 
 std::shared_ptr<Method> GoLanguageModule::FindMethod(std::string_view name) const {

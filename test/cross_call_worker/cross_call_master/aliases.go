@@ -2,7 +2,7 @@ package cross_call_master
 
 import "github.com/untrustedmodders/go-plugify"
 
-var _ = plugify.Plugin.Loaded
+var _ = plugify.Plugin()
 
 // Generated from cross_call_master
 

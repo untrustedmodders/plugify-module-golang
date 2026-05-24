@@ -58,21 +58,30 @@ struct GoSlice {
 using namespace plugify;
 
 namespace golm {
-	constexpr int kApiVersion = 1;
+	constexpr int kApiVersion = 3;
+
+	enum class PluginCode { Ok, Failed };
+
+	struct PluginResult {
+		PluginCode code{};
+		plg::string	message{};
+
+		explicit operator bool() const noexcept { return code == PluginCode::Ok; }
+		operator std::string_view() const noexcept { return message; }
+	};
 
 	struct PluginContext {
 		bool hasUpdate{};
 		bool hasStart{};
 		bool hasEnd{};
-		bool hasPanic{};
 	};
 
 	using InitFunc = int (*)(GoSlice, int, const void*);
-	using CallFunc = JitCallback::CallbackHandler;
-	using StartFunc = void (*)();
-	using UpdateFunc = void (*)(float);
-	using EndFunc = void (*)();
+	using StartFunc = PluginResult (*)();
+	using UpdateFunc = PluginResult (*)(float);
+	using EndFunc = PluginResult (*)();
 	using ContextFunc = PluginContext* (*)();
+	using CallFunc = JitCallback::CallbackHandler;
 
 	struct AssemblyHolder {
 		std::shared_ptr<IAssembly> assembly;
@@ -90,14 +99,16 @@ namespace golm {
 
 		// ILanguageModule
 		Result<InitData> Initialize(const Provider& provider, const Extension& module) override;
-		void Shutdown() override;
-		void OnUpdate(std::chrono::milliseconds dt) override;
+		Result<void> Shutdown() override;
+		Result<void> OnUpdate(std::chrono::milliseconds dt) override;
+
 		Result<LoadData> OnPluginLoad(const Extension& plugin) override;
-		void OnPluginStart(const Extension& plugin) override;
-		void OnPluginUpdate(const Extension& plugin, std::chrono::milliseconds dt) override;
-		void OnPluginEnd(const Extension& plugin) override;
-		void OnMethodExport(const Extension& plugin) override;
-		bool IsDebugBuild() override;
+		Result<void> OnPluginStart(const Extension& plugin) override;
+		Result<void> OnPluginUpdate(const Extension& plugin, std::chrono::milliseconds dt) override;
+		Result<void> OnPluginEnd(const Extension& plugin) override;
+		Result<void> OnMethodExport(const Extension& plugin) override;
+
+		bool IsDebugBuild() const noexcept override;
 
 		const std::unique_ptr<Provider>& GetProvider() { return _provider; }
 		const std::shared_ptr<ILogger>& GetLogger() { return _logger; }
