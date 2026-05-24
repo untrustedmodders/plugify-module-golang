@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.6.0](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.5.0...v2.6.0) (2026-05-24)
+
+
+### Features
+
+* add new error handling ([5df41a1](https://github.com/untrustedmodders/plugify-module-golang/commit/5df41a101751d198c99e5dc3c1f9914c2d08f593))
+
+
+### Bug Fixes
+
+* add profiler ([4b5762a](https://github.com/untrustedmodders/plugify-module-golang/commit/4b5762a5209ce3d0f8ec0060db8d3f686f78806b))
+
 ## [2.5.0](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.4.1...v2.5.0) (2026-04-03)
 
 
