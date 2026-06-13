@@ -290,7 +290,11 @@
       "funcName": "__NoParamReturnArrayVector2",
       "paramTypes": [],
       "retType": {
-        "type": "vec2[]"
+        "type": "vec2[]",
+        "enum": {
+          "name": "Vector2",
+          "values": []
+        }
       }
     },
     {
@@ -298,7 +302,11 @@
       "funcName": "__NoParamReturnArrayVector3",
       "paramTypes": [],
       "retType": {
-        "type": "vec3[]"
+        "type": "vec3[]",
+        "enum": {
+          "name": "Vector3",
+          "values": []
+        }
       }
     },
     {
@@ -306,7 +314,11 @@
       "funcName": "__NoParamReturnArrayVector4",
       "paramTypes": [],
       "retType": {
-        "type": "vec4[]"
+        "type": "vec4[]",
+        "enum": {
+          "name": "Vector4",
+          "values": []
+        }
       }
     },
     {
@@ -314,7 +326,11 @@
       "funcName": "__NoParamReturnArrayMatrix4x4",
       "paramTypes": [],
       "retType": {
-        "type": "mat4x4[]"
+        "type": "mat4x4[]",
+        "enum": {
+          "name": "Matrix4x4",
+          "values": []
+        }
       }
     },
     {
@@ -322,7 +338,11 @@
       "funcName": "__NoParamReturnVector2",
       "paramTypes": [],
       "retType": {
-        "type": "vec2"
+        "type": "vec2",
+        "enum": {
+          "name": "Vector2",
+          "values": []
+        }
       }
     },
     {
@@ -330,7 +350,11 @@
       "funcName": "__NoParamReturnVector3",
       "paramTypes": [],
       "retType": {
-        "type": "vec3"
+        "type": "vec3",
+        "enum": {
+          "name": "Vector3",
+          "values": []
+        }
       }
     },
     {
@@ -338,7 +362,11 @@
       "funcName": "__NoParamReturnVector4",
       "paramTypes": [],
       "retType": {
-        "type": "vec4"
+        "type": "vec4",
+        "enum": {
+          "name": "Vector4",
+          "values": []
+        }
       }
     },
     {
@@ -346,7 +374,11 @@
       "funcName": "__NoParamReturnMatrix4x4",
       "paramTypes": [],
       "retType": {
-        "type": "mat4x4"
+        "type": "mat4x4",
+        "enum": {
+          "name": "Matrix4x4",
+          "values": []
+        }
       }
     },
     {
@@ -354,8 +386,7 @@
       "funcName": "__Param1",
       "paramTypes": [
         {
-          "type": "int32",
-          "name": "a"
+          "type": "int32"
         }
       ],
       "retType": {
@@ -367,12 +398,10 @@
       "funcName": "__Param2",
       "paramTypes": [
         {
-          "type": "int32",
-          "name": "a"
+          "type": "int32"
         },
         {
-          "type": "float",
-          "name": "b"
+          "type": "float"
         }
       ],
       "retType": {
@@ -384,16 +413,13 @@
       "funcName": "__Param3",
       "paramTypes": [
         {
-          "type": "int32",
-          "name": "a"
+          "type": "int32"
         },
         {
-          "type": "float",
-          "name": "b"
+          "type": "float"
         },
         {
-          "type": "double",
-          "name": "c"
+          "type": "double"
         }
       ],
       "retType": {
@@ -405,20 +431,20 @@
       "funcName": "__Param4",
       "paramTypes": [
         {
-          "type": "int32",
-          "name": "a"
+          "type": "int32"
         },
         {
-          "type": "float",
-          "name": "b"
+          "type": "float"
         },
         {
-          "type": "double",
-          "name": "c"
+          "type": "double"
         },
         {
           "type": "vec4",
-          "name": "d"
+          "enum": {
+            "name": "Vector4",
+            "values": []
+          }
         }
       ],
       "retType": {
@@ -430,24 +456,23 @@
       "funcName": "__Param5",
       "paramTypes": [
         {
-          "type": "int32",
-          "name": "a"
+          "type": "int32"
         },
         {
-          "type": "float",
-          "name": "b"
+          "type": "float"
         },
         {
-          "type": "double",
-          "name": "c"
+          "type": "double"
         },
         {
           "type": "vec4",
-          "name": "d"
+          "enum": {
+            "name": "Vector4",
+            "values": []
+          }
         },
         {
-          "type": "int64[]",
-          "name": "e"
+          "type": "int64[]"
         }
       ],
       "retType": {
@@ -459,28 +484,26 @@
       "funcName": "__Param6",
       "paramTypes": [
         {
-          "type": "int32",
-          "name": "a"
+          "type": "int32"
         },
         {
-          "type": "float",
-          "name": "b"
+          "type": "float"
         },
         {
-          "type": "double",
-          "name": "c"
+          "type": "double"
         },
         {
           "type": "vec4",
-          "name": "d"
+          "enum": {
+            "name": "Vector4",
+            "values": []
+          }
         },
         {
-          "type": "int64[]",
-          "name": "e"
+          "type": "int64[]"
         },
         {
-          "type": "int8",
-          "name": "f"
+          "type": "int8"
         }
       ],
       "retType": {
@@ -492,32 +515,29 @@
       "funcName": "__Param7",
       "paramTypes": [
         {
-          "type": "int32",
-          "name": "a"
+          "type": "int32"
         },
         {
-          "type": "float",
-          "name": "b"
+          "type": "float"
         },
         {
-          "type": "double",
-          "name": "c"
+          "type": "double"
         },
         {
           "type": "vec4",
-          "name": "d"
+          "enum": {
+            "name": "Vector4",
+            "values": []
+          }
         },
         {
-          "type": "int64[]",
-          "name": "e"
+          "type": "int64[]"
         },
         {
-          "type": "int8",
-          "name": "f"
+          "type": "int8"
         },
         {
-          "type": "string",
-          "name": "g"
+          "type": "string"
         }
       ],
       "retType": {
@@ -529,36 +549,32 @@
       "funcName": "__Param8",
       "paramTypes": [
         {
-          "type": "int32",
-          "name": "a"
+          "type": "int32"
         },
         {
-          "type": "float",
-          "name": "b"
+          "type": "float"
         },
         {
-          "type": "double",
-          "name": "c"
+          "type": "double"
         },
         {
           "type": "vec4",
-          "name": "d"
+          "enum": {
+            "name": "Vector4",
+            "values": []
+          }
         },
         {
-          "type": "int64[]",
-          "name": "e"
+          "type": "int64[]"
         },
         {
-          "type": "int8",
-          "name": "f"
+          "type": "int8"
         },
         {
-          "type": "string",
-          "name": "g"
+          "type": "string"
         },
         {
-          "type": "uint16",
-          "name": "h"
+          "type": "uint16"
         }
       ],
       "retType": {
@@ -570,40 +586,35 @@
       "funcName": "__Param9",
       "paramTypes": [
         {
-          "type": "int32",
-          "name": "a"
+          "type": "int32"
         },
         {
-          "type": "float",
-          "name": "b"
+          "type": "float"
         },
         {
-          "type": "double",
-          "name": "c"
+          "type": "double"
         },
         {
           "type": "vec4",
-          "name": "d"
+          "enum": {
+            "name": "Vector4",
+            "values": []
+          }
         },
         {
-          "type": "int64[]",
-          "name": "e"
+          "type": "int64[]"
         },
         {
-          "type": "int8",
-          "name": "f"
+          "type": "int8"
         },
         {
-          "type": "string",
-          "name": "g"
+          "type": "string"
         },
         {
-          "type": "uint16",
-          "name": "h"
+          "type": "uint16"
         },
         {
-          "type": "int16",
-          "name": "k"
+          "type": "int16"
         }
       ],
       "retType": {
@@ -615,44 +626,38 @@
       "funcName": "__Param10",
       "paramTypes": [
         {
-          "type": "int32",
-          "name": "a"
+          "type": "int32"
         },
         {
-          "type": "float",
-          "name": "b"
+          "type": "float"
         },
         {
-          "type": "double",
-          "name": "c"
+          "type": "double"
         },
         {
           "type": "vec4",
-          "name": "d"
+          "enum": {
+            "name": "Vector4",
+            "values": []
+          }
         },
         {
-          "type": "int64[]",
-          "name": "e"
+          "type": "int64[]"
         },
         {
-          "type": "int8",
-          "name": "f"
+          "type": "int8"
         },
         {
-          "type": "string",
-          "name": "g"
+          "type": "string"
         },
         {
-          "type": "uint16",
-          "name": "h"
+          "type": "uint16"
         },
         {
-          "type": "int16",
-          "name": "k"
+          "type": "int16"
         },
         {
-          "type": "ptr64",
-          "name": "l"
+          "type": "ptr64"
         }
       ],
       "retType": {
@@ -665,7 +670,6 @@
       "paramTypes": [
         {
           "type": "int32",
-          "name": "a",
           "ref": true
         }
       ],
@@ -679,12 +683,10 @@
       "paramTypes": [
         {
           "type": "int32",
-          "name": "a",
           "ref": true
         },
         {
           "type": "float",
-          "name": "b",
           "ref": true
         }
       ],
@@ -698,17 +700,14 @@
       "paramTypes": [
         {
           "type": "int32",
-          "name": "a",
           "ref": true
         },
         {
           "type": "float",
-          "name": "b",
           "ref": true
         },
         {
           "type": "double",
-          "name": "c",
           "ref": true
         }
       ],
@@ -722,23 +721,23 @@
       "paramTypes": [
         {
           "type": "int32",
-          "name": "a",
           "ref": true
         },
         {
           "type": "float",
-          "name": "b",
           "ref": true
         },
         {
           "type": "double",
-          "name": "c",
           "ref": true
         },
         {
           "type": "vec4",
-          "name": "d",
-          "ref": true
+          "ref": true,
+          "enum": {
+            "name": "Vector4",
+            "values": []
+          }
         }
       ],
       "retType": {
@@ -751,27 +750,26 @@
       "paramTypes": [
         {
           "type": "int32",
-          "name": "a",
           "ref": true
         },
         {
           "type": "float",
-          "name": "b",
           "ref": true
         },
         {
           "type": "double",
-          "name": "c",
           "ref": true
         },
         {
           "type": "vec4",
-          "name": "d",
-          "ref": true
+          "ref": true,
+          "enum": {
+            "name": "Vector4",
+            "values": []
+          }
         },
         {
           "type": "int64[]",
-          "name": "e",
           "ref": true
         }
       ],
@@ -785,32 +783,30 @@
       "paramTypes": [
         {
           "type": "int32",
-          "name": "a",
           "ref": true
         },
         {
           "type": "float",
-          "name": "b",
           "ref": true
         },
         {
           "type": "double",
-          "name": "c",
           "ref": true
         },
         {
           "type": "vec4",
-          "name": "d",
-          "ref": true
+          "ref": true,
+          "enum": {
+            "name": "Vector4",
+            "values": []
+          }
         },
         {
           "type": "int64[]",
-          "name": "e",
           "ref": true
         },
         {
           "type": "int8",
-          "name": "f",
           "ref": true
         }
       ],
@@ -824,37 +820,34 @@
       "paramTypes": [
         {
           "type": "int32",
-          "name": "a",
           "ref": true
         },
         {
           "type": "float",
-          "name": "b",
           "ref": true
         },
         {
           "type": "double",
-          "name": "c",
           "ref": true
         },
         {
           "type": "vec4",
-          "name": "d",
-          "ref": true
+          "ref": true,
+          "enum": {
+            "name": "Vector4",
+            "values": []
+          }
         },
         {
           "type": "int64[]",
-          "name": "e",
           "ref": true
         },
         {
           "type": "int8",
-          "name": "f",
           "ref": true
         },
         {
           "type": "string",
-          "name": "g",
           "ref": true
         }
       ],
@@ -868,42 +861,38 @@
       "paramTypes": [
         {
           "type": "int32",
-          "name": "a",
           "ref": true
         },
         {
           "type": "float",
-          "name": "b",
           "ref": true
         },
         {
           "type": "double",
-          "name": "c",
           "ref": true
         },
         {
           "type": "vec4",
-          "name": "d",
-          "ref": true
+          "ref": true,
+          "enum": {
+            "name": "Vector4",
+            "values": []
+          }
         },
         {
           "type": "int64[]",
-          "name": "e",
           "ref": true
         },
         {
           "type": "int8",
-          "name": "f",
           "ref": true
         },
         {
           "type": "string",
-          "name": "g",
           "ref": true
         },
         {
           "type": "uint16",
-          "name": "h",
           "ref": true
         }
       ],
@@ -917,47 +906,42 @@
       "paramTypes": [
         {
           "type": "int32",
-          "name": "a",
           "ref": true
         },
         {
           "type": "float",
-          "name": "b",
           "ref": true
         },
         {
           "type": "double",
-          "name": "c",
           "ref": true
         },
         {
           "type": "vec4",
-          "name": "d",
-          "ref": true
+          "ref": true,
+          "enum": {
+            "name": "Vector4",
+            "values": []
+          }
         },
         {
           "type": "int64[]",
-          "name": "e",
           "ref": true
         },
         {
           "type": "int8",
-          "name": "f",
           "ref": true
         },
         {
           "type": "string",
-          "name": "g",
           "ref": true
         },
         {
           "type": "uint16",
-          "name": "h",
           "ref": true
         },
         {
           "type": "int16",
-          "name": "k",
           "ref": true
         }
       ],
@@ -971,52 +955,46 @@
       "paramTypes": [
         {
           "type": "int32",
-          "name": "a",
           "ref": true
         },
         {
           "type": "float",
-          "name": "b",
           "ref": true
         },
         {
           "type": "double",
-          "name": "c",
           "ref": true
         },
         {
           "type": "vec4",
-          "name": "d",
-          "ref": true
+          "ref": true,
+          "enum": {
+            "name": "Vector4",
+            "values": []
+          }
         },
         {
           "type": "int64[]",
-          "name": "e",
           "ref": true
         },
         {
           "type": "int8",
-          "name": "f",
           "ref": true
         },
         {
           "type": "string",
-          "name": "g",
           "ref": true
         },
         {
           "type": "uint16",
-          "name": "h",
           "ref": true
         },
         {
           "type": "int16",
-          "name": "k",
           "ref": true
         },
         {
           "type": "ptr64",
-          "name": "l",
           "ref": true
         }
       ],
@@ -1030,77 +1008,62 @@
       "paramTypes": [
         {
           "type": "bool[]",
-          "name": "p1",
           "ref": true
         },
         {
           "type": "int8[]",
-          "name": "p2",
           "ref": true
         },
         {
           "type": "uint16[]",
-          "name": "p3",
           "ref": true
         },
         {
           "type": "int8[]",
-          "name": "p4",
           "ref": true
         },
         {
           "type": "int16[]",
-          "name": "p5",
           "ref": true
         },
         {
           "type": "int32[]",
-          "name": "p6",
           "ref": true
         },
         {
           "type": "int64[]",
-          "name": "p7",
           "ref": true
         },
         {
           "type": "uint8[]",
-          "name": "p8",
           "ref": true
         },
         {
           "type": "uint16[]",
-          "name": "p9",
           "ref": true
         },
         {
           "type": "uint32[]",
-          "name": "p10",
           "ref": true
         },
         {
           "type": "uint64[]",
-          "name": "p11",
           "ref": true
         },
         {
           "type": "ptr64[]",
-          "name": "p12",
           "ref": true
         },
         {
           "type": "float[]",
-          "name": "p13",
           "ref": true
         },
         {
           "type": "double[]",
-          "name": "p14",
           "ref": true
         },
         {
           "type": "string[]",
-          "name": "p15",
           "ref": true
         }
       ],
@@ -1113,60 +1076,46 @@
       "funcName": "__ParamAllPrimitives",
       "paramTypes": [
         {
-          "type": "bool",
-          "name": "p1"
+          "type": "bool"
         },
         {
-          "type": "int8",
-          "name": "p2"
+          "type": "int8"
         },
         {
-          "type": "uint16",
-          "name": "p3"
+          "type": "uint16"
         },
         {
-          "type": "int8",
-          "name": "p4"
+          "type": "int8"
         },
         {
-          "type": "int16",
-          "name": "p5"
+          "type": "int16"
         },
         {
-          "type": "int32",
-          "name": "p6"
+          "type": "int32"
         },
         {
-          "type": "int64",
-          "name": "p7"
+          "type": "int64"
         },
         {
-          "type": "uint8",
-          "name": "p8"
+          "type": "uint8"
         },
         {
-          "type": "uint16",
-          "name": "p9"
+          "type": "uint16"
         },
         {
-          "type": "uint32",
-          "name": "p10"
+          "type": "uint32"
         },
         {
-          "type": "uint64",
-          "name": "p11"
+          "type": "uint64"
         },
         {
-          "type": "ptr64",
-          "name": "p12"
+          "type": "ptr64"
         },
         {
-          "type": "float",
-          "name": "p13"
+          "type": "float"
         },
         {
-          "type": "double",
-          "name": "p14"
+          "type": "double"
         }
       ],
       "retType": {
@@ -1179,188 +1128,220 @@
       "paramTypes": [
         {
           "type": "bool",
-          "name": "aBool",
           "enum": {
             "name": "AliasBool",
-            "values": null
+            "values": []
           }
         },
         {
           "type": "int8",
-          "name": "aChar8",
           "enum": {
             "name": "AliasChar8",
-            "values": null
+            "values": []
           }
         },
         {
           "type": "uint16",
-          "name": "aChar16",
           "enum": {
             "name": "AliasChar16",
-            "values": null
+            "values": []
           }
         },
         {
           "type": "int8",
-          "name": "aInt8",
           "enum": {
             "name": "AliasInt8",
-            "values": null
+            "values": []
           }
         },
         {
           "type": "int16",
-          "name": "aInt16",
           "enum": {
             "name": "AliasInt16",
-            "values": null
+            "values": []
           }
         },
         {
           "type": "int32",
-          "name": "aInt32",
           "enum": {
             "name": "AliasInt32",
-            "values": [
-              {
-                "name": "Example_First",
-                "value": 1
-              },
-              {
-                "name": "Example_Second",
-                "value": 2
-              },
-              {
-                "name": "Example_Third",
-                "value": 3
-              },
-              {
-                "name": "Example_Forth",
-                "value": 4
-              }
-            ]
+            "values": []
           }
         },
         {
           "type": "int64",
-          "name": "aInt64",
           "enum": {
             "name": "AliasInt64",
-            "values": null
+            "values": []
           }
         },
         {
           "type": "ptr64",
-          "name": "aPtr",
           "enum": {
             "name": "AliasPtr",
-            "values": null
+            "values": []
           }
         },
         {
           "type": "float",
-          "name": "aFloat",
           "enum": {
             "name": "AliasFloat",
-            "values": null
+            "values": []
           }
         },
         {
           "type": "double",
-          "name": "aDouble",
           "enum": {
             "name": "AliasDouble",
-            "values": null
+            "values": []
           }
         },
         {
           "type": "string",
-          "name": "aString",
           "enum": {
             "name": "AliasString",
-            "values": null
+            "values": []
           }
         },
         {
           "type": "any",
-          "name": "aAny"
+          "enum": {
+            "name": "AliasAny",
+            "values": []
+          }
         },
         {
           "type": "vec2",
-          "name": "aVec2"
+          "enum": {
+            "name": "AliasVec2",
+            "values": []
+          }
         },
         {
           "type": "vec3",
-          "name": "aVec3"
+          "enum": {
+            "name": "AliasVec3",
+            "values": []
+          }
         },
         {
           "type": "vec4",
-          "name": "aVec4"
+          "enum": {
+            "name": "AliasVec4",
+            "values": []
+          }
         },
         {
           "type": "mat4x4",
-          "name": "aMat4x4"
+          "enum": {
+            "name": "AliasMat4x4",
+            "values": []
+          }
         },
         {
           "type": "bool[]",
-          "name": "aBoolVec"
+          "enum": {
+            "name": "AliasBoolVector",
+            "values": []
+          }
         },
         {
           "type": "int8[]",
-          "name": "aChar8Vec"
+          "enum": {
+            "name": "AliasChar8Vector",
+            "values": []
+          }
         },
         {
           "type": "uint16[]",
-          "name": "aChar16Vec"
+          "enum": {
+            "name": "AliasChar16Vector",
+            "values": []
+          }
         },
         {
           "type": "int8[]",
-          "name": "aInt8Vec"
+          "enum": {
+            "name": "AliasInt8Vector",
+            "values": []
+          }
         },
         {
           "type": "int16[]",
-          "name": "aInt16Vec"
+          "enum": {
+            "name": "AliasInt16Vector",
+            "values": []
+          }
         },
         {
           "type": "int32[]",
-          "name": "aInt32Vec"
+          "enum": {
+            "name": "AliasInt32Vector",
+            "values": []
+          }
         },
         {
           "type": "int64[]",
-          "name": "aInt64Vec"
+          "enum": {
+            "name": "AliasInt64Vector",
+            "values": []
+          }
         },
         {
           "type": "ptr64[]",
-          "name": "aPtrVec"
+          "enum": {
+            "name": "AliasPtrVector",
+            "values": []
+          }
         },
         {
           "type": "float[]",
-          "name": "aFloatVec"
+          "enum": {
+            "name": "AliasFloatVector",
+            "values": []
+          }
         },
         {
           "type": "double[]",
-          "name": "aDoubleVec"
+          "enum": {
+            "name": "AliasDoubleVector",
+            "values": []
+          }
         },
         {
           "type": "string[]",
-          "name": "aStringVec"
+          "enum": {
+            "name": "AliasStringVector",
+            "values": []
+          }
         },
         {
           "type": "any[]",
-          "name": "aAnyVec"
+          "enum": {
+            "name": "AliasAnyVector",
+            "values": []
+          }
         },
         {
           "type": "vec2[]",
-          "name": "aVec2Vec"
+          "enum": {
+            "name": "Vector2",
+            "values": []
+          }
         },
         {
           "type": "vec3[]",
-          "name": "aVec3Vec"
+          "enum": {
+            "name": "Vector3",
+            "values": []
+          }
         },
         {
           "type": "vec4[]",
-          "name": "aVec4Vec"
+          "enum": {
+            "name": "Vector4",
+            "values": []
+          }
         }
       ],
       "retType": {
@@ -1373,219 +1354,251 @@
       "paramTypes": [
         {
           "type": "bool",
-          "name": "aBool",
           "ref": true,
           "enum": {
             "name": "AliasBool",
-            "values": null
+            "values": []
           }
         },
         {
           "type": "int8",
-          "name": "aChar8",
           "ref": true,
           "enum": {
             "name": "AliasChar8",
-            "values": null
+            "values": []
           }
         },
         {
           "type": "uint16",
-          "name": "aChar16",
           "ref": true,
           "enum": {
             "name": "AliasChar16",
-            "values": null
+            "values": []
           }
         },
         {
           "type": "int8",
-          "name": "aInt8",
           "ref": true,
           "enum": {
             "name": "AliasInt8",
-            "values": null
+            "values": []
           }
         },
         {
           "type": "int16",
-          "name": "aInt16",
           "ref": true,
           "enum": {
             "name": "AliasInt16",
-            "values": null
+            "values": []
           }
         },
         {
           "type": "int32",
-          "name": "aInt32",
           "ref": true,
           "enum": {
             "name": "AliasInt32",
-            "values": [
-              {
-                "name": "Example_First",
-                "value": 1
-              },
-              {
-                "name": "Example_Second",
-                "value": 2
-              },
-              {
-                "name": "Example_Third",
-                "value": 3
-              },
-              {
-                "name": "Example_Forth",
-                "value": 4
-              }
-            ]
+            "values": []
           }
         },
         {
           "type": "int64",
-          "name": "aInt64",
           "ref": true,
           "enum": {
             "name": "AliasInt64",
-            "values": null
+            "values": []
           }
         },
         {
           "type": "ptr64",
-          "name": "aPtr",
           "ref": true,
           "enum": {
             "name": "AliasPtr",
-            "values": null
+            "values": []
           }
         },
         {
           "type": "float",
-          "name": "aFloat",
           "ref": true,
           "enum": {
             "name": "AliasFloat",
-            "values": null
+            "values": []
           }
         },
         {
           "type": "double",
-          "name": "aDouble",
           "ref": true,
           "enum": {
             "name": "AliasDouble",
-            "values": null
+            "values": []
           }
         },
         {
           "type": "string",
-          "name": "aString",
           "ref": true,
           "enum": {
             "name": "AliasString",
-            "values": null
+            "values": []
           }
         },
         {
           "type": "any",
-          "name": "aAny",
-          "ref": true
+          "ref": true,
+          "enum": {
+            "name": "AliasAny",
+            "values": []
+          }
         },
         {
           "type": "vec2",
-          "name": "aVec2",
-          "ref": true
+          "ref": true,
+          "enum": {
+            "name": "AliasVec2",
+            "values": []
+          }
         },
         {
           "type": "vec3",
-          "name": "aVec3",
-          "ref": true
+          "ref": true,
+          "enum": {
+            "name": "AliasVec3",
+            "values": []
+          }
         },
         {
           "type": "vec4",
-          "name": "aVec4",
-          "ref": true
+          "ref": true,
+          "enum": {
+            "name": "AliasVec4",
+            "values": []
+          }
         },
         {
           "type": "mat4x4",
-          "name": "aMat4x4",
-          "ref": true
+          "ref": true,
+          "enum": {
+            "name": "AliasMat4x4",
+            "values": []
+          }
         },
         {
           "type": "bool[]",
-          "name": "aBoolVec",
-          "ref": true
+          "ref": true,
+          "enum": {
+            "name": "AliasBoolVector",
+            "values": []
+          }
         },
         {
           "type": "int8[]",
-          "name": "aChar8Vec",
-          "ref": true
+          "ref": true,
+          "enum": {
+            "name": "AliasChar8Vector",
+            "values": []
+          }
         },
         {
           "type": "uint16[]",
-          "name": "aChar16Vec",
-          "ref": true
+          "ref": true,
+          "enum": {
+            "name": "AliasChar16Vector",
+            "values": []
+          }
         },
         {
           "type": "int8[]",
-          "name": "aInt8Vec",
-          "ref": true
+          "ref": true,
+          "enum": {
+            "name": "AliasInt8Vector",
+            "values": []
+          }
         },
         {
           "type": "int16[]",
-          "name": "aInt16Vec",
-          "ref": true
+          "ref": true,
+          "enum": {
+            "name": "AliasInt16Vector",
+            "values": []
+          }
         },
         {
           "type": "int32[]",
-          "name": "aInt32Vec",
-          "ref": true
+          "ref": true,
+          "enum": {
+            "name": "AliasInt32Vector",
+            "values": []
+          }
         },
         {
           "type": "int64[]",
-          "name": "aInt64Vec",
-          "ref": true
+          "ref": true,
+          "enum": {
+            "name": "AliasInt64Vector",
+            "values": []
+          }
         },
         {
           "type": "ptr64[]",
-          "name": "aPtrVec",
-          "ref": true
+          "ref": true,
+          "enum": {
+            "name": "AliasPtrVector",
+            "values": []
+          }
         },
         {
           "type": "float[]",
-          "name": "aFloatVec",
-          "ref": true
+          "ref": true,
+          "enum": {
+            "name": "AliasFloatVector",
+            "values": []
+          }
         },
         {
           "type": "double[]",
-          "name": "aDoubleVec",
-          "ref": true
+          "ref": true,
+          "enum": {
+            "name": "AliasDoubleVector",
+            "values": []
+          }
         },
         {
           "type": "string[]",
-          "name": "aStringVec",
-          "ref": true
+          "ref": true,
+          "enum": {
+            "name": "AliasStringVector",
+            "values": []
+          }
         },
         {
           "type": "any[]",
-          "name": "aAnyVec",
-          "ref": true
+          "ref": true,
+          "enum": {
+            "name": "AliasAnyVector",
+            "values": []
+          }
         },
         {
           "type": "vec2[]",
-          "name": "aVec2Vec",
-          "ref": true
+          "ref": true,
+          "enum": {
+            "name": "Vector2",
+            "values": []
+          }
         },
         {
           "type": "vec3[]",
-          "name": "aVec3Vec",
-          "ref": true
+          "ref": true,
+          "enum": {
+            "name": "Vector3",
+            "values": []
+          }
         },
         {
           "type": "vec4[]",
-          "name": "aVec4Vec",
-          "ref": true
+          "ref": true,
+          "enum": {
+            "name": "Vector4",
+            "values": []
+          }
         }
       ],
       "retType": {
@@ -1598,7 +1611,6 @@
       "paramTypes": [
         {
           "type": "int32",
-          "name": "p1",
           "enum": {
             "name": "Example",
             "values": [
@@ -1623,7 +1635,6 @@
         },
         {
           "type": "int32[]",
-          "name": "p2",
           "enum": {
             "name": "Example",
             "values": [
@@ -1657,7 +1668,6 @@
       "paramTypes": [
         {
           "type": "int32",
-          "name": "p1",
           "ref": true,
           "enum": {
             "name": "Example",
@@ -1683,7 +1693,6 @@
         },
         {
           "type": "int32[]",
-          "name": "p2",
           "ref": true,
           "enum": {
             "name": "Example",
@@ -1717,12 +1726,10 @@
       "funcName": "__ParamVariant",
       "paramTypes": [
         {
-          "type": "any",
-          "name": "p1"
+          "type": "any"
         },
         {
-          "type": "any[]",
-          "name": "p2"
+          "type": "any[]"
         }
       ],
       "retType": {
@@ -1735,12 +1742,10 @@
       "paramTypes": [
         {
           "type": "any",
-          "name": "p1",
           "ref": true
         },
         {
           "type": "any[]",
-          "name": "p2",
           "ref": true
         }
       ],
@@ -1754,7 +1759,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncVoid",
             "funcName": "_",
@@ -1775,7 +1779,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncBool",
             "funcName": "_",
@@ -1796,7 +1799,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncChar8",
             "funcName": "_",
@@ -1817,7 +1819,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncChar16",
             "funcName": "_",
@@ -1838,7 +1839,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncInt8",
             "funcName": "_",
@@ -1859,7 +1859,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncInt16",
             "funcName": "_",
@@ -1880,7 +1879,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncInt32",
             "funcName": "_",
@@ -1901,7 +1899,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncInt64",
             "funcName": "_",
@@ -1922,7 +1919,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncUInt8",
             "funcName": "_",
@@ -1943,7 +1939,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncUInt16",
             "funcName": "_",
@@ -1964,7 +1959,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncUInt32",
             "funcName": "_",
@@ -1985,7 +1979,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncUInt64",
             "funcName": "_",
@@ -2006,7 +1999,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncPtr",
             "funcName": "_",
@@ -2027,7 +2019,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncFloat",
             "funcName": "_",
@@ -2048,7 +2039,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncDouble",
             "funcName": "_",
@@ -2069,7 +2059,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncFunction",
             "funcName": "_",
@@ -2106,7 +2095,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncString",
             "funcName": "_",
@@ -2127,7 +2115,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAny",
             "funcName": "_",
@@ -2149,7 +2136,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncBoolVector",
             "funcName": "_",
@@ -2170,7 +2156,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncChar8Vector",
             "funcName": "_",
@@ -2191,7 +2176,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncChar16Vector",
             "funcName": "_",
@@ -2212,7 +2196,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncInt8Vector",
             "funcName": "_",
@@ -2233,7 +2216,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncInt16Vector",
             "funcName": "_",
@@ -2254,7 +2236,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncInt32Vector",
             "funcName": "_",
@@ -2275,7 +2256,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncInt64Vector",
             "funcName": "_",
@@ -2296,7 +2276,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncUInt8Vector",
             "funcName": "_",
@@ -2317,7 +2296,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncUInt16Vector",
             "funcName": "_",
@@ -2338,7 +2316,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncUInt32Vector",
             "funcName": "_",
@@ -2359,7 +2336,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncUInt64Vector",
             "funcName": "_",
@@ -2380,7 +2356,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncPtrVector",
             "funcName": "_",
@@ -2401,7 +2376,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncFloatVector",
             "funcName": "_",
@@ -2422,7 +2396,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncDoubleVector",
             "funcName": "_",
@@ -2443,7 +2416,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncStringVector",
             "funcName": "_",
@@ -2464,7 +2436,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAnyVector",
             "funcName": "_",
@@ -2485,19 +2456,26 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncVec2Vector",
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "vec2[]"
+              "type": "vec2[]",
+              "enum": {
+                "name": "Vector2",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "vec2[]"
+        "type": "vec2[]",
+        "enum": {
+          "name": "Vector2",
+          "values": []
+        }
       }
     },
     {
@@ -2506,19 +2484,26 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncVec3Vector",
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "vec3[]"
+              "type": "vec3[]",
+              "enum": {
+                "name": "Vector3",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "vec3[]"
+        "type": "vec3[]",
+        "enum": {
+          "name": "Vector3",
+          "values": []
+        }
       }
     },
     {
@@ -2527,19 +2512,26 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncVec4Vector",
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "vec4[]"
+              "type": "vec4[]",
+              "enum": {
+                "name": "Vector4",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "vec4[]"
+        "type": "vec4[]",
+        "enum": {
+          "name": "Vector4",
+          "values": []
+        }
       }
     },
     {
@@ -2548,19 +2540,26 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncMat4x4Vector",
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "mat4x4[]"
+              "type": "mat4x4[]",
+              "enum": {
+                "name": "Matrix4x4",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "mat4x4[]"
+        "type": "mat4x4[]",
+        "enum": {
+          "name": "Matrix4x4",
+          "values": []
+        }
       }
     },
     {
@@ -2569,19 +2568,26 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncVec2",
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "vec2"
+              "type": "vec2",
+              "enum": {
+                "name": "Vector2",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "vec2"
+        "type": "vec2",
+        "enum": {
+          "name": "Vector2",
+          "values": []
+        }
       }
     },
     {
@@ -2590,19 +2596,26 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncVec3",
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "vec3"
+              "type": "vec3",
+              "enum": {
+                "name": "Vector3",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "vec3"
+        "type": "vec3",
+        "enum": {
+          "name": "Vector3",
+          "values": []
+        }
       }
     },
     {
@@ -2611,19 +2624,26 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncVec4",
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "vec4"
+              "type": "vec4",
+              "enum": {
+                "name": "Vector4",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "vec4"
+        "type": "vec4",
+        "enum": {
+          "name": "Vector4",
+          "values": []
+        }
       }
     },
     {
@@ -2632,19 +2652,26 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncMat4x4",
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "mat4x4"
+              "type": "mat4x4",
+              "enum": {
+                "name": "Matrix4x4",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "mat4x4"
+        "type": "mat4x4",
+        "enum": {
+          "name": "Matrix4x4",
+          "values": []
+        }
       }
     },
     {
@@ -2653,14 +2680,16 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "Func1",
             "funcName": "_",
             "paramTypes": [
               {
                 "type": "vec3",
-                "name": "a"
+                "enum": {
+                  "name": "Vector3",
+                  "values": []
+                }
               }
             ],
             "retType": {
@@ -2679,18 +2708,15 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "Func2",
             "funcName": "_",
             "paramTypes": [
               {
-                "type": "float",
-                "name": "a"
+                "type": "float"
               },
               {
-                "type": "int64",
-                "name": "b"
+                "type": "int64"
               }
             ],
             "retType": {
@@ -2709,22 +2735,22 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "Func3",
             "funcName": "_",
             "paramTypes": [
               {
-                "type": "ptr64",
-                "name": "a"
+                "type": "ptr64"
               },
               {
                 "type": "vec4",
-                "name": "b"
+                "enum": {
+                  "name": "Vector4",
+                  "values": []
+                }
               },
               {
-                "type": "string",
-                "name": "c"
+                "type": "string"
               }
             ],
             "retType": {
@@ -2743,36 +2769,43 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "Func4",
             "funcName": "_",
             "paramTypes": [
               {
-                "type": "bool",
-                "name": "a"
+                "type": "bool"
               },
               {
-                "type": "int32",
-                "name": "b"
+                "type": "int32"
               },
               {
-                "type": "uint16",
-                "name": "c"
+                "type": "uint16"
               },
               {
                 "type": "mat4x4",
-                "name": "d"
+                "enum": {
+                  "name": "Matrix4x4",
+                  "values": []
+                }
               }
             ],
             "retType": {
-              "type": "vec4"
+              "type": "vec4",
+              "enum": {
+                "name": "Vector4",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "vec4"
+        "type": "vec4",
+        "enum": {
+          "name": "Vector4",
+          "values": []
+        }
       }
     },
     {
@@ -2781,30 +2814,28 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "Func5",
             "funcName": "_",
             "paramTypes": [
               {
-                "type": "int8",
-                "name": "a"
+                "type": "int8"
               },
               {
                 "type": "vec2",
-                "name": "b"
+                "enum": {
+                  "name": "Vector2",
+                  "values": []
+                }
               },
               {
-                "type": "ptr64",
-                "name": "c"
+                "type": "ptr64"
               },
               {
-                "type": "double",
-                "name": "d"
+                "type": "double"
               },
               {
-                "type": "uint64[]",
-                "name": "e"
+                "type": "uint64[]"
               }
             ],
             "retType": {
@@ -2823,34 +2854,27 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "Func6",
             "funcName": "_",
             "paramTypes": [
               {
-                "type": "string",
-                "name": "a"
+                "type": "string"
               },
               {
-                "type": "float",
-                "name": "b"
+                "type": "float"
               },
               {
-                "type": "float[]",
-                "name": "c"
+                "type": "float[]"
               },
               {
-                "type": "int16",
-                "name": "d"
+                "type": "int16"
               },
               {
-                "type": "uint8[]",
-                "name": "e"
+                "type": "uint8[]"
               },
               {
-                "type": "ptr64",
-                "name": "f"
+                "type": "ptr64"
               }
             ],
             "retType": {
@@ -2869,38 +2893,34 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "Func7",
             "funcName": "_",
             "paramTypes": [
               {
-                "type": "int8[]",
-                "name": "vecC"
+                "type": "int8[]"
               },
               {
-                "type": "uint16",
-                "name": "u16"
+                "type": "uint16"
               },
               {
-                "type": "uint16",
-                "name": "ch16"
+                "type": "uint16"
               },
               {
-                "type": "uint32[]",
-                "name": "vecU32"
+                "type": "uint32[]"
               },
               {
                 "type": "vec4",
-                "name": "vec4"
+                "enum": {
+                  "name": "Vector4",
+                  "values": []
+                }
               },
               {
-                "type": "bool",
-                "name": "b"
+                "type": "bool"
               },
               {
-                "type": "uint64",
-                "name": "u64"
+                "type": "uint64"
               }
             ],
             "retType": {
@@ -2919,52 +2939,59 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "Func8",
             "funcName": "_",
             "paramTypes": [
               {
                 "type": "vec3",
-                "name": "vec3"
+                "enum": {
+                  "name": "Vector3",
+                  "values": []
+                }
               },
               {
-                "type": "uint32[]",
-                "name": "vecU32"
+                "type": "uint32[]"
               },
               {
-                "type": "int16",
-                "name": "i16"
+                "type": "int16"
               },
               {
-                "type": "bool",
-                "name": "b"
+                "type": "bool"
               },
               {
                 "type": "vec4",
-                "name": "vec4"
+                "enum": {
+                  "name": "Vector4",
+                  "values": []
+                }
               },
               {
-                "type": "uint16[]",
-                "name": "vecC16"
+                "type": "uint16[]"
               },
               {
-                "type": "uint16",
-                "name": "ch16"
+                "type": "uint16"
               },
               {
-                "type": "int32",
-                "name": "i32"
+                "type": "int32"
               }
             ],
             "retType": {
-              "type": "mat4x4"
+              "type": "mat4x4",
+              "enum": {
+                "name": "Matrix4x4",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "mat4x4"
+        "type": "mat4x4",
+        "enum": {
+          "name": "Matrix4x4",
+          "values": []
+        }
       }
     },
     {
@@ -2973,46 +3000,44 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "Func9",
             "funcName": "_",
             "paramTypes": [
               {
-                "type": "float",
-                "name": "f"
+                "type": "float"
               },
               {
                 "type": "vec2",
-                "name": "vec2"
+                "enum": {
+                  "name": "Vector2",
+                  "values": []
+                }
               },
               {
-                "type": "int8[]",
-                "name": "vecI8"
+                "type": "int8[]"
               },
               {
-                "type": "uint64",
-                "name": "u64"
+                "type": "uint64"
               },
               {
-                "type": "bool",
-                "name": "b"
+                "type": "bool"
               },
               {
-                "type": "string",
-                "name": "str"
+                "type": "string"
               },
               {
                 "type": "vec4",
-                "name": "vec4"
+                "enum": {
+                  "name": "Vector4",
+                  "values": []
+                }
               },
               {
-                "type": "int16",
-                "name": "i16"
+                "type": "int16"
               },
               {
-                "type": "ptr64",
-                "name": "ptr"
+                "type": "ptr64"
               }
             ],
             "retType": {
@@ -3031,50 +3056,51 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "Func10",
             "funcName": "_",
             "paramTypes": [
               {
                 "type": "vec4",
-                "name": "vec4"
+                "enum": {
+                  "name": "Vector4",
+                  "values": []
+                }
               },
               {
                 "type": "mat4x4",
-                "name": "mat"
+                "enum": {
+                  "name": "Matrix4x4",
+                  "values": []
+                }
               },
               {
-                "type": "uint32[]",
-                "name": "vecU32"
+                "type": "uint32[]"
               },
               {
-                "type": "uint64",
-                "name": "u64"
+                "type": "uint64"
               },
               {
-                "type": "int8[]",
-                "name": "vecC"
+                "type": "int8[]"
               },
               {
-                "type": "int32",
-                "name": "i32"
+                "type": "int32"
               },
               {
-                "type": "bool",
-                "name": "b"
+                "type": "bool"
               },
               {
                 "type": "vec2",
-                "name": "vec2"
+                "enum": {
+                  "name": "Vector2",
+                  "values": []
+                }
               },
               {
-                "type": "int64",
-                "name": "i64"
+                "type": "int64"
               },
               {
-                "type": "double",
-                "name": "d"
+                "type": "double"
               }
             ],
             "retType": {
@@ -3093,54 +3119,50 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "Func11",
             "funcName": "_",
             "paramTypes": [
               {
-                "type": "bool[]",
-                "name": "vecB"
+                "type": "bool[]"
               },
               {
-                "type": "uint16",
-                "name": "ch16"
+                "type": "uint16"
               },
               {
-                "type": "uint8",
-                "name": "u8"
+                "type": "uint8"
               },
               {
-                "type": "double",
-                "name": "d"
+                "type": "double"
               },
               {
                 "type": "vec3",
-                "name": "vec3"
+                "enum": {
+                  "name": "Vector3",
+                  "values": []
+                }
               },
               {
-                "type": "int8[]",
-                "name": "vecI8"
+                "type": "int8[]"
               },
               {
-                "type": "int64",
-                "name": "i64"
+                "type": "int64"
               },
               {
-                "type": "uint16",
-                "name": "u16"
+                "type": "uint16"
               },
               {
-                "type": "float",
-                "name": "f"
+                "type": "float"
               },
               {
                 "type": "vec2",
-                "name": "vec2"
+                "enum": {
+                  "name": "Vector2",
+                  "values": []
+                }
               },
               {
-                "type": "uint32",
-                "name": "u32"
+                "type": "uint32"
               }
             ],
             "retType": {
@@ -3159,58 +3181,45 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "Func12",
             "funcName": "_",
             "paramTypes": [
               {
-                "type": "ptr64",
-                "name": "ptr"
+                "type": "ptr64"
               },
               {
-                "type": "double[]",
-                "name": "vecD"
+                "type": "double[]"
               },
               {
-                "type": "uint32",
-                "name": "u32"
+                "type": "uint32"
               },
               {
-                "type": "double",
-                "name": "d"
+                "type": "double"
               },
               {
-                "type": "bool",
-                "name": "b"
+                "type": "bool"
               },
               {
-                "type": "int32",
-                "name": "i32"
+                "type": "int32"
               },
               {
-                "type": "int8",
-                "name": "i8"
+                "type": "int8"
               },
               {
-                "type": "uint64",
-                "name": "u64"
+                "type": "uint64"
               },
               {
-                "type": "float",
-                "name": "f"
+                "type": "float"
               },
               {
-                "type": "ptr64[]",
-                "name": "vecPtr"
+                "type": "ptr64[]"
               },
               {
-                "type": "int64",
-                "name": "i64"
+                "type": "int64"
               },
               {
-                "type": "int8",
-                "name": "ch"
+                "type": "int8"
               }
             ],
             "retType": {
@@ -3229,62 +3238,60 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "Func13",
             "funcName": "_",
             "paramTypes": [
               {
-                "type": "int64",
-                "name": "i64"
+                "type": "int64"
               },
               {
-                "type": "int8[]",
-                "name": "vecC"
+                "type": "int8[]"
               },
               {
-                "type": "uint16",
-                "name": "d"
+                "type": "uint16"
               },
               {
-                "type": "float",
-                "name": "f"
+                "type": "float"
               },
               {
-                "type": "bool[]",
-                "name": "b"
+                "type": "bool[]"
               },
               {
                 "type": "vec4",
-                "name": "vec4"
+                "enum": {
+                  "name": "Vector4",
+                  "values": []
+                }
               },
               {
-                "type": "string",
-                "name": "str"
+                "type": "string"
               },
               {
-                "type": "int32",
-                "name": "int32_"
+                "type": "int32"
               },
               {
                 "type": "vec3",
-                "name": "vec3"
+                "enum": {
+                  "name": "Vector3",
+                  "values": []
+                }
               },
               {
-                "type": "ptr64",
-                "name": "ptr"
+                "type": "ptr64"
               },
               {
                 "type": "vec2",
-                "name": "vec2"
+                "enum": {
+                  "name": "Vector2",
+                  "values": []
+                }
               },
               {
-                "type": "uint8[]",
-                "name": "arr"
+                "type": "uint8[]"
               },
               {
-                "type": "int16",
-                "name": "i16"
+                "type": "int16"
               }
             ],
             "retType": {
@@ -3303,66 +3310,63 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "Func14",
             "funcName": "_",
             "paramTypes": [
               {
-                "type": "int8[]",
-                "name": "vecC"
+                "type": "int8[]"
               },
               {
-                "type": "uint32[]",
-                "name": "vecU32"
+                "type": "uint32[]"
               },
               {
                 "type": "mat4x4",
-                "name": "mat"
+                "enum": {
+                  "name": "Matrix4x4",
+                  "values": []
+                }
               },
               {
-                "type": "bool",
-                "name": "b"
+                "type": "bool"
               },
               {
-                "type": "uint16",
-                "name": "ch16"
+                "type": "uint16"
               },
               {
-                "type": "int32",
-                "name": "i32"
+                "type": "int32"
               },
               {
-                "type": "float[]",
-                "name": "vecF"
+                "type": "float[]"
               },
               {
-                "type": "uint16",
-                "name": "u16"
+                "type": "uint16"
               },
               {
-                "type": "uint8[]",
-                "name": "vecU8"
+                "type": "uint8[]"
               },
               {
-                "type": "int8",
-                "name": "i8"
+                "type": "int8"
               },
               {
                 "type": "vec3",
-                "name": "vec3"
+                "enum": {
+                  "name": "Vector3",
+                  "values": []
+                }
               },
               {
                 "type": "vec4",
-                "name": "vec4"
+                "enum": {
+                  "name": "Vector4",
+                  "values": []
+                }
               },
               {
-                "type": "double",
-                "name": "d"
+                "type": "double"
               },
               {
-                "type": "ptr64",
-                "name": "ptr"
+                "type": "ptr64"
               }
             ],
             "retType": {
@@ -3381,70 +3385,66 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "Func15",
             "funcName": "_",
             "paramTypes": [
               {
-                "type": "int16[]",
-                "name": "vecI16"
+                "type": "int16[]"
               },
               {
                 "type": "mat4x4",
-                "name": "mat"
+                "enum": {
+                  "name": "Matrix4x4",
+                  "values": []
+                }
               },
               {
                 "type": "vec4",
-                "name": "vec4"
+                "enum": {
+                  "name": "Vector4",
+                  "values": []
+                }
               },
               {
-                "type": "ptr64",
-                "name": "ptr"
+                "type": "ptr64"
               },
               {
-                "type": "uint64",
-                "name": "u64"
+                "type": "uint64"
               },
               {
-                "type": "uint32[]",
-                "name": "vecU32"
+                "type": "uint32[]"
               },
               {
-                "type": "bool",
-                "name": "b"
+                "type": "bool"
               },
               {
-                "type": "float",
-                "name": "f"
+                "type": "float"
               },
               {
-                "type": "uint16[]",
-                "name": "vecC16"
+                "type": "uint16[]"
               },
               {
-                "type": "uint8",
-                "name": "u8"
+                "type": "uint8"
               },
               {
-                "type": "int32",
-                "name": "i32"
+                "type": "int32"
               },
               {
                 "type": "vec2",
-                "name": "vec2"
+                "enum": {
+                  "name": "Vector2",
+                  "values": []
+                }
               },
               {
-                "type": "uint16",
-                "name": "u16"
+                "type": "uint16"
               },
               {
-                "type": "double",
-                "name": "d"
+                "type": "double"
               },
               {
-                "type": "uint8[]",
-                "name": "vecU8"
+                "type": "uint8[]"
               }
             ],
             "retType": {
@@ -3463,74 +3463,73 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "Func16",
             "funcName": "_",
             "paramTypes": [
               {
-                "type": "bool[]",
-                "name": "vecB"
+                "type": "bool[]"
               },
               {
-                "type": "int16",
-                "name": "i16"
+                "type": "int16"
               },
               {
-                "type": "int8[]",
-                "name": "vecI8"
+                "type": "int8[]"
               },
               {
                 "type": "vec4",
-                "name": "vec4"
+                "enum": {
+                  "name": "Vector4",
+                  "values": []
+                }
               },
               {
                 "type": "mat4x4",
-                "name": "mat"
+                "enum": {
+                  "name": "Matrix4x4",
+                  "values": []
+                }
               },
               {
                 "type": "vec2",
-                "name": "vec2"
+                "enum": {
+                  "name": "Vector2",
+                  "values": []
+                }
               },
               {
-                "type": "uint64[]",
-                "name": "vecU64"
+                "type": "uint64[]"
               },
               {
-                "type": "int8[]",
-                "name": "vecC"
+                "type": "int8[]"
               },
               {
-                "type": "string",
-                "name": "str"
+                "type": "string"
               },
               {
-                "type": "int64",
-                "name": "i64"
+                "type": "int64"
               },
               {
-                "type": "uint32[]",
-                "name": "vecU32"
+                "type": "uint32[]"
               },
               {
                 "type": "vec3",
-                "name": "vec3"
+                "enum": {
+                  "name": "Vector3",
+                  "values": []
+                }
               },
               {
-                "type": "float",
-                "name": "f"
+                "type": "float"
               },
               {
-                "type": "double",
-                "name": "d"
+                "type": "double"
               },
               {
-                "type": "int8",
-                "name": "i8"
+                "type": "int8"
               },
               {
-                "type": "uint16",
-                "name": "u16"
+                "type": "uint16"
               }
             ],
             "retType": {
@@ -3550,14 +3549,12 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "Func17",
             "funcName": "_",
             "paramTypes": [
               {
                 "type": "int32",
-                "name": "i32",
                 "ref": true
               }
             ],
@@ -3577,24 +3574,25 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "Func18",
             "funcName": "_",
             "paramTypes": [
               {
                 "type": "int8",
-                "name": "i8",
                 "ref": true
               },
               {
                 "type": "int16",
-                "name": "i16",
                 "ref": true
               }
             ],
             "retType": {
-              "type": "vec2"
+              "type": "vec2",
+              "enum": {
+                "name": "Vector2",
+                "values": []
+              }
             }
           }
         }
@@ -3609,24 +3607,24 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "Func19",
             "funcName": "_",
             "paramTypes": [
               {
                 "type": "uint32",
-                "name": "u32",
                 "ref": true
               },
               {
                 "type": "vec3",
-                "name": "vec3",
-                "ref": true
+                "ref": true,
+                "enum": {
+                  "name": "Vector3",
+                  "values": []
+                }
               },
               {
                 "type": "uint32[]",
-                "name": "vecU32",
                 "ref": true
               }
             ],
@@ -3646,29 +3644,28 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "Func20",
             "funcName": "_",
             "paramTypes": [
               {
                 "type": "uint16",
-                "name": "ch16",
                 "ref": true
               },
               {
                 "type": "vec4",
-                "name": "vec4",
-                "ref": true
+                "ref": true,
+                "enum": {
+                  "name": "Vector4",
+                  "values": []
+                }
               },
               {
                 "type": "uint64[]",
-                "name": "vecU64",
                 "ref": true
               },
               {
                 "type": "int8",
-                "name": "ch",
                 "ref": true
               }
             ],
@@ -3688,34 +3685,36 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "Func21",
             "funcName": "_",
             "paramTypes": [
               {
                 "type": "mat4x4",
-                "name": "mat",
-                "ref": true
+                "ref": true,
+                "enum": {
+                  "name": "Matrix4x4",
+                  "values": []
+                }
               },
               {
                 "type": "int32[]",
-                "name": "vecI32",
                 "ref": true
               },
               {
                 "type": "vec2",
-                "name": "vec2",
-                "ref": true
+                "ref": true,
+                "enum": {
+                  "name": "Vector2",
+                  "values": []
+                }
               },
               {
                 "type": "bool",
-                "name": "b",
                 "ref": true
               },
               {
                 "type": "double",
-                "name": "extraParam",
                 "ref": true
               }
             ],
@@ -3735,40 +3734,37 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "Func22",
             "funcName": "_",
             "paramTypes": [
               {
                 "type": "ptr64",
-                "name": "ptr64Ref",
                 "ref": true
               },
               {
                 "type": "uint32",
-                "name": "uint32Ref",
                 "ref": true
               },
               {
                 "type": "double[]",
-                "name": "vectorDoubleRef",
                 "ref": true
               },
               {
                 "type": "int16",
-                "name": "int16Ref",
                 "ref": true
               },
               {
                 "type": "string",
-                "name": "plgStringRef",
                 "ref": true
               },
               {
                 "type": "vec4",
-                "name": "plgVector4Ref",
-                "ref": true
+                "ref": true,
+                "enum": {
+                  "name": "Vector4",
+                  "values": []
+                }
               }
             ],
             "retType": {
@@ -3787,44 +3783,40 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "Func23",
             "funcName": "_",
             "paramTypes": [
               {
                 "type": "uint64",
-                "name": "uint64Ref",
                 "ref": true
               },
               {
                 "type": "vec2",
-                "name": "plgVector2Ref",
-                "ref": true
+                "ref": true,
+                "enum": {
+                  "name": "Vector2",
+                  "values": []
+                }
               },
               {
                 "type": "int16[]",
-                "name": "vectorInt16Ref",
                 "ref": true
               },
               {
                 "type": "uint16",
-                "name": "char16Ref",
                 "ref": true
               },
               {
                 "type": "float",
-                "name": "floatRef",
                 "ref": true
               },
               {
                 "type": "int8",
-                "name": "int8Ref",
                 "ref": true
               },
               {
                 "type": "uint8[]",
-                "name": "vectorUInt8Ref",
                 "ref": true
               }
             ],
@@ -3844,54 +3836,53 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "Func24",
             "funcName": "_",
             "paramTypes": [
               {
                 "type": "int8[]",
-                "name": "vectorCharRef",
                 "ref": true
               },
               {
                 "type": "int64",
-                "name": "int64Ref",
                 "ref": true
               },
               {
                 "type": "uint8[]",
-                "name": "vectorUInt8Ref",
                 "ref": true
               },
               {
                 "type": "vec4",
-                "name": "plgVector4Ref",
-                "ref": true
+                "ref": true,
+                "enum": {
+                  "name": "Vector4",
+                  "values": []
+                }
               },
               {
                 "type": "uint64",
-                "name": "uint64Ref",
                 "ref": true
               },
               {
                 "type": "ptr64[]",
-                "name": "vectorptr64Ref",
                 "ref": true
               },
               {
                 "type": "double",
-                "name": "doubleRef",
                 "ref": true
               },
               {
                 "type": "ptr64[]",
-                "name": "vectorptr64Ref2",
                 "ref": true
               }
             ],
             "retType": {
-              "type": "mat4x4"
+              "type": "mat4x4",
+              "enum": {
+                "name": "Matrix4x4",
+                "values": []
+              }
             }
           }
         }
@@ -3906,54 +3897,52 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "Func25",
             "funcName": "_",
             "paramTypes": [
               {
                 "type": "int32",
-                "name": "int32Ref",
                 "ref": true
               },
               {
                 "type": "ptr64[]",
-                "name": "vectorptr64Ref",
                 "ref": true
               },
               {
                 "type": "bool",
-                "name": "boolRef",
                 "ref": true
               },
               {
                 "type": "uint8",
-                "name": "uint8Ref",
                 "ref": true
               },
               {
                 "type": "string",
-                "name": "plgStringRef",
                 "ref": true
               },
               {
                 "type": "vec3",
-                "name": "plgVector3Ref",
-                "ref": true
+                "ref": true,
+                "enum": {
+                  "name": "Vector3",
+                  "values": []
+                }
               },
               {
                 "type": "int64",
-                "name": "int64Ref",
                 "ref": true
               },
               {
                 "type": "vec4",
-                "name": "plgVector4Ref",
-                "ref": true
+                "ref": true,
+                "enum": {
+                  "name": "Vector4",
+                  "values": []
+                }
               },
               {
                 "type": "uint16",
-                "name": "uint16Ref",
                 "ref": true
               }
             ],
@@ -3973,59 +3962,56 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "Func26",
             "funcName": "_",
             "paramTypes": [
               {
                 "type": "uint16",
-                "name": "char16Ref",
                 "ref": true
               },
               {
                 "type": "vec2",
-                "name": "plgVector2Ref",
-                "ref": true
+                "ref": true,
+                "enum": {
+                  "name": "Vector2",
+                  "values": []
+                }
               },
               {
                 "type": "mat4x4",
-                "name": "plgMatrix4x4Ref",
-                "ref": true
+                "ref": true,
+                "enum": {
+                  "name": "Matrix4x4",
+                  "values": []
+                }
               },
               {
                 "type": "float[]",
-                "name": "vectorFloatRef",
                 "ref": true
               },
               {
                 "type": "int16",
-                "name": "int16Ref",
                 "ref": true
               },
               {
                 "type": "uint64",
-                "name": "uint64Ref",
                 "ref": true
               },
               {
                 "type": "uint32",
-                "name": "uint32Ref",
                 "ref": true
               },
               {
                 "type": "uint16[]",
-                "name": "vectorUInt16Ref",
                 "ref": true
               },
               {
                 "type": "ptr64",
-                "name": "ptr64Ref",
                 "ref": true
               },
               {
                 "type": "bool",
-                "name": "boolRef",
                 "ref": true
               }
             ],
@@ -4045,64 +4031,68 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "Func27",
             "funcName": "_",
             "paramTypes": [
               {
                 "type": "float",
-                "name": "floatRef",
                 "ref": true
               },
               {
                 "type": "vec3",
-                "name": "plgVector3Ref",
-                "ref": true
+                "ref": true,
+                "enum": {
+                  "name": "Vector3",
+                  "values": []
+                }
               },
               {
                 "type": "ptr64",
-                "name": "ptr64Ref",
                 "ref": true
               },
               {
                 "type": "vec2",
-                "name": "plgVector2Ref",
-                "ref": true
+                "ref": true,
+                "enum": {
+                  "name": "Vector2",
+                  "values": []
+                }
               },
               {
                 "type": "int16[]",
-                "name": "vectorInt16Ref",
                 "ref": true
               },
               {
                 "type": "mat4x4",
-                "name": "plgMatrix4x4Ref",
-                "ref": true
+                "ref": true,
+                "enum": {
+                  "name": "Matrix4x4",
+                  "values": []
+                }
               },
               {
                 "type": "bool",
-                "name": "boolRef",
                 "ref": true
               },
               {
                 "type": "vec4",
-                "name": "plgVector4Ref",
-                "ref": true
+                "ref": true,
+                "enum": {
+                  "name": "Vector4",
+                  "values": []
+                }
               },
               {
                 "type": "int8",
-                "name": "int8Ref",
                 "ref": true
               },
               {
                 "type": "int32",
-                "name": "int32Ref",
                 "ref": true
               },
               {
                 "type": "uint8[]",
-                "name": "vectorUInt8Ref",
                 "ref": true
               }
             ],
@@ -4122,69 +4112,68 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "Func28",
             "funcName": "_",
             "paramTypes": [
               {
                 "type": "ptr64",
-                "name": "ptr64Ref",
                 "ref": true
               },
               {
                 "type": "uint16",
-                "name": "uint16Ref",
                 "ref": true
               },
               {
                 "type": "uint32[]",
-                "name": "vectorUInt32Ref",
                 "ref": true
               },
               {
                 "type": "mat4x4",
-                "name": "plgMatrix4x4Ref",
-                "ref": true
+                "ref": true,
+                "enum": {
+                  "name": "Matrix4x4",
+                  "values": []
+                }
               },
               {
                 "type": "float",
-                "name": "floatRef",
                 "ref": true
               },
               {
                 "type": "vec4",
-                "name": "plgVector4Ref",
-                "ref": true
+                "ref": true,
+                "enum": {
+                  "name": "Vector4",
+                  "values": []
+                }
               },
               {
                 "type": "string",
-                "name": "plgStringRef",
                 "ref": true
               },
               {
                 "type": "uint64[]",
-                "name": "vectorUInt64Ref",
                 "ref": true
               },
               {
                 "type": "int64",
-                "name": "int64Ref",
                 "ref": true
               },
               {
                 "type": "bool",
-                "name": "boolRef",
                 "ref": true
               },
               {
                 "type": "vec3",
-                "name": "plgVector3Ref",
-                "ref": true
+                "ref": true,
+                "enum": {
+                  "name": "Vector3",
+                  "values": []
+                }
               },
               {
                 "type": "float[]",
-                "name": "vectorFloatRef",
                 "ref": true
               }
             ],
@@ -4204,74 +4193,72 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "Func29",
             "funcName": "_",
             "paramTypes": [
               {
                 "type": "vec4",
-                "name": "plgVector4Ref",
-                "ref": true
+                "ref": true,
+                "enum": {
+                  "name": "Vector4",
+                  "values": []
+                }
               },
               {
                 "type": "int32",
-                "name": "int32Ref",
                 "ref": true
               },
               {
                 "type": "int8[]",
-                "name": "vectorInt8Ref",
                 "ref": true
               },
               {
                 "type": "double",
-                "name": "doubleRef",
                 "ref": true
               },
               {
                 "type": "bool",
-                "name": "boolRef",
                 "ref": true
               },
               {
                 "type": "int8",
-                "name": "int8Ref",
                 "ref": true
               },
               {
                 "type": "uint16[]",
-                "name": "vectorUInt16Ref",
                 "ref": true
               },
               {
                 "type": "float",
-                "name": "floatRef",
                 "ref": true
               },
               {
                 "type": "string",
-                "name": "plgStringRef",
                 "ref": true
               },
               {
                 "type": "mat4x4",
-                "name": "plgMatrix4x4Ref",
-                "ref": true
+                "ref": true,
+                "enum": {
+                  "name": "Matrix4x4",
+                  "values": []
+                }
               },
               {
                 "type": "uint64",
-                "name": "uint64Ref",
                 "ref": true
               },
               {
                 "type": "vec3",
-                "name": "plgVector3Ref",
-                "ref": true
+                "ref": true,
+                "enum": {
+                  "name": "Vector3",
+                  "values": []
+                }
               },
               {
                 "type": "int64[]",
-                "name": "vectorInt64Ref",
                 "ref": true
               }
             ],
@@ -4291,79 +4278,80 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "Func30",
             "funcName": "_",
             "paramTypes": [
               {
                 "type": "ptr64",
-                "name": "ptr64Ref",
                 "ref": true
               },
               {
                 "type": "vec4",
-                "name": "plgVector4Ref",
-                "ref": true
+                "ref": true,
+                "enum": {
+                  "name": "Vector4",
+                  "values": []
+                }
               },
               {
                 "type": "int64",
-                "name": "int64Ref",
                 "ref": true
               },
               {
                 "type": "uint32[]",
-                "name": "vectorUInt32Ref",
                 "ref": true
               },
               {
                 "type": "bool",
-                "name": "boolRef",
                 "ref": true
               },
               {
                 "type": "string",
-                "name": "plgStringRef",
                 "ref": true
               },
               {
                 "type": "vec3",
-                "name": "plgVector3Ref",
-                "ref": true
+                "ref": true,
+                "enum": {
+                  "name": "Vector3",
+                  "values": []
+                }
               },
               {
                 "type": "uint8[]",
-                "name": "vectorUInt8Ref",
                 "ref": true
               },
               {
                 "type": "float",
-                "name": "floatRef",
                 "ref": true
               },
               {
                 "type": "vec2",
-                "name": "plgVector2Ref",
-                "ref": true
+                "ref": true,
+                "enum": {
+                  "name": "Vector2",
+                  "values": []
+                }
               },
               {
                 "type": "mat4x4",
-                "name": "plgMatrix4x4Ref",
-                "ref": true
+                "ref": true,
+                "enum": {
+                  "name": "Matrix4x4",
+                  "values": []
+                }
               },
               {
                 "type": "int8",
-                "name": "int8Ref",
                 "ref": true
               },
               {
                 "type": "float[]",
-                "name": "vectorFloatRef",
                 "ref": true
               },
               {
                 "type": "double",
-                "name": "doubleRef",
                 "ref": true
               }
             ],
@@ -4383,89 +4371,93 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "Func31",
             "funcName": "_",
             "paramTypes": [
               {
                 "type": "int8",
-                "name": "charRef",
                 "ref": true
               },
               {
                 "type": "uint32",
-                "name": "uint32Ref",
                 "ref": true
               },
               {
                 "type": "uint64[]",
-                "name": "vectorUInt64Ref",
                 "ref": true
               },
               {
                 "type": "vec4",
-                "name": "plgVector4Ref",
-                "ref": true
+                "ref": true,
+                "enum": {
+                  "name": "Vector4",
+                  "values": []
+                }
               },
               {
                 "type": "string",
-                "name": "plgStringRef",
                 "ref": true
               },
               {
                 "type": "bool",
-                "name": "boolRef",
                 "ref": true
               },
               {
                 "type": "int64",
-                "name": "int64Ref",
                 "ref": true
               },
               {
                 "type": "vec2",
-                "name": "vec2Ref",
-                "ref": true
+                "ref": true,
+                "enum": {
+                  "name": "Vector2",
+                  "values": []
+                }
               },
               {
                 "type": "int8",
-                "name": "int8Ref",
                 "ref": true
               },
               {
                 "type": "uint16",
-                "name": "uint16Ref",
                 "ref": true
               },
               {
                 "type": "int16[]",
-                "name": "vectorInt16Ref",
                 "ref": true
               },
               {
                 "type": "mat4x4",
-                "name": "mat4x4Ref",
-                "ref": true
+                "ref": true,
+                "enum": {
+                  "name": "Matrix4x4",
+                  "values": []
+                }
               },
               {
                 "type": "vec3",
-                "name": "vec3Ref",
-                "ref": true
+                "ref": true,
+                "enum": {
+                  "name": "Vector3",
+                  "values": []
+                }
               },
               {
                 "type": "float",
-                "name": "floatRef",
                 "ref": true
               },
               {
                 "type": "double[]",
-                "name": "vectorDoubleRef",
                 "ref": true
               }
             ],
             "retType": {
-              "type": "vec3"
+              "type": "vec3",
+              "enum": {
+                "name": "Vector3",
+                "values": []
+              }
             }
           }
         }
@@ -4480,89 +4472,88 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "Func32",
             "funcName": "_",
             "paramTypes": [
               {
                 "type": "int32",
-                "name": "p1",
                 "ref": true
               },
               {
                 "type": "uint16",
-                "name": "p2",
                 "ref": true
               },
               {
                 "type": "int8[]",
-                "name": "p3",
                 "ref": true
               },
               {
                 "type": "vec4",
-                "name": "p4",
-                "ref": true
+                "ref": true,
+                "enum": {
+                  "name": "Vector4",
+                  "values": []
+                }
               },
               {
                 "type": "ptr64",
-                "name": "p5",
                 "ref": true
               },
               {
                 "type": "uint32[]",
-                "name": "p6",
                 "ref": true
               },
               {
                 "type": "mat4x4",
-                "name": "p7",
-                "ref": true
+                "ref": true,
+                "enum": {
+                  "name": "Matrix4x4",
+                  "values": []
+                }
               },
               {
                 "type": "uint64",
-                "name": "p8",
                 "ref": true
               },
               {
                 "type": "string",
-                "name": "p9",
                 "ref": true
               },
               {
                 "type": "int64",
-                "name": "p10",
                 "ref": true
               },
               {
                 "type": "vec2",
-                "name": "p11",
-                "ref": true
+                "ref": true,
+                "enum": {
+                  "name": "Vector2",
+                  "values": []
+                }
               },
               {
                 "type": "int8[]",
-                "name": "p12",
                 "ref": true
               },
               {
                 "type": "bool",
-                "name": "p13",
                 "ref": true
               },
               {
                 "type": "vec3",
-                "name": "p14",
-                "ref": true
+                "ref": true,
+                "enum": {
+                  "name": "Vector3",
+                  "values": []
+                }
               },
               {
                 "type": "uint8",
-                "name": "p15",
                 "ref": true
               },
               {
                 "type": "uint16[]",
-                "name": "p16",
                 "ref": true
               }
             ],
@@ -4582,14 +4573,12 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "Func33",
             "funcName": "_",
             "paramTypes": [
               {
                 "type": "any",
-                "name": "variant",
                 "ref": true
               }
             ],
@@ -4609,14 +4598,12 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncEnum",
             "funcName": "_",
             "paramTypes": [
               {
                 "type": "int32",
-                "name": "p1",
                 "enum": {
                   "name": "Example",
                   "values": [
@@ -4641,7 +4628,6 @@
               },
               {
                 "type": "int32[]",
-                "name": "p2",
                 "ref": true,
                 "enum": {
                   "name": "Example",
@@ -4703,7 +4689,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasBool",
             "funcName": "_",
@@ -4712,14 +4697,18 @@
               "type": "bool",
               "enum": {
                 "name": "AliasBool",
-                "values": null
+                "values": []
               }
             }
           }
         }
       ],
       "retType": {
-        "type": "bool"
+        "type": "bool",
+        "enum": {
+          "name": "AliasBool",
+          "values": []
+        }
       }
     },
     {
@@ -4728,7 +4717,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasChar8",
             "funcName": "_",
@@ -4737,14 +4725,18 @@
               "type": "int8",
               "enum": {
                 "name": "AliasChar8",
-                "values": null
+                "values": []
               }
             }
           }
         }
       ],
       "retType": {
-        "type": "int8"
+        "type": "int8",
+        "enum": {
+          "name": "AliasChar8",
+          "values": []
+        }
       }
     },
     {
@@ -4753,7 +4745,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasChar16",
             "funcName": "_",
@@ -4762,14 +4753,18 @@
               "type": "uint16",
               "enum": {
                 "name": "AliasChar16",
-                "values": null
+                "values": []
               }
             }
           }
         }
       ],
       "retType": {
-        "type": "uint16"
+        "type": "uint16",
+        "enum": {
+          "name": "AliasChar16",
+          "values": []
+        }
       }
     },
     {
@@ -4778,7 +4773,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasInt8",
             "funcName": "_",
@@ -4787,14 +4781,18 @@
               "type": "int8",
               "enum": {
                 "name": "AliasInt8",
-                "values": null
+                "values": []
               }
             }
           }
         }
       ],
       "retType": {
-        "type": "int8"
+        "type": "int8",
+        "enum": {
+          "name": "AliasInt8",
+          "values": []
+        }
       }
     },
     {
@@ -4803,7 +4801,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasInt16",
             "funcName": "_",
@@ -4812,14 +4809,18 @@
               "type": "int16",
               "enum": {
                 "name": "AliasInt16",
-                "values": null
+                "values": []
               }
             }
           }
         }
       ],
       "retType": {
-        "type": "int16"
+        "type": "int16",
+        "enum": {
+          "name": "AliasInt16",
+          "values": []
+        }
       }
     },
     {
@@ -4828,7 +4829,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasInt32",
             "funcName": "_",
@@ -4837,31 +4837,18 @@
               "type": "int32",
               "enum": {
                 "name": "AliasInt32",
-                "values": [
-                  {
-                    "name": "Example_First",
-                    "value": 1
-                  },
-                  {
-                    "name": "Example_Second",
-                    "value": 2
-                  },
-                  {
-                    "name": "Example_Third",
-                    "value": 3
-                  },
-                  {
-                    "name": "Example_Forth",
-                    "value": 4
-                  }
-                ]
+                "values": []
               }
             }
           }
         }
       ],
       "retType": {
-        "type": "int32"
+        "type": "int32",
+        "enum": {
+          "name": "AliasInt32",
+          "values": []
+        }
       }
     },
     {
@@ -4870,7 +4857,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasInt64",
             "funcName": "_",
@@ -4879,14 +4865,18 @@
               "type": "int64",
               "enum": {
                 "name": "AliasInt64",
-                "values": null
+                "values": []
               }
             }
           }
         }
       ],
       "retType": {
-        "type": "int64"
+        "type": "int64",
+        "enum": {
+          "name": "AliasInt64",
+          "values": []
+        }
       }
     },
     {
@@ -4895,7 +4885,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasUInt8",
             "funcName": "_",
@@ -4904,14 +4893,18 @@
               "type": "uint8",
               "enum": {
                 "name": "AliasUInt8",
-                "values": null
+                "values": []
               }
             }
           }
         }
       ],
       "retType": {
-        "type": "uint8"
+        "type": "uint8",
+        "enum": {
+          "name": "AliasUInt8",
+          "values": []
+        }
       }
     },
     {
@@ -4920,7 +4913,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasUInt16",
             "funcName": "_",
@@ -4929,14 +4921,18 @@
               "type": "uint16",
               "enum": {
                 "name": "AliasUInt16",
-                "values": null
+                "values": []
               }
             }
           }
         }
       ],
       "retType": {
-        "type": "uint16"
+        "type": "uint16",
+        "enum": {
+          "name": "AliasUInt16",
+          "values": []
+        }
       }
     },
     {
@@ -4945,7 +4941,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasUInt32",
             "funcName": "_",
@@ -4954,14 +4949,18 @@
               "type": "uint32",
               "enum": {
                 "name": "AliasUInt32",
-                "values": null
+                "values": []
               }
             }
           }
         }
       ],
       "retType": {
-        "type": "uint32"
+        "type": "uint32",
+        "enum": {
+          "name": "AliasUInt32",
+          "values": []
+        }
       }
     },
     {
@@ -4970,7 +4969,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasUInt64",
             "funcName": "_",
@@ -4979,14 +4977,18 @@
               "type": "uint64",
               "enum": {
                 "name": "AliasUInt64",
-                "values": null
+                "values": []
               }
             }
           }
         }
       ],
       "retType": {
-        "type": "uint64"
+        "type": "uint64",
+        "enum": {
+          "name": "AliasUInt64",
+          "values": []
+        }
       }
     },
     {
@@ -4995,7 +4997,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasPtr",
             "funcName": "_",
@@ -5004,14 +5005,18 @@
               "type": "ptr64",
               "enum": {
                 "name": "AliasPtr",
-                "values": null
+                "values": []
               }
             }
           }
         }
       ],
       "retType": {
-        "type": "ptr64"
+        "type": "ptr64",
+        "enum": {
+          "name": "AliasPtr",
+          "values": []
+        }
       }
     },
     {
@@ -5020,7 +5025,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasFloat",
             "funcName": "_",
@@ -5029,14 +5033,18 @@
               "type": "float",
               "enum": {
                 "name": "AliasFloat",
-                "values": null
+                "values": []
               }
             }
           }
         }
       ],
       "retType": {
-        "type": "float"
+        "type": "float",
+        "enum": {
+          "name": "AliasFloat",
+          "values": []
+        }
       }
     },
     {
@@ -5045,7 +5053,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasDouble",
             "funcName": "_",
@@ -5054,14 +5061,18 @@
               "type": "double",
               "enum": {
                 "name": "AliasDouble",
-                "values": null
+                "values": []
               }
             }
           }
         }
       ],
       "retType": {
-        "type": "double"
+        "type": "double",
+        "enum": {
+          "name": "AliasDouble",
+          "values": []
+        }
       }
     },
     {
@@ -5070,7 +5081,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasFunction",
             "funcName": "_",
@@ -5079,14 +5089,18 @@
               "type": "ptr64",
               "enum": {
                 "name": "AliasFunction",
-                "values": null
+                "values": []
               }
             }
           }
         }
       ],
       "retType": {
-        "type": "ptr64"
+        "type": "ptr64",
+        "enum": {
+          "name": "AliasFunction",
+          "values": []
+        }
       }
     },
     {
@@ -5095,7 +5109,6 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasString",
             "funcName": "_",
@@ -5104,14 +5117,18 @@
               "type": "string",
               "enum": {
                 "name": "AliasString",
-                "values": null
+                "values": []
               }
             }
           }
         }
       ],
       "retType": {
-        "type": "string"
+        "type": "string",
+        "enum": {
+          "name": "AliasString",
+          "values": []
+        }
       }
     },
     {
@@ -5120,19 +5137,26 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasAny",
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "any"
+              "type": "any",
+              "enum": {
+                "name": "AliasAny",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "any"
+        "type": "any",
+        "enum": {
+          "name": "AliasAny",
+          "values": []
+        }
       }
     },
     {
@@ -5141,19 +5165,26 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasBoolVector",
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "bool[]"
+              "type": "bool[]",
+              "enum": {
+                "name": "AliasBoolVector",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "bool[]"
+        "type": "bool[]",
+        "enum": {
+          "name": "AliasBoolVector",
+          "values": []
+        }
       }
     },
     {
@@ -5162,19 +5193,26 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasChar8Vector",
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "int8[]"
+              "type": "int8[]",
+              "enum": {
+                "name": "AliasChar8Vector",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "int8[]"
+        "type": "int8[]",
+        "enum": {
+          "name": "AliasChar8Vector",
+          "values": []
+        }
       }
     },
     {
@@ -5183,19 +5221,26 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasChar16Vector",
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "uint16[]"
+              "type": "uint16[]",
+              "enum": {
+                "name": "AliasChar16Vector",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "uint16[]"
+        "type": "uint16[]",
+        "enum": {
+          "name": "AliasChar16Vector",
+          "values": []
+        }
       }
     },
     {
@@ -5204,19 +5249,26 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasInt8Vector",
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "int8[]"
+              "type": "int8[]",
+              "enum": {
+                "name": "AliasInt8Vector",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "int8[]"
+        "type": "int8[]",
+        "enum": {
+          "name": "AliasInt8Vector",
+          "values": []
+        }
       }
     },
     {
@@ -5225,19 +5277,26 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasInt16Vector",
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "int16[]"
+              "type": "int16[]",
+              "enum": {
+                "name": "AliasInt16Vector",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "int16[]"
+        "type": "int16[]",
+        "enum": {
+          "name": "AliasInt16Vector",
+          "values": []
+        }
       }
     },
     {
@@ -5246,19 +5305,26 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasInt32Vector",
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "int32[]"
+              "type": "int32[]",
+              "enum": {
+                "name": "AliasInt32Vector",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "int32[]"
+        "type": "int32[]",
+        "enum": {
+          "name": "AliasInt32Vector",
+          "values": []
+        }
       }
     },
     {
@@ -5267,19 +5333,26 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasInt64Vector",
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "int64[]"
+              "type": "int64[]",
+              "enum": {
+                "name": "AliasInt64Vector",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "int64[]"
+        "type": "int64[]",
+        "enum": {
+          "name": "AliasInt64Vector",
+          "values": []
+        }
       }
     },
     {
@@ -5288,19 +5361,26 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasUInt8Vector",
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "uint8[]"
+              "type": "uint8[]",
+              "enum": {
+                "name": "AliasUInt8Vector",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "uint8[]"
+        "type": "uint8[]",
+        "enum": {
+          "name": "AliasUInt8Vector",
+          "values": []
+        }
       }
     },
     {
@@ -5309,19 +5389,26 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasUInt16Vector",
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "uint16[]"
+              "type": "uint16[]",
+              "enum": {
+                "name": "AliasUInt16Vector",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "uint16[]"
+        "type": "uint16[]",
+        "enum": {
+          "name": "AliasUInt16Vector",
+          "values": []
+        }
       }
     },
     {
@@ -5330,19 +5417,26 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasUInt32Vector",
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "uint32[]"
+              "type": "uint32[]",
+              "enum": {
+                "name": "AliasUInt32Vector",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "uint32[]"
+        "type": "uint32[]",
+        "enum": {
+          "name": "AliasUInt32Vector",
+          "values": []
+        }
       }
     },
     {
@@ -5351,19 +5445,26 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasUInt64Vector",
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "uint64[]"
+              "type": "uint64[]",
+              "enum": {
+                "name": "AliasUInt64Vector",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "uint64[]"
+        "type": "uint64[]",
+        "enum": {
+          "name": "AliasUInt64Vector",
+          "values": []
+        }
       }
     },
     {
@@ -5372,19 +5473,26 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasPtrVector",
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "ptr64[]"
+              "type": "ptr64[]",
+              "enum": {
+                "name": "AliasPtrVector",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "ptr64[]"
+        "type": "ptr64[]",
+        "enum": {
+          "name": "AliasPtrVector",
+          "values": []
+        }
       }
     },
     {
@@ -5393,19 +5501,26 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasFloatVector",
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "float[]"
+              "type": "float[]",
+              "enum": {
+                "name": "AliasFloatVector",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "float[]"
+        "type": "float[]",
+        "enum": {
+          "name": "AliasFloatVector",
+          "values": []
+        }
       }
     },
     {
@@ -5414,19 +5529,26 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasDoubleVector",
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "double[]"
+              "type": "double[]",
+              "enum": {
+                "name": "AliasDoubleVector",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "double[]"
+        "type": "double[]",
+        "enum": {
+          "name": "AliasDoubleVector",
+          "values": []
+        }
       }
     },
     {
@@ -5435,19 +5557,26 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasStringVector",
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "string[]"
+              "type": "string[]",
+              "enum": {
+                "name": "AliasStringVector",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "string[]"
+        "type": "string[]",
+        "enum": {
+          "name": "AliasStringVector",
+          "values": []
+        }
       }
     },
     {
@@ -5456,19 +5585,26 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasAnyVector",
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "any[]"
+              "type": "any[]",
+              "enum": {
+                "name": "AliasAnyVector",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "any[]"
+        "type": "any[]",
+        "enum": {
+          "name": "AliasAnyVector",
+          "values": []
+        }
       }
     },
     {
@@ -5477,19 +5613,26 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasVec2Vector",
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "vec2[]"
+              "type": "vec2[]",
+              "enum": {
+                "name": "Vector2",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "vec2[]"
+        "type": "vec2[]",
+        "enum": {
+          "name": "Vector2",
+          "values": []
+        }
       }
     },
     {
@@ -5498,19 +5641,26 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasVec3Vector",
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "vec3[]"
+              "type": "vec3[]",
+              "enum": {
+                "name": "Vector3",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "vec3[]"
+        "type": "vec3[]",
+        "enum": {
+          "name": "Vector3",
+          "values": []
+        }
       }
     },
     {
@@ -5519,19 +5669,26 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasVec4Vector",
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "vec4[]"
+              "type": "vec4[]",
+              "enum": {
+                "name": "Vector4",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "vec4[]"
+        "type": "vec4[]",
+        "enum": {
+          "name": "Vector4",
+          "values": []
+        }
       }
     },
     {
@@ -5540,19 +5697,26 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasMat4x4Vector",
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "mat4x4[]"
+              "type": "mat4x4[]",
+              "enum": {
+                "name": "Matrix4x4",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "mat4x4[]"
+        "type": "mat4x4[]",
+        "enum": {
+          "name": "Matrix4x4",
+          "values": []
+        }
       }
     },
     {
@@ -5561,19 +5725,26 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasVec2",
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "vec2"
+              "type": "vec2",
+              "enum": {
+                "name": "AliasVec2",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "vec2"
+        "type": "vec2",
+        "enum": {
+          "name": "AliasVec2",
+          "values": []
+        }
       }
     },
     {
@@ -5582,19 +5753,26 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasVec3",
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "vec3"
+              "type": "vec3",
+              "enum": {
+                "name": "AliasVec3",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "vec3"
+        "type": "vec3",
+        "enum": {
+          "name": "AliasVec3",
+          "values": []
+        }
       }
     },
     {
@@ -5603,19 +5781,26 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasVec4",
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "vec4"
+              "type": "vec4",
+              "enum": {
+                "name": "AliasVec4",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "vec4"
+        "type": "vec4",
+        "enum": {
+          "name": "AliasVec4",
+          "values": []
+        }
       }
     },
     {
@@ -5624,19 +5809,26 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasMat4x4",
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "mat4x4"
+              "type": "mat4x4",
+              "enum": {
+                "name": "AliasMat4x4",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "mat4x4"
+        "type": "mat4x4",
+        "enum": {
+          "name": "AliasMat4x4",
+          "values": []
+        }
       }
     },
     {
@@ -5645,205 +5837,244 @@
       "paramTypes": [
         {
           "type": "function",
-          "name": "func_",
           "prototype": {
             "name": "FuncAliasAll",
             "funcName": "_",
             "paramTypes": [
               {
                 "type": "bool",
-                "name": "aBool",
                 "enum": {
                   "name": "AliasBool",
-                  "values": null
+                  "values": []
                 }
               },
               {
                 "type": "int8",
-                "name": "aChar8",
                 "enum": {
                   "name": "AliasChar8",
-                  "values": null
+                  "values": []
                 }
               },
               {
                 "type": "uint16",
-                "name": "aChar16",
                 "enum": {
                   "name": "AliasChar16",
-                  "values": null
+                  "values": []
                 }
               },
               {
                 "type": "int8",
-                "name": "aInt8",
                 "enum": {
                   "name": "AliasInt8",
-                  "values": null
+                  "values": []
                 }
               },
               {
                 "type": "int16",
-                "name": "aInt16",
                 "enum": {
                   "name": "AliasInt16",
-                  "values": null
+                  "values": []
                 }
               },
               {
                 "type": "int32",
-                "name": "aInt32",
                 "enum": {
                   "name": "AliasInt32",
-                  "values": [
-                    {
-                      "name": "Example_First",
-                      "value": 1
-                    },
-                    {
-                      "name": "Example_Second",
-                      "value": 2
-                    },
-                    {
-                      "name": "Example_Third",
-                      "value": 3
-                    },
-                    {
-                      "name": "Example_Forth",
-                      "value": 4
-                    }
-                  ]
+                  "values": []
                 }
               },
               {
                 "type": "int64",
-                "name": "aInt64",
                 "enum": {
                   "name": "AliasInt64",
-                  "values": null
+                  "values": []
                 }
               },
               {
                 "type": "ptr64",
-                "name": "aPtr",
                 "enum": {
                   "name": "AliasPtr",
-                  "values": null
+                  "values": []
                 }
               },
               {
                 "type": "float",
-                "name": "aFloat",
                 "enum": {
                   "name": "AliasFloat",
-                  "values": null
+                  "values": []
                 }
               },
               {
                 "type": "double",
-                "name": "aDouble",
                 "enum": {
                   "name": "AliasDouble",
-                  "values": null
+                  "values": []
                 }
               },
               {
                 "type": "string",
-                "name": "aString",
                 "enum": {
                   "name": "AliasString",
-                  "values": null
+                  "values": []
                 }
               },
               {
                 "type": "any",
-                "name": "aAny"
+                "enum": {
+                  "name": "AliasAny",
+                  "values": []
+                }
               },
               {
                 "type": "vec2",
-                "name": "aVec2"
+                "enum": {
+                  "name": "AliasVec2",
+                  "values": []
+                }
               },
               {
                 "type": "vec3",
-                "name": "aVec3"
+                "enum": {
+                  "name": "AliasVec3",
+                  "values": []
+                }
               },
               {
                 "type": "vec4",
-                "name": "aVec4"
+                "enum": {
+                  "name": "AliasVec4",
+                  "values": []
+                }
               },
               {
                 "type": "mat4x4",
-                "name": "aMat4x4"
+                "enum": {
+                  "name": "AliasMat4x4",
+                  "values": []
+                }
               },
               {
                 "type": "bool[]",
-                "name": "aBoolVec"
+                "enum": {
+                  "name": "AliasBoolVector",
+                  "values": []
+                }
               },
               {
                 "type": "int8[]",
-                "name": "aChar8Vec"
+                "enum": {
+                  "name": "AliasChar8Vector",
+                  "values": []
+                }
               },
               {
                 "type": "uint16[]",
-                "name": "aChar16Vec"
+                "enum": {
+                  "name": "AliasChar16Vector",
+                  "values": []
+                }
               },
               {
                 "type": "int8[]",
-                "name": "aInt8Vec"
+                "enum": {
+                  "name": "AliasInt8Vector",
+                  "values": []
+                }
               },
               {
                 "type": "int16[]",
-                "name": "aInt16Vec"
+                "enum": {
+                  "name": "AliasInt16Vector",
+                  "values": []
+                }
               },
               {
                 "type": "int32[]",
-                "name": "aInt32Vec"
+                "enum": {
+                  "name": "AliasInt32Vector",
+                  "values": []
+                }
               },
               {
                 "type": "int64[]",
-                "name": "aInt64Vec"
+                "enum": {
+                  "name": "AliasInt64Vector",
+                  "values": []
+                }
               },
               {
                 "type": "ptr64[]",
-                "name": "aPtrVec"
+                "enum": {
+                  "name": "AliasPtrVector",
+                  "values": []
+                }
               },
               {
                 "type": "float[]",
-                "name": "aFloatVec"
+                "enum": {
+                  "name": "AliasFloatVector",
+                  "values": []
+                }
               },
               {
                 "type": "double[]",
-                "name": "aDoubleVec"
+                "enum": {
+                  "name": "AliasDoubleVector",
+                  "values": []
+                }
               },
               {
                 "type": "string[]",
-                "name": "aStringVec"
+                "enum": {
+                  "name": "AliasStringVector",
+                  "values": []
+                }
               },
               {
                 "type": "any[]",
-                "name": "aAnyVec"
+                "enum": {
+                  "name": "AliasAnyVector",
+                  "values": []
+                }
               },
               {
                 "type": "vec2[]",
-                "name": "aVec2Vec"
+                "enum": {
+                  "name": "Vector2",
+                  "values": []
+                }
               },
               {
                 "type": "vec3[]",
-                "name": "aVec3Vec"
+                "enum": {
+                  "name": "Vector3",
+                  "values": []
+                }
               },
               {
                 "type": "vec4[]",
-                "name": "aVec4Vec"
+                "enum": {
+                  "name": "Vector4",
+                  "values": []
+                }
               }
             ],
             "retType": {
-              "type": "string"
+              "type": "string",
+              "enum": {
+                "name": "AliasString",
+                "values": []
+              }
             }
           }
         }
       ],
       "retType": {
-        "type": "string"
+        "type": "string",
+        "enum": {
+          "name": "AliasString",
+          "values": []
+        }
       }
     },
     {
@@ -7307,8 +7538,7 @@
       "funcName": "__ReverseCall",
       "paramTypes": [
         {
-          "type": "string",
-          "name": "test"
+          "type": "string"
         }
       ],
       "retType": {

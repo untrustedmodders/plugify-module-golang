@@ -346,7 +346,7 @@ func NoParamReturnStringCallback() string {
 			__native := C.NoParamReturnStringCallback()
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetStringData(&__retVal_native)
+			__retVal = plugify.GetStringData[string](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -386,7 +386,7 @@ func NoParamReturnArrayBoolCallback() []bool {
 			__native := C.NoParamReturnArrayBoolCallback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataBool(&__retVal_native)
+			__retVal = plugify.GetVectorDataBool[bool](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -406,7 +406,7 @@ func NoParamReturnArrayChar8Callback() []int8 {
 			__native := C.NoParamReturnArrayChar8Callback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataChar8(&__retVal_native)
+			__retVal = plugify.GetVectorDataChar8[int8](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -426,7 +426,7 @@ func NoParamReturnArrayChar16Callback() []uint16 {
 			__native := C.NoParamReturnArrayChar16Callback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataChar16(&__retVal_native)
+			__retVal = plugify.GetVectorDataChar16[uint16](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -446,7 +446,7 @@ func NoParamReturnArrayInt8Callback() []int8 {
 			__native := C.NoParamReturnArrayInt8Callback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataInt8(&__retVal_native)
+			__retVal = plugify.GetVectorDataInt8[int8](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -466,7 +466,7 @@ func NoParamReturnArrayInt16Callback() []int16 {
 			__native := C.NoParamReturnArrayInt16Callback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataInt16(&__retVal_native)
+			__retVal = plugify.GetVectorDataInt16[int16](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -486,7 +486,7 @@ func NoParamReturnArrayInt32Callback() []int32 {
 			__native := C.NoParamReturnArrayInt32Callback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataInt32(&__retVal_native)
+			__retVal = plugify.GetVectorDataInt32[int32](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -506,7 +506,7 @@ func NoParamReturnArrayInt64Callback() []int64 {
 			__native := C.NoParamReturnArrayInt64Callback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataInt64(&__retVal_native)
+			__retVal = plugify.GetVectorDataInt64[int64](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -526,7 +526,7 @@ func NoParamReturnArrayUInt8Callback() []uint8 {
 			__native := C.NoParamReturnArrayUInt8Callback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataUInt8(&__retVal_native)
+			__retVal = plugify.GetVectorDataUInt8[uint8](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -546,7 +546,7 @@ func NoParamReturnArrayUInt16Callback() []uint16 {
 			__native := C.NoParamReturnArrayUInt16Callback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataUInt16(&__retVal_native)
+			__retVal = plugify.GetVectorDataUInt16[uint16](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -566,7 +566,7 @@ func NoParamReturnArrayUInt32Callback() []uint32 {
 			__native := C.NoParamReturnArrayUInt32Callback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataUInt32(&__retVal_native)
+			__retVal = plugify.GetVectorDataUInt32[uint32](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -586,7 +586,7 @@ func NoParamReturnArrayUInt64Callback() []uint64 {
 			__native := C.NoParamReturnArrayUInt64Callback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataUInt64(&__retVal_native)
+			__retVal = plugify.GetVectorDataUInt64[uint64](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -606,7 +606,7 @@ func NoParamReturnArrayPointerCallback() []uintptr {
 			__native := C.NoParamReturnArrayPointerCallback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataPointer(&__retVal_native)
+			__retVal = plugify.GetVectorDataPointer[uintptr](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -626,7 +626,7 @@ func NoParamReturnArrayFloatCallback() []float32 {
 			__native := C.NoParamReturnArrayFloatCallback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataFloat(&__retVal_native)
+			__retVal = plugify.GetVectorDataFloat[float32](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -646,7 +646,7 @@ func NoParamReturnArrayDoubleCallback() []float64 {
 			__native := C.NoParamReturnArrayDoubleCallback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataDouble(&__retVal_native)
+			__retVal = plugify.GetVectorDataDouble[float64](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -666,7 +666,7 @@ func NoParamReturnArrayStringCallback() []string {
 			__native := C.NoParamReturnArrayStringCallback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataString(&__retVal_native)
+			__retVal = plugify.GetVectorDataString[string](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -686,7 +686,7 @@ func NoParamReturnArrayAnyCallback() []any {
 			__native := C.NoParamReturnArrayAnyCallback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataVariant(&__retVal_native)
+			__retVal = plugify.GetVectorDataVariant[any, []any](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -706,7 +706,7 @@ func NoParamReturnArrayVector2Callback() []plugify.Vector2 {
 			__native := C.NoParamReturnArrayVector2Callback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataVector2(&__retVal_native)
+			__retVal = plugify.GetVectorDataVector2[plugify.Vector2](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -726,7 +726,7 @@ func NoParamReturnArrayVector3Callback() []plugify.Vector3 {
 			__native := C.NoParamReturnArrayVector3Callback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataVector3(&__retVal_native)
+			__retVal = plugify.GetVectorDataVector3[plugify.Vector3](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -746,7 +746,7 @@ func NoParamReturnArrayVector4Callback() []plugify.Vector4 {
 			__native := C.NoParamReturnArrayVector4Callback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataVector4(&__retVal_native)
+			__retVal = plugify.GetVectorDataVector4[plugify.Vector4](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -766,7 +766,7 @@ func NoParamReturnArrayMatrix4x4Callback() []plugify.Matrix4x4 {
 			__native := C.NoParamReturnArrayMatrix4x4Callback()
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataMatrix4x4(&__retVal_native)
+			__retVal = plugify.GetVectorDataMatrix4x4[plugify.Matrix4x4](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -1095,7 +1095,7 @@ func ParamRef7Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *
 			*d = *(*plugify.Vector4)(unsafe.Pointer(&__d))
 			plugify.GetVectorDataInt64To(&__e, e)
 			*f = int8(__f)
-			*g = plugify.GetStringData(&__g)
+			*g = plugify.GetStringData[string](&__g)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -1126,7 +1126,7 @@ func ParamRef8Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *
 			*d = *(*plugify.Vector4)(unsafe.Pointer(&__d))
 			plugify.GetVectorDataInt64To(&__e, e)
 			*f = int8(__f)
-			*g = plugify.GetStringData(&__g)
+			*g = plugify.GetStringData[string](&__g)
 			*h = uint16(__h)
 		},
 		Finally: func() {
@@ -1159,7 +1159,7 @@ func ParamRef9Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *
 			*d = *(*plugify.Vector4)(unsafe.Pointer(&__d))
 			plugify.GetVectorDataInt64To(&__e, e)
 			*f = int8(__f)
-			*g = plugify.GetStringData(&__g)
+			*g = plugify.GetStringData[string](&__g)
 			*h = uint16(__h)
 			*k = int16(__k)
 		},
@@ -1194,7 +1194,7 @@ func ParamRef10Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e 
 			*d = *(*plugify.Vector4)(unsafe.Pointer(&__d))
 			plugify.GetVectorDataInt64To(&__e, e)
 			*f = int8(__f)
-			*g = plugify.GetStringData(&__g)
+			*g = plugify.GetStringData[string](&__g)
 			*h = uint16(__h)
 			*k = int16(__k)
 			*l = uintptr(__l)
@@ -1390,22 +1390,22 @@ func ParamAllRefAliasesCallback(aBool *AliasBool, aChar8 *AliasChar8, aChar16 *A
 		Try: func() {
 			__retVal = int64(C.ParamAllRefAliasesCallback(&__aBool, &__aChar8, &__aChar16, &__aInt8, &__aInt16, &__aInt32, &__aInt64, &__aPtr, &__aFloat, &__aDouble, (*C.String)(unsafe.Pointer(&__aString)), (*C.Variant)(unsafe.Pointer(&__aAny)), &__aVec2, &__aVec3, &__aVec4, &__aMat4x4, (*C.Vector)(unsafe.Pointer(&__aBoolVec)), (*C.Vector)(unsafe.Pointer(&__aChar8Vec)), (*C.Vector)(unsafe.Pointer(&__aChar16Vec)), (*C.Vector)(unsafe.Pointer(&__aInt8Vec)), (*C.Vector)(unsafe.Pointer(&__aInt16Vec)), (*C.Vector)(unsafe.Pointer(&__aInt32Vec)), (*C.Vector)(unsafe.Pointer(&__aInt64Vec)), (*C.Vector)(unsafe.Pointer(&__aPtrVec)), (*C.Vector)(unsafe.Pointer(&__aFloatVec)), (*C.Vector)(unsafe.Pointer(&__aDoubleVec)), (*C.Vector)(unsafe.Pointer(&__aStringVec)), (*C.Vector)(unsafe.Pointer(&__aAnyVec)), (*C.Vector)(unsafe.Pointer(&__aVec2Vec)), (*C.Vector)(unsafe.Pointer(&__aVec3Vec)), (*C.Vector)(unsafe.Pointer(&__aVec4Vec))))
 			// Unmarshal - Convert native data to managed data.
-			*aBool = bool(__aBool)
-			*aChar8 = int8(__aChar8)
-			*aChar16 = uint16(__aChar16)
-			*aInt8 = int8(__aInt8)
-			*aInt16 = int16(__aInt16)
-			*aInt32 = int32(__aInt32)
-			*aInt64 = int64(__aInt64)
-			*aPtr = uintptr(__aPtr)
-			*aFloat = float32(__aFloat)
-			*aDouble = float64(__aDouble)
-			*aString = plugify.GetStringData(&__aString)
+			*aBool = AliasBool(__aBool)
+			*aChar8 = AliasChar8(__aChar8)
+			*aChar16 = AliasChar16(__aChar16)
+			*aInt8 = AliasInt8(__aInt8)
+			*aInt16 = AliasInt16(__aInt16)
+			*aInt32 = AliasInt32(__aInt32)
+			*aInt64 = AliasInt64(__aInt64)
+			*aPtr = AliasPtr(__aPtr)
+			*aFloat = AliasFloat(__aFloat)
+			*aDouble = AliasDouble(__aDouble)
+			*aString = plugify.GetStringData[AliasString](&__aString)
 			*aAny = plugify.GetVariantData(&__aAny)
-			*aVec2 = *(*plugify.Vector2)(unsafe.Pointer(&__aVec2))
-			*aVec3 = *(*plugify.Vector3)(unsafe.Pointer(&__aVec3))
-			*aVec4 = *(*plugify.Vector4)(unsafe.Pointer(&__aVec4))
-			*aMat4x4 = *(*plugify.Matrix4x4)(unsafe.Pointer(&__aMat4x4))
+			*aVec2 = *(*AliasVec2)(unsafe.Pointer(&__aVec2))
+			*aVec3 = *(*AliasVec3)(unsafe.Pointer(&__aVec3))
+			*aVec4 = *(*AliasVec4)(unsafe.Pointer(&__aVec4))
+			*aMat4x4 = *(*AliasMat4x4)(unsafe.Pointer(&__aMat4x4))
 			plugify.GetVectorDataBoolTo(&__aBoolVec, aBoolVec)
 			plugify.GetVectorDataChar8To(&__aChar8Vec, aChar8Vec)
 			plugify.GetVectorDataChar16To(&__aChar16Vec, aChar16Vec)
@@ -1666,7 +1666,7 @@ func CallFuncStringCallback(func_ FuncString) string {
 			__native := C.CallFuncStringCallback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetStringData(&__retVal_native)
+			__retVal = plugify.GetStringData[string](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -1717,7 +1717,7 @@ func CallFuncBoolVectorCallback(func_ FuncBoolVector) []bool {
 			__native := C.CallFuncBoolVectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataBool(&__retVal_native)
+			__retVal = plugify.GetVectorDataBool[bool](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -1738,7 +1738,7 @@ func CallFuncChar8VectorCallback(func_ FuncChar8Vector) []int8 {
 			__native := C.CallFuncChar8VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataChar8(&__retVal_native)
+			__retVal = plugify.GetVectorDataChar8[int8](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -1759,7 +1759,7 @@ func CallFuncChar16VectorCallback(func_ FuncChar16Vector) []uint16 {
 			__native := C.CallFuncChar16VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataChar16(&__retVal_native)
+			__retVal = plugify.GetVectorDataChar16[uint16](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -1780,7 +1780,7 @@ func CallFuncInt8VectorCallback(func_ FuncInt8Vector) []int8 {
 			__native := C.CallFuncInt8VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataInt8(&__retVal_native)
+			__retVal = plugify.GetVectorDataInt8[int8](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -1801,7 +1801,7 @@ func CallFuncInt16VectorCallback(func_ FuncInt16Vector) []int16 {
 			__native := C.CallFuncInt16VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataInt16(&__retVal_native)
+			__retVal = plugify.GetVectorDataInt16[int16](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -1822,7 +1822,7 @@ func CallFuncInt32VectorCallback(func_ FuncInt32Vector) []int32 {
 			__native := C.CallFuncInt32VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataInt32(&__retVal_native)
+			__retVal = plugify.GetVectorDataInt32[int32](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -1843,7 +1843,7 @@ func CallFuncInt64VectorCallback(func_ FuncInt64Vector) []int64 {
 			__native := C.CallFuncInt64VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataInt64(&__retVal_native)
+			__retVal = plugify.GetVectorDataInt64[int64](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -1864,7 +1864,7 @@ func CallFuncUInt8VectorCallback(func_ FuncUInt8Vector) []uint8 {
 			__native := C.CallFuncUInt8VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataUInt8(&__retVal_native)
+			__retVal = plugify.GetVectorDataUInt8[uint8](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -1885,7 +1885,7 @@ func CallFuncUInt16VectorCallback(func_ FuncUInt16Vector) []uint16 {
 			__native := C.CallFuncUInt16VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataUInt16(&__retVal_native)
+			__retVal = plugify.GetVectorDataUInt16[uint16](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -1906,7 +1906,7 @@ func CallFuncUInt32VectorCallback(func_ FuncUInt32Vector) []uint32 {
 			__native := C.CallFuncUInt32VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataUInt32(&__retVal_native)
+			__retVal = plugify.GetVectorDataUInt32[uint32](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -1927,7 +1927,7 @@ func CallFuncUInt64VectorCallback(func_ FuncUInt64Vector) []uint64 {
 			__native := C.CallFuncUInt64VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataUInt64(&__retVal_native)
+			__retVal = plugify.GetVectorDataUInt64[uint64](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -1948,7 +1948,7 @@ func CallFuncPtrVectorCallback(func_ FuncPtrVector) []uintptr {
 			__native := C.CallFuncPtrVectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataPointer(&__retVal_native)
+			__retVal = plugify.GetVectorDataPointer[uintptr](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -1969,7 +1969,7 @@ func CallFuncFloatVectorCallback(func_ FuncFloatVector) []float32 {
 			__native := C.CallFuncFloatVectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataFloat(&__retVal_native)
+			__retVal = plugify.GetVectorDataFloat[float32](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -1990,7 +1990,7 @@ func CallFuncDoubleVectorCallback(func_ FuncDoubleVector) []float64 {
 			__native := C.CallFuncDoubleVectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataDouble(&__retVal_native)
+			__retVal = plugify.GetVectorDataDouble[float64](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -2011,7 +2011,7 @@ func CallFuncStringVectorCallback(func_ FuncStringVector) []string {
 			__native := C.CallFuncStringVectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataString(&__retVal_native)
+			__retVal = plugify.GetVectorDataString[string](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -2032,7 +2032,7 @@ func CallFuncAnyVectorCallback(func_ FuncAnyVector) []any {
 			__native := C.CallFuncAnyVectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataVariant(&__retVal_native)
+			__retVal = plugify.GetVectorDataVariant[any, []any](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -2053,7 +2053,7 @@ func CallFuncVec2VectorCallback(func_ FuncVec2Vector) []plugify.Vector2 {
 			__native := C.CallFuncVec2VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataVector2(&__retVal_native)
+			__retVal = plugify.GetVectorDataVector2[plugify.Vector2](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -2074,7 +2074,7 @@ func CallFuncVec3VectorCallback(func_ FuncVec3Vector) []plugify.Vector3 {
 			__native := C.CallFuncVec3VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataVector3(&__retVal_native)
+			__retVal = plugify.GetVectorDataVector3[plugify.Vector3](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -2095,7 +2095,7 @@ func CallFuncVec4VectorCallback(func_ FuncVec4Vector) []plugify.Vector4 {
 			__native := C.CallFuncVec4VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataVector4(&__retVal_native)
+			__retVal = plugify.GetVectorDataVector4[plugify.Vector4](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -2116,7 +2116,7 @@ func CallFuncMat4x4VectorCallback(func_ FuncMat4x4Vector) []plugify.Matrix4x4 {
 			__native := C.CallFuncMat4x4VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataMatrix4x4(&__retVal_native)
+			__retVal = plugify.GetVectorDataMatrix4x4[plugify.Matrix4x4](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -2171,7 +2171,7 @@ func CallFuncAliasBoolCallback(func_ FuncAliasBool) AliasBool {
 	defer plugify.Scope("cross_call_master::CallFuncAliasBoolCallback", 3)()
 	var __retVal AliasBool
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	__retVal = bool(C.CallFuncAliasBoolCallback(__func_))
+	__retVal = AliasBool(C.CallFuncAliasBoolCallback(__func_))
 	return __retVal
 }
 
@@ -2180,7 +2180,7 @@ func CallFuncAliasChar8Callback(func_ FuncAliasChar8) AliasChar8 {
 	defer plugify.Scope("cross_call_master::CallFuncAliasChar8Callback", 3)()
 	var __retVal AliasChar8
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	__retVal = int8(C.CallFuncAliasChar8Callback(__func_))
+	__retVal = AliasChar8(C.CallFuncAliasChar8Callback(__func_))
 	return __retVal
 }
 
@@ -2189,7 +2189,7 @@ func CallFuncAliasChar16Callback(func_ FuncAliasChar16) AliasChar16 {
 	defer plugify.Scope("cross_call_master::CallFuncAliasChar16Callback", 3)()
 	var __retVal AliasChar16
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	__retVal = uint16(C.CallFuncAliasChar16Callback(__func_))
+	__retVal = AliasChar16(C.CallFuncAliasChar16Callback(__func_))
 	return __retVal
 }
 
@@ -2198,7 +2198,7 @@ func CallFuncAliasInt8Callback(func_ FuncAliasInt8) AliasInt8 {
 	defer plugify.Scope("cross_call_master::CallFuncAliasInt8Callback", 3)()
 	var __retVal AliasInt8
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	__retVal = int8(C.CallFuncAliasInt8Callback(__func_))
+	__retVal = AliasInt8(C.CallFuncAliasInt8Callback(__func_))
 	return __retVal
 }
 
@@ -2207,7 +2207,7 @@ func CallFuncAliasInt16Callback(func_ FuncAliasInt16) AliasInt16 {
 	defer plugify.Scope("cross_call_master::CallFuncAliasInt16Callback", 3)()
 	var __retVal AliasInt16
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	__retVal = int16(C.CallFuncAliasInt16Callback(__func_))
+	__retVal = AliasInt16(C.CallFuncAliasInt16Callback(__func_))
 	return __retVal
 }
 
@@ -2216,7 +2216,7 @@ func CallFuncAliasInt32Callback(func_ FuncAliasInt32) AliasInt32 {
 	defer plugify.Scope("cross_call_master::CallFuncAliasInt32Callback", 3)()
 	var __retVal AliasInt32
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	__retVal = int32(C.CallFuncAliasInt32Callback(__func_))
+	__retVal = AliasInt32(C.CallFuncAliasInt32Callback(__func_))
 	return __retVal
 }
 
@@ -2225,7 +2225,7 @@ func CallFuncAliasInt64Callback(func_ FuncAliasInt64) AliasInt64 {
 	defer plugify.Scope("cross_call_master::CallFuncAliasInt64Callback", 3)()
 	var __retVal AliasInt64
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	__retVal = int64(C.CallFuncAliasInt64Callback(__func_))
+	__retVal = AliasInt64(C.CallFuncAliasInt64Callback(__func_))
 	return __retVal
 }
 
@@ -2234,7 +2234,7 @@ func CallFuncAliasUInt8Callback(func_ FuncAliasUInt8) AliasUInt8 {
 	defer plugify.Scope("cross_call_master::CallFuncAliasUInt8Callback", 3)()
 	var __retVal AliasUInt8
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	__retVal = uint8(C.CallFuncAliasUInt8Callback(__func_))
+	__retVal = AliasUInt8(C.CallFuncAliasUInt8Callback(__func_))
 	return __retVal
 }
 
@@ -2243,7 +2243,7 @@ func CallFuncAliasUInt16Callback(func_ FuncAliasUInt16) AliasUInt16 {
 	defer plugify.Scope("cross_call_master::CallFuncAliasUInt16Callback", 3)()
 	var __retVal AliasUInt16
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	__retVal = uint16(C.CallFuncAliasUInt16Callback(__func_))
+	__retVal = AliasUInt16(C.CallFuncAliasUInt16Callback(__func_))
 	return __retVal
 }
 
@@ -2252,7 +2252,7 @@ func CallFuncAliasUInt32Callback(func_ FuncAliasUInt32) AliasUInt32 {
 	defer plugify.Scope("cross_call_master::CallFuncAliasUInt32Callback", 3)()
 	var __retVal AliasUInt32
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	__retVal = uint32(C.CallFuncAliasUInt32Callback(__func_))
+	__retVal = AliasUInt32(C.CallFuncAliasUInt32Callback(__func_))
 	return __retVal
 }
 
@@ -2261,7 +2261,7 @@ func CallFuncAliasUInt64Callback(func_ FuncAliasUInt64) AliasUInt64 {
 	defer plugify.Scope("cross_call_master::CallFuncAliasUInt64Callback", 3)()
 	var __retVal AliasUInt64
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	__retVal = uint64(C.CallFuncAliasUInt64Callback(__func_))
+	__retVal = AliasUInt64(C.CallFuncAliasUInt64Callback(__func_))
 	return __retVal
 }
 
@@ -2270,7 +2270,7 @@ func CallFuncAliasPtrCallback(func_ FuncAliasPtr) AliasPtr {
 	defer plugify.Scope("cross_call_master::CallFuncAliasPtrCallback", 3)()
 	var __retVal AliasPtr
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	__retVal = uintptr(C.CallFuncAliasPtrCallback(__func_))
+	__retVal = AliasPtr(C.CallFuncAliasPtrCallback(__func_))
 	return __retVal
 }
 
@@ -2279,7 +2279,7 @@ func CallFuncAliasFloatCallback(func_ FuncAliasFloat) AliasFloat {
 	defer plugify.Scope("cross_call_master::CallFuncAliasFloatCallback", 3)()
 	var __retVal AliasFloat
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	__retVal = float32(C.CallFuncAliasFloatCallback(__func_))
+	__retVal = AliasFloat(C.CallFuncAliasFloatCallback(__func_))
 	return __retVal
 }
 
@@ -2288,7 +2288,7 @@ func CallFuncAliasDoubleCallback(func_ FuncAliasDouble) AliasDouble {
 	defer plugify.Scope("cross_call_master::CallFuncAliasDoubleCallback", 3)()
 	var __retVal AliasDouble
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	__retVal = float64(C.CallFuncAliasDoubleCallback(__func_))
+	__retVal = AliasDouble(C.CallFuncAliasDoubleCallback(__func_))
 	return __retVal
 }
 
@@ -2303,7 +2303,7 @@ func CallFuncAliasStringCallback(func_ FuncAliasString) AliasString {
 			__native := C.CallFuncAliasStringCallback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetStringData(&__retVal_native)
+			__retVal = plugify.GetStringData[AliasString](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -2324,7 +2324,7 @@ func CallFuncAliasAnyCallback(func_ FuncAliasAny) AliasAny {
 			__native := C.CallFuncAliasAnyCallback(__func_)
 			__retVal_native = *(*plugify.PlgVariant)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVariantData(&__retVal_native)
+			__retVal = AliasAny(&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -2339,7 +2339,7 @@ func CallFuncAliasFunctionCallback(func_ FuncAliasFunction) AliasFunction {
 	defer plugify.Scope("cross_call_master::CallFuncAliasFunctionCallback", 3)()
 	var __retVal AliasFunction
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	__retVal = uintptr(C.CallFuncAliasFunctionCallback(__func_))
+	__retVal = AliasFunction(C.CallFuncAliasFunctionCallback(__func_))
 	return __retVal
 }
 
@@ -2354,7 +2354,7 @@ func CallFuncAliasBoolVectorCallback(func_ FuncAliasBoolVector) AliasBoolVector 
 			__native := C.CallFuncAliasBoolVectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataBool(&__retVal_native)
+			__retVal = plugify.GetVectorDataBool[bool](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -2375,7 +2375,7 @@ func CallFuncAliasChar8VectorCallback(func_ FuncAliasChar8Vector) AliasChar8Vect
 			__native := C.CallFuncAliasChar8VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataChar8(&__retVal_native)
+			__retVal = plugify.GetVectorDataChar8[int8](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -2396,7 +2396,7 @@ func CallFuncAliasChar16VectorCallback(func_ FuncAliasChar16Vector) AliasChar16V
 			__native := C.CallFuncAliasChar16VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataChar16(&__retVal_native)
+			__retVal = plugify.GetVectorDataChar16[uint16](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -2417,7 +2417,7 @@ func CallFuncAliasInt8VectorCallback(func_ FuncAliasInt8Vector) AliasInt8Vector 
 			__native := C.CallFuncAliasInt8VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataInt8(&__retVal_native)
+			__retVal = plugify.GetVectorDataInt8[int8](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -2438,7 +2438,7 @@ func CallFuncAliasInt16VectorCallback(func_ FuncAliasInt16Vector) AliasInt16Vect
 			__native := C.CallFuncAliasInt16VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataInt16(&__retVal_native)
+			__retVal = plugify.GetVectorDataInt16[int16](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -2459,7 +2459,7 @@ func CallFuncAliasInt32VectorCallback(func_ FuncAliasInt32Vector) AliasInt32Vect
 			__native := C.CallFuncAliasInt32VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataInt32(&__retVal_native)
+			__retVal = plugify.GetVectorDataInt32[int32](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -2480,7 +2480,7 @@ func CallFuncAliasInt64VectorCallback(func_ FuncAliasInt64Vector) AliasInt64Vect
 			__native := C.CallFuncAliasInt64VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataInt64(&__retVal_native)
+			__retVal = plugify.GetVectorDataInt64[int64](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -2501,7 +2501,7 @@ func CallFuncAliasUInt8VectorCallback(func_ FuncAliasUInt8Vector) AliasUInt8Vect
 			__native := C.CallFuncAliasUInt8VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataUInt8(&__retVal_native)
+			__retVal = plugify.GetVectorDataUInt8[uint8](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -2522,7 +2522,7 @@ func CallFuncAliasUInt16VectorCallback(func_ FuncAliasUInt16Vector) AliasUInt16V
 			__native := C.CallFuncAliasUInt16VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataUInt16(&__retVal_native)
+			__retVal = plugify.GetVectorDataUInt16[uint16](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -2543,7 +2543,7 @@ func CallFuncAliasUInt32VectorCallback(func_ FuncAliasUInt32Vector) AliasUInt32V
 			__native := C.CallFuncAliasUInt32VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataUInt32(&__retVal_native)
+			__retVal = plugify.GetVectorDataUInt32[uint32](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -2564,7 +2564,7 @@ func CallFuncAliasUInt64VectorCallback(func_ FuncAliasUInt64Vector) AliasUInt64V
 			__native := C.CallFuncAliasUInt64VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataUInt64(&__retVal_native)
+			__retVal = plugify.GetVectorDataUInt64[uint64](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -2585,7 +2585,7 @@ func CallFuncAliasPtrVectorCallback(func_ FuncAliasPtrVector) AliasPtrVector {
 			__native := C.CallFuncAliasPtrVectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataPointer(&__retVal_native)
+			__retVal = plugify.GetVectorDataPointer[uintptr](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -2606,7 +2606,7 @@ func CallFuncAliasFloatVectorCallback(func_ FuncAliasFloatVector) AliasFloatVect
 			__native := C.CallFuncAliasFloatVectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataFloat(&__retVal_native)
+			__retVal = plugify.GetVectorDataFloat[float32](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -2627,7 +2627,7 @@ func CallFuncAliasDoubleVectorCallback(func_ FuncAliasDoubleVector) AliasDoubleV
 			__native := C.CallFuncAliasDoubleVectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataDouble(&__retVal_native)
+			__retVal = plugify.GetVectorDataDouble[float64](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -2648,7 +2648,7 @@ func CallFuncAliasStringVectorCallback(func_ FuncAliasStringVector) AliasStringV
 			__native := C.CallFuncAliasStringVectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataString(&__retVal_native)
+			__retVal = plugify.GetVectorDataString[string](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -2669,7 +2669,7 @@ func CallFuncAliasAnyVectorCallback(func_ FuncAliasAnyVector) AliasAnyVector {
 			__native := C.CallFuncAliasAnyVectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataVariant(&__retVal_native)
+			__retVal = plugify.GetVectorDataVariant[any, AliasAnyVector](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -2690,7 +2690,7 @@ func CallFuncAliasVec2VectorCallback(func_ FuncAliasVec2Vector) AliasVec2Vector 
 			__native := C.CallFuncAliasVec2VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataVector2(&__retVal_native)
+			__retVal = plugify.GetVectorDataVector2[plugify.Vector2](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -2711,7 +2711,7 @@ func CallFuncAliasVec3VectorCallback(func_ FuncAliasVec3Vector) AliasVec3Vector 
 			__native := C.CallFuncAliasVec3VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataVector3(&__retVal_native)
+			__retVal = plugify.GetVectorDataVector3[plugify.Vector3](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -2732,7 +2732,7 @@ func CallFuncAliasVec4VectorCallback(func_ FuncAliasVec4Vector) AliasVec4Vector 
 			__native := C.CallFuncAliasVec4VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataVector4(&__retVal_native)
+			__retVal = plugify.GetVectorDataVector4[plugify.Vector4](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -2753,7 +2753,7 @@ func CallFuncAliasMat4x4VectorCallback(func_ FuncAliasMat4x4Vector) AliasMat4x4V
 			__native := C.CallFuncAliasMat4x4VectorCallback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataMatrix4x4(&__retVal_native)
+			__retVal = plugify.GetVectorDataMatrix4x4[plugify.Matrix4x4](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -2769,7 +2769,7 @@ func CallFuncAliasVec2Callback(func_ FuncAliasVec2) AliasVec2 {
 	var __retVal AliasVec2
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__native := C.CallFuncAliasVec2Callback(__func_)
-	__retVal = *(*plugify.Vector2)(unsafe.Pointer(&__native))
+	__retVal = *(*AliasVec2)(unsafe.Pointer(&__native))
 	return __retVal
 }
 
@@ -2779,7 +2779,7 @@ func CallFuncAliasVec3Callback(func_ FuncAliasVec3) AliasVec3 {
 	var __retVal AliasVec3
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__native := C.CallFuncAliasVec3Callback(__func_)
-	__retVal = *(*plugify.Vector3)(unsafe.Pointer(&__native))
+	__retVal = *(*AliasVec3)(unsafe.Pointer(&__native))
 	return __retVal
 }
 
@@ -2789,7 +2789,7 @@ func CallFuncAliasVec4Callback(func_ FuncAliasVec4) AliasVec4 {
 	var __retVal AliasVec4
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__native := C.CallFuncAliasVec4Callback(__func_)
-	__retVal = *(*plugify.Vector4)(unsafe.Pointer(&__native))
+	__retVal = *(*AliasVec4)(unsafe.Pointer(&__native))
 	return __retVal
 }
 
@@ -2799,14 +2799,14 @@ func CallFuncAliasMat4x4Callback(func_ FuncAliasMat4x4) AliasMat4x4 {
 	var __retVal AliasMat4x4
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__native := C.CallFuncAliasMat4x4Callback(__func_)
-	__retVal = *(*plugify.Matrix4x4)(unsafe.Pointer(&__native))
+	__retVal = *(*AliasMat4x4)(unsafe.Pointer(&__native))
 	return __retVal
 }
 
 // CallFuncAliasAllCallback
-func CallFuncAliasAllCallback(func_ FuncAliasAll) string {
+func CallFuncAliasAllCallback(func_ FuncAliasAll) AliasString {
 	defer plugify.Scope("cross_call_master::CallFuncAliasAllCallback", 3)()
-	var __retVal string
+	var __retVal AliasString
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	plugify.Block{
@@ -2814,7 +2814,7 @@ func CallFuncAliasAllCallback(func_ FuncAliasAll) string {
 			__native := C.CallFuncAliasAllCallback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetStringData(&__retVal_native)
+			__retVal = plugify.GetStringData[AliasString](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -2941,7 +2941,7 @@ func CallFunc13Callback(func_ Func13) string {
 			__native := C.CallFunc13Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetStringData(&__retVal_native)
+			__retVal = plugify.GetStringData[string](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -2962,7 +2962,7 @@ func CallFunc14Callback(func_ Func14) []string {
 			__native := C.CallFunc14Callback(__func_)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataString(&__retVal_native)
+			__retVal = plugify.GetVectorDataString[string](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -3001,7 +3001,7 @@ func CallFunc17Callback(func_ Func17) string {
 			__native := C.CallFunc17Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetStringData(&__retVal_native)
+			__retVal = plugify.GetStringData[string](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -3022,7 +3022,7 @@ func CallFunc18Callback(func_ Func18) string {
 			__native := C.CallFunc18Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetStringData(&__retVal_native)
+			__retVal = plugify.GetStringData[string](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -3043,7 +3043,7 @@ func CallFunc19Callback(func_ Func19) string {
 			__native := C.CallFunc19Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetStringData(&__retVal_native)
+			__retVal = plugify.GetStringData[string](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -3064,7 +3064,7 @@ func CallFunc20Callback(func_ Func20) string {
 			__native := C.CallFunc20Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetStringData(&__retVal_native)
+			__retVal = plugify.GetStringData[string](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -3085,7 +3085,7 @@ func CallFunc21Callback(func_ Func21) string {
 			__native := C.CallFunc21Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetStringData(&__retVal_native)
+			__retVal = plugify.GetStringData[string](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -3106,7 +3106,7 @@ func CallFunc22Callback(func_ Func22) string {
 			__native := C.CallFunc22Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetStringData(&__retVal_native)
+			__retVal = plugify.GetStringData[string](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -3127,7 +3127,7 @@ func CallFunc23Callback(func_ Func23) string {
 			__native := C.CallFunc23Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetStringData(&__retVal_native)
+			__retVal = plugify.GetStringData[string](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -3148,7 +3148,7 @@ func CallFunc24Callback(func_ Func24) string {
 			__native := C.CallFunc24Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetStringData(&__retVal_native)
+			__retVal = plugify.GetStringData[string](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -3169,7 +3169,7 @@ func CallFunc25Callback(func_ Func25) string {
 			__native := C.CallFunc25Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetStringData(&__retVal_native)
+			__retVal = plugify.GetStringData[string](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -3190,7 +3190,7 @@ func CallFunc26Callback(func_ Func26) string {
 			__native := C.CallFunc26Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetStringData(&__retVal_native)
+			__retVal = plugify.GetStringData[string](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -3211,7 +3211,7 @@ func CallFunc27Callback(func_ Func27) string {
 			__native := C.CallFunc27Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetStringData(&__retVal_native)
+			__retVal = plugify.GetStringData[string](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -3232,7 +3232,7 @@ func CallFunc28Callback(func_ Func28) string {
 			__native := C.CallFunc28Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetStringData(&__retVal_native)
+			__retVal = plugify.GetStringData[string](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -3253,7 +3253,7 @@ func CallFunc29Callback(func_ Func29) string {
 			__native := C.CallFunc29Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetStringData(&__retVal_native)
+			__retVal = plugify.GetStringData[string](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -3274,7 +3274,7 @@ func CallFunc30Callback(func_ Func30) string {
 			__native := C.CallFunc30Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetStringData(&__retVal_native)
+			__retVal = plugify.GetStringData[string](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -3295,7 +3295,7 @@ func CallFunc31Callback(func_ Func31) string {
 			__native := C.CallFunc31Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetStringData(&__retVal_native)
+			__retVal = plugify.GetStringData[string](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -3316,7 +3316,7 @@ func CallFunc32Callback(func_ Func32) string {
 			__native := C.CallFunc32Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetStringData(&__retVal_native)
+			__retVal = plugify.GetStringData[string](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -3337,7 +3337,7 @@ func CallFunc33Callback(func_ Func33) string {
 			__native := C.CallFunc33Callback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetStringData(&__retVal_native)
+			__retVal = plugify.GetStringData[string](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -3358,7 +3358,7 @@ func CallFuncEnumCallback(func_ FuncEnum) string {
 			__native := C.CallFuncEnumCallback(__func_)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetStringData(&__retVal_native)
+			__retVal = plugify.GetStringData[string](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.

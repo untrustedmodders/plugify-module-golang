@@ -85,7 +85,7 @@ func ResourceHandleGetName(handle uintptr) string {
 			__native := C.ResourceHandleGetName(__handle)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetStringData(&__retVal_native)
+			__retVal = plugify.GetStringData[string](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.
@@ -146,7 +146,7 @@ func ResourceHandleGetData(handle uintptr) []float32 {
 			__native := C.ResourceHandleGetData(__handle)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
 			// Unmarshal - Convert native data to managed data.
-			__retVal = plugify.GetVectorDataFloat(&__retVal_native)
+			__retVal = plugify.GetVectorDataFloat[float32](&__retVal_native)
 		},
 		Finally: func() {
 			// Perform cleanup.

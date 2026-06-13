@@ -1,20 +1,20 @@
 package main
 
-// #include "autoexports.h"
+//#include "autoexports.h"
 import "C"
 import (
-	"plugify-plugin/cross_call_master"
 	"reflect"
 	"unsafe"
 
-	"github.com/untrustedmodders/go-plugify"
+	cross_call_master "plugify-plugin/cross_call_master"
+
+	//"github.com/untrustedmodders/go-plugify"
+	plugify "github.com/untrustedmodders/go-plugify"
 )
 
 var _ = reflect.TypeOf(0)
 var _ = unsafe.Sizeof(0)
 var _ = plugify.Plugin()
-
-// Exported methods
 
 //export __NoParamReturnVoid
 func __NoParamReturnVoid() {
@@ -240,28 +240,28 @@ func __NoParamReturnArrayAny() C.Vector {
 //export __NoParamReturnArrayVector2
 func __NoParamReturnArrayVector2() C.Vector {
 	__result := NoParamReturnArrayVector2()
-	__return := plugify.ConstructVectorVector2(__result)
+	__return := plugify.ConstructVectorVector2[plugify.Vector2](__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
 //export __NoParamReturnArrayVector3
 func __NoParamReturnArrayVector3() C.Vector {
 	__result := NoParamReturnArrayVector3()
-	__return := plugify.ConstructVectorVector3(__result)
+	__return := plugify.ConstructVectorVector3[plugify.Vector3](__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
 //export __NoParamReturnArrayVector4
 func __NoParamReturnArrayVector4() C.Vector {
 	__result := NoParamReturnArrayVector4()
-	__return := plugify.ConstructVectorVector4(__result)
+	__return := plugify.ConstructVectorVector4[plugify.Vector4](__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
 //export __NoParamReturnArrayMatrix4x4
 func __NoParamReturnArrayMatrix4x4() C.Vector {
 	__result := NoParamReturnArrayMatrix4x4()
-	__return := plugify.ConstructVectorMatrix4x4(__result)
+	__return := plugify.ConstructVectorMatrix4x4[plugify.Matrix4x4](__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
@@ -311,32 +311,32 @@ func __Param4(a int32, b float32, c float64, d *C.Vector4) {
 
 //export __Param5
 func __Param5(a int32, b float32, c float64, d *C.Vector4, e *C.Vector) {
-	Param5(a, b, c, *(*plugify.Vector4)(unsafe.Pointer(d)), plugify.GetVectorDataInt64((*plugify.PlgVector)(unsafe.Pointer(e))))
+	Param5(a, b, c, *(*plugify.Vector4)(unsafe.Pointer(d)), plugify.GetVectorDataInt64[int64]((*plugify.PlgVector)(unsafe.Pointer(e))))
 }
 
 //export __Param6
 func __Param6(a int32, b float32, c float64, d *C.Vector4, e *C.Vector, f int8) {
-	Param6(a, b, c, *(*plugify.Vector4)(unsafe.Pointer(d)), plugify.GetVectorDataInt64((*plugify.PlgVector)(unsafe.Pointer(e))), f)
+	Param6(a, b, c, *(*plugify.Vector4)(unsafe.Pointer(d)), plugify.GetVectorDataInt64[int64]((*plugify.PlgVector)(unsafe.Pointer(e))), f)
 }
 
 //export __Param7
 func __Param7(a int32, b float32, c float64, d *C.Vector4, e *C.Vector, f int8, g *C.String) {
-	Param7(a, b, c, *(*plugify.Vector4)(unsafe.Pointer(d)), plugify.GetVectorDataInt64((*plugify.PlgVector)(unsafe.Pointer(e))), f, plugify.GetStringData((*plugify.PlgString)(unsafe.Pointer(g))))
+	Param7(a, b, c, *(*plugify.Vector4)(unsafe.Pointer(d)), plugify.GetVectorDataInt64[int64]((*plugify.PlgVector)(unsafe.Pointer(e))), f, plugify.GetStringData[string]((*plugify.PlgString)(unsafe.Pointer(g))))
 }
 
 //export __Param8
 func __Param8(a int32, b float32, c float64, d *C.Vector4, e *C.Vector, f int8, g *C.String, h uint16) {
-	Param8(a, b, c, *(*plugify.Vector4)(unsafe.Pointer(d)), plugify.GetVectorDataInt64((*plugify.PlgVector)(unsafe.Pointer(e))), f, plugify.GetStringData((*plugify.PlgString)(unsafe.Pointer(g))), h)
+	Param8(a, b, c, *(*plugify.Vector4)(unsafe.Pointer(d)), plugify.GetVectorDataInt64[int64]((*plugify.PlgVector)(unsafe.Pointer(e))), f, plugify.GetStringData[string]((*plugify.PlgString)(unsafe.Pointer(g))), h)
 }
 
 //export __Param9
 func __Param9(a int32, b float32, c float64, d *C.Vector4, e *C.Vector, f int8, g *C.String, h uint16, k int16) {
-	Param9(a, b, c, *(*plugify.Vector4)(unsafe.Pointer(d)), plugify.GetVectorDataInt64((*plugify.PlgVector)(unsafe.Pointer(e))), f, plugify.GetStringData((*plugify.PlgString)(unsafe.Pointer(g))), h, k)
+	Param9(a, b, c, *(*plugify.Vector4)(unsafe.Pointer(d)), plugify.GetVectorDataInt64[int64]((*plugify.PlgVector)(unsafe.Pointer(e))), f, plugify.GetStringData[string]((*plugify.PlgString)(unsafe.Pointer(g))), h, k)
 }
 
 //export __Param10
 func __Param10(a int32, b float32, c float64, d *C.Vector4, e *C.Vector, f int8, g *C.String, h uint16, k int16, l uintptr) {
-	Param10(a, b, c, *(*plugify.Vector4)(unsafe.Pointer(d)), plugify.GetVectorDataInt64((*plugify.PlgVector)(unsafe.Pointer(e))), f, plugify.GetStringData((*plugify.PlgString)(unsafe.Pointer(g))), h, k, l)
+	Param10(a, b, c, *(*plugify.Vector4)(unsafe.Pointer(d)), plugify.GetVectorDataInt64[int64]((*plugify.PlgVector)(unsafe.Pointer(e))), f, plugify.GetStringData[string]((*plugify.PlgString)(unsafe.Pointer(g))), h, k, l)
 }
 
 //export __ParamRef1
@@ -361,22 +361,22 @@ func __ParamRef4(a *int32, b *float32, c *float64, d *C.Vector4) {
 
 //export __ParamRef5
 func __ParamRef5(a *int32, b *float32, c *float64, d *C.Vector4, e *C.Vector) {
-	_e := plugify.GetVectorDataInt64((*plugify.PlgVector)(unsafe.Pointer(e)))
+	_e := plugify.GetVectorDataInt64[int64]((*plugify.PlgVector)(unsafe.Pointer(e)))
 	ParamRef5(a, b, c, (*plugify.Vector4)(unsafe.Pointer(d)), &_e)
 	plugify.AssignVectorInt64((*plugify.PlgVector)(unsafe.Pointer(e)), _e)
 }
 
 //export __ParamRef6
 func __ParamRef6(a *int32, b *float32, c *float64, d *C.Vector4, e *C.Vector, f *int8) {
-	_e := plugify.GetVectorDataInt64((*plugify.PlgVector)(unsafe.Pointer(e)))
+	_e := plugify.GetVectorDataInt64[int64]((*plugify.PlgVector)(unsafe.Pointer(e)))
 	ParamRef6(a, b, c, (*plugify.Vector4)(unsafe.Pointer(d)), &_e, f)
 	plugify.AssignVectorInt64((*plugify.PlgVector)(unsafe.Pointer(e)), _e)
 }
 
 //export __ParamRef7
 func __ParamRef7(a *int32, b *float32, c *float64, d *C.Vector4, e *C.Vector, f *int8, g *C.String) {
-	_e := plugify.GetVectorDataInt64((*plugify.PlgVector)(unsafe.Pointer(e)))
-	_g := plugify.GetStringData((*plugify.PlgString)(unsafe.Pointer(g)))
+	_e := plugify.GetVectorDataInt64[int64]((*plugify.PlgVector)(unsafe.Pointer(e)))
+	_g := plugify.GetStringData[string]((*plugify.PlgString)(unsafe.Pointer(g)))
 	ParamRef7(a, b, c, (*plugify.Vector4)(unsafe.Pointer(d)), &_e, f, &_g)
 	plugify.AssignVectorInt64((*plugify.PlgVector)(unsafe.Pointer(e)), _e)
 	plugify.AssignString((*plugify.PlgString)(unsafe.Pointer(g)), _g)
@@ -384,8 +384,8 @@ func __ParamRef7(a *int32, b *float32, c *float64, d *C.Vector4, e *C.Vector, f 
 
 //export __ParamRef8
 func __ParamRef8(a *int32, b *float32, c *float64, d *C.Vector4, e *C.Vector, f *int8, g *C.String, h *uint16) {
-	_e := plugify.GetVectorDataInt64((*plugify.PlgVector)(unsafe.Pointer(e)))
-	_g := plugify.GetStringData((*plugify.PlgString)(unsafe.Pointer(g)))
+	_e := plugify.GetVectorDataInt64[int64]((*plugify.PlgVector)(unsafe.Pointer(e)))
+	_g := plugify.GetStringData[string]((*plugify.PlgString)(unsafe.Pointer(g)))
 	ParamRef8(a, b, c, (*plugify.Vector4)(unsafe.Pointer(d)), &_e, f, &_g, h)
 	plugify.AssignVectorInt64((*plugify.PlgVector)(unsafe.Pointer(e)), _e)
 	plugify.AssignString((*plugify.PlgString)(unsafe.Pointer(g)), _g)
@@ -393,8 +393,8 @@ func __ParamRef8(a *int32, b *float32, c *float64, d *C.Vector4, e *C.Vector, f 
 
 //export __ParamRef9
 func __ParamRef9(a *int32, b *float32, c *float64, d *C.Vector4, e *C.Vector, f *int8, g *C.String, h *uint16, k *int16) {
-	_e := plugify.GetVectorDataInt64((*plugify.PlgVector)(unsafe.Pointer(e)))
-	_g := plugify.GetStringData((*plugify.PlgString)(unsafe.Pointer(g)))
+	_e := plugify.GetVectorDataInt64[int64]((*plugify.PlgVector)(unsafe.Pointer(e)))
+	_g := plugify.GetStringData[string]((*plugify.PlgString)(unsafe.Pointer(g)))
 	ParamRef9(a, b, c, (*plugify.Vector4)(unsafe.Pointer(d)), &_e, f, &_g, h, k)
 	plugify.AssignVectorInt64((*plugify.PlgVector)(unsafe.Pointer(e)), _e)
 	plugify.AssignString((*plugify.PlgString)(unsafe.Pointer(g)), _g)
@@ -402,8 +402,8 @@ func __ParamRef9(a *int32, b *float32, c *float64, d *C.Vector4, e *C.Vector, f 
 
 //export __ParamRef10
 func __ParamRef10(a *int32, b *float32, c *float64, d *C.Vector4, e *C.Vector, f *int8, g *C.String, h *uint16, k *int16, l *uintptr) {
-	_e := plugify.GetVectorDataInt64((*plugify.PlgVector)(unsafe.Pointer(e)))
-	_g := plugify.GetStringData((*plugify.PlgString)(unsafe.Pointer(g)))
+	_e := plugify.GetVectorDataInt64[int64]((*plugify.PlgVector)(unsafe.Pointer(e)))
+	_g := plugify.GetStringData[string]((*plugify.PlgString)(unsafe.Pointer(g)))
 	ParamRef10(a, b, c, (*plugify.Vector4)(unsafe.Pointer(d)), &_e, f, &_g, h, k, l)
 	plugify.AssignVectorInt64((*plugify.PlgVector)(unsafe.Pointer(e)), _e)
 	plugify.AssignString((*plugify.PlgString)(unsafe.Pointer(g)), _g)
@@ -411,21 +411,21 @@ func __ParamRef10(a *int32, b *float32, c *float64, d *C.Vector4, e *C.Vector, f
 
 //export __ParamRefVectors
 func __ParamRefVectors(p1 *C.Vector, p2 *C.Vector, p3 *C.Vector, p4 *C.Vector, p5 *C.Vector, p6 *C.Vector, p7 *C.Vector, p8 *C.Vector, p9 *C.Vector, p10 *C.Vector, p11 *C.Vector, p12 *C.Vector, p13 *C.Vector, p14 *C.Vector, p15 *C.Vector) {
-	_p1 := plugify.GetVectorDataBool((*plugify.PlgVector)(unsafe.Pointer(p1)))
-	_p2 := plugify.GetVectorDataInt8((*plugify.PlgVector)(unsafe.Pointer(p2)))
-	_p3 := plugify.GetVectorDataUInt16((*plugify.PlgVector)(unsafe.Pointer(p3)))
-	_p4 := plugify.GetVectorDataInt8((*plugify.PlgVector)(unsafe.Pointer(p4)))
-	_p5 := plugify.GetVectorDataInt16((*plugify.PlgVector)(unsafe.Pointer(p5)))
-	_p6 := plugify.GetVectorDataInt32((*plugify.PlgVector)(unsafe.Pointer(p6)))
-	_p7 := plugify.GetVectorDataInt64((*plugify.PlgVector)(unsafe.Pointer(p7)))
-	_p8 := plugify.GetVectorDataUInt8((*plugify.PlgVector)(unsafe.Pointer(p8)))
-	_p9 := plugify.GetVectorDataUInt16((*plugify.PlgVector)(unsafe.Pointer(p9)))
-	_p10 := plugify.GetVectorDataUInt32((*plugify.PlgVector)(unsafe.Pointer(p10)))
-	_p11 := plugify.GetVectorDataUInt64((*plugify.PlgVector)(unsafe.Pointer(p11)))
-	_p12 := plugify.GetVectorDataPointer((*plugify.PlgVector)(unsafe.Pointer(p12)))
-	_p13 := plugify.GetVectorDataFloat((*plugify.PlgVector)(unsafe.Pointer(p13)))
-	_p14 := plugify.GetVectorDataDouble((*plugify.PlgVector)(unsafe.Pointer(p14)))
-	_p15 := plugify.GetVectorDataString((*plugify.PlgVector)(unsafe.Pointer(p15)))
+	_p1 := plugify.GetVectorDataBool[bool]((*plugify.PlgVector)(unsafe.Pointer(p1)))
+	_p2 := plugify.GetVectorDataInt8[int8]((*plugify.PlgVector)(unsafe.Pointer(p2)))
+	_p3 := plugify.GetVectorDataUInt16[uint16]((*plugify.PlgVector)(unsafe.Pointer(p3)))
+	_p4 := plugify.GetVectorDataInt8[int8]((*plugify.PlgVector)(unsafe.Pointer(p4)))
+	_p5 := plugify.GetVectorDataInt16[int16]((*plugify.PlgVector)(unsafe.Pointer(p5)))
+	_p6 := plugify.GetVectorDataInt32[int32]((*plugify.PlgVector)(unsafe.Pointer(p6)))
+	_p7 := plugify.GetVectorDataInt64[int64]((*plugify.PlgVector)(unsafe.Pointer(p7)))
+	_p8 := plugify.GetVectorDataUInt8[uint8]((*plugify.PlgVector)(unsafe.Pointer(p8)))
+	_p9 := plugify.GetVectorDataUInt16[uint16]((*plugify.PlgVector)(unsafe.Pointer(p9)))
+	_p10 := plugify.GetVectorDataUInt32[uint32]((*plugify.PlgVector)(unsafe.Pointer(p10)))
+	_p11 := plugify.GetVectorDataUInt64[uint64]((*plugify.PlgVector)(unsafe.Pointer(p11)))
+	_p12 := plugify.GetVectorDataPointer[uintptr]((*plugify.PlgVector)(unsafe.Pointer(p12)))
+	_p13 := plugify.GetVectorDataFloat[float32]((*plugify.PlgVector)(unsafe.Pointer(p13)))
+	_p14 := plugify.GetVectorDataDouble[float64]((*plugify.PlgVector)(unsafe.Pointer(p14)))
+	_p15 := plugify.GetVectorDataString[string]((*plugify.PlgVector)(unsafe.Pointer(p15)))
 	ParamRefVectors(&_p1, &_p2, &_p3, &_p4, &_p5, &_p6, &_p7, &_p8, &_p9, &_p10, &_p11, &_p12, &_p13, &_p14, &_p15)
 	plugify.AssignVectorBool((*plugify.PlgVector)(unsafe.Pointer(p1)), _p1)
 	plugify.AssignVectorInt8((*plugify.PlgVector)(unsafe.Pointer(p2)), _p2)
@@ -452,30 +452,30 @@ func __ParamAllPrimitives(p1 bool, p2 int8, p3 uint16, p4 int8, p5 int16, p6 int
 
 //export __ParamAllAliases
 func __ParamAllAliases(aBool bool, aChar8 int8, aChar16 uint16, aInt8 int8, aInt16 int16, aInt32 int32, aInt64 int64, aPtr uintptr, aFloat float32, aDouble float64, aString *C.String, aAny *C.Variant, aVec2 *C.Vector2, aVec3 *C.Vector3, aVec4 *C.Vector4, aMat4x4 *C.Matrix4x4, aBoolVec *C.Vector, aChar8Vec *C.Vector, aChar16Vec *C.Vector, aInt8Vec *C.Vector, aInt16Vec *C.Vector, aInt32Vec *C.Vector, aInt64Vec *C.Vector, aPtrVec *C.Vector, aFloatVec *C.Vector, aDoubleVec *C.Vector, aStringVec *C.Vector, aAnyVec *C.Vector, aVec2Vec *C.Vector, aVec3Vec *C.Vector, aVec4Vec *C.Vector) int32 {
-	__result := ParamAllAliases(cross_call_master.AliasBool(aBool), cross_call_master.AliasChar8(aChar8), cross_call_master.AliasChar16(aChar16), cross_call_master.AliasInt8(aInt8), cross_call_master.AliasInt16(aInt16), cross_call_master.AliasInt32(aInt32), cross_call_master.AliasInt64(aInt64), cross_call_master.AliasPtr(aPtr), cross_call_master.AliasFloat(aFloat), cross_call_master.AliasDouble(aDouble), plugify.GetStringData((*plugify.PlgString)(unsafe.Pointer(aString))), plugify.GetVariantData((*plugify.PlgVariant)(unsafe.Pointer(aAny))), *(*plugify.Vector2)(unsafe.Pointer(aVec2)), *(*plugify.Vector3)(unsafe.Pointer(aVec3)), *(*plugify.Vector4)(unsafe.Pointer(aVec4)), *(*plugify.Matrix4x4)(unsafe.Pointer(aMat4x4)), plugify.GetVectorDataBool((*plugify.PlgVector)(unsafe.Pointer(aBoolVec))), plugify.GetVectorDataInt8((*plugify.PlgVector)(unsafe.Pointer(aChar8Vec))), plugify.GetVectorDataUInt16((*plugify.PlgVector)(unsafe.Pointer(aChar16Vec))), plugify.GetVectorDataInt8((*plugify.PlgVector)(unsafe.Pointer(aInt8Vec))), plugify.GetVectorDataInt16((*plugify.PlgVector)(unsafe.Pointer(aInt16Vec))), plugify.GetVectorDataInt32((*plugify.PlgVector)(unsafe.Pointer(aInt32Vec))), plugify.GetVectorDataInt64((*plugify.PlgVector)(unsafe.Pointer(aInt64Vec))), plugify.GetVectorDataPointer((*plugify.PlgVector)(unsafe.Pointer(aPtrVec))), plugify.GetVectorDataFloat((*plugify.PlgVector)(unsafe.Pointer(aFloatVec))), plugify.GetVectorDataDouble((*plugify.PlgVector)(unsafe.Pointer(aDoubleVec))), plugify.GetVectorDataString((*plugify.PlgVector)(unsafe.Pointer(aStringVec))), plugify.GetVectorDataVariant((*plugify.PlgVector)(unsafe.Pointer(aAnyVec))), plugify.GetVectorDataVector2((*plugify.PlgVector)(unsafe.Pointer(aVec2Vec))), plugify.GetVectorDataVector3((*plugify.PlgVector)(unsafe.Pointer(aVec3Vec))), plugify.GetVectorDataVector4((*plugify.PlgVector)(unsafe.Pointer(aVec4Vec))))
+	__result := ParamAllAliases(cross_call_master.AliasBool(aBool), cross_call_master.AliasChar8(aChar8), cross_call_master.AliasChar16(aChar16), cross_call_master.AliasInt8(aInt8), cross_call_master.AliasInt16(aInt16), cross_call_master.AliasInt32(aInt32), cross_call_master.AliasInt64(aInt64), cross_call_master.AliasPtr(aPtr), cross_call_master.AliasFloat(aFloat), cross_call_master.AliasDouble(aDouble), plugify.GetStringData[cross_call_master.AliasString]((*plugify.PlgString)(unsafe.Pointer(aString))), cross_call_master.AliasAny(plugify.GetVariantData((*plugify.PlgVariant)(unsafe.Pointer(aAny)))), *(*cross_call_master.AliasVec2)(unsafe.Pointer(aVec2)), *(*cross_call_master.AliasVec3)(unsafe.Pointer(aVec3)), *(*cross_call_master.AliasVec4)(unsafe.Pointer(aVec4)), *(*cross_call_master.AliasMat4x4)(unsafe.Pointer(aMat4x4)), (cross_call_master.AliasBoolVector)(plugify.GetVectorDataBool[bool]((*plugify.PlgVector)(unsafe.Pointer(aBoolVec)))), (cross_call_master.AliasChar8Vector)(plugify.GetVectorDataInt8[int8]((*plugify.PlgVector)(unsafe.Pointer(aChar8Vec)))), (cross_call_master.AliasChar16Vector)(plugify.GetVectorDataUInt16[uint16]((*plugify.PlgVector)(unsafe.Pointer(aChar16Vec)))), (cross_call_master.AliasInt8Vector)(plugify.GetVectorDataInt8[int8]((*plugify.PlgVector)(unsafe.Pointer(aInt8Vec)))), (cross_call_master.AliasInt16Vector)(plugify.GetVectorDataInt16[int16]((*plugify.PlgVector)(unsafe.Pointer(aInt16Vec)))), (cross_call_master.AliasInt32Vector)(plugify.GetVectorDataInt32[int32]((*plugify.PlgVector)(unsafe.Pointer(aInt32Vec)))), (cross_call_master.AliasInt64Vector)(plugify.GetVectorDataInt64[int64]((*plugify.PlgVector)(unsafe.Pointer(aInt64Vec)))), (cross_call_master.AliasPtrVector)(plugify.GetVectorDataPointer[uintptr]((*plugify.PlgVector)(unsafe.Pointer(aPtrVec)))), (cross_call_master.AliasFloatVector)(plugify.GetVectorDataFloat[float32]((*plugify.PlgVector)(unsafe.Pointer(aFloatVec)))), (cross_call_master.AliasDoubleVector)(plugify.GetVectorDataDouble[float64]((*plugify.PlgVector)(unsafe.Pointer(aDoubleVec)))), (cross_call_master.AliasStringVector)(plugify.GetVectorDataString[string]((*plugify.PlgVector)(unsafe.Pointer(aStringVec)))), (cross_call_master.AliasAnyVector)(plugify.GetVectorDataVariant[any, cross_call_master.AliasAnyVector]((*plugify.PlgVector)(unsafe.Pointer(aAnyVec)))), (cross_call_master.AliasVec2Vector)(plugify.GetVectorDataVector2[plugify.Vector2]((*plugify.PlgVector)(unsafe.Pointer(aVec2Vec)))), (cross_call_master.AliasVec3Vector)(plugify.GetVectorDataVector3[plugify.Vector3]((*plugify.PlgVector)(unsafe.Pointer(aVec3Vec)))), (cross_call_master.AliasVec4Vector)(plugify.GetVectorDataVector4[plugify.Vector4]((*plugify.PlgVector)(unsafe.Pointer(aVec4Vec)))))
 	return __result
 }
 
 //export __ParamAllRefAliases
 func __ParamAllRefAliases(aBool *bool, aChar8 *int8, aChar16 *uint16, aInt8 *int8, aInt16 *int16, aInt32 *int32, aInt64 *int64, aPtr *uintptr, aFloat *float32, aDouble *float64, aString *C.String, aAny *C.Variant, aVec2 *C.Vector2, aVec3 *C.Vector3, aVec4 *C.Vector4, aMat4x4 *C.Matrix4x4, aBoolVec *C.Vector, aChar8Vec *C.Vector, aChar16Vec *C.Vector, aInt8Vec *C.Vector, aInt16Vec *C.Vector, aInt32Vec *C.Vector, aInt64Vec *C.Vector, aPtrVec *C.Vector, aFloatVec *C.Vector, aDoubleVec *C.Vector, aStringVec *C.Vector, aAnyVec *C.Vector, aVec2Vec *C.Vector, aVec3Vec *C.Vector, aVec4Vec *C.Vector) int64 {
-	_aString := plugify.GetStringData((*plugify.PlgString)(unsafe.Pointer(aString)))
-	_aAny := plugify.GetVariantData((*plugify.PlgVariant)(unsafe.Pointer(aAny)))
-	_aBoolVec := plugify.GetVectorDataBool((*plugify.PlgVector)(unsafe.Pointer(aBoolVec)))
-	_aChar8Vec := plugify.GetVectorDataInt8((*plugify.PlgVector)(unsafe.Pointer(aChar8Vec)))
-	_aChar16Vec := plugify.GetVectorDataUInt16((*plugify.PlgVector)(unsafe.Pointer(aChar16Vec)))
-	_aInt8Vec := plugify.GetVectorDataInt8((*plugify.PlgVector)(unsafe.Pointer(aInt8Vec)))
-	_aInt16Vec := plugify.GetVectorDataInt16((*plugify.PlgVector)(unsafe.Pointer(aInt16Vec)))
-	_aInt32Vec := plugify.GetVectorDataInt32((*plugify.PlgVector)(unsafe.Pointer(aInt32Vec)))
-	_aInt64Vec := plugify.GetVectorDataInt64((*plugify.PlgVector)(unsafe.Pointer(aInt64Vec)))
-	_aPtrVec := plugify.GetVectorDataPointer((*plugify.PlgVector)(unsafe.Pointer(aPtrVec)))
-	_aFloatVec := plugify.GetVectorDataFloat((*plugify.PlgVector)(unsafe.Pointer(aFloatVec)))
-	_aDoubleVec := plugify.GetVectorDataDouble((*plugify.PlgVector)(unsafe.Pointer(aDoubleVec)))
-	_aStringVec := plugify.GetVectorDataString((*plugify.PlgVector)(unsafe.Pointer(aStringVec)))
-	_aAnyVec := plugify.GetVectorDataVariant((*plugify.PlgVector)(unsafe.Pointer(aAnyVec)))
-	_aVec2Vec := plugify.GetVectorDataVector2((*plugify.PlgVector)(unsafe.Pointer(aVec2Vec)))
-	_aVec3Vec := plugify.GetVectorDataVector3((*plugify.PlgVector)(unsafe.Pointer(aVec3Vec)))
-	_aVec4Vec := plugify.GetVectorDataVector4((*plugify.PlgVector)(unsafe.Pointer(aVec4Vec)))
-	__result := ParamAllRefAliases((*cross_call_master.AliasBool)(aBool), (*cross_call_master.AliasChar8)(aChar8), (*cross_call_master.AliasChar16)(aChar16), (*cross_call_master.AliasInt8)(aInt8), (*cross_call_master.AliasInt16)(aInt16), (*cross_call_master.AliasInt32)(aInt32), (*cross_call_master.AliasInt64)(aInt64), (*cross_call_master.AliasPtr)(aPtr), (*cross_call_master.AliasFloat)(aFloat), (*cross_call_master.AliasDouble)(aDouble), &_aString, &_aAny, (*plugify.Vector2)(unsafe.Pointer(aVec2)), (*plugify.Vector3)(unsafe.Pointer(aVec3)), (*plugify.Vector4)(unsafe.Pointer(aVec4)), (*plugify.Matrix4x4)(unsafe.Pointer(aMat4x4)), &_aBoolVec, &_aChar8Vec, &_aChar16Vec, &_aInt8Vec, &_aInt16Vec, &_aInt32Vec, &_aInt64Vec, &_aPtrVec, &_aFloatVec, &_aDoubleVec, &_aStringVec, &_aAnyVec, &_aVec2Vec, &_aVec3Vec, &_aVec4Vec)
+	_aString := plugify.GetStringData[cross_call_master.AliasString]((*plugify.PlgString)(unsafe.Pointer(aString)))
+	_aAny := cross_call_master.AliasAny(plugify.GetVariantData((*plugify.PlgVariant)(unsafe.Pointer(aAny))))
+	_aBoolVec := (cross_call_master.AliasBoolVector)(plugify.GetVectorDataBool[bool]((*plugify.PlgVector)(unsafe.Pointer(aBoolVec))))
+	_aChar8Vec := (cross_call_master.AliasChar8Vector)(plugify.GetVectorDataInt8[int8]((*plugify.PlgVector)(unsafe.Pointer(aChar8Vec))))
+	_aChar16Vec := (cross_call_master.AliasChar16Vector)(plugify.GetVectorDataUInt16[uint16]((*plugify.PlgVector)(unsafe.Pointer(aChar16Vec))))
+	_aInt8Vec := (cross_call_master.AliasInt8Vector)(plugify.GetVectorDataInt8[int8]((*plugify.PlgVector)(unsafe.Pointer(aInt8Vec))))
+	_aInt16Vec := (cross_call_master.AliasInt16Vector)(plugify.GetVectorDataInt16[int16]((*plugify.PlgVector)(unsafe.Pointer(aInt16Vec))))
+	_aInt32Vec := (cross_call_master.AliasInt32Vector)(plugify.GetVectorDataInt32[int32]((*plugify.PlgVector)(unsafe.Pointer(aInt32Vec))))
+	_aInt64Vec := (cross_call_master.AliasInt64Vector)(plugify.GetVectorDataInt64[int64]((*plugify.PlgVector)(unsafe.Pointer(aInt64Vec))))
+	_aPtrVec := (cross_call_master.AliasPtrVector)(plugify.GetVectorDataPointer[uintptr]((*plugify.PlgVector)(unsafe.Pointer(aPtrVec))))
+	_aFloatVec := (cross_call_master.AliasFloatVector)(plugify.GetVectorDataFloat[float32]((*plugify.PlgVector)(unsafe.Pointer(aFloatVec))))
+	_aDoubleVec := (cross_call_master.AliasDoubleVector)(plugify.GetVectorDataDouble[float64]((*plugify.PlgVector)(unsafe.Pointer(aDoubleVec))))
+	_aStringVec := (cross_call_master.AliasStringVector)(plugify.GetVectorDataString[string]((*plugify.PlgVector)(unsafe.Pointer(aStringVec))))
+	_aAnyVec := (cross_call_master.AliasAnyVector)(plugify.GetVectorDataVariant[any, cross_call_master.AliasAnyVector]((*plugify.PlgVector)(unsafe.Pointer(aAnyVec))))
+	_aVec2Vec := (cross_call_master.AliasVec2Vector)(plugify.GetVectorDataVector2[plugify.Vector2]((*plugify.PlgVector)(unsafe.Pointer(aVec2Vec))))
+	_aVec3Vec := (cross_call_master.AliasVec3Vector)(plugify.GetVectorDataVector3[plugify.Vector3]((*plugify.PlgVector)(unsafe.Pointer(aVec3Vec))))
+	_aVec4Vec := (cross_call_master.AliasVec4Vector)(plugify.GetVectorDataVector4[plugify.Vector4]((*plugify.PlgVector)(unsafe.Pointer(aVec4Vec))))
+	__result := ParamAllRefAliases((*cross_call_master.AliasBool)(unsafe.Pointer(aBool)), (*cross_call_master.AliasChar8)(unsafe.Pointer(aChar8)), (*cross_call_master.AliasChar16)(unsafe.Pointer(aChar16)), (*cross_call_master.AliasInt8)(unsafe.Pointer(aInt8)), (*cross_call_master.AliasInt16)(unsafe.Pointer(aInt16)), (*cross_call_master.AliasInt32)(unsafe.Pointer(aInt32)), (*cross_call_master.AliasInt64)(unsafe.Pointer(aInt64)), (*cross_call_master.AliasPtr)(unsafe.Pointer(aPtr)), (*cross_call_master.AliasFloat)(unsafe.Pointer(aFloat)), (*cross_call_master.AliasDouble)(unsafe.Pointer(aDouble)), &_aString, &_aAny, (*cross_call_master.AliasVec2)(unsafe.Pointer(aVec2)), (*cross_call_master.AliasVec3)(unsafe.Pointer(aVec3)), (*cross_call_master.AliasVec4)(unsafe.Pointer(aVec4)), (*cross_call_master.AliasMat4x4)(unsafe.Pointer(aMat4x4)), &_aBoolVec, &_aChar8Vec, &_aChar16Vec, &_aInt8Vec, &_aInt16Vec, &_aInt32Vec, &_aInt64Vec, &_aPtrVec, &_aFloatVec, &_aDoubleVec, &_aStringVec, &_aAnyVec, &_aVec2Vec, &_aVec3Vec, &_aVec4Vec)
 	plugify.AssignString((*plugify.PlgString)(unsafe.Pointer(aString)), _aString)
 	plugify.AssignVariant((*plugify.PlgVariant)(unsafe.Pointer(aAny)), _aAny)
 	plugify.AssignVectorBool((*plugify.PlgVector)(unsafe.Pointer(aBoolVec)), _aBoolVec)
@@ -498,27 +498,27 @@ func __ParamAllRefAliases(aBool *bool, aChar8 *int8, aChar16 *uint16, aInt8 *int
 
 //export __ParamEnum
 func __ParamEnum(p1 int32, p2 *C.Vector) int32 {
-	__result := ParamEnum(Example(p1), plugify.GetVectorDataInt32T[Example]((*plugify.PlgVector)(unsafe.Pointer(p2))))
+	__result := ParamEnum(Example(p1), plugify.GetVectorDataInt32[Example]((*plugify.PlgVector)(unsafe.Pointer(p2))))
 	return __result
 }
 
 //export __ParamEnumRef
 func __ParamEnumRef(p1 *int32, p2 *C.Vector) int32 {
-	_p2 := plugify.GetVectorDataInt32T[Example]((*plugify.PlgVector)(unsafe.Pointer(p2)))
-	__result := ParamEnumRef((*Example)(p1), &_p2)
+	_p2 := plugify.GetVectorDataInt32[Example]((*plugify.PlgVector)(unsafe.Pointer(p2)))
+	__result := ParamEnumRef((*Example)(unsafe.Pointer(p1)), &_p2)
 	plugify.AssignVectorInt32((*plugify.PlgVector)(unsafe.Pointer(p2)), _p2)
 	return __result
 }
 
 //export __ParamVariant
 func __ParamVariant(p1 *C.Variant, p2 *C.Vector) {
-	ParamVariant(plugify.GetVariantData((*plugify.PlgVariant)(unsafe.Pointer(p1))), plugify.GetVectorDataVariant((*plugify.PlgVector)(unsafe.Pointer(p2))))
+	ParamVariant(plugify.GetVariantData((*plugify.PlgVariant)(unsafe.Pointer(p1))), plugify.GetVectorDataVariant[any, []any]((*plugify.PlgVector)(unsafe.Pointer(p2))))
 }
 
 //export __ParamVariantRef
 func __ParamVariantRef(p1 *C.Variant, p2 *C.Vector) {
 	_p1 := plugify.GetVariantData((*plugify.PlgVariant)(unsafe.Pointer(p1)))
-	_p2 := plugify.GetVectorDataVariant((*plugify.PlgVector)(unsafe.Pointer(p2)))
+	_p2 := plugify.GetVectorDataVariant[any, []any]((*plugify.PlgVector)(unsafe.Pointer(p2)))
 	ParamVariantRef(&_p1, &_p2)
 	plugify.AssignVariant((*plugify.PlgVariant)(unsafe.Pointer(p1)), _p1)
 	plugify.AssignVectorVariant((*plugify.PlgVector)(unsafe.Pointer(p2)), _p2)
@@ -748,28 +748,28 @@ func __CallFuncAnyVector(func_ unsafe.Pointer) C.Vector {
 //export __CallFuncVec2Vector
 func __CallFuncVec2Vector(func_ unsafe.Pointer) C.Vector {
 	__result := CallFuncVec2Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncVec2Vector(nil))).(cross_call_master.FuncVec2Vector))
-	__return := plugify.ConstructVectorVector2(__result)
+	__return := plugify.ConstructVectorVector2[plugify.Vector2](__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
 //export __CallFuncVec3Vector
 func __CallFuncVec3Vector(func_ unsafe.Pointer) C.Vector {
 	__result := CallFuncVec3Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncVec3Vector(nil))).(cross_call_master.FuncVec3Vector))
-	__return := plugify.ConstructVectorVector3(__result)
+	__return := plugify.ConstructVectorVector3[plugify.Vector3](__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
 //export __CallFuncVec4Vector
 func __CallFuncVec4Vector(func_ unsafe.Pointer) C.Vector {
 	__result := CallFuncVec4Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncVec4Vector(nil))).(cross_call_master.FuncVec4Vector))
-	__return := plugify.ConstructVectorVector4(__result)
+	__return := plugify.ConstructVectorVector4[plugify.Vector4](__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
 //export __CallFuncMat4x4Vector
 func __CallFuncMat4x4Vector(func_ unsafe.Pointer) C.Vector {
 	__result := CallFuncMat4x4Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncMat4x4Vector(nil))).(cross_call_master.FuncMat4x4Vector))
-	__return := plugify.ConstructVectorMatrix4x4(__result)
+	__return := plugify.ConstructVectorMatrix4x4[plugify.Matrix4x4](__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
@@ -1022,91 +1022,91 @@ func __CallFuncEnum(func_ unsafe.Pointer) C.String {
 //export __CallFuncAliasBool
 func __CallFuncAliasBool(func_ unsafe.Pointer) bool {
 	__result := CallFuncAliasBool(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasBool(nil))).(cross_call_master.FuncAliasBool))
-	return __result
+	return bool(__result)
 }
 
 //export __CallFuncAliasChar8
 func __CallFuncAliasChar8(func_ unsafe.Pointer) int8 {
 	__result := CallFuncAliasChar8(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasChar8(nil))).(cross_call_master.FuncAliasChar8))
-	return __result
+	return int8(__result)
 }
 
 //export __CallFuncAliasChar16
 func __CallFuncAliasChar16(func_ unsafe.Pointer) uint16 {
 	__result := CallFuncAliasChar16(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasChar16(nil))).(cross_call_master.FuncAliasChar16))
-	return __result
+	return uint16(__result)
 }
 
 //export __CallFuncAliasInt8
 func __CallFuncAliasInt8(func_ unsafe.Pointer) int8 {
 	__result := CallFuncAliasInt8(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasInt8(nil))).(cross_call_master.FuncAliasInt8))
-	return __result
+	return int8(__result)
 }
 
 //export __CallFuncAliasInt16
 func __CallFuncAliasInt16(func_ unsafe.Pointer) int16 {
 	__result := CallFuncAliasInt16(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasInt16(nil))).(cross_call_master.FuncAliasInt16))
-	return __result
+	return int16(__result)
 }
 
 //export __CallFuncAliasInt32
 func __CallFuncAliasInt32(func_ unsafe.Pointer) int32 {
 	__result := CallFuncAliasInt32(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasInt32(nil))).(cross_call_master.FuncAliasInt32))
-	return __result
+	return int32(__result)
 }
 
 //export __CallFuncAliasInt64
 func __CallFuncAliasInt64(func_ unsafe.Pointer) int64 {
 	__result := CallFuncAliasInt64(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasInt64(nil))).(cross_call_master.FuncAliasInt64))
-	return __result
+	return int64(__result)
 }
 
 //export __CallFuncAliasUInt8
 func __CallFuncAliasUInt8(func_ unsafe.Pointer) uint8 {
 	__result := CallFuncAliasUInt8(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasUInt8(nil))).(cross_call_master.FuncAliasUInt8))
-	return __result
+	return uint8(__result)
 }
 
 //export __CallFuncAliasUInt16
 func __CallFuncAliasUInt16(func_ unsafe.Pointer) uint16 {
 	__result := CallFuncAliasUInt16(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasUInt16(nil))).(cross_call_master.FuncAliasUInt16))
-	return __result
+	return uint16(__result)
 }
 
 //export __CallFuncAliasUInt32
 func __CallFuncAliasUInt32(func_ unsafe.Pointer) uint32 {
 	__result := CallFuncAliasUInt32(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasUInt32(nil))).(cross_call_master.FuncAliasUInt32))
-	return __result
+	return uint32(__result)
 }
 
 //export __CallFuncAliasUInt64
 func __CallFuncAliasUInt64(func_ unsafe.Pointer) uint64 {
 	__result := CallFuncAliasUInt64(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasUInt64(nil))).(cross_call_master.FuncAliasUInt64))
-	return __result
+	return uint64(__result)
 }
 
 //export __CallFuncAliasPtr
 func __CallFuncAliasPtr(func_ unsafe.Pointer) uintptr {
 	__result := CallFuncAliasPtr(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasPtr(nil))).(cross_call_master.FuncAliasPtr))
-	return __result
+	return uintptr(__result)
 }
 
 //export __CallFuncAliasFloat
 func __CallFuncAliasFloat(func_ unsafe.Pointer) float32 {
 	__result := CallFuncAliasFloat(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasFloat(nil))).(cross_call_master.FuncAliasFloat))
-	return __result
+	return float32(__result)
 }
 
 //export __CallFuncAliasDouble
 func __CallFuncAliasDouble(func_ unsafe.Pointer) float64 {
 	__result := CallFuncAliasDouble(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasDouble(nil))).(cross_call_master.FuncAliasDouble))
-	return __result
+	return float64(__result)
 }
 
 //export __CallFuncAliasFunction
 func __CallFuncAliasFunction(func_ unsafe.Pointer) uintptr {
 	__result := CallFuncAliasFunction(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasFunction(nil))).(cross_call_master.FuncAliasFunction))
-	return __result
+	return uintptr(__result)
 }
 
 //export __CallFuncAliasString
@@ -1238,28 +1238,28 @@ func __CallFuncAliasAnyVector(func_ unsafe.Pointer) C.Vector {
 //export __CallFuncAliasVec2Vector
 func __CallFuncAliasVec2Vector(func_ unsafe.Pointer) C.Vector {
 	__result := CallFuncAliasVec2Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasVec2Vector(nil))).(cross_call_master.FuncAliasVec2Vector))
-	__return := plugify.ConstructVectorVector2(__result)
+	__return := plugify.ConstructVectorVector2[plugify.Vector2](__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
 //export __CallFuncAliasVec3Vector
 func __CallFuncAliasVec3Vector(func_ unsafe.Pointer) C.Vector {
 	__result := CallFuncAliasVec3Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasVec3Vector(nil))).(cross_call_master.FuncAliasVec3Vector))
-	__return := plugify.ConstructVectorVector3(__result)
+	__return := plugify.ConstructVectorVector3[plugify.Vector3](__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
 //export __CallFuncAliasVec4Vector
 func __CallFuncAliasVec4Vector(func_ unsafe.Pointer) C.Vector {
 	__result := CallFuncAliasVec4Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasVec4Vector(nil))).(cross_call_master.FuncAliasVec4Vector))
-	__return := plugify.ConstructVectorVector4(__result)
+	__return := plugify.ConstructVectorVector4[plugify.Vector4](__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
 //export __CallFuncAliasMat4x4Vector
 func __CallFuncAliasMat4x4Vector(func_ unsafe.Pointer) C.Vector {
 	__result := CallFuncAliasMat4x4Vector(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasMat4x4Vector(nil))).(cross_call_master.FuncAliasMat4x4Vector))
-	__return := plugify.ConstructVectorMatrix4x4(__result)
+	__return := plugify.ConstructVectorMatrix4x4[plugify.Matrix4x4](__result)
 	return *(*C.Vector)(unsafe.Pointer(&__return))
 }
 
@@ -2570,5 +2570,5 @@ func __ReverseCallFuncEnum() C.String {
 
 //export __ReverseCall
 func __ReverseCall(test *C.String) {
-	ReverseCall(plugify.GetStringData((*plugify.PlgString)(unsafe.Pointer(test))))
+	ReverseCall(plugify.GetStringData[string]((*plugify.PlgString)(unsafe.Pointer(test))))
 }

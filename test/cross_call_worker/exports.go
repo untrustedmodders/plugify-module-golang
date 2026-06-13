@@ -541,7 +541,7 @@ func ParamAllAliases(
 	aVec2 cross_call_master.AliasVec2,
 	aVec3 cross_call_master.AliasVec3,
 	aVec4 cross_call_master.AliasVec4,
-	aMat4x4 plugify.Matrix4x4,
+	aMat4x4 cross_call_master.AliasMat4x4,
 	aBoolVec cross_call_master.AliasBoolVector,
 	aChar8Vec cross_call_master.AliasChar8Vector,
 	aChar16Vec cross_call_master.AliasChar16Vector,
@@ -613,7 +613,7 @@ func ParamAllRefAliases(
 	aVec2 *cross_call_master.AliasVec2,
 	aVec3 *cross_call_master.AliasVec3,
 	aVec4 *cross_call_master.AliasVec4,
-	aMat4x4 *plugify.Matrix4x4,
+	aMat4x4 *cross_call_master.AliasMat4x4,
 	aBoolVec *cross_call_master.AliasBoolVector,
 	aChar8Vec *cross_call_master.AliasChar8Vector,
 	aChar16Vec *cross_call_master.AliasChar16Vector,
@@ -653,21 +653,21 @@ func ParamAllRefAliases(
 			{4.4, 4.1, 4.2, 4.3},
 		},
 	}
-	*aBoolVec = cross_call_master.AliasBoolVector{*aBool}
-	*aChar8Vec = cross_call_master.AliasChar8Vector{*aChar8}
-	*aChar16Vec = cross_call_master.AliasChar16Vector{*aChar16}
-	*aInt8Vec = cross_call_master.AliasInt8Vector{*aInt8}
-	*aInt16Vec = cross_call_master.AliasInt16Vector{*aInt16}
-	*aInt32Vec = cross_call_master.AliasInt32Vector{*aInt32}
-	*aInt64Vec = cross_call_master.AliasInt64Vector{*aInt64}
-	*aPtrVec = cross_call_master.AliasPtrVector{*aPtr}
-	*aFloatVec = cross_call_master.AliasFloatVector{*aFloat}
-	*aDoubleVec = cross_call_master.AliasDoubleVector{*aDouble}
-	*aStringVec = cross_call_master.AliasStringVector{*aString}
+	*aBoolVec = cross_call_master.AliasBoolVector{bool(*aBool)}
+	*aChar8Vec = cross_call_master.AliasChar8Vector{int8(*aChar8)}
+	*aChar16Vec = cross_call_master.AliasChar16Vector{uint16(*aChar16)}
+	*aInt8Vec = cross_call_master.AliasInt8Vector{int8(*aInt8)}
+	*aInt16Vec = cross_call_master.AliasInt16Vector{int16(*aInt16)}
+	*aInt32Vec = cross_call_master.AliasInt32Vector{int32(*aInt32)}
+	*aInt64Vec = cross_call_master.AliasInt64Vector{int64(*aInt64)}
+	*aPtrVec = cross_call_master.AliasPtrVector{uintptr(*aPtr)}
+	*aFloatVec = cross_call_master.AliasFloatVector{float32(*aFloat)}
+	*aDoubleVec = cross_call_master.AliasDoubleVector{float64(*aDouble)}
+	*aStringVec = cross_call_master.AliasStringVector{string(*aString)}
 	*aAnyVec = cross_call_master.AliasAnyVector{*aAny}
-	*aVec2Vec = cross_call_master.AliasVec2Vector{*aVec2}
-	*aVec3Vec = cross_call_master.AliasVec3Vector{*aVec3}
-	*aVec4Vec = cross_call_master.AliasVec4Vector{*aVec4}
+	*aVec2Vec = cross_call_master.AliasVec2Vector{plugify.Vector2(*aVec2)}
+	*aVec3Vec = cross_call_master.AliasVec3Vector{plugify.Vector3(*aVec3)}
+	*aVec4Vec = cross_call_master.AliasVec4Vector{plugify.Vector4(*aVec4)}
 	return 24
 }
 
@@ -1406,228 +1406,229 @@ func CallFuncEnum(func_ cross_call_master.FuncEnum) string {
 }
 
 // plugify:export CallFuncAliasBool
-func CallFuncAliasBool(func_ cross_call_master.FuncAliasBool) bool {
+func CallFuncAliasBool(func_ cross_call_master.FuncAliasBool) cross_call_master.AliasBool {
 	return func_()
 }
 
 // plugify:export CallFuncAliasChar8
-func CallFuncAliasChar8(func_ cross_call_master.FuncAliasChar8) int8 {
+func CallFuncAliasChar8(func_ cross_call_master.FuncAliasChar8) cross_call_master.AliasChar8 {
 	return func_()
 }
 
 // plugify:export CallFuncAliasChar16
-func CallFuncAliasChar16(func_ cross_call_master.FuncAliasChar16) uint16 {
+func CallFuncAliasChar16(func_ cross_call_master.FuncAliasChar16) cross_call_master.AliasChar16 {
 	return func_()
 }
 
 // plugify:export CallFuncAliasInt8
-func CallFuncAliasInt8(func_ cross_call_master.FuncAliasInt8) int8 {
+func CallFuncAliasInt8(func_ cross_call_master.FuncAliasInt8) cross_call_master.AliasInt8 {
 	return func_()
 }
 
 // plugify:export CallFuncAliasInt16
-func CallFuncAliasInt16(func_ cross_call_master.FuncAliasInt16) int16 {
+func CallFuncAliasInt16(func_ cross_call_master.FuncAliasInt16) cross_call_master.AliasInt16 {
 	return func_()
 }
 
 // plugify:export CallFuncAliasInt32
-func CallFuncAliasInt32(func_ cross_call_master.FuncAliasInt32) int32 {
+func CallFuncAliasInt32(func_ cross_call_master.FuncAliasInt32) cross_call_master.AliasInt32 {
 	return func_()
 }
 
 // plugify:export CallFuncAliasInt64
-func CallFuncAliasInt64(func_ cross_call_master.FuncAliasInt64) int64 {
+func CallFuncAliasInt64(func_ cross_call_master.FuncAliasInt64) cross_call_master.AliasInt64 {
 	return func_()
 }
 
 // plugify:export CallFuncAliasUInt8
-func CallFuncAliasUInt8(func_ cross_call_master.FuncAliasUInt8) uint8 {
+func CallFuncAliasUInt8(func_ cross_call_master.FuncAliasUInt8) cross_call_master.AliasUInt8 {
 	return func_()
 }
 
 // plugify:export CallFuncAliasUInt16
-func CallFuncAliasUInt16(func_ cross_call_master.FuncAliasUInt16) uint16 {
+func CallFuncAliasUInt16(func_ cross_call_master.FuncAliasUInt16) cross_call_master.AliasUInt16 {
 	return func_()
 }
 
 // plugify:export CallFuncAliasUInt32
-func CallFuncAliasUInt32(func_ cross_call_master.FuncAliasUInt32) uint32 {
+func CallFuncAliasUInt32(func_ cross_call_master.FuncAliasUInt32) cross_call_master.AliasUInt32 {
 	return func_()
 }
 
 // plugify:export CallFuncAliasUInt64
-func CallFuncAliasUInt64(func_ cross_call_master.FuncAliasUInt64) uint64 {
+func CallFuncAliasUInt64(func_ cross_call_master.FuncAliasUInt64) cross_call_master.AliasUInt64 {
 	return func_()
 }
 
 // plugify:export CallFuncAliasPtr
-func CallFuncAliasPtr(func_ cross_call_master.FuncAliasPtr) uintptr {
+func CallFuncAliasPtr(func_ cross_call_master.FuncAliasPtr) cross_call_master.AliasPtr {
 	return func_()
 }
 
 // plugify:export CallFuncAliasFloat
-func CallFuncAliasFloat(func_ cross_call_master.FuncAliasFloat) float32 {
+func CallFuncAliasFloat(func_ cross_call_master.FuncAliasFloat) cross_call_master.AliasFloat {
 	return func_()
 }
 
 // plugify:export CallFuncAliasDouble
-func CallFuncAliasDouble(func_ cross_call_master.FuncAliasDouble) float64 {
+func CallFuncAliasDouble(func_ cross_call_master.FuncAliasDouble) cross_call_master.AliasDouble {
 	return func_()
 }
 
 // plugify:export CallFuncAliasFunction
-func CallFuncAliasFunction(func_ cross_call_master.FuncAliasFunction) uintptr {
+func CallFuncAliasFunction(func_ cross_call_master.FuncAliasFunction) cross_call_master.AliasFunction {
 	return func_()
 }
 
 // plugify:export CallFuncAliasString
-func CallFuncAliasString(func_ cross_call_master.FuncAliasString) string {
+func CallFuncAliasString(func_ cross_call_master.FuncAliasString) cross_call_master.AliasString {
 	return func_()
 }
 
 // plugify:export CallFuncAliasAny
-func CallFuncAliasAny(func_ cross_call_master.FuncAliasAny) any {
+func CallFuncAliasAny(func_ cross_call_master.FuncAliasAny) cross_call_master.AliasAny {
 	return func_()
 }
 
 // plugify:export CallFuncAliasBoolVector
-func CallFuncAliasBoolVector(func_ cross_call_master.FuncAliasBoolVector) []bool {
+func CallFuncAliasBoolVector(func_ cross_call_master.FuncAliasBoolVector) cross_call_master.AliasBoolVector {
 	return func_()
 }
 
 // plugify:export CallFuncAliasChar8Vector
-func CallFuncAliasChar8Vector(func_ cross_call_master.FuncAliasChar8Vector) []int8 {
+func CallFuncAliasChar8Vector(func_ cross_call_master.FuncAliasChar8Vector) cross_call_master.AliasChar8Vector {
 	return func_()
 }
 
 // plugify:export CallFuncAliasChar16Vector
-func CallFuncAliasChar16Vector(func_ cross_call_master.FuncAliasChar16Vector) []uint16 {
+func CallFuncAliasChar16Vector(func_ cross_call_master.FuncAliasChar16Vector) cross_call_master.AliasChar16Vector {
 	return func_()
 }
 
 // plugify:export CallFuncAliasInt8Vector
-func CallFuncAliasInt8Vector(func_ cross_call_master.FuncAliasInt8Vector) []int8 {
+func CallFuncAliasInt8Vector(func_ cross_call_master.FuncAliasInt8Vector) cross_call_master.AliasInt8Vector {
 	return func_()
 }
 
 // plugify:export CallFuncAliasInt16Vector
-func CallFuncAliasInt16Vector(func_ cross_call_master.FuncAliasInt16Vector) []int16 {
+func CallFuncAliasInt16Vector(func_ cross_call_master.FuncAliasInt16Vector) cross_call_master.AliasInt16Vector {
 	return func_()
 }
 
 // plugify:export CallFuncAliasInt32Vector
-func CallFuncAliasInt32Vector(func_ cross_call_master.FuncAliasInt32Vector) []int32 {
+func CallFuncAliasInt32Vector(func_ cross_call_master.FuncAliasInt32Vector) cross_call_master.AliasInt32Vector {
 	return func_()
 }
 
 // plugify:export CallFuncAliasInt64Vector
-func CallFuncAliasInt64Vector(func_ cross_call_master.FuncAliasInt64Vector) []int64 {
+func CallFuncAliasInt64Vector(func_ cross_call_master.FuncAliasInt64Vector) cross_call_master.AliasInt64Vector {
 	return func_()
 }
 
 // plugify:export CallFuncAliasUInt8Vector
-func CallFuncAliasUInt8Vector(func_ cross_call_master.FuncAliasUInt8Vector) []uint8 {
+func CallFuncAliasUInt8Vector(func_ cross_call_master.FuncAliasUInt8Vector) cross_call_master.AliasUInt8Vector {
 	return func_()
 }
 
 // plugify:export CallFuncAliasUInt16Vector
-func CallFuncAliasUInt16Vector(func_ cross_call_master.FuncAliasUInt16Vector) []uint16 {
+func CallFuncAliasUInt16Vector(func_ cross_call_master.FuncAliasUInt16Vector) cross_call_master.AliasUInt16Vector {
 	return func_()
 }
 
 // plugify:export CallFuncAliasUInt32Vector
-func CallFuncAliasUInt32Vector(func_ cross_call_master.FuncAliasUInt32Vector) []uint32 {
+func CallFuncAliasUInt32Vector(func_ cross_call_master.FuncAliasUInt32Vector) cross_call_master.AliasUInt32Vector {
 	return func_()
 }
 
 // plugify:export CallFuncAliasUInt64Vector
-func CallFuncAliasUInt64Vector(func_ cross_call_master.FuncAliasUInt64Vector) []uint64 {
+func CallFuncAliasUInt64Vector(func_ cross_call_master.FuncAliasUInt64Vector) cross_call_master.AliasUInt64Vector {
 	return func_()
 }
 
 // plugify:export CallFuncAliasPtrVector
-func CallFuncAliasPtrVector(func_ cross_call_master.FuncAliasPtrVector) []uintptr {
+func CallFuncAliasPtrVector(func_ cross_call_master.FuncAliasPtrVector) cross_call_master.AliasPtrVector {
 	return func_()
 }
 
 // plugify:export CallFuncAliasFloatVector
-func CallFuncAliasFloatVector(func_ cross_call_master.FuncAliasFloatVector) []float32 {
+func CallFuncAliasFloatVector(func_ cross_call_master.FuncAliasFloatVector) cross_call_master.AliasFloatVector {
 	return func_()
 }
 
 // plugify:export CallFuncAliasDoubleVector
-func CallFuncAliasDoubleVector(func_ cross_call_master.FuncAliasDoubleVector) []float64 {
+func CallFuncAliasDoubleVector(func_ cross_call_master.FuncAliasDoubleVector) cross_call_master.AliasDoubleVector {
 	return func_()
 }
 
 // plugify:export CallFuncAliasStringVector
-func CallFuncAliasStringVector(func_ cross_call_master.FuncAliasStringVector) []string {
+func CallFuncAliasStringVector(func_ cross_call_master.FuncAliasStringVector) cross_call_master.AliasStringVector {
 	return func_()
 }
 
 // plugify:export CallFuncAliasAnyVector
-func CallFuncAliasAnyVector(func_ cross_call_master.FuncAliasAnyVector) []any {
+func CallFuncAliasAnyVector(func_ cross_call_master.FuncAliasAnyVector) cross_call_master.AliasAnyVector {
 	return func_()
 }
 
 // plugify:export CallFuncAliasVec2Vector
-func CallFuncAliasVec2Vector(func_ cross_call_master.FuncAliasVec2Vector) []plugify.Vector2 {
+func CallFuncAliasVec2Vector(func_ cross_call_master.FuncAliasVec2Vector) cross_call_master.AliasVec2Vector {
 	return func_()
 }
 
 // plugify:export CallFuncAliasVec3Vector
-func CallFuncAliasVec3Vector(func_ cross_call_master.FuncAliasVec3Vector) []plugify.Vector3 {
+func CallFuncAliasVec3Vector(func_ cross_call_master.FuncAliasVec3Vector) cross_call_master.AliasVec3Vector {
 	return func_()
 }
 
 // plugify:export CallFuncAliasVec4Vector
-func CallFuncAliasVec4Vector(func_ cross_call_master.FuncAliasVec4Vector) []plugify.Vector4 {
+func CallFuncAliasVec4Vector(func_ cross_call_master.FuncAliasVec4Vector) cross_call_master.AliasVec4Vector {
 	return func_()
 }
 
 // plugify:export CallFuncAliasMat4x4Vector
-func CallFuncAliasMat4x4Vector(func_ cross_call_master.FuncAliasMat4x4Vector) []plugify.Matrix4x4 {
+func CallFuncAliasMat4x4Vector(func_ cross_call_master.FuncAliasMat4x4Vector) cross_call_master.AliasMat4x4Vector {
 	return func_()
 }
 
 // plugify:export CallFuncAliasVec2
-func CallFuncAliasVec2(func_ cross_call_master.FuncAliasVec2) plugify.Vector2 {
+func CallFuncAliasVec2(func_ cross_call_master.FuncAliasVec2) cross_call_master.AliasVec2 {
 	return func_()
 }
 
 // plugify:export CallFuncAliasVec3
-func CallFuncAliasVec3(func_ cross_call_master.FuncAliasVec3) plugify.Vector3 {
+func CallFuncAliasVec3(func_ cross_call_master.FuncAliasVec3) cross_call_master.AliasVec3 {
 	return func_()
 }
 
 // plugify:export CallFuncAliasVec4
-func CallFuncAliasVec4(func_ cross_call_master.FuncAliasVec4) plugify.Vector4 {
+func CallFuncAliasVec4(func_ cross_call_master.FuncAliasVec4) cross_call_master.AliasVec4 {
 	return func_()
 }
 
 // plugify:export CallFuncAliasMat4x4
-func CallFuncAliasMat4x4(func_ cross_call_master.FuncAliasMat4x4) plugify.Matrix4x4 {
+func CallFuncAliasMat4x4(func_ cross_call_master.FuncAliasMat4x4) cross_call_master.AliasMat4x4 {
 	return func_()
 }
 
 // plugify:export CallFuncAliasAll
-func CallFuncAliasAll(func_ cross_call_master.FuncAliasAll) string {
-	aBool := true
-	aChar8 := int8('A')
-	aChar16 := uint16('0')
-	aInt8 := int8(1)
-	aInt16 := int16(2)
-	aInt32 := int32(3)
-	aInt64 := int64(4)
-	aPtr := uintptr(0)
-	aFloat := float32(5.5)
-	aDouble := float64(6.6)
-	aString := "seven"
-	aAny := any("six")
-	aVec2 := plugify.Vector2{X: 0.1, Y: 0.2}
-	aVec3 := plugify.Vector3{X: 0.3, Y: 0.4, Z: 0.5}
-	aVec4 := plugify.Vector4{X: 0.6, Y: 0.7, Z: 0.8, W: 0.9}
-	aMat4x4 := plugify.Matrix4x4{
+func CallFuncAliasAll(func_ cross_call_master.FuncAliasAll) cross_call_master.AliasString {
+	var aBool cross_call_master.AliasBool = true
+	var aChar8 cross_call_master.AliasChar8 = 'A'
+	var aChar16 cross_call_master.AliasChar16 = '0'
+	var aInt8 cross_call_master.AliasInt8 = 1
+	var aInt16 cross_call_master.AliasInt16 = 2
+	var aInt32 cross_call_master.AliasInt32 = 3
+	var aInt64 cross_call_master.AliasInt64 = 4
+	var aPtr cross_call_master.AliasPtr
+	var aFloat cross_call_master.AliasFloat = 5.5
+	var aDouble cross_call_master.AliasDouble = 6.6
+	var aString cross_call_master.AliasString = "seven"
+	var aAny cross_call_master.AliasAny = "six"
+
+	var aVec2 cross_call_master.AliasVec2 = cross_call_master.AliasVec2{X: 0.1, Y: 0.2}
+	var aVec3 cross_call_master.AliasVec3 = cross_call_master.AliasVec3{X: 0.3, Y: 0.4, Z: 0.5}
+	var aVec4 cross_call_master.AliasVec4 = cross_call_master.AliasVec4{X: 0.6, Y: 0.7, Z: 0.8, W: 0.9}
+	var aMat4x4 cross_call_master.AliasMat4x4 = cross_call_master.AliasMat4x4{
 		M: [4][4]float32{
 			{1.4, 1.1, 1.2, 1.3},
 			{2.4, 2.1, 2.2, 2.3},
@@ -1635,26 +1636,31 @@ func CallFuncAliasAll(func_ cross_call_master.FuncAliasAll) string {
 			{4.4, 4.1, 4.2, 4.3},
 		},
 	}
-	aBoolVec := []bool{aBool}
-	aChar8Vec := []int8{aChar8}
-	aChar16Vec := []uint16{aChar16}
-	aInt8Vec := []int8{aInt8}
-	aInt16Vec := []int16{aInt16}
-	aInt32Vec := []int32{aInt32}
-	aInt64Vec := []int64{aInt64}
-	aPtrVec := []uintptr{aPtr}
-	aFloatVec := []float32{aFloat}
-	aDoubleVec := []float64{aDouble}
-	aStringVec := []string{aString}
-	aAnyVec := []any{aAny}
-	aVec2Vec := []plugify.Vector2{aVec2}
-	aVec3Vec := []plugify.Vector3{aVec3}
-	aVec4Vec := []plugify.Vector4{aVec4}
 
-	result := func_(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble,
-		aString, aAny, aVec2, aVec3, aVec4, aMat4x4, aBoolVec, aChar8Vec, aChar16Vec, aInt8Vec,
-		aInt16Vec, aInt32Vec, aInt64Vec, aPtrVec, aFloatVec, aDoubleVec, aStringVec, aAnyVec,
-		aVec2Vec, aVec3Vec, aVec4Vec)
+	aBoolVec := cross_call_master.AliasBoolVector{bool(aBool)}
+	aChar8Vec := cross_call_master.AliasChar8Vector{int8(aChar8)}
+	aChar16Vec := cross_call_master.AliasChar16Vector{uint16(aChar16)}
+	aInt8Vec := cross_call_master.AliasInt8Vector{int8(aInt8)}
+	aInt16Vec := cross_call_master.AliasInt16Vector{int16(aInt16)}
+	aInt32Vec := cross_call_master.AliasInt32Vector{int32(aInt32)}
+	aInt64Vec := cross_call_master.AliasInt64Vector{int64(aInt64)}
+	aPtrVec := cross_call_master.AliasPtrVector{uintptr(aPtr)}
+	aFloatVec := cross_call_master.AliasFloatVector{float32(aFloat)}
+	aDoubleVec := cross_call_master.AliasDoubleVector{float64(aDouble)}
+	aStringVec := cross_call_master.AliasStringVector{string(aString)}
+	aAnyVec := cross_call_master.AliasAnyVector{aAny}
+	aVec2Vec := cross_call_master.AliasVec2Vector{plugify.Vector2(aVec2)}
+	aVec3Vec := cross_call_master.AliasVec3Vector{plugify.Vector3(aVec3)}
+	aVec4Vec := cross_call_master.AliasVec4Vector{plugify.Vector4(aVec4)}
+
+	result := func_(
+		aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64,
+		aPtr, aFloat, aDouble, aString, aAny,
+		aVec2, aVec3, aVec4, aMat4x4,
+		aBoolVec, aChar8Vec, aChar16Vec, aInt8Vec, aInt16Vec,
+		aInt32Vec, aInt64Vec, aPtrVec, aFloatVec, aDoubleVec,
+		aStringVec, aAnyVec, aVec2Vec, aVec3Vec, aVec4Vec,
+	)
 
 	return result
 }
@@ -2227,21 +2233,21 @@ func ReverseParamAllAliases() string {
 		},
 	}
 
-	aBoolVec := cross_call_master.AliasBoolVector{aBool}
-	aChar8Vec := cross_call_master.AliasChar8Vector{aChar8}
-	aChar16Vec := cross_call_master.AliasChar16Vector{aChar16}
-	aInt8Vec := cross_call_master.AliasInt8Vector{aInt8}
-	aInt16Vec := cross_call_master.AliasInt16Vector{aInt16}
-	aInt32Vec := cross_call_master.AliasInt32Vector{aInt32}
-	aInt64Vec := cross_call_master.AliasInt64Vector{aInt64}
-	aPtrVec := cross_call_master.AliasPtrVector{aPtr}
-	aFloatVec := cross_call_master.AliasFloatVector{aFloat}
-	aDoubleVec := cross_call_master.AliasDoubleVector{aDouble}
-	aStringVec := cross_call_master.AliasStringVector{aString}
+	aBoolVec := cross_call_master.AliasBoolVector{bool(aBool)}
+	aChar8Vec := cross_call_master.AliasChar8Vector{int8(aChar8)}
+	aChar16Vec := cross_call_master.AliasChar16Vector{uint16(aChar16)}
+	aInt8Vec := cross_call_master.AliasInt8Vector{int8(aInt8)}
+	aInt16Vec := cross_call_master.AliasInt16Vector{int16(aInt16)}
+	aInt32Vec := cross_call_master.AliasInt32Vector{int32(aInt32)}
+	aInt64Vec := cross_call_master.AliasInt64Vector{int64(aInt64)}
+	aPtrVec := cross_call_master.AliasPtrVector{uintptr(aPtr)}
+	aFloatVec := cross_call_master.AliasFloatVector{float32(aFloat)}
+	aDoubleVec := cross_call_master.AliasDoubleVector{float64(aDouble)}
+	aStringVec := cross_call_master.AliasStringVector{string(aString)}
 	aAnyVec := cross_call_master.AliasAnyVector{aAny}
-	aVec2Vec := cross_call_master.AliasVec2Vector{aVec2}
-	aVec3Vec := cross_call_master.AliasVec3Vector{aVec3}
-	aVec4Vec := cross_call_master.AliasVec4Vector{aVec4}
+	aVec2Vec := cross_call_master.AliasVec2Vector{plugify.Vector2(aVec2)}
+	aVec3Vec := cross_call_master.AliasVec3Vector{plugify.Vector3(aVec3)}
+	aVec4Vec := cross_call_master.AliasVec4Vector{plugify.Vector4(aVec4)}
 
 	result := cross_call_master.ParamAllAliasesCallback(
 		aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64,
@@ -2583,7 +2589,7 @@ func ReverseCallFuncMat4x4() string {
 // plugify:export ReverseCallFuncAliasBool
 func ReverseCallFuncAliasBool() string {
 	result := cross_call_master.CallFuncAliasBoolCallback(MockFuncAliasBool)
-	return formatBool(result)
+	return formatBool(bool(result))
 }
 
 // plugify:export ReverseCallFuncAliasChar8
@@ -2655,19 +2661,19 @@ func ReverseCallFuncAliasPtr() string {
 // plugify:export ReverseCallFuncAliasFloat
 func ReverseCallFuncAliasFloat() string {
 	result := cross_call_master.CallFuncAliasFloatCallback(MockFuncAliasFloat)
-	return fmt.Sprintf("%v", formatFlt32(result))
+	return fmt.Sprintf("%v", formatFlt32(float32(result)))
 }
 
 // plugify:export ReverseCallFuncAliasDouble
 func ReverseCallFuncAliasDouble() string {
 	result := cross_call_master.CallFuncAliasDoubleCallback(MockFuncAliasDouble)
-	return fmt.Sprintf("%v", formatFlt64(result))
+	return fmt.Sprintf("%v", formatFlt64(float64(result)))
 }
 
 // plugify:export ReverseCallFuncAliasString
 func ReverseCallFuncAliasString() string {
 	result := cross_call_master.CallFuncAliasStringCallback(MockFuncAliasString)
-	return result
+	return string(result)
 }
 
 // plugify:export ReverseCallFuncAliasAny
@@ -2799,31 +2805,31 @@ func ReverseCallFuncAliasMat4x4Vector() string {
 // plugify:export ReverseCallFuncAliasVec2
 func ReverseCallFuncAliasVec2() string {
 	result := cross_call_master.CallFuncAliasVec2Callback(MockFuncAliasVec2)
-	return formatVector2(result)
+	return formatVector2(plugify.Vector2(result))
 }
 
 // plugify:export ReverseCallFuncAliasVec3
 func ReverseCallFuncAliasVec3() string {
 	result := cross_call_master.CallFuncAliasVec3Callback(MockFuncAliasVec3)
-	return formatVector3(result)
+	return formatVector3(plugify.Vector3(result))
 }
 
 // plugify:export ReverseCallFuncAliasVec4
 func ReverseCallFuncAliasVec4() string {
 	result := cross_call_master.CallFuncAliasVec4Callback(MockFuncAliasVec4)
-	return formatVector4(result)
+	return formatVector4(plugify.Vector4(result))
 }
 
 // plugify:export ReverseCallFuncAliasMat4x4
 func ReverseCallFuncAliasMat4x4() string {
 	result := cross_call_master.CallFuncAliasMat4x4Callback(MockFuncAliasMat4x4)
-	return formatMatrix4x4(result)
+	return formatMatrix4x4(plugify.Matrix4x4(result))
 }
 
 // plugify:export ReverseCallFuncAliasAll
 func ReverseCallFuncAliasAll() string {
 	result := cross_call_master.CallFuncAliasAllCallback(MockFuncAliasAll)
-	return result
+	return string(result)
 }
 
 // plugify:export ReverseCallFunc1

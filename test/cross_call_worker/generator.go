@@ -14,7 +14,7 @@ import (
 
 func main() {
 	var (
-		patterns     = flag.String("patterns", "./...", "Package patterns to analyze")
+		patterns     = flag.String("patterns", "*", "Package patterns to analyze")
 		output       = flag.String("output", "", "Output manifest file (default: <packagename>.pplugin)")
 		name         = flag.String("name", "", "Plugin name (default: package name)")
 		version      = flag.String("version", "1.0.0", "Plugin version")
@@ -26,7 +26,6 @@ func main() {
 		dependencies = flag.String("dependencies", "", "Comma-separated list of dependencies (e.g., plugin1,plugin2)")
 		conflicts    = flag.String("conflicts", "", "Comma-separated list of conflicts (e.g., plugin3,plugin4)")
 		entry        = flag.String("entry", "", "Plugin entry point (default: <packagename>)")
-		target       = flag.String("package", "main", "Autoexports package (default: main)")
 	)
 
 	flag.Parse()
@@ -48,7 +47,18 @@ func main() {
 	conflictList := parseCommaSeparated(*conflicts)
 
 	// Call the generator with error handling
-	err := plugify.Generate(*patterns, *output, *name, *version, *description, *author, *website, *license, platformList, dependencyList, conflictList, *entry, *target)
+	err := plugify.Generate(*output, *name, *entry, true, plugify.GenerateParams{
+		Version:      *version,
+		Description:  *description,
+		Author:       *author,
+		Website:      *website,
+		License:      *license,
+		Platforms:    platformList,
+		Dependencies: dependencyList,
+		Conflicts:    conflictList,
+	}, &plugify.LoadPackageFilter{
+		PathPatterns: []string{*patterns},
+	})
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error generating plugin manifest: %v\n", err)
 		os.Exit(1)

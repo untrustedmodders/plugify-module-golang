@@ -264,7 +264,7 @@ type FuncAliasVec4 func() AliasVec4
 type FuncAliasMat4x4 func() AliasMat4x4
 
 
-type FuncAliasAll func(aBool AliasBool, aChar8 AliasChar8, aChar16 AliasChar16, aInt8 AliasInt8, aInt16 AliasInt16, aInt32 AliasInt32, aInt64 AliasInt64, aPtr AliasPtr, aFloat AliasFloat, aDouble AliasDouble, aString AliasString, aAny AliasAny, aVec2 AliasVec2, aVec3 AliasVec3, aVec4 AliasVec4, aMat4x4 AliasMat4x4, aBoolVec AliasBoolVector, aChar8Vec AliasChar8Vector, aChar16Vec AliasChar16Vector, aInt8Vec AliasInt8Vector, aInt16Vec AliasInt16Vector, aInt32Vec AliasInt32Vector, aInt64Vec AliasInt64Vector, aPtrVec AliasPtrVector, aFloatVec AliasFloatVector, aDoubleVec AliasDoubleVector, aStringVec AliasStringVector, aAnyVec AliasAnyVector, aVec2Vec AliasVec2Vector, aVec3Vec AliasVec3Vector, aVec4Vec AliasVec4Vector) string
+type FuncAliasAll func(aBool AliasBool, aChar8 AliasChar8, aChar16 AliasChar16, aInt8 AliasInt8, aInt16 AliasInt16, aInt32 AliasInt32, aInt64 AliasInt64, aPtr AliasPtr, aFloat AliasFloat, aDouble AliasDouble, aString AliasString, aAny AliasAny, aVec2 AliasVec2, aVec3 AliasVec3, aVec4 AliasVec4, aMat4x4 AliasMat4x4, aBoolVec AliasBoolVector, aChar8Vec AliasChar8Vector, aChar16Vec AliasChar16Vector, aInt8Vec AliasInt8Vector, aInt16Vec AliasInt16Vector, aInt32Vec AliasInt32Vector, aInt64Vec AliasInt64Vector, aPtrVec AliasPtrVector, aFloatVec AliasFloatVector, aDoubleVec AliasDoubleVector, aStringVec AliasStringVector, aAnyVec AliasAnyVector, aVec2Vec AliasVec2Vector, aVec3Vec AliasVec3Vector, aVec4Vec AliasVec4Vector) AliasString
 
 
 type Func1 func(a plugify.Vector3) int32

@@ -447,19 +447,19 @@ func MockFuncAliasMat4x4Vector() cross_call_master.AliasMat4x4Vector {
 }
 
 func MockFuncAliasVec2() cross_call_master.AliasVec2 {
-	return plugify.Vector2{X: 1.0, Y: 2.0}
+	return cross_call_master.AliasVec2{X: 1.0, Y: 2.0}
 }
 
 func MockFuncAliasVec3() cross_call_master.AliasVec3 {
-	return plugify.Vector3{X: 1.0, Y: 2.0, Z: 3.0}
+	return cross_call_master.AliasVec3{X: 1.0, Y: 2.0, Z: 3.0}
 }
 
 func MockFuncAliasVec4() cross_call_master.AliasVec4 {
-	return plugify.Vector4{X: 1.0, Y: 2.0, Z: 3.0, W: 4.0}
+	return cross_call_master.AliasVec4{X: 1.0, Y: 2.0, Z: 3.0, W: 4.0}
 }
 
 func MockFuncAliasMat4x4() cross_call_master.AliasMat4x4 {
-	return plugify.Matrix4x4{
+	return cross_call_master.AliasMat4x4{
 		M: [4][4]float32{
 			{1, 0, 0, 0},
 			{0, 0, 0, 0},
@@ -502,7 +502,7 @@ func MockFuncAliasAll(
 	aVec3Vec cross_call_master.AliasVec3Vector,
 	aVec4Vec cross_call_master.AliasVec4Vector,
 ) cross_call_master.AliasString {
-	return fmt.Sprintf(
+	return cross_call_master.AliasString(fmt.Sprintf(
 		"%v|%c|%d|%d|%d|%d|%d|%v|%v|%v|%s|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v",
 		aBool,
 		aChar8,
@@ -535,7 +535,7 @@ func MockFuncAliasAll(
 		aVec2Vec,
 		aVec3Vec,
 		aVec4Vec,
-	)
+	))
 }
 
 func MockFunc1(v plugify.Vector3) int32 {
