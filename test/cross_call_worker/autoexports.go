@@ -6,15 +6,13 @@ import (
 	"reflect"
 	"unsafe"
 
-	cross_call_master "plugify-plugin/cross_call_master"
-
-	//"github.com/untrustedmodders/go-plugify"
-	plugify "github.com/untrustedmodders/go-plugify"
+	"cross_call_worker/cross_call_master"
+	"github.com/untrustedmodders/go-plugify"
 )
 
 var _ = reflect.TypeOf(0)
 var _ = unsafe.Sizeof(0)
-var _ = plugify.Plugin()
+var _ = plugify.ApiVersion
 
 //export __NoParamReturnVoid
 func __NoParamReturnVoid() {
@@ -498,14 +496,14 @@ func __ParamAllRefAliases(aBool *bool, aChar8 *int8, aChar16 *uint16, aInt8 *int
 
 //export __ParamEnum
 func __ParamEnum(p1 int32, p2 *C.Vector) int32 {
-	__result := ParamEnum(Example(p1), plugify.GetVectorDataInt32[Example]((*plugify.PlgVector)(unsafe.Pointer(p2))))
+	__result := ParamEnum(cross_call_master.Example(p1), plugify.GetVectorDataInt32[Example]((*plugify.PlgVector)(unsafe.Pointer(p2))))
 	return __result
 }
 
 //export __ParamEnumRef
 func __ParamEnumRef(p1 *int32, p2 *C.Vector) int32 {
-	_p2 := plugify.GetVectorDataInt32[Example]((*plugify.PlgVector)(unsafe.Pointer(p2)))
-	__result := ParamEnumRef((*Example)(unsafe.Pointer(p1)), &_p2)
+	_p2 := plugify.GetVectorDataInt32[cross_call_master.Example]((*plugify.PlgVector)(unsafe.Pointer(p2)))
+	__result := ParamEnumRef((*cross_call_master.Example)(unsafe.Pointer(p1)), &_p2)
 	plugify.AssignVectorInt32((*plugify.PlgVector)(unsafe.Pointer(p2)), _p2)
 	return __result
 }

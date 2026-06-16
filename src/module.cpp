@@ -42,11 +42,129 @@ Result<InitData> GoLanguageModule::Initialize(const Provider& provider, [[maybe_
 
 	_logger->Log(LOG_PREFIX "Inited!", Severity::Debug);
 
+	std::filesystem::path runtimePath(module.GetRuntime());
+	runtimePath.replace_filename(PLUGIFY_PATH_LITERAL("" GOLM_LIBRARY_PREFIX "plugify-host-golang" GOLM_LIBRARY_SUFFIX));
+
+	if (std::filesystem::exists(runtimePath)) {
+		LoadFlag flags = LoadFlag::NoUnload;
+		auto assemblyResult = _provider->Resolve<IAssemblyLoader>()->Load(runtimePath, flags);
+		if (!assemblyResult) {
+			return MakeError(std::move(assemblyResult.error()));
+		}
+
+		auto assembly = *assemblyResult;
+
+		auto initResult = assembly->GetSymbol("plugify_PluginInit");
+		if (!initResult) {
+			return MakeError(std::move(initResult.error()));
+		}
+
+		auto mainResult = assembly->GetSymbol("plugify_PluginMain");
+		if (!mainResult) {
+			return MakeError(std::move(initResult.error()));
+		}
+
+		auto startResult = assembly->GetSymbol("plugify_PluginStart");
+		if (!startResult) {
+			return MakeError(std::move(startResult.error()));
+		}
+
+		auto updateResult = assembly->GetSymbol("plugify_PluginUpdate");
+		if (!updateResult) {
+			return MakeError(std::move(updateResult.error()));
+		}
+
+		auto endResult = assembly->GetSymbol("plugify_PluginEnd");
+		if (!endResult) {
+			return MakeError(std::move(endResult.error()));
+		}
+
+		auto contextResult = assembly->GetSymbol("plugify_PluginContext");
+		if (!contextResult) {
+			return MakeError(std::move(contextResult.error()));
+		}
+
+		auto shutdownResult = assembly->GetSymbol("plugify_PluginShutdown");
+		if (!shutdownResult) {
+			return MakeError(std::move(shutdownResult.error()));
+		}
+
+		auto callbackResult = assembly->GetSymbol("plugify_InternalCall");
+		if (!callbackResult) {
+			return MakeError(std::move(callbackResult.error()));
+		}
+
+		auto openResult = assembly->GetSymbol("Open");
+		if (!openResult) {
+			return MakeError(std::move(openResult.error()));
+		}
+
+		auto callResult = assembly->GetSymbol("Call");
+		if (!callResult) {
+			return MakeError(std::move(callResult.error()));
+		}
+
+		auto bindResult = assembly->GetSymbol("Bind");
+		if (!bindResult) {
+			return MakeError(std::move(bindResult.error()));
+		}
+
+		auto findResult = assembly->GetSymbol("Find");
+		if (!findResult) {
+			return MakeError(std::move(findResult.error()));
+		}
+
+		auto* startFunc = startResult->As<StartFunc>();
+		auto* updateFunc = updateResult->As<UpdateFunc>();
+		auto* endFunc = endResult->As<EndFunc>();
+		auto* contextFunc = contextResult->As<ContextFunc>();
+		auto* callbackFunc = callbackResult->As<CallbackFunc>();
+		auto* initFunc = initResult->As<InitFunc>();
+		auto* mainFunc = mainResult->As<MainFunc>();
+		auto* shutdownFunc = shutdownResult->As<ShutdownFunc>();
+		auto* openFunc = openResult->As<OpenFunc>();
+		auto* callFunc = callResult->As<CallFunc>();
+		auto* bindFunc = bindResult->As<BindFunc>();
+		auto* findFunc = findResult->As<FindFunc>();
+
+		const GoInt resultVersion = initFunc(GoSlice(std::span(_pluginApi)), kApiVersion, nullptr);
+		if (resultVersion != 0) {
+			return MakeError("Not supported plugin api {}, max supported {}", resultVersion, kApiVersion);
+		}
+
+		_runtime = std::move(assembly);
+		_symbols = RuntimeSymbols{
+			startFunc,
+			updateFunc,
+			endFunc,
+			contextFunc,
+			callbackFunc,
+			initFunc,
+			mainFunc,
+			shutdownFunc,
+			openFunc,
+			bindFunc,
+			callFunc,
+			findFunc
+		};
+	}
+
 	return InitData{{ .hasUpdate = false }};
 }
 
 Result<void> GoLanguageModule::Shutdown() {
+	if (_runtime) {
+		_symbols.shutdownFunc();
+	}
+	for (const auto& [_, assembly] : _assemblies) {
+		if (!assembly.id) {
+			assembly.symbols.shutdownFunc();
+		}
+	}
+
 	_assemblies.clear();
+	_symbols = {};
+	_runtime.reset();
 	_profiler.reset();
 	_loader.reset();
 	_logger.reset();
@@ -64,14 +182,30 @@ bool GoLanguageModule::IsDebugBuild() const noexcept {
 }
 
 Result<void> GoLanguageModule::OnMethodExport(const Extension& plugin) {
-	for (const auto& [method, addr] : plugin.GetMethodsData()) {
-		auto variableName = std::format("__{}_{}", plugin.GetName(), method.GetName());
-		for (const auto& assembly : _assemblies) {
-			if (auto function = assembly->assembly->GetSymbol(variableName)) {
-				*function->RCast<MemAddr*>() = addr;
-			}
-		}
-	}
+    auto* ownerAssembly = FindAssembly(plugin.GetId());
+    bool isGoOwner = ownerAssembly && ownerAssembly->id;
+
+    for (const auto& [method, addr] : plugin.GetMethodsData()) {
+        auto variableName = std::format("__{}_{}", plugin.GetName(), method.GetName());
+		auto delegateName = variableName.substr(2);
+		delegateName.front() = static_cast<char>(std::toupper(static_cast<unsigned char>(delegateName.front())));
+
+        for (const auto& [id, assembly] : _assemblies) {
+            // Skip self-export
+            if (id == plugin.GetId())
+                continue;
+
+            if (isGoOwner && assembly.id) {
+                // Go-to-Go: bind via delegate
+                _symbols.bindFunc(ownerAssembly->id, assembly.id, GoString(method.GetName()), GoString(delegateName));
+            } else {
+                // Go-to-C++ or C++-to-any: write function pointer directly
+                if (auto function = assembly.assembly->GetSymbol(variableName)) {
+                    *function->As<MemAddr*>() = addr;
+                }
+            }
+        }
+    }
 	return {};
 }
 
@@ -79,45 +213,15 @@ Result<LoadData> GoLanguageModule::OnPluginLoad(const Extension& plugin) {
 	std::filesystem::path assemblyPath(plugin.GetLocation() / plugin.GetEntry());
 	assemblyPath.replace_extension(PLUGIFY_PATH_LITERAL("" GOLM_LIBRARY_SUFFIX));
 
+	auto id = _symbols.openFunc ? _symbols.openFunc(GoString(plg::as_string(assemblyPath))) : NULL;
+
 	LoadFlag flags = LoadFlag::LazyBinding | LoadFlag::NoUnload;
 	auto assemblyResult = _provider->Resolve<IAssemblyLoader>()->Load(assemblyPath, flags);
 	if (!assemblyResult) {
 		return MakeError(std::move(assemblyResult.error()));
 	}
 
-	auto& assembly = *assemblyResult;
-
-	auto initResult = assembly->GetSymbol("plugify_PluginInit");
-	if (!initResult) {
-		return MakeError(std::move(initResult.error()));
-	}
-	auto startResult = assembly->GetSymbol("plugify_PluginStart");
-	if (!startResult) {
-		return MakeError(std::move(startResult.error()));
-	}
-	auto updateResult = assembly->GetSymbol("plugify_PluginUpdate");
-	if (!updateResult) {
-		return MakeError(std::move(updateResult.error()));
-	}
-	auto endResult = assembly->GetSymbol("plugify_PluginEnd");
-	if (!endResult) {
-		return MakeError(std::move(endResult.error()));
-	}
-	auto contextResult = assembly->GetSymbol("plugify_PluginContext");
-	if (!contextResult) {
-		return MakeError(std::move(contextResult.error()));
-	}
-	auto callResult = assembly->GetSymbol("plugify_InternalCall");
-	if (!callResult) {
-		return MakeError(std::move(callResult.error()));
-	}
-
-	auto* initFunc = initResult->RCast<InitFunc>();
-	auto* startFunc = startResult->RCast<StartFunc>();
-	auto* updateFunc = updateResult->RCast<UpdateFunc>();
-	auto* endFunc = endResult->RCast<EndFunc>();
-	auto* contextFunc = contextResult->RCast<ContextFunc>();
-	auto* callFunc = callResult->RCast<CallFunc>();
+	auto assembly = *assemblyResult;
 
 	std::vector<std::string> errors;
 
@@ -141,20 +245,100 @@ Result<LoadData> GoLanguageModule::OnPluginLoad(const Extension& plugin) {
 		return MakeError("Invalid methods:\n{}", plg::join(errors, "\n"));
 	}
 
-	GoSlice api { const_cast<void**>(_pluginApi.data()), _pluginApi.size(), _pluginApi.size() };
-	const int resultVersion = initFunc(api, kApiVersion, static_cast<const void *>(&plugin));
-	if (resultVersion != 0) {
-		return MakeError("Not supported plugin api {}, max supported {}", resultVersion, kApiVersion);
+	PluginContext context;
+	PluginSymbols symbols;
+
+	// plugin mode
+	if (id) {
+		context = PluginContext{
+			_symbols.findFunc(id, GoString("OnPluginUpdate")),
+			true,//_symbols.findFunc(id, GoString("OnPluginStart")),
+			true,//_symbols.findFunc(id, GoString("OnPluginEnd"))
+		};
+		symbols = static_cast<PluginSymbols>(_symbols);
+	} else {
+		auto initResult = assembly->GetSymbol("plugify_PluginInit");
+		if (!initResult) {
+			return MakeError(std::move(initResult.error()));
+		}
+
+		auto mainResult = assembly->GetSymbol("plugify_PluginMain");
+		if (!mainResult) {
+			return MakeError(std::move(initResult.error()));
+		}
+
+		auto startResult = assembly->GetSymbol("plugify_PluginStart");
+		if (!startResult) {
+			return MakeError(std::move(startResult.error()));
+		}
+
+		auto updateResult = assembly->GetSymbol("plugify_PluginUpdate");
+		if (!updateResult) {
+			return MakeError(std::move(updateResult.error()));
+		}
+
+		auto endResult = assembly->GetSymbol("plugify_PluginEnd");
+		if (!endResult) {
+			return MakeError(std::move(endResult.error()));
+		}
+
+		auto contextResult = assembly->GetSymbol("plugify_PluginContext");
+		if (!contextResult) {
+			return MakeError(std::move(contextResult.error()));
+		}
+
+		auto shutdownResult = assembly->GetSymbol("plugify_PluginShutdown");
+		if (!shutdownResult) {
+			return MakeError(std::move(shutdownResult.error()));
+		}
+
+		auto callbackResult = assembly->GetSymbol("plugify_InternalCall");
+		if (!callbackResult) {
+			return MakeError(std::move(callbackResult.error()));
+		}
+
+		auto* startFunc = startResult->As<StartFunc>();
+		auto* updateFunc = updateResult->As<UpdateFunc>();
+		auto* endFunc = endResult->As<EndFunc>();
+		auto* contextFunc = contextResult->As<ContextFunc>();
+		auto* callbackFunc = callbackResult->As<CallbackFunc>();
+		auto* initFunc = initResult->As<InitFunc>();
+		auto* mainFunc = mainResult->As<MainFunc>();
+		auto* shutdownFunc = shutdownResult->As<ShutdownFunc>();
+
+		const GoInt resultVersion = initFunc(GoSlice(std::span(_pluginApi)), kApiVersion, &plugin);
+		if (resultVersion != 0) {
+			return MakeError("Not supported plugin api {}, max supported {}", resultVersion, kApiVersion);
+		}
+
+		if (mainFunc) {
+			mainFunc(GoString(plugin.GetName()));
+		}
+
+		context = contextFunc ? *(contextFunc()) : PluginContext{};
+		symbols = PluginSymbols{
+			startFunc,
+			updateFunc,
+			endFunc,
+			contextFunc,
+			callbackFunc,
+			initFunc,
+			mainFunc,
+			shutdownFunc
+		};
 	}
 
-	const auto& [hasUpdate, hasStart, hasEnd] = contextFunc ? *(contextFunc()) : PluginContext{};
+	const auto [it, result] = _assemblies.try_emplace(plugin.GetId(), std::move(assembly), symbols, id);
+	if (!result) {
+		return MakeError("Save plugin data to map unsuccessful");
+	}
 
-	auto data = _assemblies.emplace_back(std::make_unique<AssemblyHolder>(std::move(assembly), updateFunc, startFunc, endFunc, contextFunc, callFunc)).get();
-	return LoadData{ std::move(methods), data, { hasUpdate, hasStart, hasEnd, !exportedMethods.empty() } };
+	const auto& [_, holder] = *it;
+	return LoadData{ std::move(methods), &holder, { context.hasUpdate, context.hasStart, context.hasEnd, !exportedMethods.empty() } };
 }
 
 Result<void> GoLanguageModule::OnPluginStart(const Extension& plugin) {
-	auto result = plugin.GetUserData().RCast<AssemblyHolder*>()->startFunc();
+	auto result = plugin.GetUserData().As<AssemblyHolder*>()->symbols.startFunc(GoString(plugin.GetName()));
 	if (!result) {
 		_logger->Log(std::format(LOG_PREFIX "{}: call of 'OnPluginStart' failed\n{}", plugin.GetName(), result.message), Severity::Error);
 		return MakeError(std::string(result));
@@ -163,7 +347,7 @@ Result<void> GoLanguageModule::OnPluginStart(const Extension& plugin) {
 }
 
 Result<void> GoLanguageModule::OnPluginUpdate(const Extension& plugin, std::chrono::milliseconds dt) {
-	auto result = plugin.GetUserData().RCast<AssemblyHolder*>()->updateFunc(std::chrono::duration<float>(dt).count());
+	auto result = plugin.GetUserData().As<AssemblyHolder*>()->symbols.updateFunc(GoString(plugin.GetName()), std::chrono::duration<float>(dt).count());
 	if (!result) {
 		_logger->Log(std::format(LOG_PREFIX "{}: call of 'OnPluginUpdate' failed\n{}", plugin.GetName(), result.message), Severity::Error);
 		return MakeError(std::string(result));
@@ -172,7 +356,7 @@ Result<void> GoLanguageModule::OnPluginUpdate(const Extension& plugin, std::chro
 }
 
 Result<void> GoLanguageModule::OnPluginEnd(const Extension& plugin) {
-	auto result = plugin.GetUserData().RCast<AssemblyHolder*>()->endFunc();
+	auto result = plugin.GetUserData().As<AssemblyHolder*>()->symbols.endFunc(GoString(plugin.GetName()));
 	if (!result) {
 		_logger->Log(std::format(LOG_PREFIX "{}: call of 'OnPluginEnd' failed\n{}", plugin.GetName(), result.message), Severity::Error);
 		return MakeError(std::string(result));
@@ -192,6 +376,17 @@ std::shared_ptr<Method> GoLanguageModule::FindMethod(std::string_view name) cons
 	}
 	_logger->Log(std::format(LOG_PREFIX "FindMethod failed to find: '{}'", name), Severity::Error);
 	return {};
+}
+
+const Extension* GoLanguageModule::FindExtension(std::string_view name) const {
+	return _provider->FindExtension(name);
+}
+
+const AssemblyHolder* GoLanguageModule::FindAssembly(UniqueId pluginId) const {
+	auto it = _assemblies.find(pluginId);
+	if (it != _assemblies.end())
+		return &it->second;
+	return nullptr;
 }
 
 namespace golm {
@@ -264,8 +459,12 @@ bool IsProfiling() {
 	return false;
 }
 
-ptrdiff_t GetPluginId(const Extension& plugin) {
-	return static_cast<ptrdiff_t>(plugin.GetId());
+const void* GetPlugin(GoString name) {
+	return g_golm.FindExtension(name);
+}
+
+UniqueId::Value GetPluginId(const Extension& plugin) {
+	return plugin.GetId();
 }
 
 plg::string GetPluginName(const Extension& plugin) {
@@ -347,25 +546,6 @@ namespace {
 	}
 
 	template<typename T>
-	/*PLUGIFY_FORCE_INLINE*/plg::vector<plg::string> ConstructVector(T* arr, ptrdiff_t len) requires(std::is_same_v<T, GoString>) {
-		if (arr == nullptr || len == 0) [[unlikely]]
-			if (len > 0)
-				return plg::vector<plg::string>(static_cast<size_t>(len));
-			else
-				return {};
-		else {
-			plg::vector<plg::string> vector;
-			size_t N = static_cast<size_t>(len);
-			vector.reserve(N);
-			for (size_t i = 0; i < N; ++i) {
-				const auto& str = arr[i];
-				vector.emplace_back(str.p, static_cast<size_t>(str.n));
-			}
-			return vector;
-		}
-	}
-
-	template<typename T>
 	PLUGIFY_FORCE_INLINE void DestroyVector(plg::vector<T>* vector) {
 		vector->~vector();
 	}
@@ -381,20 +561,6 @@ namespace {
 			vector->clear();
 		else
 			vector->assign(arr, arr + len);
-	}
-
-	template<typename T>
-	PLUGIFY_FORCE_INLINE void AssignVector(plg::vector<plg::string>* vector, T* arr, ptrdiff_t len) requires(std::is_same_v<T, GoString>) {
-		if (arr == nullptr || len == 0) [[unlikely]]
-			vector->clear();
-		else {
-			size_t N = static_cast<size_t>(len);
-			vector->resize(N);
-			for (size_t i = 0; i < N; ++i) {
-				const auto& str = arr[i];
-				(*vector)[i].assign(str.p, static_cast<size_t>(str.n));
-			}
-		}
 	}
 
 	template<typename T>
@@ -418,7 +584,7 @@ plg::vector<uint64_t> ConstructVectorUInt64(uint64_t* arr, ptrdiff_t len) { retu
 plg::vector<uintptr_t> ConstructVectorPointer(uintptr_t* arr, ptrdiff_t len) { return ConstructVector(arr, len); }
 plg::vector<float> ConstructVectorFloat(float* arr, ptrdiff_t len) { return ConstructVector(arr, len); }
 plg::vector<double> ConstructVectorDouble(double* arr, ptrdiff_t len) { return ConstructVector(arr, len); }
-plg::vector<plg::string> ConstructVectorString(GoString* arr, ptrdiff_t len) { return ConstructVector(arr, len); }
+plg::vector<plg::string> ConstructVectorString(ptrdiff_t len) { return plg::vector<plg::string>(static_cast<size_t>(len)); }
 plg::vector<plg::any> ConstructVectorVariant(ptrdiff_t len) { return plg::vector<plg::any>(static_cast<size_t>(len)); }
 plg::vector<plg::vec2> ConstructVectorVector2(plg::vec2* arr, ptrdiff_t len) { return ConstructVector(arr, len); }
 plg::vector<plg::vec3> ConstructVectorVector3(plg::vec3* arr, ptrdiff_t len) { return ConstructVector(arr, len); }
@@ -482,7 +648,7 @@ uintptr_t* GetVectorDataPointer(plg::vector<uintptr_t>* vec) { return GetVectorD
 float* GetVectorDataFloat(plg::vector<float>* vec) { return GetVectorData(vec); }
 double* GetVectorDataDouble(plg::vector<double>* vec) { return GetVectorData(vec); }
 plg::string* GetVectorDataString(plg::vector<plg::string>* vec) { return GetVectorData(vec); }
-plg::any* GetVectorDataVariant(plg::vector<plg::any>* vec, ptrdiff_t at) { return &vec->at(static_cast<size_t>(at)); }
+plg::any* GetVectorDataVariant(plg::vector<plg::any>* vec) { return GetVectorData(vec); }
 plg::vec2* GetVectorDataVector2(plg::vector<plg::vec2>* vec) { return GetVectorData(vec); }
 plg::vec3* GetVectorDataVector3(plg::vector<plg::vec3>* vec) { return GetVectorData(vec); }
 plg::vec4* GetVectorDataVector4(plg::vector<plg::vec4>* vec) { return GetVectorData(vec); }
@@ -502,8 +668,8 @@ void AssignVectorUInt64(plg::vector<uint64_t>* ptr, uint64_t * arr, ptrdiff_t le
 void AssignVectorPointer(plg::vector<uintptr_t>* ptr, uintptr_t* arr, ptrdiff_t len) { AssignVector(ptr, arr, len); }
 void AssignVectorFloat(plg::vector<float>* ptr, float* arr, ptrdiff_t len) { AssignVector(ptr, arr, len); }
 void AssignVectorDouble(plg::vector<double>* ptr, double* arr, ptrdiff_t len) { AssignVector(ptr, arr, len); }
-void AssignVectorString(plg::vector<plg::string>* ptr, GoString* arr, ptrdiff_t len) { AssignVector(ptr, arr, len); }
-void AssignVectorVariant(plg::vector<plg::any>* vector, ptrdiff_t len) { vector->resize(static_cast<size_t>(len)); }
+void AssignVectorString(plg::vector<plg::string>* ptr, ptrdiff_t len) { ptr->resize(static_cast<size_t>(len)); }
+void AssignVectorVariant(plg::vector<plg::any>* ptr, ptrdiff_t len) { ptr->resize(static_cast<size_t>(len)); }
 void AssignVectorVector2(plg::vector<plg::vec2>* ptr, plg::vec2* arr, ptrdiff_t len) { AssignVector(ptr, arr, len); }
 void AssignVectorVector3(plg::vector<plg::vec3>* ptr, plg::vec3* arr, ptrdiff_t len) { AssignVector(ptr, arr, len); }
 void AssignVectorVector4(plg::vector<plg::vec4>* ptr, plg::vec4* arr, ptrdiff_t len) { AssignVector(ptr, arr, len); }
@@ -557,13 +723,13 @@ const char* GetCallError(JitCall* call) {
 	return call ? call->GetError().data() : "Target invalid";
 }
 
-JitCallback* NewCallback(const Extension& plugin, GoString name, void* delegate) {
+JitCallback* NewCallback(const Extension* plugin, GoString name, void* delegate) {
 	std::shared_ptr<Method> method = g_golm.FindMethod(name);
 	if (method == nullptr || delegate == nullptr)
 		return nullptr;
 
 	JitCallback* callback = new JitCallback{};
-	callback->GetJitFunc(*method, plugin.GetUserData().RCast<AssemblyHolder*>()->callFunc, delegate);
+	callback->GetJitFunc(*method, plugin ? plugin->GetUserData().As<AssemblyHolder*>()->symbols.callbackFunc : g_golm.GetRuntimeSymbols().callbackFunc, delegate);
 	return callback;
 }
 
@@ -604,7 +770,7 @@ const EnumObject& GetMethodEnum(const Method& handle, ptrdiff_t index) {
 	}
 }
 
-const std::array<void*, 139> GoLanguageModule::_pluginApi = {
+const std::array<void*, 140> GoLanguageModule::_pluginApi = {
 		reinterpret_cast<void*>(&::GetBaseDir),
 		reinterpret_cast<void*>(&::GetExtensionsDir),
 		reinterpret_cast<void*>(&::GetConfigsDir),
@@ -618,6 +784,7 @@ const std::array<void*, 139> GoLanguageModule::_pluginApi = {
 		reinterpret_cast<void*>(&::EndZone),
 		reinterpret_cast<void*>(&::IsProfiling),
 
+		reinterpret_cast<void*>(&::GetPlugin),
 		reinterpret_cast<void*>(&::GetPluginId),
 		reinterpret_cast<void*>(&::GetPluginName),
 		reinterpret_cast<void*>(&::GetPluginDescription),

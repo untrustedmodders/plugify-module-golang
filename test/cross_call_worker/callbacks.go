@@ -1,8 +1,8 @@
 package main
 
 import (
+	"cross_call_worker/cross_call_master"
 	"fmt"
-	"plugify-plugin/cross_call_master"
 	"unsafe"
 
 	"github.com/untrustedmodders/go-plugify"

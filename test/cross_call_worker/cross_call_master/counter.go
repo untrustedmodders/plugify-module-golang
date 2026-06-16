@@ -27,84 +27,118 @@ var _ = errors.New("")
 var _ = reflect.TypeOf(0)
 var _ = runtime.GOOS
 var _ = unsafe.Sizeof(0)
-var _ = plugify.Plugin()
+var _ = plugify.ApiVersion
 
 // Generated from cross_call_master (group: counter)
 
-// CounterCreate 
-func CounterCreate(initialValue int64) uintptr {
-	defer plugify.Scope("cross_call_master::CounterCreate", 3)()
+var P_CounterCreate = func(initialValue int64) uintptr {
 	var __retVal uintptr
 	__initialValue := C.int64_t(initialValue)
 	__retVal = uintptr(C.CounterCreate(__initialValue))
 	return __retVal
 }
 
-// CounterCreateZero 
-func CounterCreateZero() uintptr {
-	defer plugify.Scope("cross_call_master::CounterCreateZero", 3)()
+// CounterCreate 
+func CounterCreate(initialValue int64) uintptr {
+	defer plugify.Scope("cross_call_master::CounterCreate", buildInfo, 3)()
+	return P_CounterCreate(initialValue)
+}
+
+var P_CounterCreateZero = func() uintptr {
 	__retVal := uintptr(C.CounterCreateZero())
 	return __retVal
 }
 
-// CounterGetValue 
-func CounterGetValue(counter uintptr) int64 {
-	defer plugify.Scope("cross_call_master::CounterGetValue", 3)()
+// CounterCreateZero 
+func CounterCreateZero() uintptr {
+	defer plugify.Scope("cross_call_master::CounterCreateZero", buildInfo, 3)()
+	return P_CounterCreateZero()
+}
+
+var P_CounterGetValue = func(counter uintptr) int64 {
 	var __retVal int64
 	__counter := C.uintptr_t(counter)
 	__retVal = int64(C.CounterGetValue(__counter))
 	return __retVal
 }
 
-// CounterSetValue 
-func CounterSetValue(counter uintptr, value int64) {
-	defer plugify.Scope("cross_call_master::CounterSetValue", 3)()
+// CounterGetValue 
+func CounterGetValue(counter uintptr) int64 {
+	defer plugify.Scope("cross_call_master::CounterGetValue", buildInfo, 3)()
+	return P_CounterGetValue(counter)
+}
+
+var P_CounterSetValue = func(counter uintptr, value int64) {
 	__counter := C.uintptr_t(counter)
 	__value := C.int64_t(value)
 	C.CounterSetValue(__counter, __value)
 }
 
-// CounterIncrement 
-func CounterIncrement(counter uintptr) {
-	defer plugify.Scope("cross_call_master::CounterIncrement", 3)()
+// CounterSetValue 
+func CounterSetValue(counter uintptr, value int64) {
+	defer plugify.Scope("cross_call_master::CounterSetValue", buildInfo, 3)()
+	P_CounterSetValue(counter, value)
+}
+
+var P_CounterIncrement = func(counter uintptr) {
 	__counter := C.uintptr_t(counter)
 	C.CounterIncrement(__counter)
 }
 
-// CounterDecrement 
-func CounterDecrement(counter uintptr) {
-	defer plugify.Scope("cross_call_master::CounterDecrement", 3)()
+// CounterIncrement 
+func CounterIncrement(counter uintptr) {
+	defer plugify.Scope("cross_call_master::CounterIncrement", buildInfo, 3)()
+	P_CounterIncrement(counter)
+}
+
+var P_CounterDecrement = func(counter uintptr) {
 	__counter := C.uintptr_t(counter)
 	C.CounterDecrement(__counter)
 }
 
-// CounterAdd 
-func CounterAdd(counter uintptr, amount int64) {
-	defer plugify.Scope("cross_call_master::CounterAdd", 3)()
+// CounterDecrement 
+func CounterDecrement(counter uintptr) {
+	defer plugify.Scope("cross_call_master::CounterDecrement", buildInfo, 3)()
+	P_CounterDecrement(counter)
+}
+
+var P_CounterAdd = func(counter uintptr, amount int64) {
 	__counter := C.uintptr_t(counter)
 	__amount := C.int64_t(amount)
 	C.CounterAdd(__counter, __amount)
 }
 
-// CounterReset 
-func CounterReset(counter uintptr) {
-	defer plugify.Scope("cross_call_master::CounterReset", 3)()
+// CounterAdd 
+func CounterAdd(counter uintptr, amount int64) {
+	defer plugify.Scope("cross_call_master::CounterAdd", buildInfo, 3)()
+	P_CounterAdd(counter, amount)
+}
+
+var P_CounterReset = func(counter uintptr) {
 	__counter := C.uintptr_t(counter)
 	C.CounterReset(__counter)
 }
 
-// CounterIsPositive 
-func CounterIsPositive(counter uintptr) bool {
-	defer plugify.Scope("cross_call_master::CounterIsPositive", 3)()
+// CounterReset 
+func CounterReset(counter uintptr) {
+	defer plugify.Scope("cross_call_master::CounterReset", buildInfo, 3)()
+	P_CounterReset(counter)
+}
+
+var P_CounterIsPositive = func(counter uintptr) bool {
 	var __retVal bool
 	__counter := C.uintptr_t(counter)
 	__retVal = bool(C.CounterIsPositive(__counter))
 	return __retVal
 }
 
-// CounterCompare 
-func CounterCompare(value1 int64, value2 int64) int32 {
-	defer plugify.Scope("cross_call_master::CounterCompare", 3)()
+// CounterIsPositive 
+func CounterIsPositive(counter uintptr) bool {
+	defer plugify.Scope("cross_call_master::CounterIsPositive", buildInfo, 3)()
+	return P_CounterIsPositive(counter)
+}
+
+var P_CounterCompare = func(value1 int64, value2 int64) int32 {
 	var __retVal int32
 	__value1 := C.int64_t(value1)
 	__value2 := C.int64_t(value2)
@@ -112,9 +146,13 @@ func CounterCompare(value1 int64, value2 int64) int32 {
 	return __retVal
 }
 
-// CounterSum 
-func CounterSum(values []int64) int64 {
-	defer plugify.Scope("cross_call_master::CounterSum", 3)()
+// CounterCompare 
+func CounterCompare(value1 int64, value2 int64) int32 {
+	defer plugify.Scope("cross_call_master::CounterCompare", buildInfo, 3)()
+	return P_CounterCompare(value1, value2)
+}
+
+var P_CounterSum = func(values []int64) int64 {
 	var __retVal int64
 	__values := plugify.ConstructVectorInt64(values)
 	plugify.Block {
@@ -127,5 +165,11 @@ func CounterSum(values []int64) int64 {
 		},
 	}.Do()
 	return __retVal
+}
+
+// CounterSum 
+func CounterSum(values []int64) int64 {
+	defer plugify.Scope("cross_call_master::CounterSum", buildInfo, 3)()
+	return P_CounterSum(values)
 }
 

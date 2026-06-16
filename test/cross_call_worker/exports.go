@@ -1,9 +1,9 @@
 package main
 
 import (
+	"cross_call_worker/cross_call_master"
 	"fmt"
 	"math"
-	"plugify-plugin/cross_call_master"
 	"runtime"
 	"strconv"
 	"strings"
@@ -12,7 +12,7 @@ import (
 	"github.com/untrustedmodders/go-plugify"
 )
 
-type Example = int32
+type Example = cross_call_master.Example
 
 const (
 	First  Example = 1

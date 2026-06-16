@@ -1,8 +1,8 @@
-module plugify-plugin
+module cross_call_worker
 
-go 1.25.0
+go 1.26
 
-require github.com/untrustedmodders/go-plugify v1.9.0
+require github.com/untrustedmodders/go-plugify v1.10.0
 
 require (
 	golang.org/x/mod v0.37.0 // indirect

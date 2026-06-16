@@ -1,5 +1,7 @@
 #pragma once
 
+#include <map>
+
 #include <plugify/assembly.hpp>
 #include <plugify/callback.hpp>
 #include <plugify/language_module.hpp>
@@ -33,6 +35,11 @@ struct GoString {
 	const char* p{};
 	GoInt n{};
 
+	explicit GoString(std::string_view sv)
+		: p(sv.data())
+		, n(static_cast<GoInt>(sv.size()))
+	{}
+
 	operator std::string_view() const { return {p, static_cast<size_t>(n)};  }
 	operator bool() const { return n > 0;  }
 };
@@ -50,15 +57,22 @@ struct GoSlice {
 	GoInt len{};
 	GoInt cap{};
 
+	template<typename T, size_t N>
+	explicit GoSlice(std::span<const T, N> sp)
+		: data(const_cast<T*>(sp.data()))
+		, len(static_cast<GoInt>(sp.size()))
+		, cap(static_cast<GoInt>(sp.size()))
+	{}
+
 	template<typename T>
-	operator std::span<T>() const { return { static_cast<T*>(data), static_cast<size_t>(len)}; }
+	operator std::span<const T>() const { return { static_cast<T*>(data), static_cast<size_t>(len)}; }
 	operator bool() const { return len > 0;  }
 };
 
 using namespace plugify;
 
 namespace golm {
-	constexpr int kApiVersion = 3;
+	constexpr GoInt kApiVersion = 3;
 
 	enum class PluginCode { Ok, Failed };
 
@@ -76,21 +90,45 @@ namespace golm {
 		bool hasEnd{};
 	};
 
-	using InitFunc = int (*)(GoSlice, int, const void*);
-	using StartFunc = PluginResult (*)();
-	using UpdateFunc = PluginResult (*)(float);
-	using EndFunc = PluginResult (*)();
+	using InitFunc = GoInt (*)(GoSlice, GoInt, const Extension*);
+	using MainFunc = void(*)(GoString);
+	using ShutdownFunc = void (*)();
+	using StartFunc = PluginResult (*)(GoString);
+	using UpdateFunc = PluginResult (*)(GoString, GoFloat32);
+	using EndFunc = PluginResult (*)(GoString);
 	using ContextFunc = PluginContext* (*)();
-	using CallFunc = JitCallback::CallbackHandler;
+	using CallbackFunc = JitCallback::CallbackHandler;
+
+	using OpenFunc = GoInt (*)(GoString);
+	using BindFunc = bool (*)(GoInt, GoInt, GoString, GoString);
+	using CallFunc = bool (*)(GoInt, GoString);
+	using FindFunc = bool (*)(GoInt, GoString);
+
+	struct PluginSymbols {
+		StartFunc startFunc{};
+		UpdateFunc updateFunc{};
+		EndFunc endFunc{};
+		ContextFunc contextFunc{};
+		CallbackFunc callbackFunc{};
+		InitFunc initFunc{};
+		MainFunc mainFunc{};
+		ShutdownFunc shutdownFunc{};
+	};
+
+	struct RuntimeSymbols : PluginSymbols {
+		OpenFunc openFunc{};
+		BindFunc bindFunc{};
+		CallFunc callFunc{};
+		FindFunc findFunc{};
+	};
 
 	struct AssemblyHolder {
 		std::shared_ptr<IAssembly> assembly;
-		UpdateFunc updateFunc;
-		StartFunc startFunc;
-		EndFunc endFunc;
-		ContextFunc contextFunc;
-		CallFunc callFunc;
+		PluginSymbols symbols;
+		GoInt id; // only valid for -buildmode=plugin
 	};
+
+	using AssemblyMap = std::map<UniqueId, AssemblyHolder>;
 
 	class GoLanguageModule final : public ILanguageModule {
 	public:
@@ -114,6 +152,10 @@ namespace golm {
 		const std::shared_ptr<ILogger>& GetLogger() { return _logger; }
 		const std::shared_ptr<IProfiler>& GetProfiler() const { return _profiler; }
 
+		const RuntimeSymbols& GetRuntimeSymbols() const noexcept { return _symbols; }
+		const AssemblyMap& GetAssemblies() const { return _assemblies; }
+		const AssemblyHolder* FindAssembly(UniqueId pluginId) const;
+		const Extension* FindExtension(std::string_view name) const;
 		std::shared_ptr<Method> FindMethod(std::string_view name) const;
 
 	private:
@@ -121,9 +163,11 @@ namespace golm {
 		std::shared_ptr<ILogger> _logger;
 		std::shared_ptr<IAssemblyLoader> _loader;
 		std::shared_ptr<IProfiler> _profiler;
-		std::vector<std::unique_ptr<AssemblyHolder>> _assemblies;
+		std::shared_ptr<IAssembly> _runtime;
+		RuntimeSymbols _symbols;
+		AssemblyMap _assemblies;
 
-		static const std::array<void*, 139> _pluginApi;
+		static const std::array<void*, 140> _pluginApi;
 	};
 
 	extern GoLanguageModule g_golm;
