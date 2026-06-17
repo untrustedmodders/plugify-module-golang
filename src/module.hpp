@@ -35,6 +35,8 @@ struct GoString {
 	const char* p{};
 	GoInt n{};
 
+	GoString() = default;
+
 	explicit GoString(std::string_view sv)
 		: p(sv.data())
 		, n(static_cast<GoInt>(sv.size()))
@@ -56,6 +58,8 @@ struct GoSlice {
 	void* data{};
 	GoInt len{};
 	GoInt cap{};
+
+	GoSlice() = default;
 
 	template<typename T, size_t N>
 	explicit GoSlice(std::span<const T, N> sp)
@@ -90,41 +94,42 @@ namespace golm {
 		bool hasEnd{};
 	};
 
-	using InitFunc = GoInt (*)(GoSlice, GoInt, const Extension*);
-	using MainFunc = void(*)(GoString);
+	using InitFunc = GoInt (*)(GoSlice, GoInt, GoString);
 	using ShutdownFunc = void (*)();
 	using StartFunc = PluginResult (*)(GoString);
 	using UpdateFunc = PluginResult (*)(GoString, GoFloat32);
 	using EndFunc = PluginResult (*)(GoString);
-	using ContextFunc = PluginContext* (*)();
-	using CallbackFunc = JitCallback::CallbackHandler;
+	using ContextFunc = PluginContext (*)(GoString);
+	using CallbackFunc = void (*)(const Method* method, Address data, uint64_t* params, size_t count, /*uint128_t*/ void* ret);
 
 	using OpenFunc = GoInt (*)(GoString);
 	using BindFunc = bool (*)(GoInt, GoInt, GoString, GoString);
 	using CallFunc = bool (*)(GoInt, GoString);
 	using FindFunc = bool (*)(GoInt, GoString);
+	using ErrorFunc = GoString (*)();
 
-	struct PluginSymbols {
+	struct Symbols {
 		StartFunc startFunc{};
 		UpdateFunc updateFunc{};
 		EndFunc endFunc{};
 		ContextFunc contextFunc{};
 		CallbackFunc callbackFunc{};
+
 		InitFunc initFunc{};
-		MainFunc mainFunc{};
 		ShutdownFunc shutdownFunc{};
 	};
 
-	struct RuntimeSymbols : PluginSymbols {
+	struct RuntimeSymbols : Symbols {
 		OpenFunc openFunc{};
 		BindFunc bindFunc{};
 		CallFunc callFunc{};
 		FindFunc findFunc{};
+		ErrorFunc errorFunc{};
 	};
 
 	struct AssemblyHolder {
 		std::shared_ptr<IAssembly> assembly;
-		PluginSymbols symbols;
+		Symbols symbols;
 		GoInt id; // only valid for -buildmode=plugin
 	};
 
@@ -152,7 +157,6 @@ namespace golm {
 		const std::shared_ptr<ILogger>& GetLogger() { return _logger; }
 		const std::shared_ptr<IProfiler>& GetProfiler() const { return _profiler; }
 
-		const RuntimeSymbols& GetRuntimeSymbols() const noexcept { return _symbols; }
 		const AssemblyMap& GetAssemblies() const { return _assemblies; }
 		const AssemblyHolder* FindAssembly(UniqueId pluginId) const;
 		const Extension* FindExtension(std::string_view name) const;

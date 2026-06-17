@@ -2,6 +2,10 @@
 // +build plugin
 package main
 
+import (
+	"example_plugin/cross_call_worker"
+)
+
 var Cross_call_worker_NoParamReturnVoid = &cross_call_worker.P_NoParamReturnVoid
 var Cross_call_worker_NoParamReturnBool = &cross_call_worker.P_NoParamReturnBool
 var Cross_call_worker_NoParamReturnChar8 = &cross_call_worker.P_NoParamReturnChar8

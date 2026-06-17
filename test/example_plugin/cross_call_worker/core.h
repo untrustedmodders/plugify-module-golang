@@ -524,9 +524,9 @@ static Variant CallFuncAny(void* func_) {
 	return __cross_call_worker_CallFuncAny(func_);
 }
 
-extern uintptr_t (*__cross_call_worker_CallFuncFunction)(void*);
+extern void* (*__cross_call_worker_CallFuncFunction)(void*);
 
-static uintptr_t CallFuncFunction(void* func_) {
+static void* CallFuncFunction(void* func_) {
 	return __cross_call_worker_CallFuncFunction(func_);
 }
 

@@ -1,25 +1,31 @@
 package main
 
+/*
+#include "main.h"
+*/
 import "C"
 import (
+	"fmt"
 	"plugin"
 	"reflect"
-	"sync"
+	"unsafe"
+
+	"github.com/untrustedmodders/go-plugify"
 )
 
+var _ = plugify.ApiVersion
+
 var (
-	mu      sync.Mutex
-	nextID  int
-	plugins = map[int]*plugin.Plugin{}
+	nextID    int
+	plugins   = map[int]*plugin.Plugin{}
+	lastError string
 )
 
 //export Open
 func Open(path string) int {
-	mu.Lock()
-	defer mu.Unlock()
-
 	pl, err := plugin.Open(path)
 	if err != nil {
+		lastError = err.Error()
 		return 0
 	}
 
@@ -38,15 +44,13 @@ func Open(path string) int {
 
 //export Call
 func Call(id int, method string) bool {
-	mu.Lock()
-	defer mu.Unlock()
-
 	pl, ok := plugins[id]
 	if !ok {
 		return false
 	}
 	sym, err := pl.Lookup(method)
 	if err != nil {
+		lastError = err.Error()
 		return false
 	}
 
@@ -56,15 +60,13 @@ func Call(id int, method string) bool {
 
 //export Find
 func Find(id int, method string) bool {
-	mu.Lock()
-	defer mu.Unlock()
-
 	pl, ok := plugins[id]
 	if !ok {
 		return false
 	}
 	sym, err := pl.Lookup(method)
 	if err != nil {
+		lastError = err.Error()
 		return false
 	}
 
@@ -73,15 +75,13 @@ func Find(id int, method string) bool {
 
 //export Bind
 func Bind(from int, to int, fromMethod string, toVar string) bool {
-	mu.Lock()
-	defer mu.Unlock()
-
 	fromPl, ok := plugins[from]
 	if !ok {
 		return false
 	}
 	fromSym, err := fromPl.Lookup(fromMethod)
 	if err != nil {
+		lastError = err.Error()
 		return false
 	}
 
@@ -91,6 +91,7 @@ func Bind(from int, to int, fromMethod string, toVar string) bool {
 	}
 	toSym, err := toPl.Lookup(toVar)
 	if err != nil {
+		lastError = err.Error()
 		return false
 	}
 
@@ -100,20 +101,47 @@ func Bind(from int, to int, fromMethod string, toVar string) bool {
 		fromVal = fromVal.Elem()
 	}
 	if fromVal.Kind() != reflect.Func {
+		lastError = fmt.Sprintf("from symbol is not a function but a %v", fromVal.Kind())
 		return false
 	}
 
-	// to must be a pointer to a func variable
+	// to must be a pointer to a func variable, OR a pointer to a pointer to a func variable
 	toVal := reflect.ValueOf(toSym)
-	if toVal.Kind() != reflect.Ptr || toVal.Elem().Kind() != reflect.Func {
+	if toVal.Kind() != reflect.Ptr {
+		lastError = fmt.Sprintf("to symbol must be a pointer (or pointer-to-pointer) to a func variable, but got %v", toVal.Type())
+		return false
+	}
+
+	// unwrap one level: now toVal should point at either a func or another pointer
+	elem := toVal.Elem()
+
+	switch elem.Kind() {
+	case reflect.Func:
+		// toSym was *Delegate — toVal already points at the func slot we assign into
+	case reflect.Ptr:
+		// toSym was **Delegate — descend one more level
+		if elem.IsNil() {
+			// need a non-nil *Delegate to assign into; allocate one
+			newPtr := reflect.New(elem.Type().Elem())
+			elem.Set(newPtr)
+		}
+		toVal = elem // now toVal.Elem() will be the actual Delegate slot
+		elem = toVal.Elem()
+		if elem.Kind() != reflect.Func {
+			lastError = fmt.Sprintf("to symbol must ultimately point to a func variable, but got %v", elem.Type())
+			return false
+		}
+	default:
+		lastError = fmt.Sprintf("to symbol must be a pointer (or pointer-to-pointer) to a func variable, but got %v", toVal.Type())
 		return false
 	}
 
 	fromType := fromVal.Type()
-	toType := toVal.Elem().Type()
+	toType := elem.Type()
 
 	// check compatibility before attempting any assignment or bridge
 	if !compatible(fromType, toType) {
+		lastError = fmt.Sprintf("incompatible function signatures: %v vs %v", fromType, toType)
 		return false
 	}
 
@@ -138,6 +166,17 @@ func Bind(from int, to int, fromMethod string, toVar string) bool {
 	toVal.Elem().Set(bridgeFunc(fromVal, toType))
 
 	return true
+}
+
+//export Error
+func Error() C.String {
+	buffer := &C.error_buffer[0]
+	slice := unsafe.Slice((*byte)(unsafe.Pointer(buffer)), C.sizeof_error_buffer)
+	length := copy(slice, lastError)
+	return C.String{
+		p: buffer,
+		n: C.ptrdiff_t(length),
+	}
 }
 
 // compatible checks if two types can be bridged.
@@ -223,6 +262,17 @@ func bridgeFunc(from reflect.Value, targetType reflect.Type) reflect.Value {
 
 		results := from.Call(convertedArgs)
 
+		// convertValue allocates a *new* object for pointer args (different
+		// backing memory than the caller's pointer), so writes the callee makes
+		// through that pointer (e.g. *[]T mutation/append, *struct field writes)
+		// only land in convertedArgs[i] and are lost unless copied back here.
+		for i, arg := range args {
+			if arg.Kind() == reflect.Ptr && !arg.IsNil() &&
+				!convertedArgs[i].IsNil() && arg.Type() != convertedArgs[i].Type() {
+				arg.Elem().Set(convertValue(convertedArgs[i].Elem(), arg.Type().Elem()))
+			}
+		}
+
 		convertedResults := make([]reflect.Value, len(results))
 		for i, r := range results {
 			convertedResults[i] = convertValue(r, targetType.Out(i))
@@ -299,4 +349,7 @@ func convertValue(v reflect.Value, target reflect.Type) reflect.Value {
 }
 
 func main() {
+}
+
+func init() {
 }

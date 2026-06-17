@@ -261,7 +261,7 @@ PLUGIFY_EXPORT String (*__cross_call_worker_CallFuncString)(void*) = NULL;
 PLUGIFY_EXPORT Variant (*__cross_call_worker_CallFuncAny)(void*) = NULL;
 
 
-PLUGIFY_EXPORT uintptr_t (*__cross_call_worker_CallFuncFunction)(void*) = NULL;
+PLUGIFY_EXPORT void* (*__cross_call_worker_CallFuncFunction)(void*) = NULL;
 
 
 PLUGIFY_EXPORT Vector (*__cross_call_worker_CallFuncBoolVector)(void*) = NULL;

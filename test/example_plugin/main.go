@@ -3,20 +3,36 @@ package main
 import (
 	"example_plugin/cross_call_worker"
 	"fmt"
-	"runtime/debug"
 
 	"github.com/untrustedmodders/go-plugify"
 )
 
-var plugin plugify.PluginInfo
+var plugin plugify.Plugin
 
 func OnPluginStart() error {
 	fmt.Println("Example: OnPluginStart")
+
+	strs := cross_call_worker.CallFunc33(func(a *any) {
+		fmt.Println("Example: CallFunc33")
+		*a = "some string lul"
+	})
+	fmt.Println("Example CallFunc33: ", strs)
 	str := cross_call_worker.CallFuncEnum(func(p1 cross_call_worker.Example, p2 *[]cross_call_worker.Example) []cross_call_worker.Example {
 		fmt.Println("Example: CallFuncEnum")
+		p1 = cross_call_worker.Example_Third
+		*p2 = []cross_call_worker.Example{
+			cross_call_worker.Example_Third,
+			cross_call_worker.Example_Third,
+			cross_call_worker.Example_Third,
+		}
 		return []cross_call_worker.Example{cross_call_worker.Example_Forth}
 	})
-	fmt.Println("Example after: ", str)
+	fmt.Println("Example CallFuncEnum: ", str)
+
+	for i := 0; i < 122; i++ {
+		cross_call_worker.NoParamReturnVoid()
+	}
+
 	return nil
 }
 
@@ -33,6 +49,5 @@ func OnPluginEnd() error {
 func main() {}
 
 func init() {
-	var buildInfo, _ = debug.ReadBuildInfo()
-	plugin = plugify.NewPlugin(buildInfo, OnPluginStart, nil, OnPluginEnd)
+	plugin = plugify.NewPlugin("example_plugin", OnPluginStart, nil, OnPluginEnd)
 }

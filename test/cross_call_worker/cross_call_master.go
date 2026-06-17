@@ -2,6 +2,10 @@
 // +build plugin
 package main
 
+import (
+	"cross_call_worker/cross_call_master"
+)
+
 var Cross_call_master_ReverseReturn = &cross_call_master.P_ReverseReturn
 var Cross_call_master_NoParamReturnVoidCallback = &cross_call_master.P_NoParamReturnVoidCallback
 var Cross_call_master_NoParamReturnBoolCallback = &cross_call_master.P_NoParamReturnBoolCallback

@@ -2,12 +2,11 @@ package main
 
 import (
 	"fmt"
-	"runtime/debug"
 
 	"github.com/untrustedmodders/go-plugify"
 )
 
-var plugin plugify.PluginInfo
+var plugin plugify.Plugin
 
 func OnPluginStart() error {
 	fmt.Println("Go: OnPluginStart")
@@ -27,7 +26,5 @@ func OnPluginEnd() error {
 func main() {}
 
 func init() {
-	var buildInfo, _ = debug.ReadBuildInfo()
-	fmt.Printf("Plug: Version: %v\n", buildInfo)
-	plugin = plugify.NewPlugin(buildInfo, OnPluginStart, nil, OnPluginEnd)
+	plugin = plugify.NewPlugin("cross_call_worker", OnPluginStart, nil, OnPluginEnd)
 }

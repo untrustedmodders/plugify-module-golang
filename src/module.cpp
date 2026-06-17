@@ -46,7 +46,7 @@ Result<InitData> GoLanguageModule::Initialize(const Provider& provider, [[maybe_
 	runtimePath.replace_filename(PLUGIFY_PATH_LITERAL("" GOLM_LIBRARY_PREFIX "plugify-host-golang" GOLM_LIBRARY_SUFFIX));
 
 	if (std::filesystem::exists(runtimePath)) {
-		LoadFlag flags = LoadFlag::NoUnload;
+		LoadFlag flags = LoadFlag::GlobalSymbols | LoadFlag::NoUnload;
 		auto assemblyResult = _provider->Resolve<IAssemblyLoader>()->Load(runtimePath, flags);
 		if (!assemblyResult) {
 			return MakeError(std::move(assemblyResult.error()));
@@ -56,11 +56,6 @@ Result<InitData> GoLanguageModule::Initialize(const Provider& provider, [[maybe_
 
 		auto initResult = assembly->GetSymbol("plugify_PluginInit");
 		if (!initResult) {
-			return MakeError(std::move(initResult.error()));
-		}
-
-		auto mainResult = assembly->GetSymbol("plugify_PluginMain");
-		if (!mainResult) {
 			return MakeError(std::move(initResult.error()));
 		}
 
@@ -89,7 +84,7 @@ Result<InitData> GoLanguageModule::Initialize(const Provider& provider, [[maybe_
 			return MakeError(std::move(shutdownResult.error()));
 		}
 
-		auto callbackResult = assembly->GetSymbol("plugify_InternalCall");
+		auto callbackResult = assembly->GetSymbol("plugify_PluginCall");
 		if (!callbackResult) {
 			return MakeError(std::move(callbackResult.error()));
 		}
@@ -114,20 +109,26 @@ Result<InitData> GoLanguageModule::Initialize(const Provider& provider, [[maybe_
 			return MakeError(std::move(findResult.error()));
 		}
 
+		auto errorResult = assembly->GetSymbol("Error");
+		if (!errorResult) {
+			return MakeError(std::move(errorResult.error()));
+		}
+
 		auto* startFunc = startResult->As<StartFunc>();
 		auto* updateFunc = updateResult->As<UpdateFunc>();
 		auto* endFunc = endResult->As<EndFunc>();
 		auto* contextFunc = contextResult->As<ContextFunc>();
 		auto* callbackFunc = callbackResult->As<CallbackFunc>();
 		auto* initFunc = initResult->As<InitFunc>();
-		auto* mainFunc = mainResult->As<MainFunc>();
 		auto* shutdownFunc = shutdownResult->As<ShutdownFunc>();
+
 		auto* openFunc = openResult->As<OpenFunc>();
 		auto* callFunc = callResult->As<CallFunc>();
 		auto* bindFunc = bindResult->As<BindFunc>();
 		auto* findFunc = findResult->As<FindFunc>();
+		auto* errorFunc = errorResult->As<ErrorFunc>();
 
-		const GoInt resultVersion = initFunc(GoSlice(std::span(_pluginApi)), kApiVersion, nullptr);
+		const GoInt resultVersion = initFunc(GoSlice(std::span(_pluginApi)), kApiVersion, GoString(""));
 		if (resultVersion != 0) {
 			return MakeError("Not supported plugin api {}, max supported {}", resultVersion, kApiVersion);
 		}
@@ -140,12 +141,13 @@ Result<InitData> GoLanguageModule::Initialize(const Provider& provider, [[maybe_
 			contextFunc,
 			callbackFunc,
 			initFunc,
-			mainFunc,
 			shutdownFunc,
+
 			openFunc,
 			bindFunc,
 			callFunc,
-			findFunc
+			findFunc,
+			errorFunc,
 		};
 	}
 
@@ -153,9 +155,10 @@ Result<InitData> GoLanguageModule::Initialize(const Provider& provider, [[maybe_
 }
 
 Result<void> GoLanguageModule::Shutdown() {
-	if (_runtime) {
+	if (_symbols.shutdownFunc) {
 		_symbols.shutdownFunc();
 	}
+
 	for (const auto& [_, assembly] : _assemblies) {
 		if (!assembly.id) {
 			assembly.symbols.shutdownFunc();
@@ -197,7 +200,9 @@ Result<void> GoLanguageModule::OnMethodExport(const Extension& plugin) {
 
             if (isGoOwner && assembly.id) {
                 // Go-to-Go: bind via delegate
-                _symbols.bindFunc(ownerAssembly->id, assembly.id, GoString(method.GetName()), GoString(delegateName));
+                if (!_symbols.bindFunc(ownerAssembly->id, assembly.id, GoString(method.GetName()), GoString(delegateName))) {
+	                return MakeError(std::string(_symbols.errorFunc()));
+                }
             } else {
                 // Go-to-C++ or C++-to-any: write function pointer directly
                 if (auto function = assembly.assembly->GetSymbol(variableName)) {
@@ -213,15 +218,24 @@ Result<LoadData> GoLanguageModule::OnPluginLoad(const Extension& plugin) {
 	std::filesystem::path assemblyPath(plugin.GetLocation() / plugin.GetEntry());
 	assemblyPath.replace_extension(PLUGIFY_PATH_LITERAL("" GOLM_LIBRARY_SUFFIX));
 
-	auto id = _symbols.openFunc ? _symbols.openFunc(GoString(plg::as_string(assemblyPath))) : NULL;
-
-	LoadFlag flags = LoadFlag::LazyBinding | LoadFlag::NoUnload;
+	LoadFlag flags = LoadFlag::GlobalSymbols | LoadFlag::NoUnload;
 	auto assemblyResult = _provider->Resolve<IAssemblyLoader>()->Load(assemblyPath, flags);
 	if (!assemblyResult) {
 		return MakeError(std::move(assemblyResult.error()));
 	}
 
 	auto assembly = *assemblyResult;
+
+	GoInt id{};
+
+	// doInit only is defined in package runtime.
+	// https://github.com/golang/go/blob/fd6f414c65e61a51cf12c98ef473957d73f97c44/src/plugin/plugin_dlopen.go#L145
+	if (_symbols.openFunc && !assembly->GetSymbol("runtime.doInit")) {
+		id = _symbols.openFunc(GoString(plg::as_string(assemblyPath)));
+		if (!id) {
+			return MakeError(std::string(_symbols.errorFunc()));
+		}
+	}
 
 	std::vector<std::string> errors;
 
@@ -245,25 +259,14 @@ Result<LoadData> GoLanguageModule::OnPluginLoad(const Extension& plugin) {
 		return MakeError("Invalid methods:\n{}", plg::join(errors, "\n"));
 	}
 
-	PluginContext context;
-	PluginSymbols symbols;
+	Symbols symbols;
 
 	// plugin mode
 	if (id) {
-		context = PluginContext{
-			_symbols.findFunc(id, GoString("OnPluginUpdate")),
-			true,//_symbols.findFunc(id, GoString("OnPluginStart")),
-			true,//_symbols.findFunc(id, GoString("OnPluginEnd"))
-		};
-		symbols = static_cast<PluginSymbols>(_symbols);
+		symbols = static_cast<Symbols>(_symbols);
 	} else {
 		auto initResult = assembly->GetSymbol("plugify_PluginInit");
 		if (!initResult) {
-			return MakeError(std::move(initResult.error()));
-		}
-
-		auto mainResult = assembly->GetSymbol("plugify_PluginMain");
-		if (!mainResult) {
 			return MakeError(std::move(initResult.error()));
 		}
 
@@ -292,7 +295,7 @@ Result<LoadData> GoLanguageModule::OnPluginLoad(const Extension& plugin) {
 			return MakeError(std::move(shutdownResult.error()));
 		}
 
-		auto callbackResult = assembly->GetSymbol("plugify_InternalCall");
+		auto callbackResult = assembly->GetSymbol("plugify_PluginCall");
 		if (!callbackResult) {
 			return MakeError(std::move(callbackResult.error()));
 		}
@@ -303,29 +306,22 @@ Result<LoadData> GoLanguageModule::OnPluginLoad(const Extension& plugin) {
 		auto* contextFunc = contextResult->As<ContextFunc>();
 		auto* callbackFunc = callbackResult->As<CallbackFunc>();
 		auto* initFunc = initResult->As<InitFunc>();
-		auto* mainFunc = mainResult->As<MainFunc>();
 		auto* shutdownFunc = shutdownResult->As<ShutdownFunc>();
 
-		const GoInt resultVersion = initFunc(GoSlice(std::span(_pluginApi)), kApiVersion, &plugin);
-		if (resultVersion != 0) {
-			return MakeError("Not supported plugin api {}, max supported {}", resultVersion, kApiVersion);
-		}
-
-		if (mainFunc) {
-			mainFunc(GoString(plugin.GetName()));
-		}
-
-		context = contextFunc ? *(contextFunc()) : PluginContext{};
-		symbols = PluginSymbols{
+		symbols = Symbols{
 			startFunc,
 			updateFunc,
 			endFunc,
 			contextFunc,
 			callbackFunc,
 			initFunc,
-			mainFunc,
 			shutdownFunc
 		};
+	}
+
+	const GoInt resultVersion = symbols.initFunc(id ? GoSlice() : GoSlice(std::span(_pluginApi)), kApiVersion, GoString(plugin.GetName()));
+	if (resultVersion != 0) {
+		return MakeError("Not supported plugin api {}, max supported {}", resultVersion, kApiVersion);
 	}
 
 	const auto [it, result] = _assemblies.try_emplace(plugin.GetId(), std::move(assembly), symbols, id);
@@ -333,8 +329,10 @@ Result<LoadData> GoLanguageModule::OnPluginLoad(const Extension& plugin) {
 		return MakeError("Save plugin data to map unsuccessful");
 	}
 
+	const auto& [hasUpdate, hasStart, hasEnd] = symbols.contextFunc(GoString(plugin.GetName()));
+
 	const auto& [_, holder] = *it;
-	return LoadData{ std::move(methods), &holder, { context.hasUpdate, context.hasStart, context.hasEnd, !exportedMethods.empty() } };
+	return LoadData{ std::move(methods), &holder, { hasUpdate, hasStart, hasEnd, !exportedMethods.empty() } };
 }
 
 Result<void> GoLanguageModule::OnPluginStart(const Extension& plugin) {
@@ -706,7 +704,7 @@ JitCall* NewCall(void* target, ManagedType* params, ptrdiff_t count, ManagedType
 		sig.AddArg(ref ? ValueType::Pointer : type);
 	}
 
-	JitCall* call = new JitCall{};
+	auto* call = new JitCall{};
 	call->GetJitFunc(sig, target, JitCall::WaitType::None, retHidden);
 	return call;
 }
@@ -728,8 +726,9 @@ JitCallback* NewCallback(const Extension* plugin, GoString name, void* delegate)
 	if (method == nullptr || delegate == nullptr)
 		return nullptr;
 
-	JitCallback* callback = new JitCallback{};
-	callback->GetJitFunc(*method, plugin ? plugin->GetUserData().As<AssemblyHolder*>()->symbols.callbackFunc : g_golm.GetRuntimeSymbols().callbackFunc, delegate);
+	auto* holder = plugin->GetUserData().As<AssemblyHolder*>();
+	auto* callback = new JitCallback{};
+	callback->GetJitFunc(*method, holder->symbols.callbackFunc, delegate);
 	return callback;
 }
 
