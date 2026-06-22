@@ -384,7 +384,7 @@ PLUGIFY_EXPORT String (*__cross_call_worker_CallFuncAliasString)(void*) = NULL;
 PLUGIFY_EXPORT Variant (*__cross_call_worker_CallFuncAliasAny)(void*) = NULL;
 
 
-PLUGIFY_EXPORT uintptr_t (*__cross_call_worker_CallFuncAliasFunction)(void*) = NULL;
+PLUGIFY_EXPORT void* (*__cross_call_worker_CallFuncAliasFunction)(void*) = NULL;
 
 
 PLUGIFY_EXPORT Vector (*__cross_call_worker_CallFuncAliasBoolVector)(void*) = NULL;

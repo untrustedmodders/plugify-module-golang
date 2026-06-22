@@ -5663,20 +5663,28 @@
             "funcName": "_",
             "paramTypes": [],
             "retType": {
-              "type": "ptr64",
-              "enum": {
+              "type": "function",
+              "prototype": {
                 "name": "AliasFunction",
-                "values": []
+                "funcName": "_",
+                "paramTypes": [],
+                "retType": {
+                  "type": "void"
+                }
               }
             }
           }
         }
       ],
       "retType": {
-        "type": "ptr64",
-        "enum": {
+        "type": "function",
+        "prototype": {
           "name": "AliasFunction",
-          "values": []
+          "funcName": "_",
+          "paramTypes": [],
+          "retType": {
+            "type": "void"
+          }
         }
       }
     },

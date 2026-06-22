@@ -264,7 +264,7 @@ PLUGIFY_EXPORT String (*__cross_call_master_CallFuncStringCallback)(void*) = NUL
 PLUGIFY_EXPORT Variant (*__cross_call_master_CallFuncAnyCallback)(void*) = NULL;
 
 
-PLUGIFY_EXPORT uintptr_t (*__cross_call_master_CallFuncFunctionCallback)(void*) = NULL;
+PLUGIFY_EXPORT void* (*__cross_call_master_CallFuncFunctionCallback)(void*) = NULL;
 
 
 PLUGIFY_EXPORT Vector (*__cross_call_master_CallFuncBoolVectorCallback)(void*) = NULL;
@@ -387,7 +387,7 @@ PLUGIFY_EXPORT String (*__cross_call_master_CallFuncAliasStringCallback)(void*) 
 PLUGIFY_EXPORT Variant (*__cross_call_master_CallFuncAliasAnyCallback)(void*) = NULL;
 
 
-PLUGIFY_EXPORT uintptr_t (*__cross_call_master_CallFuncAliasFunctionCallback)(void*) = NULL;
+PLUGIFY_EXPORT void* (*__cross_call_master_CallFuncAliasFunctionCallback)(void*) = NULL;
 
 
 PLUGIFY_EXPORT Vector (*__cross_call_master_CallFuncAliasBoolVectorCallback)(void*) = NULL;

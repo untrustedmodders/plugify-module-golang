@@ -60,10 +60,10 @@ type FuncString func() string
 type FuncAny func() any
 
 
-type FuncFunction func() FuncFunctionInner
-
-
 type FuncFunctionInner func()
+
+
+type FuncFunction func() FuncFunctionInner
 
 
 type FuncBoolVector func() []bool
@@ -186,10 +186,10 @@ type FuncAliasString func() AliasString
 type FuncAliasAny func() AliasAny
 
 
-type FuncAliasFunction func() AliasFunction
-
-
 type FuncAliasFunctionInner func()
+
+
+type FuncAliasFunction func() AliasFunction
 
 
 type FuncAliasBoolVector func() AliasBoolVector

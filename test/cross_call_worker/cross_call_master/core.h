@@ -530,9 +530,9 @@ static Variant CallFuncAnyCallback(void* func_) {
 	return __cross_call_master_CallFuncAnyCallback(func_);
 }
 
-extern uintptr_t (*__cross_call_master_CallFuncFunctionCallback)(void*);
+extern void* (*__cross_call_master_CallFuncFunctionCallback)(void*);
 
-static uintptr_t CallFuncFunctionCallback(void* func_) {
+static void* CallFuncFunctionCallback(void* func_) {
 	return __cross_call_master_CallFuncFunctionCallback(func_);
 }
 
@@ -776,9 +776,9 @@ static Variant CallFuncAliasAnyCallback(void* func_) {
 	return __cross_call_master_CallFuncAliasAnyCallback(func_);
 }
 
-extern uintptr_t (*__cross_call_master_CallFuncAliasFunctionCallback)(void*);
+extern void* (*__cross_call_master_CallFuncAliasFunctionCallback)(void*);
 
-static uintptr_t CallFuncAliasFunctionCallback(void* func_) {
+static void* CallFuncAliasFunctionCallback(void* func_) {
 	return __cross_call_master_CallFuncAliasFunctionCallback(func_);
 }
 

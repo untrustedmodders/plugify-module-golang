@@ -76,7 +76,7 @@ type AliasUInt32 uint32
 
 type AliasUInt64 uint64
 
-type AliasFunction uintptr
+type AliasFunction FuncAliasFunctionInner
 
 type AliasUInt8Vector []uint8
 

@@ -1,197 +1,771 @@
 //go:build plugin
 // +build plugin
+
 package main
 
+//TODO: replace "example_plugin" by your package name
 import (
 	"example_plugin/cross_call_worker"
+	"unsafe"
+
+	"github.com/untrustedmodders/go-plugify"
 )
 
-var Cross_call_worker_NoParamReturnVoid = &cross_call_worker.P_NoParamReturnVoid
-var Cross_call_worker_NoParamReturnBool = &cross_call_worker.P_NoParamReturnBool
-var Cross_call_worker_NoParamReturnChar8 = &cross_call_worker.P_NoParamReturnChar8
-var Cross_call_worker_NoParamReturnChar16 = &cross_call_worker.P_NoParamReturnChar16
-var Cross_call_worker_NoParamReturnInt8 = &cross_call_worker.P_NoParamReturnInt8
-var Cross_call_worker_NoParamReturnInt16 = &cross_call_worker.P_NoParamReturnInt16
-var Cross_call_worker_NoParamReturnInt32 = &cross_call_worker.P_NoParamReturnInt32
-var Cross_call_worker_NoParamReturnInt64 = &cross_call_worker.P_NoParamReturnInt64
-var Cross_call_worker_NoParamReturnUInt8 = &cross_call_worker.P_NoParamReturnUInt8
-var Cross_call_worker_NoParamReturnUInt16 = &cross_call_worker.P_NoParamReturnUInt16
-var Cross_call_worker_NoParamReturnUInt32 = &cross_call_worker.P_NoParamReturnUInt32
-var Cross_call_worker_NoParamReturnUInt64 = &cross_call_worker.P_NoParamReturnUInt64
-var Cross_call_worker_NoParamReturnPointer = &cross_call_worker.P_NoParamReturnPointer
-var Cross_call_worker_NoParamReturnFloat = &cross_call_worker.P_NoParamReturnFloat
-var Cross_call_worker_NoParamReturnDouble = &cross_call_worker.P_NoParamReturnDouble
-var Cross_call_worker_NoParamReturnFunction = &cross_call_worker.P_NoParamReturnFunction
-var Cross_call_worker_NoParamReturnString = &cross_call_worker.P_NoParamReturnString
-var Cross_call_worker_NoParamReturnAny = &cross_call_worker.P_NoParamReturnAny
-var Cross_call_worker_NoParamReturnArrayBool = &cross_call_worker.P_NoParamReturnArrayBool
-var Cross_call_worker_NoParamReturnArrayChar8 = &cross_call_worker.P_NoParamReturnArrayChar8
-var Cross_call_worker_NoParamReturnArrayChar16 = &cross_call_worker.P_NoParamReturnArrayChar16
-var Cross_call_worker_NoParamReturnArrayInt8 = &cross_call_worker.P_NoParamReturnArrayInt8
-var Cross_call_worker_NoParamReturnArrayInt16 = &cross_call_worker.P_NoParamReturnArrayInt16
-var Cross_call_worker_NoParamReturnArrayInt32 = &cross_call_worker.P_NoParamReturnArrayInt32
-var Cross_call_worker_NoParamReturnArrayInt64 = &cross_call_worker.P_NoParamReturnArrayInt64
-var Cross_call_worker_NoParamReturnArrayUInt8 = &cross_call_worker.P_NoParamReturnArrayUInt8
-var Cross_call_worker_NoParamReturnArrayUInt16 = &cross_call_worker.P_NoParamReturnArrayUInt16
-var Cross_call_worker_NoParamReturnArrayUInt32 = &cross_call_worker.P_NoParamReturnArrayUInt32
-var Cross_call_worker_NoParamReturnArrayUInt64 = &cross_call_worker.P_NoParamReturnArrayUInt64
-var Cross_call_worker_NoParamReturnArrayPointer = &cross_call_worker.P_NoParamReturnArrayPointer
-var Cross_call_worker_NoParamReturnArrayFloat = &cross_call_worker.P_NoParamReturnArrayFloat
-var Cross_call_worker_NoParamReturnArrayDouble = &cross_call_worker.P_NoParamReturnArrayDouble
-var Cross_call_worker_NoParamReturnArrayString = &cross_call_worker.P_NoParamReturnArrayString
-var Cross_call_worker_NoParamReturnArrayAny = &cross_call_worker.P_NoParamReturnArrayAny
-var Cross_call_worker_NoParamReturnArrayVector2 = &cross_call_worker.P_NoParamReturnArrayVector2
-var Cross_call_worker_NoParamReturnArrayVector3 = &cross_call_worker.P_NoParamReturnArrayVector3
-var Cross_call_worker_NoParamReturnArrayVector4 = &cross_call_worker.P_NoParamReturnArrayVector4
-var Cross_call_worker_NoParamReturnArrayMatrix4x4 = &cross_call_worker.P_NoParamReturnArrayMatrix4x4
-var Cross_call_worker_NoParamReturnVector2 = &cross_call_worker.P_NoParamReturnVector2
-var Cross_call_worker_NoParamReturnVector3 = &cross_call_worker.P_NoParamReturnVector3
-var Cross_call_worker_NoParamReturnVector4 = &cross_call_worker.P_NoParamReturnVector4
-var Cross_call_worker_NoParamReturnMatrix4x4 = &cross_call_worker.P_NoParamReturnMatrix4x4
-var Cross_call_worker_Param1 = &cross_call_worker.P_Param1
-var Cross_call_worker_Param2 = &cross_call_worker.P_Param2
-var Cross_call_worker_Param3 = &cross_call_worker.P_Param3
-var Cross_call_worker_Param4 = &cross_call_worker.P_Param4
-var Cross_call_worker_Param5 = &cross_call_worker.P_Param5
-var Cross_call_worker_Param6 = &cross_call_worker.P_Param6
-var Cross_call_worker_Param7 = &cross_call_worker.P_Param7
-var Cross_call_worker_Param8 = &cross_call_worker.P_Param8
-var Cross_call_worker_Param9 = &cross_call_worker.P_Param9
-var Cross_call_worker_Param10 = &cross_call_worker.P_Param10
-var Cross_call_worker_ParamRef1 = &cross_call_worker.P_ParamRef1
-var Cross_call_worker_ParamRef2 = &cross_call_worker.P_ParamRef2
-var Cross_call_worker_ParamRef3 = &cross_call_worker.P_ParamRef3
-var Cross_call_worker_ParamRef4 = &cross_call_worker.P_ParamRef4
-var Cross_call_worker_ParamRef5 = &cross_call_worker.P_ParamRef5
-var Cross_call_worker_ParamRef6 = &cross_call_worker.P_ParamRef6
-var Cross_call_worker_ParamRef7 = &cross_call_worker.P_ParamRef7
-var Cross_call_worker_ParamRef8 = &cross_call_worker.P_ParamRef8
-var Cross_call_worker_ParamRef9 = &cross_call_worker.P_ParamRef9
-var Cross_call_worker_ParamRef10 = &cross_call_worker.P_ParamRef10
-var Cross_call_worker_ParamRefVectors = &cross_call_worker.P_ParamRefVectors
-var Cross_call_worker_ParamAllPrimitives = &cross_call_worker.P_ParamAllPrimitives
-var Cross_call_worker_ParamAllAliases = &cross_call_worker.P_ParamAllAliases
-var Cross_call_worker_ParamAllRefAliases = &cross_call_worker.P_ParamAllRefAliases
-var Cross_call_worker_ParamVariant = &cross_call_worker.P_ParamVariant
-var Cross_call_worker_ParamEnum = &cross_call_worker.P_ParamEnum
-var Cross_call_worker_ParamEnumRef = &cross_call_worker.P_ParamEnumRef
-var Cross_call_worker_ParamVariantRef = &cross_call_worker.P_ParamVariantRef
-var Cross_call_worker_CallFuncVoid = &cross_call_worker.P_CallFuncVoid
-var Cross_call_worker_CallFuncBool = &cross_call_worker.P_CallFuncBool
-var Cross_call_worker_CallFuncChar8 = &cross_call_worker.P_CallFuncChar8
-var Cross_call_worker_CallFuncChar16 = &cross_call_worker.P_CallFuncChar16
-var Cross_call_worker_CallFuncInt8 = &cross_call_worker.P_CallFuncInt8
-var Cross_call_worker_CallFuncInt16 = &cross_call_worker.P_CallFuncInt16
-var Cross_call_worker_CallFuncInt32 = &cross_call_worker.P_CallFuncInt32
-var Cross_call_worker_CallFuncInt64 = &cross_call_worker.P_CallFuncInt64
-var Cross_call_worker_CallFuncUInt8 = &cross_call_worker.P_CallFuncUInt8
-var Cross_call_worker_CallFuncUInt16 = &cross_call_worker.P_CallFuncUInt16
-var Cross_call_worker_CallFuncUInt32 = &cross_call_worker.P_CallFuncUInt32
-var Cross_call_worker_CallFuncUInt64 = &cross_call_worker.P_CallFuncUInt64
-var Cross_call_worker_CallFuncPtr = &cross_call_worker.P_CallFuncPtr
-var Cross_call_worker_CallFuncFloat = &cross_call_worker.P_CallFuncFloat
-var Cross_call_worker_CallFuncDouble = &cross_call_worker.P_CallFuncDouble
-var Cross_call_worker_CallFuncString = &cross_call_worker.P_CallFuncString
-var Cross_call_worker_CallFuncAny = &cross_call_worker.P_CallFuncAny
-var Cross_call_worker_CallFuncFunction = &cross_call_worker.P_CallFuncFunction
-var Cross_call_worker_CallFuncBoolVector = &cross_call_worker.P_CallFuncBoolVector
-var Cross_call_worker_CallFuncChar8Vector = &cross_call_worker.P_CallFuncChar8Vector
-var Cross_call_worker_CallFuncChar16Vector = &cross_call_worker.P_CallFuncChar16Vector
-var Cross_call_worker_CallFuncInt8Vector = &cross_call_worker.P_CallFuncInt8Vector
-var Cross_call_worker_CallFuncInt16Vector = &cross_call_worker.P_CallFuncInt16Vector
-var Cross_call_worker_CallFuncInt32Vector = &cross_call_worker.P_CallFuncInt32Vector
-var Cross_call_worker_CallFuncInt64Vector = &cross_call_worker.P_CallFuncInt64Vector
-var Cross_call_worker_CallFuncUInt8Vector = &cross_call_worker.P_CallFuncUInt8Vector
-var Cross_call_worker_CallFuncUInt16Vector = &cross_call_worker.P_CallFuncUInt16Vector
-var Cross_call_worker_CallFuncUInt32Vector = &cross_call_worker.P_CallFuncUInt32Vector
-var Cross_call_worker_CallFuncUInt64Vector = &cross_call_worker.P_CallFuncUInt64Vector
-var Cross_call_worker_CallFuncPtrVector = &cross_call_worker.P_CallFuncPtrVector
-var Cross_call_worker_CallFuncFloatVector = &cross_call_worker.P_CallFuncFloatVector
-var Cross_call_worker_CallFuncDoubleVector = &cross_call_worker.P_CallFuncDoubleVector
-var Cross_call_worker_CallFuncStringVector = &cross_call_worker.P_CallFuncStringVector
-var Cross_call_worker_CallFuncAnyVector = &cross_call_worker.P_CallFuncAnyVector
-var Cross_call_worker_CallFuncVec2Vector = &cross_call_worker.P_CallFuncVec2Vector
-var Cross_call_worker_CallFuncVec3Vector = &cross_call_worker.P_CallFuncVec3Vector
-var Cross_call_worker_CallFuncVec4Vector = &cross_call_worker.P_CallFuncVec4Vector
-var Cross_call_worker_CallFuncMat4x4Vector = &cross_call_worker.P_CallFuncMat4x4Vector
-var Cross_call_worker_CallFuncVec2 = &cross_call_worker.P_CallFuncVec2
-var Cross_call_worker_CallFuncVec3 = &cross_call_worker.P_CallFuncVec3
-var Cross_call_worker_CallFuncVec4 = &cross_call_worker.P_CallFuncVec4
-var Cross_call_worker_CallFuncMat4x4 = &cross_call_worker.P_CallFuncMat4x4
-var Cross_call_worker_CallFuncAliasBool = &cross_call_worker.P_CallFuncAliasBool
-var Cross_call_worker_CallFuncAliasChar8 = &cross_call_worker.P_CallFuncAliasChar8
-var Cross_call_worker_CallFuncAliasChar16 = &cross_call_worker.P_CallFuncAliasChar16
-var Cross_call_worker_CallFuncAliasInt8 = &cross_call_worker.P_CallFuncAliasInt8
-var Cross_call_worker_CallFuncAliasInt16 = &cross_call_worker.P_CallFuncAliasInt16
-var Cross_call_worker_CallFuncAliasInt32 = &cross_call_worker.P_CallFuncAliasInt32
-var Cross_call_worker_CallFuncAliasInt64 = &cross_call_worker.P_CallFuncAliasInt64
-var Cross_call_worker_CallFuncAliasUInt8 = &cross_call_worker.P_CallFuncAliasUInt8
-var Cross_call_worker_CallFuncAliasUInt16 = &cross_call_worker.P_CallFuncAliasUInt16
-var Cross_call_worker_CallFuncAliasUInt32 = &cross_call_worker.P_CallFuncAliasUInt32
-var Cross_call_worker_CallFuncAliasUInt64 = &cross_call_worker.P_CallFuncAliasUInt64
-var Cross_call_worker_CallFuncAliasPtr = &cross_call_worker.P_CallFuncAliasPtr
-var Cross_call_worker_CallFuncAliasFloat = &cross_call_worker.P_CallFuncAliasFloat
-var Cross_call_worker_CallFuncAliasDouble = &cross_call_worker.P_CallFuncAliasDouble
-var Cross_call_worker_CallFuncAliasString = &cross_call_worker.P_CallFuncAliasString
-var Cross_call_worker_CallFuncAliasAny = &cross_call_worker.P_CallFuncAliasAny
-var Cross_call_worker_CallFuncAliasFunction = &cross_call_worker.P_CallFuncAliasFunction
-var Cross_call_worker_CallFuncAliasBoolVector = &cross_call_worker.P_CallFuncAliasBoolVector
-var Cross_call_worker_CallFuncAliasChar8Vector = &cross_call_worker.P_CallFuncAliasChar8Vector
-var Cross_call_worker_CallFuncAliasChar16Vector = &cross_call_worker.P_CallFuncAliasChar16Vector
-var Cross_call_worker_CallFuncAliasInt8Vector = &cross_call_worker.P_CallFuncAliasInt8Vector
-var Cross_call_worker_CallFuncAliasInt16Vector = &cross_call_worker.P_CallFuncAliasInt16Vector
-var Cross_call_worker_CallFuncAliasInt32Vector = &cross_call_worker.P_CallFuncAliasInt32Vector
-var Cross_call_worker_CallFuncAliasInt64Vector = &cross_call_worker.P_CallFuncAliasInt64Vector
-var Cross_call_worker_CallFuncAliasUInt8Vector = &cross_call_worker.P_CallFuncAliasUInt8Vector
-var Cross_call_worker_CallFuncAliasUInt16Vector = &cross_call_worker.P_CallFuncAliasUInt16Vector
-var Cross_call_worker_CallFuncAliasUInt32Vector = &cross_call_worker.P_CallFuncAliasUInt32Vector
-var Cross_call_worker_CallFuncAliasUInt64Vector = &cross_call_worker.P_CallFuncAliasUInt64Vector
-var Cross_call_worker_CallFuncAliasPtrVector = &cross_call_worker.P_CallFuncAliasPtrVector
-var Cross_call_worker_CallFuncAliasFloatVector = &cross_call_worker.P_CallFuncAliasFloatVector
-var Cross_call_worker_CallFuncAliasDoubleVector = &cross_call_worker.P_CallFuncAliasDoubleVector
-var Cross_call_worker_CallFuncAliasStringVector = &cross_call_worker.P_CallFuncAliasStringVector
-var Cross_call_worker_CallFuncAliasAnyVector = &cross_call_worker.P_CallFuncAliasAnyVector
-var Cross_call_worker_CallFuncAliasVec2Vector = &cross_call_worker.P_CallFuncAliasVec2Vector
-var Cross_call_worker_CallFuncAliasVec3Vector = &cross_call_worker.P_CallFuncAliasVec3Vector
-var Cross_call_worker_CallFuncAliasVec4Vector = &cross_call_worker.P_CallFuncAliasVec4Vector
-var Cross_call_worker_CallFuncAliasMat4x4Vector = &cross_call_worker.P_CallFuncAliasMat4x4Vector
-var Cross_call_worker_CallFuncAliasVec2 = &cross_call_worker.P_CallFuncAliasVec2
-var Cross_call_worker_CallFuncAliasVec3 = &cross_call_worker.P_CallFuncAliasVec3
-var Cross_call_worker_CallFuncAliasVec4 = &cross_call_worker.P_CallFuncAliasVec4
-var Cross_call_worker_CallFuncAliasMat4x4 = &cross_call_worker.P_CallFuncAliasMat4x4
-var Cross_call_worker_CallFuncAliasAll = &cross_call_worker.P_CallFuncAliasAll
-var Cross_call_worker_CallFunc1 = &cross_call_worker.P_CallFunc1
-var Cross_call_worker_CallFunc2 = &cross_call_worker.P_CallFunc2
-var Cross_call_worker_CallFunc3 = &cross_call_worker.P_CallFunc3
-var Cross_call_worker_CallFunc4 = &cross_call_worker.P_CallFunc4
-var Cross_call_worker_CallFunc5 = &cross_call_worker.P_CallFunc5
-var Cross_call_worker_CallFunc6 = &cross_call_worker.P_CallFunc6
-var Cross_call_worker_CallFunc7 = &cross_call_worker.P_CallFunc7
-var Cross_call_worker_CallFunc8 = &cross_call_worker.P_CallFunc8
-var Cross_call_worker_CallFunc9 = &cross_call_worker.P_CallFunc9
-var Cross_call_worker_CallFunc10 = &cross_call_worker.P_CallFunc10
-var Cross_call_worker_CallFunc11 = &cross_call_worker.P_CallFunc11
-var Cross_call_worker_CallFunc12 = &cross_call_worker.P_CallFunc12
-var Cross_call_worker_CallFunc13 = &cross_call_worker.P_CallFunc13
-var Cross_call_worker_CallFunc14 = &cross_call_worker.P_CallFunc14
-var Cross_call_worker_CallFunc15 = &cross_call_worker.P_CallFunc15
-var Cross_call_worker_CallFunc16 = &cross_call_worker.P_CallFunc16
-var Cross_call_worker_CallFunc17 = &cross_call_worker.P_CallFunc17
-var Cross_call_worker_CallFunc18 = &cross_call_worker.P_CallFunc18
-var Cross_call_worker_CallFunc19 = &cross_call_worker.P_CallFunc19
-var Cross_call_worker_CallFunc20 = &cross_call_worker.P_CallFunc20
-var Cross_call_worker_CallFunc21 = &cross_call_worker.P_CallFunc21
-var Cross_call_worker_CallFunc22 = &cross_call_worker.P_CallFunc22
-var Cross_call_worker_CallFunc23 = &cross_call_worker.P_CallFunc23
-var Cross_call_worker_CallFunc24 = &cross_call_worker.P_CallFunc24
-var Cross_call_worker_CallFunc25 = &cross_call_worker.P_CallFunc25
-var Cross_call_worker_CallFunc26 = &cross_call_worker.P_CallFunc26
-var Cross_call_worker_CallFunc27 = &cross_call_worker.P_CallFunc27
-var Cross_call_worker_CallFunc28 = &cross_call_worker.P_CallFunc28
-var Cross_call_worker_CallFunc29 = &cross_call_worker.P_CallFunc29
-var Cross_call_worker_CallFunc30 = &cross_call_worker.P_CallFunc30
-var Cross_call_worker_CallFunc31 = &cross_call_worker.P_CallFunc31
-var Cross_call_worker_CallFunc32 = &cross_call_worker.P_CallFunc32
-var Cross_call_worker_CallFunc33 = &cross_call_worker.P_CallFunc33
-var Cross_call_worker_CallFuncEnum = &cross_call_worker.P_CallFuncEnum
-var Cross_call_worker_ReverseCall = &cross_call_worker.P_ReverseCall
+var _ = unsafe.Sizeof(0)
+var _ = plugify.ApiVersion
+
+//go:linkname cross_call_worker_NoParamReturnVoid example_plugin/cross_call_worker._NoParamReturnVoid
+var cross_call_worker_NoParamReturnVoid func()
+var Cross_call_worker_NoParamReturnVoid = &cross_call_worker_NoParamReturnVoid
+
+//go:linkname cross_call_worker_NoParamReturnBool example_plugin/cross_call_worker._NoParamReturnBool
+var cross_call_worker_NoParamReturnBool func() bool
+var Cross_call_worker_NoParamReturnBool = &cross_call_worker_NoParamReturnBool
+
+//go:linkname cross_call_worker_NoParamReturnChar8 example_plugin/cross_call_worker._NoParamReturnChar8
+var cross_call_worker_NoParamReturnChar8 func() int8
+var Cross_call_worker_NoParamReturnChar8 = &cross_call_worker_NoParamReturnChar8
+
+//go:linkname cross_call_worker_NoParamReturnChar16 example_plugin/cross_call_worker._NoParamReturnChar16
+var cross_call_worker_NoParamReturnChar16 func() uint16
+var Cross_call_worker_NoParamReturnChar16 = &cross_call_worker_NoParamReturnChar16
+
+//go:linkname cross_call_worker_NoParamReturnInt8 example_plugin/cross_call_worker._NoParamReturnInt8
+var cross_call_worker_NoParamReturnInt8 func() int8
+var Cross_call_worker_NoParamReturnInt8 = &cross_call_worker_NoParamReturnInt8
+
+//go:linkname cross_call_worker_NoParamReturnInt16 example_plugin/cross_call_worker._NoParamReturnInt16
+var cross_call_worker_NoParamReturnInt16 func() int16
+var Cross_call_worker_NoParamReturnInt16 = &cross_call_worker_NoParamReturnInt16
+
+//go:linkname cross_call_worker_NoParamReturnInt32 example_plugin/cross_call_worker._NoParamReturnInt32
+var cross_call_worker_NoParamReturnInt32 func() int32
+var Cross_call_worker_NoParamReturnInt32 = &cross_call_worker_NoParamReturnInt32
+
+//go:linkname cross_call_worker_NoParamReturnInt64 example_plugin/cross_call_worker._NoParamReturnInt64
+var cross_call_worker_NoParamReturnInt64 func() int64
+var Cross_call_worker_NoParamReturnInt64 = &cross_call_worker_NoParamReturnInt64
+
+//go:linkname cross_call_worker_NoParamReturnUInt8 example_plugin/cross_call_worker._NoParamReturnUInt8
+var cross_call_worker_NoParamReturnUInt8 func() uint8
+var Cross_call_worker_NoParamReturnUInt8 = &cross_call_worker_NoParamReturnUInt8
+
+//go:linkname cross_call_worker_NoParamReturnUInt16 example_plugin/cross_call_worker._NoParamReturnUInt16
+var cross_call_worker_NoParamReturnUInt16 func() uint16
+var Cross_call_worker_NoParamReturnUInt16 = &cross_call_worker_NoParamReturnUInt16
+
+//go:linkname cross_call_worker_NoParamReturnUInt32 example_plugin/cross_call_worker._NoParamReturnUInt32
+var cross_call_worker_NoParamReturnUInt32 func() uint32
+var Cross_call_worker_NoParamReturnUInt32 = &cross_call_worker_NoParamReturnUInt32
+
+//go:linkname cross_call_worker_NoParamReturnUInt64 example_plugin/cross_call_worker._NoParamReturnUInt64
+var cross_call_worker_NoParamReturnUInt64 func() uint64
+var Cross_call_worker_NoParamReturnUInt64 = &cross_call_worker_NoParamReturnUInt64
+
+//go:linkname cross_call_worker_NoParamReturnPointer example_plugin/cross_call_worker._NoParamReturnPointer
+var cross_call_worker_NoParamReturnPointer func() uintptr
+var Cross_call_worker_NoParamReturnPointer = &cross_call_worker_NoParamReturnPointer
+
+//go:linkname cross_call_worker_NoParamReturnFloat example_plugin/cross_call_worker._NoParamReturnFloat
+var cross_call_worker_NoParamReturnFloat func() float32
+var Cross_call_worker_NoParamReturnFloat = &cross_call_worker_NoParamReturnFloat
+
+//go:linkname cross_call_worker_NoParamReturnDouble example_plugin/cross_call_worker._NoParamReturnDouble
+var cross_call_worker_NoParamReturnDouble func() float64
+var Cross_call_worker_NoParamReturnDouble = &cross_call_worker_NoParamReturnDouble
+
+//go:linkname cross_call_worker_NoParamReturnFunction example_plugin/cross_call_worker._NoParamReturnFunction
+var cross_call_worker_NoParamReturnFunction func() cross_call_worker.NoParamReturnFunctionFunc
+var Cross_call_worker_NoParamReturnFunction = &cross_call_worker_NoParamReturnFunction
+
+//go:linkname cross_call_worker_NoParamReturnString example_plugin/cross_call_worker._NoParamReturnString
+var cross_call_worker_NoParamReturnString func() string
+var Cross_call_worker_NoParamReturnString = &cross_call_worker_NoParamReturnString
+
+//go:linkname cross_call_worker_NoParamReturnAny example_plugin/cross_call_worker._NoParamReturnAny
+var cross_call_worker_NoParamReturnAny func() any
+var Cross_call_worker_NoParamReturnAny = &cross_call_worker_NoParamReturnAny
+
+//go:linkname cross_call_worker_NoParamReturnArrayBool example_plugin/cross_call_worker._NoParamReturnArrayBool
+var cross_call_worker_NoParamReturnArrayBool func() []bool
+var Cross_call_worker_NoParamReturnArrayBool = &cross_call_worker_NoParamReturnArrayBool
+
+//go:linkname cross_call_worker_NoParamReturnArrayChar8 example_plugin/cross_call_worker._NoParamReturnArrayChar8
+var cross_call_worker_NoParamReturnArrayChar8 func() []int8
+var Cross_call_worker_NoParamReturnArrayChar8 = &cross_call_worker_NoParamReturnArrayChar8
+
+//go:linkname cross_call_worker_NoParamReturnArrayChar16 example_plugin/cross_call_worker._NoParamReturnArrayChar16
+var cross_call_worker_NoParamReturnArrayChar16 func() []uint16
+var Cross_call_worker_NoParamReturnArrayChar16 = &cross_call_worker_NoParamReturnArrayChar16
+
+//go:linkname cross_call_worker_NoParamReturnArrayInt8 example_plugin/cross_call_worker._NoParamReturnArrayInt8
+var cross_call_worker_NoParamReturnArrayInt8 func() []int8
+var Cross_call_worker_NoParamReturnArrayInt8 = &cross_call_worker_NoParamReturnArrayInt8
+
+//go:linkname cross_call_worker_NoParamReturnArrayInt16 example_plugin/cross_call_worker._NoParamReturnArrayInt16
+var cross_call_worker_NoParamReturnArrayInt16 func() []int16
+var Cross_call_worker_NoParamReturnArrayInt16 = &cross_call_worker_NoParamReturnArrayInt16
+
+//go:linkname cross_call_worker_NoParamReturnArrayInt32 example_plugin/cross_call_worker._NoParamReturnArrayInt32
+var cross_call_worker_NoParamReturnArrayInt32 func() []int32
+var Cross_call_worker_NoParamReturnArrayInt32 = &cross_call_worker_NoParamReturnArrayInt32
+
+//go:linkname cross_call_worker_NoParamReturnArrayInt64 example_plugin/cross_call_worker._NoParamReturnArrayInt64
+var cross_call_worker_NoParamReturnArrayInt64 func() []int64
+var Cross_call_worker_NoParamReturnArrayInt64 = &cross_call_worker_NoParamReturnArrayInt64
+
+//go:linkname cross_call_worker_NoParamReturnArrayUInt8 example_plugin/cross_call_worker._NoParamReturnArrayUInt8
+var cross_call_worker_NoParamReturnArrayUInt8 func() []uint8
+var Cross_call_worker_NoParamReturnArrayUInt8 = &cross_call_worker_NoParamReturnArrayUInt8
+
+//go:linkname cross_call_worker_NoParamReturnArrayUInt16 example_plugin/cross_call_worker._NoParamReturnArrayUInt16
+var cross_call_worker_NoParamReturnArrayUInt16 func() []uint16
+var Cross_call_worker_NoParamReturnArrayUInt16 = &cross_call_worker_NoParamReturnArrayUInt16
+
+//go:linkname cross_call_worker_NoParamReturnArrayUInt32 example_plugin/cross_call_worker._NoParamReturnArrayUInt32
+var cross_call_worker_NoParamReturnArrayUInt32 func() []uint32
+var Cross_call_worker_NoParamReturnArrayUInt32 = &cross_call_worker_NoParamReturnArrayUInt32
+
+//go:linkname cross_call_worker_NoParamReturnArrayUInt64 example_plugin/cross_call_worker._NoParamReturnArrayUInt64
+var cross_call_worker_NoParamReturnArrayUInt64 func() []uint64
+var Cross_call_worker_NoParamReturnArrayUInt64 = &cross_call_worker_NoParamReturnArrayUInt64
+
+//go:linkname cross_call_worker_NoParamReturnArrayPointer example_plugin/cross_call_worker._NoParamReturnArrayPointer
+var cross_call_worker_NoParamReturnArrayPointer func() []uintptr
+var Cross_call_worker_NoParamReturnArrayPointer = &cross_call_worker_NoParamReturnArrayPointer
+
+//go:linkname cross_call_worker_NoParamReturnArrayFloat example_plugin/cross_call_worker._NoParamReturnArrayFloat
+var cross_call_worker_NoParamReturnArrayFloat func() []float32
+var Cross_call_worker_NoParamReturnArrayFloat = &cross_call_worker_NoParamReturnArrayFloat
+
+//go:linkname cross_call_worker_NoParamReturnArrayDouble example_plugin/cross_call_worker._NoParamReturnArrayDouble
+var cross_call_worker_NoParamReturnArrayDouble func() []float64
+var Cross_call_worker_NoParamReturnArrayDouble = &cross_call_worker_NoParamReturnArrayDouble
+
+//go:linkname cross_call_worker_NoParamReturnArrayString example_plugin/cross_call_worker._NoParamReturnArrayString
+var cross_call_worker_NoParamReturnArrayString func() []string
+var Cross_call_worker_NoParamReturnArrayString = &cross_call_worker_NoParamReturnArrayString
+
+//go:linkname cross_call_worker_NoParamReturnArrayAny example_plugin/cross_call_worker._NoParamReturnArrayAny
+var cross_call_worker_NoParamReturnArrayAny func() []any
+var Cross_call_worker_NoParamReturnArrayAny = &cross_call_worker_NoParamReturnArrayAny
+
+//go:linkname cross_call_worker_NoParamReturnArrayVector2 example_plugin/cross_call_worker._NoParamReturnArrayVector2
+var cross_call_worker_NoParamReturnArrayVector2 func() []plugify.Vector2
+var Cross_call_worker_NoParamReturnArrayVector2 = &cross_call_worker_NoParamReturnArrayVector2
+
+//go:linkname cross_call_worker_NoParamReturnArrayVector3 example_plugin/cross_call_worker._NoParamReturnArrayVector3
+var cross_call_worker_NoParamReturnArrayVector3 func() []plugify.Vector3
+var Cross_call_worker_NoParamReturnArrayVector3 = &cross_call_worker_NoParamReturnArrayVector3
+
+//go:linkname cross_call_worker_NoParamReturnArrayVector4 example_plugin/cross_call_worker._NoParamReturnArrayVector4
+var cross_call_worker_NoParamReturnArrayVector4 func() []plugify.Vector4
+var Cross_call_worker_NoParamReturnArrayVector4 = &cross_call_worker_NoParamReturnArrayVector4
+
+//go:linkname cross_call_worker_NoParamReturnArrayMatrix4x4 example_plugin/cross_call_worker._NoParamReturnArrayMatrix4x4
+var cross_call_worker_NoParamReturnArrayMatrix4x4 func() []plugify.Matrix4x4
+var Cross_call_worker_NoParamReturnArrayMatrix4x4 = &cross_call_worker_NoParamReturnArrayMatrix4x4
+
+//go:linkname cross_call_worker_NoParamReturnVector2 example_plugin/cross_call_worker._NoParamReturnVector2
+var cross_call_worker_NoParamReturnVector2 func() plugify.Vector2
+var Cross_call_worker_NoParamReturnVector2 = &cross_call_worker_NoParamReturnVector2
+
+//go:linkname cross_call_worker_NoParamReturnVector3 example_plugin/cross_call_worker._NoParamReturnVector3
+var cross_call_worker_NoParamReturnVector3 func() plugify.Vector3
+var Cross_call_worker_NoParamReturnVector3 = &cross_call_worker_NoParamReturnVector3
+
+//go:linkname cross_call_worker_NoParamReturnVector4 example_plugin/cross_call_worker._NoParamReturnVector4
+var cross_call_worker_NoParamReturnVector4 func() plugify.Vector4
+var Cross_call_worker_NoParamReturnVector4 = &cross_call_worker_NoParamReturnVector4
+
+//go:linkname cross_call_worker_NoParamReturnMatrix4x4 example_plugin/cross_call_worker._NoParamReturnMatrix4x4
+var cross_call_worker_NoParamReturnMatrix4x4 func() plugify.Matrix4x4
+var Cross_call_worker_NoParamReturnMatrix4x4 = &cross_call_worker_NoParamReturnMatrix4x4
+
+//go:linkname cross_call_worker_Param1 example_plugin/cross_call_worker._Param1
+var cross_call_worker_Param1 func(a int32)
+var Cross_call_worker_Param1 = &cross_call_worker_Param1
+
+//go:linkname cross_call_worker_Param2 example_plugin/cross_call_worker._Param2
+var cross_call_worker_Param2 func(a int32, b float32)
+var Cross_call_worker_Param2 = &cross_call_worker_Param2
+
+//go:linkname cross_call_worker_Param3 example_plugin/cross_call_worker._Param3
+var cross_call_worker_Param3 func(a int32, b float32, c float64)
+var Cross_call_worker_Param3 = &cross_call_worker_Param3
+
+//go:linkname cross_call_worker_Param4 example_plugin/cross_call_worker._Param4
+var cross_call_worker_Param4 func(a int32, b float32, c float64, d plugify.Vector4)
+var Cross_call_worker_Param4 = &cross_call_worker_Param4
+
+//go:linkname cross_call_worker_Param5 example_plugin/cross_call_worker._Param5
+var cross_call_worker_Param5 func(a int32, b float32, c float64, d plugify.Vector4, e []int64)
+var Cross_call_worker_Param5 = &cross_call_worker_Param5
+
+//go:linkname cross_call_worker_Param6 example_plugin/cross_call_worker._Param6
+var cross_call_worker_Param6 func(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8)
+var Cross_call_worker_Param6 = &cross_call_worker_Param6
+
+//go:linkname cross_call_worker_Param7 example_plugin/cross_call_worker._Param7
+var cross_call_worker_Param7 func(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8, g string)
+var Cross_call_worker_Param7 = &cross_call_worker_Param7
+
+//go:linkname cross_call_worker_Param8 example_plugin/cross_call_worker._Param8
+var cross_call_worker_Param8 func(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8, g string, h uint16)
+var Cross_call_worker_Param8 = &cross_call_worker_Param8
+
+//go:linkname cross_call_worker_Param9 example_plugin/cross_call_worker._Param9
+var cross_call_worker_Param9 func(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8, g string, h uint16, k int16)
+var Cross_call_worker_Param9 = &cross_call_worker_Param9
+
+//go:linkname cross_call_worker_Param10 example_plugin/cross_call_worker._Param10
+var cross_call_worker_Param10 func(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8, g string, h uint16, k int16, l uintptr)
+var Cross_call_worker_Param10 = &cross_call_worker_Param10
+
+//go:linkname cross_call_worker_ParamRef1 example_plugin/cross_call_worker._ParamRef1
+var cross_call_worker_ParamRef1 func(a *int32)
+var Cross_call_worker_ParamRef1 = &cross_call_worker_ParamRef1
+
+//go:linkname cross_call_worker_ParamRef2 example_plugin/cross_call_worker._ParamRef2
+var cross_call_worker_ParamRef2 func(a *int32, b *float32)
+var Cross_call_worker_ParamRef2 = &cross_call_worker_ParamRef2
+
+//go:linkname cross_call_worker_ParamRef3 example_plugin/cross_call_worker._ParamRef3
+var cross_call_worker_ParamRef3 func(a *int32, b *float32, c *float64)
+var Cross_call_worker_ParamRef3 = &cross_call_worker_ParamRef3
+
+//go:linkname cross_call_worker_ParamRef4 example_plugin/cross_call_worker._ParamRef4
+var cross_call_worker_ParamRef4 func(a *int32, b *float32, c *float64, d *plugify.Vector4)
+var Cross_call_worker_ParamRef4 = &cross_call_worker_ParamRef4
+
+//go:linkname cross_call_worker_ParamRef5 example_plugin/cross_call_worker._ParamRef5
+var cross_call_worker_ParamRef5 func(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64)
+var Cross_call_worker_ParamRef5 = &cross_call_worker_ParamRef5
+
+//go:linkname cross_call_worker_ParamRef6 example_plugin/cross_call_worker._ParamRef6
+var cross_call_worker_ParamRef6 func(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8)
+var Cross_call_worker_ParamRef6 = &cross_call_worker_ParamRef6
+
+//go:linkname cross_call_worker_ParamRef7 example_plugin/cross_call_worker._ParamRef7
+var cross_call_worker_ParamRef7 func(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8, g *string)
+var Cross_call_worker_ParamRef7 = &cross_call_worker_ParamRef7
+
+//go:linkname cross_call_worker_ParamRef8 example_plugin/cross_call_worker._ParamRef8
+var cross_call_worker_ParamRef8 func(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8, g *string, h *uint16)
+var Cross_call_worker_ParamRef8 = &cross_call_worker_ParamRef8
+
+//go:linkname cross_call_worker_ParamRef9 example_plugin/cross_call_worker._ParamRef9
+var cross_call_worker_ParamRef9 func(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8, g *string, h *uint16, k *int16)
+var Cross_call_worker_ParamRef9 = &cross_call_worker_ParamRef9
+
+//go:linkname cross_call_worker_ParamRef10 example_plugin/cross_call_worker._ParamRef10
+var cross_call_worker_ParamRef10 func(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8, g *string, h *uint16, k *int16, l *uintptr)
+var Cross_call_worker_ParamRef10 = &cross_call_worker_ParamRef10
+
+//go:linkname cross_call_worker_ParamRefVectors example_plugin/cross_call_worker._ParamRefVectors
+var cross_call_worker_ParamRefVectors func(p1 *[]bool, p2 *[]int8, p3 *[]uint16, p4 *[]int8, p5 *[]int16, p6 *[]int32, p7 *[]int64, p8 *[]uint8, p9 *[]uint16, p10 *[]uint32, p11 *[]uint64, p12 *[]uintptr, p13 *[]float32, p14 *[]float64, p15 *[]string)
+var Cross_call_worker_ParamRefVectors = &cross_call_worker_ParamRefVectors
+
+//go:linkname cross_call_worker_ParamAllPrimitives example_plugin/cross_call_worker._ParamAllPrimitives
+var cross_call_worker_ParamAllPrimitives func(p1 bool, p2 int8, p3 uint16, p4 int8, p5 int16, p6 int32, p7 int64, p8 uint8, p9 uint16, p10 uint32, p11 uint64, p12 uintptr, p13 float32, p14 float64) int64
+var Cross_call_worker_ParamAllPrimitives = &cross_call_worker_ParamAllPrimitives
+
+//go:linkname cross_call_worker_ParamAllAliases example_plugin/cross_call_worker._ParamAllAliases
+var cross_call_worker_ParamAllAliases func(aBool cross_call_worker.AliasBool, aChar8 cross_call_worker.AliasChar8, aChar16 cross_call_worker.AliasChar16, aInt8 cross_call_worker.AliasInt8, aInt16 cross_call_worker.AliasInt16, aInt32 cross_call_worker.AliasInt32, aInt64 cross_call_worker.AliasInt64, aPtr cross_call_worker.AliasPtr, aFloat cross_call_worker.AliasFloat, aDouble cross_call_worker.AliasDouble, aString cross_call_worker.AliasString, aAny cross_call_worker.AliasAny, aVec2 cross_call_worker.AliasVec2, aVec3 cross_call_worker.AliasVec3, aVec4 cross_call_worker.AliasVec4, aMat4x4 cross_call_worker.AliasMat4x4, aBoolVec cross_call_worker.AliasBoolVector, aChar8Vec cross_call_worker.AliasChar8Vector, aChar16Vec cross_call_worker.AliasChar16Vector, aInt8Vec cross_call_worker.AliasInt8Vector, aInt16Vec cross_call_worker.AliasInt16Vector, aInt32Vec cross_call_worker.AliasInt32Vector, aInt64Vec cross_call_worker.AliasInt64Vector, aPtrVec cross_call_worker.AliasPtrVector, aFloatVec cross_call_worker.AliasFloatVector, aDoubleVec cross_call_worker.AliasDoubleVector, aStringVec cross_call_worker.AliasStringVector, aAnyVec cross_call_worker.AliasAnyVector, aVec2Vec cross_call_worker.AliasVec2Vector, aVec3Vec cross_call_worker.AliasVec3Vector, aVec4Vec cross_call_worker.AliasVec4Vector) int32
+var Cross_call_worker_ParamAllAliases = &cross_call_worker_ParamAllAliases
+
+//go:linkname cross_call_worker_ParamAllRefAliases example_plugin/cross_call_worker._ParamAllRefAliases
+var cross_call_worker_ParamAllRefAliases func(aBool *cross_call_worker.AliasBool, aChar8 *cross_call_worker.AliasChar8, aChar16 *cross_call_worker.AliasChar16, aInt8 *cross_call_worker.AliasInt8, aInt16 *cross_call_worker.AliasInt16, aInt32 *cross_call_worker.AliasInt32, aInt64 *cross_call_worker.AliasInt64, aPtr *cross_call_worker.AliasPtr, aFloat *cross_call_worker.AliasFloat, aDouble *cross_call_worker.AliasDouble, aString *cross_call_worker.AliasString, aAny *cross_call_worker.AliasAny, aVec2 *cross_call_worker.AliasVec2, aVec3 *cross_call_worker.AliasVec3, aVec4 *cross_call_worker.AliasVec4, aMat4x4 *cross_call_worker.AliasMat4x4, aBoolVec *cross_call_worker.AliasBoolVector, aChar8Vec *cross_call_worker.AliasChar8Vector, aChar16Vec *cross_call_worker.AliasChar16Vector, aInt8Vec *cross_call_worker.AliasInt8Vector, aInt16Vec *cross_call_worker.AliasInt16Vector, aInt32Vec *cross_call_worker.AliasInt32Vector, aInt64Vec *cross_call_worker.AliasInt64Vector, aPtrVec *cross_call_worker.AliasPtrVector, aFloatVec *cross_call_worker.AliasFloatVector, aDoubleVec *cross_call_worker.AliasDoubleVector, aStringVec *cross_call_worker.AliasStringVector, aAnyVec *cross_call_worker.AliasAnyVector, aVec2Vec *cross_call_worker.AliasVec2Vector, aVec3Vec *cross_call_worker.AliasVec3Vector, aVec4Vec *cross_call_worker.AliasVec4Vector) int64
+var Cross_call_worker_ParamAllRefAliases = &cross_call_worker_ParamAllRefAliases
+
+//go:linkname cross_call_worker_ParamVariant example_plugin/cross_call_worker._ParamVariant
+var cross_call_worker_ParamVariant func(p1 any, p2 []any)
+var Cross_call_worker_ParamVariant = &cross_call_worker_ParamVariant
+
+//go:linkname cross_call_worker_ParamEnum example_plugin/cross_call_worker._ParamEnum
+var cross_call_worker_ParamEnum func(p1 cross_call_worker.Example, p2 []cross_call_worker.Example) int32
+var Cross_call_worker_ParamEnum = &cross_call_worker_ParamEnum
+
+//go:linkname cross_call_worker_ParamEnumRef example_plugin/cross_call_worker._ParamEnumRef
+var cross_call_worker_ParamEnumRef func(p1 *cross_call_worker.Example, p2 *[]cross_call_worker.Example) int32
+var Cross_call_worker_ParamEnumRef = &cross_call_worker_ParamEnumRef
+
+//go:linkname cross_call_worker_ParamVariantRef example_plugin/cross_call_worker._ParamVariantRef
+var cross_call_worker_ParamVariantRef func(p1 *any, p2 *[]any)
+var Cross_call_worker_ParamVariantRef = &cross_call_worker_ParamVariantRef
+
+//go:linkname cross_call_worker_CallFuncVoid example_plugin/cross_call_worker._CallFuncVoid
+var cross_call_worker_CallFuncVoid func(func_ cross_call_worker.FuncVoid)
+var Cross_call_worker_CallFuncVoid = &cross_call_worker_CallFuncVoid
+
+//go:linkname cross_call_worker_CallFuncBool example_plugin/cross_call_worker._CallFuncBool
+var cross_call_worker_CallFuncBool func(func_ cross_call_worker.FuncBool) bool
+var Cross_call_worker_CallFuncBool = &cross_call_worker_CallFuncBool
+
+//go:linkname cross_call_worker_CallFuncChar8 example_plugin/cross_call_worker._CallFuncChar8
+var cross_call_worker_CallFuncChar8 func(func_ cross_call_worker.FuncChar8) int8
+var Cross_call_worker_CallFuncChar8 = &cross_call_worker_CallFuncChar8
+
+//go:linkname cross_call_worker_CallFuncChar16 example_plugin/cross_call_worker._CallFuncChar16
+var cross_call_worker_CallFuncChar16 func(func_ cross_call_worker.FuncChar16) uint16
+var Cross_call_worker_CallFuncChar16 = &cross_call_worker_CallFuncChar16
+
+//go:linkname cross_call_worker_CallFuncInt8 example_plugin/cross_call_worker._CallFuncInt8
+var cross_call_worker_CallFuncInt8 func(func_ cross_call_worker.FuncInt8) int8
+var Cross_call_worker_CallFuncInt8 = &cross_call_worker_CallFuncInt8
+
+//go:linkname cross_call_worker_CallFuncInt16 example_plugin/cross_call_worker._CallFuncInt16
+var cross_call_worker_CallFuncInt16 func(func_ cross_call_worker.FuncInt16) int16
+var Cross_call_worker_CallFuncInt16 = &cross_call_worker_CallFuncInt16
+
+//go:linkname cross_call_worker_CallFuncInt32 example_plugin/cross_call_worker._CallFuncInt32
+var cross_call_worker_CallFuncInt32 func(func_ cross_call_worker.FuncInt32) int32
+var Cross_call_worker_CallFuncInt32 = &cross_call_worker_CallFuncInt32
+
+//go:linkname cross_call_worker_CallFuncInt64 example_plugin/cross_call_worker._CallFuncInt64
+var cross_call_worker_CallFuncInt64 func(func_ cross_call_worker.FuncInt64) int64
+var Cross_call_worker_CallFuncInt64 = &cross_call_worker_CallFuncInt64
+
+//go:linkname cross_call_worker_CallFuncUInt8 example_plugin/cross_call_worker._CallFuncUInt8
+var cross_call_worker_CallFuncUInt8 func(func_ cross_call_worker.FuncUInt8) uint8
+var Cross_call_worker_CallFuncUInt8 = &cross_call_worker_CallFuncUInt8
+
+//go:linkname cross_call_worker_CallFuncUInt16 example_plugin/cross_call_worker._CallFuncUInt16
+var cross_call_worker_CallFuncUInt16 func(func_ cross_call_worker.FuncUInt16) uint16
+var Cross_call_worker_CallFuncUInt16 = &cross_call_worker_CallFuncUInt16
+
+//go:linkname cross_call_worker_CallFuncUInt32 example_plugin/cross_call_worker._CallFuncUInt32
+var cross_call_worker_CallFuncUInt32 func(func_ cross_call_worker.FuncUInt32) uint32
+var Cross_call_worker_CallFuncUInt32 = &cross_call_worker_CallFuncUInt32
+
+//go:linkname cross_call_worker_CallFuncUInt64 example_plugin/cross_call_worker._CallFuncUInt64
+var cross_call_worker_CallFuncUInt64 func(func_ cross_call_worker.FuncUInt64) uint64
+var Cross_call_worker_CallFuncUInt64 = &cross_call_worker_CallFuncUInt64
+
+//go:linkname cross_call_worker_CallFuncPtr example_plugin/cross_call_worker._CallFuncPtr
+var cross_call_worker_CallFuncPtr func(func_ cross_call_worker.FuncPtr) uintptr
+var Cross_call_worker_CallFuncPtr = &cross_call_worker_CallFuncPtr
+
+//go:linkname cross_call_worker_CallFuncFloat example_plugin/cross_call_worker._CallFuncFloat
+var cross_call_worker_CallFuncFloat func(func_ cross_call_worker.FuncFloat) float32
+var Cross_call_worker_CallFuncFloat = &cross_call_worker_CallFuncFloat
+
+//go:linkname cross_call_worker_CallFuncDouble example_plugin/cross_call_worker._CallFuncDouble
+var cross_call_worker_CallFuncDouble func(func_ cross_call_worker.FuncDouble) float64
+var Cross_call_worker_CallFuncDouble = &cross_call_worker_CallFuncDouble
+
+//go:linkname cross_call_worker_CallFuncString example_plugin/cross_call_worker._CallFuncString
+var cross_call_worker_CallFuncString func(func_ cross_call_worker.FuncString) string
+var Cross_call_worker_CallFuncString = &cross_call_worker_CallFuncString
+
+//go:linkname cross_call_worker_CallFuncAny example_plugin/cross_call_worker._CallFuncAny
+var cross_call_worker_CallFuncAny func(func_ cross_call_worker.FuncAny) any
+var Cross_call_worker_CallFuncAny = &cross_call_worker_CallFuncAny
+
+//go:linkname cross_call_worker_CallFuncFunction example_plugin/cross_call_worker._CallFuncFunction
+var cross_call_worker_CallFuncFunction func(func_ cross_call_worker.FuncFunction) cross_call_worker.FuncFunctionInner
+var Cross_call_worker_CallFuncFunction = &cross_call_worker_CallFuncFunction
+
+//go:linkname cross_call_worker_CallFuncBoolVector example_plugin/cross_call_worker._CallFuncBoolVector
+var cross_call_worker_CallFuncBoolVector func(func_ cross_call_worker.FuncBoolVector) []bool
+var Cross_call_worker_CallFuncBoolVector = &cross_call_worker_CallFuncBoolVector
+
+//go:linkname cross_call_worker_CallFuncChar8Vector example_plugin/cross_call_worker._CallFuncChar8Vector
+var cross_call_worker_CallFuncChar8Vector func(func_ cross_call_worker.FuncChar8Vector) []int8
+var Cross_call_worker_CallFuncChar8Vector = &cross_call_worker_CallFuncChar8Vector
+
+//go:linkname cross_call_worker_CallFuncChar16Vector example_plugin/cross_call_worker._CallFuncChar16Vector
+var cross_call_worker_CallFuncChar16Vector func(func_ cross_call_worker.FuncChar16Vector) []uint16
+var Cross_call_worker_CallFuncChar16Vector = &cross_call_worker_CallFuncChar16Vector
+
+//go:linkname cross_call_worker_CallFuncInt8Vector example_plugin/cross_call_worker._CallFuncInt8Vector
+var cross_call_worker_CallFuncInt8Vector func(func_ cross_call_worker.FuncInt8Vector) []int8
+var Cross_call_worker_CallFuncInt8Vector = &cross_call_worker_CallFuncInt8Vector
+
+//go:linkname cross_call_worker_CallFuncInt16Vector example_plugin/cross_call_worker._CallFuncInt16Vector
+var cross_call_worker_CallFuncInt16Vector func(func_ cross_call_worker.FuncInt16Vector) []int16
+var Cross_call_worker_CallFuncInt16Vector = &cross_call_worker_CallFuncInt16Vector
+
+//go:linkname cross_call_worker_CallFuncInt32Vector example_plugin/cross_call_worker._CallFuncInt32Vector
+var cross_call_worker_CallFuncInt32Vector func(func_ cross_call_worker.FuncInt32Vector) []int32
+var Cross_call_worker_CallFuncInt32Vector = &cross_call_worker_CallFuncInt32Vector
+
+//go:linkname cross_call_worker_CallFuncInt64Vector example_plugin/cross_call_worker._CallFuncInt64Vector
+var cross_call_worker_CallFuncInt64Vector func(func_ cross_call_worker.FuncInt64Vector) []int64
+var Cross_call_worker_CallFuncInt64Vector = &cross_call_worker_CallFuncInt64Vector
+
+//go:linkname cross_call_worker_CallFuncUInt8Vector example_plugin/cross_call_worker._CallFuncUInt8Vector
+var cross_call_worker_CallFuncUInt8Vector func(func_ cross_call_worker.FuncUInt8Vector) []uint8
+var Cross_call_worker_CallFuncUInt8Vector = &cross_call_worker_CallFuncUInt8Vector
+
+//go:linkname cross_call_worker_CallFuncUInt16Vector example_plugin/cross_call_worker._CallFuncUInt16Vector
+var cross_call_worker_CallFuncUInt16Vector func(func_ cross_call_worker.FuncUInt16Vector) []uint16
+var Cross_call_worker_CallFuncUInt16Vector = &cross_call_worker_CallFuncUInt16Vector
+
+//go:linkname cross_call_worker_CallFuncUInt32Vector example_plugin/cross_call_worker._CallFuncUInt32Vector
+var cross_call_worker_CallFuncUInt32Vector func(func_ cross_call_worker.FuncUInt32Vector) []uint32
+var Cross_call_worker_CallFuncUInt32Vector = &cross_call_worker_CallFuncUInt32Vector
+
+//go:linkname cross_call_worker_CallFuncUInt64Vector example_plugin/cross_call_worker._CallFuncUInt64Vector
+var cross_call_worker_CallFuncUInt64Vector func(func_ cross_call_worker.FuncUInt64Vector) []uint64
+var Cross_call_worker_CallFuncUInt64Vector = &cross_call_worker_CallFuncUInt64Vector
+
+//go:linkname cross_call_worker_CallFuncPtrVector example_plugin/cross_call_worker._CallFuncPtrVector
+var cross_call_worker_CallFuncPtrVector func(func_ cross_call_worker.FuncPtrVector) []uintptr
+var Cross_call_worker_CallFuncPtrVector = &cross_call_worker_CallFuncPtrVector
+
+//go:linkname cross_call_worker_CallFuncFloatVector example_plugin/cross_call_worker._CallFuncFloatVector
+var cross_call_worker_CallFuncFloatVector func(func_ cross_call_worker.FuncFloatVector) []float32
+var Cross_call_worker_CallFuncFloatVector = &cross_call_worker_CallFuncFloatVector
+
+//go:linkname cross_call_worker_CallFuncDoubleVector example_plugin/cross_call_worker._CallFuncDoubleVector
+var cross_call_worker_CallFuncDoubleVector func(func_ cross_call_worker.FuncDoubleVector) []float64
+var Cross_call_worker_CallFuncDoubleVector = &cross_call_worker_CallFuncDoubleVector
+
+//go:linkname cross_call_worker_CallFuncStringVector example_plugin/cross_call_worker._CallFuncStringVector
+var cross_call_worker_CallFuncStringVector func(func_ cross_call_worker.FuncStringVector) []string
+var Cross_call_worker_CallFuncStringVector = &cross_call_worker_CallFuncStringVector
+
+//go:linkname cross_call_worker_CallFuncAnyVector example_plugin/cross_call_worker._CallFuncAnyVector
+var cross_call_worker_CallFuncAnyVector func(func_ cross_call_worker.FuncAnyVector) []any
+var Cross_call_worker_CallFuncAnyVector = &cross_call_worker_CallFuncAnyVector
+
+//go:linkname cross_call_worker_CallFuncVec2Vector example_plugin/cross_call_worker._CallFuncVec2Vector
+var cross_call_worker_CallFuncVec2Vector func(func_ cross_call_worker.FuncVec2Vector) []plugify.Vector2
+var Cross_call_worker_CallFuncVec2Vector = &cross_call_worker_CallFuncVec2Vector
+
+//go:linkname cross_call_worker_CallFuncVec3Vector example_plugin/cross_call_worker._CallFuncVec3Vector
+var cross_call_worker_CallFuncVec3Vector func(func_ cross_call_worker.FuncVec3Vector) []plugify.Vector3
+var Cross_call_worker_CallFuncVec3Vector = &cross_call_worker_CallFuncVec3Vector
+
+//go:linkname cross_call_worker_CallFuncVec4Vector example_plugin/cross_call_worker._CallFuncVec4Vector
+var cross_call_worker_CallFuncVec4Vector func(func_ cross_call_worker.FuncVec4Vector) []plugify.Vector4
+var Cross_call_worker_CallFuncVec4Vector = &cross_call_worker_CallFuncVec4Vector
+
+//go:linkname cross_call_worker_CallFuncMat4x4Vector example_plugin/cross_call_worker._CallFuncMat4x4Vector
+var cross_call_worker_CallFuncMat4x4Vector func(func_ cross_call_worker.FuncMat4x4Vector) []plugify.Matrix4x4
+var Cross_call_worker_CallFuncMat4x4Vector = &cross_call_worker_CallFuncMat4x4Vector
+
+//go:linkname cross_call_worker_CallFuncVec2 example_plugin/cross_call_worker._CallFuncVec2
+var cross_call_worker_CallFuncVec2 func(func_ cross_call_worker.FuncVec2) plugify.Vector2
+var Cross_call_worker_CallFuncVec2 = &cross_call_worker_CallFuncVec2
+
+//go:linkname cross_call_worker_CallFuncVec3 example_plugin/cross_call_worker._CallFuncVec3
+var cross_call_worker_CallFuncVec3 func(func_ cross_call_worker.FuncVec3) plugify.Vector3
+var Cross_call_worker_CallFuncVec3 = &cross_call_worker_CallFuncVec3
+
+//go:linkname cross_call_worker_CallFuncVec4 example_plugin/cross_call_worker._CallFuncVec4
+var cross_call_worker_CallFuncVec4 func(func_ cross_call_worker.FuncVec4) plugify.Vector4
+var Cross_call_worker_CallFuncVec4 = &cross_call_worker_CallFuncVec4
+
+//go:linkname cross_call_worker_CallFuncMat4x4 example_plugin/cross_call_worker._CallFuncMat4x4
+var cross_call_worker_CallFuncMat4x4 func(func_ cross_call_worker.FuncMat4x4) plugify.Matrix4x4
+var Cross_call_worker_CallFuncMat4x4 = &cross_call_worker_CallFuncMat4x4
+
+//go:linkname cross_call_worker_CallFuncAliasBool example_plugin/cross_call_worker._CallFuncAliasBool
+var cross_call_worker_CallFuncAliasBool func(func_ cross_call_worker.FuncAliasBool) cross_call_worker.AliasBool
+var Cross_call_worker_CallFuncAliasBool = &cross_call_worker_CallFuncAliasBool
+
+//go:linkname cross_call_worker_CallFuncAliasChar8 example_plugin/cross_call_worker._CallFuncAliasChar8
+var cross_call_worker_CallFuncAliasChar8 func(func_ cross_call_worker.FuncAliasChar8) cross_call_worker.AliasChar8
+var Cross_call_worker_CallFuncAliasChar8 = &cross_call_worker_CallFuncAliasChar8
+
+//go:linkname cross_call_worker_CallFuncAliasChar16 example_plugin/cross_call_worker._CallFuncAliasChar16
+var cross_call_worker_CallFuncAliasChar16 func(func_ cross_call_worker.FuncAliasChar16) cross_call_worker.AliasChar16
+var Cross_call_worker_CallFuncAliasChar16 = &cross_call_worker_CallFuncAliasChar16
+
+//go:linkname cross_call_worker_CallFuncAliasInt8 example_plugin/cross_call_worker._CallFuncAliasInt8
+var cross_call_worker_CallFuncAliasInt8 func(func_ cross_call_worker.FuncAliasInt8) cross_call_worker.AliasInt8
+var Cross_call_worker_CallFuncAliasInt8 = &cross_call_worker_CallFuncAliasInt8
+
+//go:linkname cross_call_worker_CallFuncAliasInt16 example_plugin/cross_call_worker._CallFuncAliasInt16
+var cross_call_worker_CallFuncAliasInt16 func(func_ cross_call_worker.FuncAliasInt16) cross_call_worker.AliasInt16
+var Cross_call_worker_CallFuncAliasInt16 = &cross_call_worker_CallFuncAliasInt16
+
+//go:linkname cross_call_worker_CallFuncAliasInt32 example_plugin/cross_call_worker._CallFuncAliasInt32
+var cross_call_worker_CallFuncAliasInt32 func(func_ cross_call_worker.FuncAliasInt32) cross_call_worker.AliasInt32
+var Cross_call_worker_CallFuncAliasInt32 = &cross_call_worker_CallFuncAliasInt32
+
+//go:linkname cross_call_worker_CallFuncAliasInt64 example_plugin/cross_call_worker._CallFuncAliasInt64
+var cross_call_worker_CallFuncAliasInt64 func(func_ cross_call_worker.FuncAliasInt64) cross_call_worker.AliasInt64
+var Cross_call_worker_CallFuncAliasInt64 = &cross_call_worker_CallFuncAliasInt64
+
+//go:linkname cross_call_worker_CallFuncAliasUInt8 example_plugin/cross_call_worker._CallFuncAliasUInt8
+var cross_call_worker_CallFuncAliasUInt8 func(func_ cross_call_worker.FuncAliasUInt8) cross_call_worker.AliasUInt8
+var Cross_call_worker_CallFuncAliasUInt8 = &cross_call_worker_CallFuncAliasUInt8
+
+//go:linkname cross_call_worker_CallFuncAliasUInt16 example_plugin/cross_call_worker._CallFuncAliasUInt16
+var cross_call_worker_CallFuncAliasUInt16 func(func_ cross_call_worker.FuncAliasUInt16) cross_call_worker.AliasUInt16
+var Cross_call_worker_CallFuncAliasUInt16 = &cross_call_worker_CallFuncAliasUInt16
+
+//go:linkname cross_call_worker_CallFuncAliasUInt32 example_plugin/cross_call_worker._CallFuncAliasUInt32
+var cross_call_worker_CallFuncAliasUInt32 func(func_ cross_call_worker.FuncAliasUInt32) cross_call_worker.AliasUInt32
+var Cross_call_worker_CallFuncAliasUInt32 = &cross_call_worker_CallFuncAliasUInt32
+
+//go:linkname cross_call_worker_CallFuncAliasUInt64 example_plugin/cross_call_worker._CallFuncAliasUInt64
+var cross_call_worker_CallFuncAliasUInt64 func(func_ cross_call_worker.FuncAliasUInt64) cross_call_worker.AliasUInt64
+var Cross_call_worker_CallFuncAliasUInt64 = &cross_call_worker_CallFuncAliasUInt64
+
+//go:linkname cross_call_worker_CallFuncAliasPtr example_plugin/cross_call_worker._CallFuncAliasPtr
+var cross_call_worker_CallFuncAliasPtr func(func_ cross_call_worker.FuncAliasPtr) cross_call_worker.AliasPtr
+var Cross_call_worker_CallFuncAliasPtr = &cross_call_worker_CallFuncAliasPtr
+
+//go:linkname cross_call_worker_CallFuncAliasFloat example_plugin/cross_call_worker._CallFuncAliasFloat
+var cross_call_worker_CallFuncAliasFloat func(func_ cross_call_worker.FuncAliasFloat) cross_call_worker.AliasFloat
+var Cross_call_worker_CallFuncAliasFloat = &cross_call_worker_CallFuncAliasFloat
+
+//go:linkname cross_call_worker_CallFuncAliasDouble example_plugin/cross_call_worker._CallFuncAliasDouble
+var cross_call_worker_CallFuncAliasDouble func(func_ cross_call_worker.FuncAliasDouble) cross_call_worker.AliasDouble
+var Cross_call_worker_CallFuncAliasDouble = &cross_call_worker_CallFuncAliasDouble
+
+//go:linkname cross_call_worker_CallFuncAliasString example_plugin/cross_call_worker._CallFuncAliasString
+var cross_call_worker_CallFuncAliasString func(func_ cross_call_worker.FuncAliasString) cross_call_worker.AliasString
+var Cross_call_worker_CallFuncAliasString = &cross_call_worker_CallFuncAliasString
+
+//go:linkname cross_call_worker_CallFuncAliasAny example_plugin/cross_call_worker._CallFuncAliasAny
+var cross_call_worker_CallFuncAliasAny func(func_ cross_call_worker.FuncAliasAny) cross_call_worker.AliasAny
+var Cross_call_worker_CallFuncAliasAny = &cross_call_worker_CallFuncAliasAny
+
+//go:linkname cross_call_worker_CallFuncAliasFunction example_plugin/cross_call_worker._CallFuncAliasFunction
+var cross_call_worker_CallFuncAliasFunction func(func_ cross_call_worker.FuncAliasFunction) cross_call_worker.AliasFunction
+var Cross_call_worker_CallFuncAliasFunction = &cross_call_worker_CallFuncAliasFunction
+
+//go:linkname cross_call_worker_CallFuncAliasBoolVector example_plugin/cross_call_worker._CallFuncAliasBoolVector
+var cross_call_worker_CallFuncAliasBoolVector func(func_ cross_call_worker.FuncAliasBoolVector) cross_call_worker.AliasBoolVector
+var Cross_call_worker_CallFuncAliasBoolVector = &cross_call_worker_CallFuncAliasBoolVector
+
+//go:linkname cross_call_worker_CallFuncAliasChar8Vector example_plugin/cross_call_worker._CallFuncAliasChar8Vector
+var cross_call_worker_CallFuncAliasChar8Vector func(func_ cross_call_worker.FuncAliasChar8Vector) cross_call_worker.AliasChar8Vector
+var Cross_call_worker_CallFuncAliasChar8Vector = &cross_call_worker_CallFuncAliasChar8Vector
+
+//go:linkname cross_call_worker_CallFuncAliasChar16Vector example_plugin/cross_call_worker._CallFuncAliasChar16Vector
+var cross_call_worker_CallFuncAliasChar16Vector func(func_ cross_call_worker.FuncAliasChar16Vector) cross_call_worker.AliasChar16Vector
+var Cross_call_worker_CallFuncAliasChar16Vector = &cross_call_worker_CallFuncAliasChar16Vector
+
+//go:linkname cross_call_worker_CallFuncAliasInt8Vector example_plugin/cross_call_worker._CallFuncAliasInt8Vector
+var cross_call_worker_CallFuncAliasInt8Vector func(func_ cross_call_worker.FuncAliasInt8Vector) cross_call_worker.AliasInt8Vector
+var Cross_call_worker_CallFuncAliasInt8Vector = &cross_call_worker_CallFuncAliasInt8Vector
+
+//go:linkname cross_call_worker_CallFuncAliasInt16Vector example_plugin/cross_call_worker._CallFuncAliasInt16Vector
+var cross_call_worker_CallFuncAliasInt16Vector func(func_ cross_call_worker.FuncAliasInt16Vector) cross_call_worker.AliasInt16Vector
+var Cross_call_worker_CallFuncAliasInt16Vector = &cross_call_worker_CallFuncAliasInt16Vector
+
+//go:linkname cross_call_worker_CallFuncAliasInt32Vector example_plugin/cross_call_worker._CallFuncAliasInt32Vector
+var cross_call_worker_CallFuncAliasInt32Vector func(func_ cross_call_worker.FuncAliasInt32Vector) cross_call_worker.AliasInt32Vector
+var Cross_call_worker_CallFuncAliasInt32Vector = &cross_call_worker_CallFuncAliasInt32Vector
+
+//go:linkname cross_call_worker_CallFuncAliasInt64Vector example_plugin/cross_call_worker._CallFuncAliasInt64Vector
+var cross_call_worker_CallFuncAliasInt64Vector func(func_ cross_call_worker.FuncAliasInt64Vector) cross_call_worker.AliasInt64Vector
+var Cross_call_worker_CallFuncAliasInt64Vector = &cross_call_worker_CallFuncAliasInt64Vector
+
+//go:linkname cross_call_worker_CallFuncAliasUInt8Vector example_plugin/cross_call_worker._CallFuncAliasUInt8Vector
+var cross_call_worker_CallFuncAliasUInt8Vector func(func_ cross_call_worker.FuncAliasUInt8Vector) cross_call_worker.AliasUInt8Vector
+var Cross_call_worker_CallFuncAliasUInt8Vector = &cross_call_worker_CallFuncAliasUInt8Vector
+
+//go:linkname cross_call_worker_CallFuncAliasUInt16Vector example_plugin/cross_call_worker._CallFuncAliasUInt16Vector
+var cross_call_worker_CallFuncAliasUInt16Vector func(func_ cross_call_worker.FuncAliasUInt16Vector) cross_call_worker.AliasUInt16Vector
+var Cross_call_worker_CallFuncAliasUInt16Vector = &cross_call_worker_CallFuncAliasUInt16Vector
+
+//go:linkname cross_call_worker_CallFuncAliasUInt32Vector example_plugin/cross_call_worker._CallFuncAliasUInt32Vector
+var cross_call_worker_CallFuncAliasUInt32Vector func(func_ cross_call_worker.FuncAliasUInt32Vector) cross_call_worker.AliasUInt32Vector
+var Cross_call_worker_CallFuncAliasUInt32Vector = &cross_call_worker_CallFuncAliasUInt32Vector
+
+//go:linkname cross_call_worker_CallFuncAliasUInt64Vector example_plugin/cross_call_worker._CallFuncAliasUInt64Vector
+var cross_call_worker_CallFuncAliasUInt64Vector func(func_ cross_call_worker.FuncAliasUInt64Vector) cross_call_worker.AliasUInt64Vector
+var Cross_call_worker_CallFuncAliasUInt64Vector = &cross_call_worker_CallFuncAliasUInt64Vector
+
+//go:linkname cross_call_worker_CallFuncAliasPtrVector example_plugin/cross_call_worker._CallFuncAliasPtrVector
+var cross_call_worker_CallFuncAliasPtrVector func(func_ cross_call_worker.FuncAliasPtrVector) cross_call_worker.AliasPtrVector
+var Cross_call_worker_CallFuncAliasPtrVector = &cross_call_worker_CallFuncAliasPtrVector
+
+//go:linkname cross_call_worker_CallFuncAliasFloatVector example_plugin/cross_call_worker._CallFuncAliasFloatVector
+var cross_call_worker_CallFuncAliasFloatVector func(func_ cross_call_worker.FuncAliasFloatVector) cross_call_worker.AliasFloatVector
+var Cross_call_worker_CallFuncAliasFloatVector = &cross_call_worker_CallFuncAliasFloatVector
+
+//go:linkname cross_call_worker_CallFuncAliasDoubleVector example_plugin/cross_call_worker._CallFuncAliasDoubleVector
+var cross_call_worker_CallFuncAliasDoubleVector func(func_ cross_call_worker.FuncAliasDoubleVector) cross_call_worker.AliasDoubleVector
+var Cross_call_worker_CallFuncAliasDoubleVector = &cross_call_worker_CallFuncAliasDoubleVector
+
+//go:linkname cross_call_worker_CallFuncAliasStringVector example_plugin/cross_call_worker._CallFuncAliasStringVector
+var cross_call_worker_CallFuncAliasStringVector func(func_ cross_call_worker.FuncAliasStringVector) cross_call_worker.AliasStringVector
+var Cross_call_worker_CallFuncAliasStringVector = &cross_call_worker_CallFuncAliasStringVector
+
+//go:linkname cross_call_worker_CallFuncAliasAnyVector example_plugin/cross_call_worker._CallFuncAliasAnyVector
+var cross_call_worker_CallFuncAliasAnyVector func(func_ cross_call_worker.FuncAliasAnyVector) cross_call_worker.AliasAnyVector
+var Cross_call_worker_CallFuncAliasAnyVector = &cross_call_worker_CallFuncAliasAnyVector
+
+//go:linkname cross_call_worker_CallFuncAliasVec2Vector example_plugin/cross_call_worker._CallFuncAliasVec2Vector
+var cross_call_worker_CallFuncAliasVec2Vector func(func_ cross_call_worker.FuncAliasVec2Vector) cross_call_worker.AliasVec2Vector
+var Cross_call_worker_CallFuncAliasVec2Vector = &cross_call_worker_CallFuncAliasVec2Vector
+
+//go:linkname cross_call_worker_CallFuncAliasVec3Vector example_plugin/cross_call_worker._CallFuncAliasVec3Vector
+var cross_call_worker_CallFuncAliasVec3Vector func(func_ cross_call_worker.FuncAliasVec3Vector) cross_call_worker.AliasVec3Vector
+var Cross_call_worker_CallFuncAliasVec3Vector = &cross_call_worker_CallFuncAliasVec3Vector
+
+//go:linkname cross_call_worker_CallFuncAliasVec4Vector example_plugin/cross_call_worker._CallFuncAliasVec4Vector
+var cross_call_worker_CallFuncAliasVec4Vector func(func_ cross_call_worker.FuncAliasVec4Vector) cross_call_worker.AliasVec4Vector
+var Cross_call_worker_CallFuncAliasVec4Vector = &cross_call_worker_CallFuncAliasVec4Vector
+
+//go:linkname cross_call_worker_CallFuncAliasMat4x4Vector example_plugin/cross_call_worker._CallFuncAliasMat4x4Vector
+var cross_call_worker_CallFuncAliasMat4x4Vector func(func_ cross_call_worker.FuncAliasMat4x4Vector) cross_call_worker.AliasMat4x4Vector
+var Cross_call_worker_CallFuncAliasMat4x4Vector = &cross_call_worker_CallFuncAliasMat4x4Vector
+
+//go:linkname cross_call_worker_CallFuncAliasVec2 example_plugin/cross_call_worker._CallFuncAliasVec2
+var cross_call_worker_CallFuncAliasVec2 func(func_ cross_call_worker.FuncAliasVec2) cross_call_worker.AliasVec2
+var Cross_call_worker_CallFuncAliasVec2 = &cross_call_worker_CallFuncAliasVec2
+
+//go:linkname cross_call_worker_CallFuncAliasVec3 example_plugin/cross_call_worker._CallFuncAliasVec3
+var cross_call_worker_CallFuncAliasVec3 func(func_ cross_call_worker.FuncAliasVec3) cross_call_worker.AliasVec3
+var Cross_call_worker_CallFuncAliasVec3 = &cross_call_worker_CallFuncAliasVec3
+
+//go:linkname cross_call_worker_CallFuncAliasVec4 example_plugin/cross_call_worker._CallFuncAliasVec4
+var cross_call_worker_CallFuncAliasVec4 func(func_ cross_call_worker.FuncAliasVec4) cross_call_worker.AliasVec4
+var Cross_call_worker_CallFuncAliasVec4 = &cross_call_worker_CallFuncAliasVec4
+
+//go:linkname cross_call_worker_CallFuncAliasMat4x4 example_plugin/cross_call_worker._CallFuncAliasMat4x4
+var cross_call_worker_CallFuncAliasMat4x4 func(func_ cross_call_worker.FuncAliasMat4x4) cross_call_worker.AliasMat4x4
+var Cross_call_worker_CallFuncAliasMat4x4 = &cross_call_worker_CallFuncAliasMat4x4
+
+//go:linkname cross_call_worker_CallFuncAliasAll example_plugin/cross_call_worker._CallFuncAliasAll
+var cross_call_worker_CallFuncAliasAll func(func_ cross_call_worker.FuncAliasAll) cross_call_worker.AliasString
+var Cross_call_worker_CallFuncAliasAll = &cross_call_worker_CallFuncAliasAll
+
+//go:linkname cross_call_worker_CallFunc1 example_plugin/cross_call_worker._CallFunc1
+var cross_call_worker_CallFunc1 func(func_ cross_call_worker.Func1) int32
+var Cross_call_worker_CallFunc1 = &cross_call_worker_CallFunc1
+
+//go:linkname cross_call_worker_CallFunc2 example_plugin/cross_call_worker._CallFunc2
+var cross_call_worker_CallFunc2 func(func_ cross_call_worker.Func2) int8
+var Cross_call_worker_CallFunc2 = &cross_call_worker_CallFunc2
+
+//go:linkname cross_call_worker_CallFunc3 example_plugin/cross_call_worker._CallFunc3
+var cross_call_worker_CallFunc3 func(func_ cross_call_worker.Func3)
+var Cross_call_worker_CallFunc3 = &cross_call_worker_CallFunc3
+
+//go:linkname cross_call_worker_CallFunc4 example_plugin/cross_call_worker._CallFunc4
+var cross_call_worker_CallFunc4 func(func_ cross_call_worker.Func4) plugify.Vector4
+var Cross_call_worker_CallFunc4 = &cross_call_worker_CallFunc4
+
+//go:linkname cross_call_worker_CallFunc5 example_plugin/cross_call_worker._CallFunc5
+var cross_call_worker_CallFunc5 func(func_ cross_call_worker.Func5) bool
+var Cross_call_worker_CallFunc5 = &cross_call_worker_CallFunc5
+
+//go:linkname cross_call_worker_CallFunc6 example_plugin/cross_call_worker._CallFunc6
+var cross_call_worker_CallFunc6 func(func_ cross_call_worker.Func6) int64
+var Cross_call_worker_CallFunc6 = &cross_call_worker_CallFunc6
+
+//go:linkname cross_call_worker_CallFunc7 example_plugin/cross_call_worker._CallFunc7
+var cross_call_worker_CallFunc7 func(func_ cross_call_worker.Func7) float64
+var Cross_call_worker_CallFunc7 = &cross_call_worker_CallFunc7
+
+//go:linkname cross_call_worker_CallFunc8 example_plugin/cross_call_worker._CallFunc8
+var cross_call_worker_CallFunc8 func(func_ cross_call_worker.Func8) plugify.Matrix4x4
+var Cross_call_worker_CallFunc8 = &cross_call_worker_CallFunc8
+
+//go:linkname cross_call_worker_CallFunc9 example_plugin/cross_call_worker._CallFunc9
+var cross_call_worker_CallFunc9 func(func_ cross_call_worker.Func9)
+var Cross_call_worker_CallFunc9 = &cross_call_worker_CallFunc9
+
+//go:linkname cross_call_worker_CallFunc10 example_plugin/cross_call_worker._CallFunc10
+var cross_call_worker_CallFunc10 func(func_ cross_call_worker.Func10) uint32
+var Cross_call_worker_CallFunc10 = &cross_call_worker_CallFunc10
+
+//go:linkname cross_call_worker_CallFunc11 example_plugin/cross_call_worker._CallFunc11
+var cross_call_worker_CallFunc11 func(func_ cross_call_worker.Func11) uintptr
+var Cross_call_worker_CallFunc11 = &cross_call_worker_CallFunc11
+
+//go:linkname cross_call_worker_CallFunc12 example_plugin/cross_call_worker._CallFunc12
+var cross_call_worker_CallFunc12 func(func_ cross_call_worker.Func12) bool
+var Cross_call_worker_CallFunc12 = &cross_call_worker_CallFunc12
+
+//go:linkname cross_call_worker_CallFunc13 example_plugin/cross_call_worker._CallFunc13
+var cross_call_worker_CallFunc13 func(func_ cross_call_worker.Func13) string
+var Cross_call_worker_CallFunc13 = &cross_call_worker_CallFunc13
+
+//go:linkname cross_call_worker_CallFunc14 example_plugin/cross_call_worker._CallFunc14
+var cross_call_worker_CallFunc14 func(func_ cross_call_worker.Func14) []string
+var Cross_call_worker_CallFunc14 = &cross_call_worker_CallFunc14
+
+//go:linkname cross_call_worker_CallFunc15 example_plugin/cross_call_worker._CallFunc15
+var cross_call_worker_CallFunc15 func(func_ cross_call_worker.Func15) int16
+var Cross_call_worker_CallFunc15 = &cross_call_worker_CallFunc15
+
+//go:linkname cross_call_worker_CallFunc16 example_plugin/cross_call_worker._CallFunc16
+var cross_call_worker_CallFunc16 func(func_ cross_call_worker.Func16) uintptr
+var Cross_call_worker_CallFunc16 = &cross_call_worker_CallFunc16
+
+//go:linkname cross_call_worker_CallFunc17 example_plugin/cross_call_worker._CallFunc17
+var cross_call_worker_CallFunc17 func(func_ cross_call_worker.Func17) string
+var Cross_call_worker_CallFunc17 = &cross_call_worker_CallFunc17
+
+//go:linkname cross_call_worker_CallFunc18 example_plugin/cross_call_worker._CallFunc18
+var cross_call_worker_CallFunc18 func(func_ cross_call_worker.Func18) string
+var Cross_call_worker_CallFunc18 = &cross_call_worker_CallFunc18
+
+//go:linkname cross_call_worker_CallFunc19 example_plugin/cross_call_worker._CallFunc19
+var cross_call_worker_CallFunc19 func(func_ cross_call_worker.Func19) string
+var Cross_call_worker_CallFunc19 = &cross_call_worker_CallFunc19
+
+//go:linkname cross_call_worker_CallFunc20 example_plugin/cross_call_worker._CallFunc20
+var cross_call_worker_CallFunc20 func(func_ cross_call_worker.Func20) string
+var Cross_call_worker_CallFunc20 = &cross_call_worker_CallFunc20
+
+//go:linkname cross_call_worker_CallFunc21 example_plugin/cross_call_worker._CallFunc21
+var cross_call_worker_CallFunc21 func(func_ cross_call_worker.Func21) string
+var Cross_call_worker_CallFunc21 = &cross_call_worker_CallFunc21
+
+//go:linkname cross_call_worker_CallFunc22 example_plugin/cross_call_worker._CallFunc22
+var cross_call_worker_CallFunc22 func(func_ cross_call_worker.Func22) string
+var Cross_call_worker_CallFunc22 = &cross_call_worker_CallFunc22
+
+//go:linkname cross_call_worker_CallFunc23 example_plugin/cross_call_worker._CallFunc23
+var cross_call_worker_CallFunc23 func(func_ cross_call_worker.Func23) string
+var Cross_call_worker_CallFunc23 = &cross_call_worker_CallFunc23
+
+//go:linkname cross_call_worker_CallFunc24 example_plugin/cross_call_worker._CallFunc24
+var cross_call_worker_CallFunc24 func(func_ cross_call_worker.Func24) string
+var Cross_call_worker_CallFunc24 = &cross_call_worker_CallFunc24
+
+//go:linkname cross_call_worker_CallFunc25 example_plugin/cross_call_worker._CallFunc25
+var cross_call_worker_CallFunc25 func(func_ cross_call_worker.Func25) string
+var Cross_call_worker_CallFunc25 = &cross_call_worker_CallFunc25
+
+//go:linkname cross_call_worker_CallFunc26 example_plugin/cross_call_worker._CallFunc26
+var cross_call_worker_CallFunc26 func(func_ cross_call_worker.Func26) string
+var Cross_call_worker_CallFunc26 = &cross_call_worker_CallFunc26
+
+//go:linkname cross_call_worker_CallFunc27 example_plugin/cross_call_worker._CallFunc27
+var cross_call_worker_CallFunc27 func(func_ cross_call_worker.Func27) string
+var Cross_call_worker_CallFunc27 = &cross_call_worker_CallFunc27
+
+//go:linkname cross_call_worker_CallFunc28 example_plugin/cross_call_worker._CallFunc28
+var cross_call_worker_CallFunc28 func(func_ cross_call_worker.Func28) string
+var Cross_call_worker_CallFunc28 = &cross_call_worker_CallFunc28
+
+//go:linkname cross_call_worker_CallFunc29 example_plugin/cross_call_worker._CallFunc29
+var cross_call_worker_CallFunc29 func(func_ cross_call_worker.Func29) string
+var Cross_call_worker_CallFunc29 = &cross_call_worker_CallFunc29
+
+//go:linkname cross_call_worker_CallFunc30 example_plugin/cross_call_worker._CallFunc30
+var cross_call_worker_CallFunc30 func(func_ cross_call_worker.Func30) string
+var Cross_call_worker_CallFunc30 = &cross_call_worker_CallFunc30
+
+//go:linkname cross_call_worker_CallFunc31 example_plugin/cross_call_worker._CallFunc31
+var cross_call_worker_CallFunc31 func(func_ cross_call_worker.Func31) string
+var Cross_call_worker_CallFunc31 = &cross_call_worker_CallFunc31
+
+//go:linkname cross_call_worker_CallFunc32 example_plugin/cross_call_worker._CallFunc32
+var cross_call_worker_CallFunc32 func(func_ cross_call_worker.Func32) string
+var Cross_call_worker_CallFunc32 = &cross_call_worker_CallFunc32
+
+//go:linkname cross_call_worker_CallFunc33 example_plugin/cross_call_worker._CallFunc33
+var cross_call_worker_CallFunc33 func(func_ cross_call_worker.Func33) string
+var Cross_call_worker_CallFunc33 = &cross_call_worker_CallFunc33
+
+//go:linkname cross_call_worker_CallFuncEnum example_plugin/cross_call_worker._CallFuncEnum
+var cross_call_worker_CallFuncEnum func(func_ cross_call_worker.FuncEnum) string
+var Cross_call_worker_CallFuncEnum = &cross_call_worker_CallFuncEnum
+
+//go:linkname cross_call_worker_ReverseCall example_plugin/cross_call_worker._ReverseCall
+var cross_call_worker_ReverseCall func(test string)
+var Cross_call_worker_ReverseCall = &cross_call_worker_ReverseCall

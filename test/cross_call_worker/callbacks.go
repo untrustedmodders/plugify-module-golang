@@ -294,7 +294,7 @@ func MockFuncAliasDouble() cross_call_master.AliasDouble {
 }
 
 func MockFuncAliasFunction() cross_call_master.AliasFunction {
-	return 0
+	return MockFuncVoid
 }
 
 func MockFuncAliasString() cross_call_master.AliasString {

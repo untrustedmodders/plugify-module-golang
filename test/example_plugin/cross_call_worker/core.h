@@ -770,9 +770,9 @@ static Variant CallFuncAliasAny(void* func_) {
 	return __cross_call_worker_CallFuncAliasAny(func_);
 }
 
-extern uintptr_t (*__cross_call_worker_CallFuncAliasFunction)(void*);
+extern void* (*__cross_call_worker_CallFuncAliasFunction)(void*);
 
-static uintptr_t CallFuncAliasFunction(void* func_) {
+static void* CallFuncAliasFunction(void* func_) {
 	return __cross_call_worker_CallFuncAliasFunction(func_);
 }
 

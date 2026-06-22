@@ -209,7 +209,7 @@ var _ = plugify.ApiVersion
 
 // Generated from cross_call_master (group: core)
 
-var P_ReverseReturn = func(returnString string) {
+var _ReverseReturn = func(returnString string) {
 	__returnString := plugify.ConstructString(returnString)
 	plugify.Block{
 		Try: func() {
@@ -225,20 +225,20 @@ var P_ReverseReturn = func(returnString string) {
 // ReverseReturn
 func ReverseReturn(returnString string) {
 	defer plugify.Scope("cross_call_master::ReverseReturn", ModuleName, 3)()
-	P_ReverseReturn(returnString)
+	_ReverseReturn(returnString)
 }
 
-var P_NoParamReturnVoidCallback = func() {
+var _NoParamReturnVoidCallback = func() {
 	C.NoParamReturnVoidCallback()
 }
 
 // NoParamReturnVoidCallback
 func NoParamReturnVoidCallback() {
 	defer plugify.Scope("cross_call_master::NoParamReturnVoidCallback", ModuleName, 3)()
-	P_NoParamReturnVoidCallback()
+	_NoParamReturnVoidCallback()
 }
 
-var P_NoParamReturnBoolCallback = func() bool {
+var _NoParamReturnBoolCallback = func() bool {
 	__retVal := bool(C.NoParamReturnBoolCallback())
 	return __retVal
 }
@@ -246,10 +246,10 @@ var P_NoParamReturnBoolCallback = func() bool {
 // NoParamReturnBoolCallback
 func NoParamReturnBoolCallback() bool {
 	defer plugify.Scope("cross_call_master::NoParamReturnBoolCallback", ModuleName, 3)()
-	return P_NoParamReturnBoolCallback()
+	return _NoParamReturnBoolCallback()
 }
 
-var P_NoParamReturnChar8Callback = func() int8 {
+var _NoParamReturnChar8Callback = func() int8 {
 	__retVal := int8(C.NoParamReturnChar8Callback())
 	return __retVal
 }
@@ -257,10 +257,10 @@ var P_NoParamReturnChar8Callback = func() int8 {
 // NoParamReturnChar8Callback
 func NoParamReturnChar8Callback() int8 {
 	defer plugify.Scope("cross_call_master::NoParamReturnChar8Callback", ModuleName, 3)()
-	return P_NoParamReturnChar8Callback()
+	return _NoParamReturnChar8Callback()
 }
 
-var P_NoParamReturnChar16Callback = func() uint16 {
+var _NoParamReturnChar16Callback = func() uint16 {
 	__retVal := uint16(C.NoParamReturnChar16Callback())
 	return __retVal
 }
@@ -268,10 +268,10 @@ var P_NoParamReturnChar16Callback = func() uint16 {
 // NoParamReturnChar16Callback
 func NoParamReturnChar16Callback() uint16 {
 	defer plugify.Scope("cross_call_master::NoParamReturnChar16Callback", ModuleName, 3)()
-	return P_NoParamReturnChar16Callback()
+	return _NoParamReturnChar16Callback()
 }
 
-var P_NoParamReturnInt8Callback = func() int8 {
+var _NoParamReturnInt8Callback = func() int8 {
 	__retVal := int8(C.NoParamReturnInt8Callback())
 	return __retVal
 }
@@ -279,10 +279,10 @@ var P_NoParamReturnInt8Callback = func() int8 {
 // NoParamReturnInt8Callback
 func NoParamReturnInt8Callback() int8 {
 	defer plugify.Scope("cross_call_master::NoParamReturnInt8Callback", ModuleName, 3)()
-	return P_NoParamReturnInt8Callback()
+	return _NoParamReturnInt8Callback()
 }
 
-var P_NoParamReturnInt16Callback = func() int16 {
+var _NoParamReturnInt16Callback = func() int16 {
 	__retVal := int16(C.NoParamReturnInt16Callback())
 	return __retVal
 }
@@ -290,10 +290,10 @@ var P_NoParamReturnInt16Callback = func() int16 {
 // NoParamReturnInt16Callback
 func NoParamReturnInt16Callback() int16 {
 	defer plugify.Scope("cross_call_master::NoParamReturnInt16Callback", ModuleName, 3)()
-	return P_NoParamReturnInt16Callback()
+	return _NoParamReturnInt16Callback()
 }
 
-var P_NoParamReturnInt32Callback = func() int32 {
+var _NoParamReturnInt32Callback = func() int32 {
 	__retVal := int32(C.NoParamReturnInt32Callback())
 	return __retVal
 }
@@ -301,10 +301,10 @@ var P_NoParamReturnInt32Callback = func() int32 {
 // NoParamReturnInt32Callback
 func NoParamReturnInt32Callback() int32 {
 	defer plugify.Scope("cross_call_master::NoParamReturnInt32Callback", ModuleName, 3)()
-	return P_NoParamReturnInt32Callback()
+	return _NoParamReturnInt32Callback()
 }
 
-var P_NoParamReturnInt64Callback = func() int64 {
+var _NoParamReturnInt64Callback = func() int64 {
 	__retVal := int64(C.NoParamReturnInt64Callback())
 	return __retVal
 }
@@ -312,10 +312,10 @@ var P_NoParamReturnInt64Callback = func() int64 {
 // NoParamReturnInt64Callback
 func NoParamReturnInt64Callback() int64 {
 	defer plugify.Scope("cross_call_master::NoParamReturnInt64Callback", ModuleName, 3)()
-	return P_NoParamReturnInt64Callback()
+	return _NoParamReturnInt64Callback()
 }
 
-var P_NoParamReturnUInt8Callback = func() uint8 {
+var _NoParamReturnUInt8Callback = func() uint8 {
 	__retVal := uint8(C.NoParamReturnUInt8Callback())
 	return __retVal
 }
@@ -323,10 +323,10 @@ var P_NoParamReturnUInt8Callback = func() uint8 {
 // NoParamReturnUInt8Callback
 func NoParamReturnUInt8Callback() uint8 {
 	defer plugify.Scope("cross_call_master::NoParamReturnUInt8Callback", ModuleName, 3)()
-	return P_NoParamReturnUInt8Callback()
+	return _NoParamReturnUInt8Callback()
 }
 
-var P_NoParamReturnUInt16Callback = func() uint16 {
+var _NoParamReturnUInt16Callback = func() uint16 {
 	__retVal := uint16(C.NoParamReturnUInt16Callback())
 	return __retVal
 }
@@ -334,10 +334,10 @@ var P_NoParamReturnUInt16Callback = func() uint16 {
 // NoParamReturnUInt16Callback
 func NoParamReturnUInt16Callback() uint16 {
 	defer plugify.Scope("cross_call_master::NoParamReturnUInt16Callback", ModuleName, 3)()
-	return P_NoParamReturnUInt16Callback()
+	return _NoParamReturnUInt16Callback()
 }
 
-var P_NoParamReturnUInt32Callback = func() uint32 {
+var _NoParamReturnUInt32Callback = func() uint32 {
 	__retVal := uint32(C.NoParamReturnUInt32Callback())
 	return __retVal
 }
@@ -345,10 +345,10 @@ var P_NoParamReturnUInt32Callback = func() uint32 {
 // NoParamReturnUInt32Callback
 func NoParamReturnUInt32Callback() uint32 {
 	defer plugify.Scope("cross_call_master::NoParamReturnUInt32Callback", ModuleName, 3)()
-	return P_NoParamReturnUInt32Callback()
+	return _NoParamReturnUInt32Callback()
 }
 
-var P_NoParamReturnUInt64Callback = func() uint64 {
+var _NoParamReturnUInt64Callback = func() uint64 {
 	__retVal := uint64(C.NoParamReturnUInt64Callback())
 	return __retVal
 }
@@ -356,10 +356,10 @@ var P_NoParamReturnUInt64Callback = func() uint64 {
 // NoParamReturnUInt64Callback
 func NoParamReturnUInt64Callback() uint64 {
 	defer plugify.Scope("cross_call_master::NoParamReturnUInt64Callback", ModuleName, 3)()
-	return P_NoParamReturnUInt64Callback()
+	return _NoParamReturnUInt64Callback()
 }
 
-var P_NoParamReturnPointerCallback = func() uintptr {
+var _NoParamReturnPointerCallback = func() uintptr {
 	__retVal := uintptr(C.NoParamReturnPointerCallback())
 	return __retVal
 }
@@ -367,10 +367,10 @@ var P_NoParamReturnPointerCallback = func() uintptr {
 // NoParamReturnPointerCallback
 func NoParamReturnPointerCallback() uintptr {
 	defer plugify.Scope("cross_call_master::NoParamReturnPointerCallback", ModuleName, 3)()
-	return P_NoParamReturnPointerCallback()
+	return _NoParamReturnPointerCallback()
 }
 
-var P_NoParamReturnFloatCallback = func() float32 {
+var _NoParamReturnFloatCallback = func() float32 {
 	__retVal := float32(C.NoParamReturnFloatCallback())
 	return __retVal
 }
@@ -378,10 +378,10 @@ var P_NoParamReturnFloatCallback = func() float32 {
 // NoParamReturnFloatCallback
 func NoParamReturnFloatCallback() float32 {
 	defer plugify.Scope("cross_call_master::NoParamReturnFloatCallback", ModuleName, 3)()
-	return P_NoParamReturnFloatCallback()
+	return _NoParamReturnFloatCallback()
 }
 
-var P_NoParamReturnDoubleCallback = func() float64 {
+var _NoParamReturnDoubleCallback = func() float64 {
 	__retVal := float64(C.NoParamReturnDoubleCallback())
 	return __retVal
 }
@@ -389,10 +389,10 @@ var P_NoParamReturnDoubleCallback = func() float64 {
 // NoParamReturnDoubleCallback
 func NoParamReturnDoubleCallback() float64 {
 	defer plugify.Scope("cross_call_master::NoParamReturnDoubleCallback", ModuleName, 3)()
-	return P_NoParamReturnDoubleCallback()
+	return _NoParamReturnDoubleCallback()
 }
 
-var P_NoParamReturnFunctionCallback = func() NoParamReturnFunctionCallbackFunc {
+var _NoParamReturnFunctionCallback = func() NoParamReturnFunctionCallbackFunc {
 	__retVal := plugify.GetDelegateForFunctionPointer(C.NoParamReturnFunctionCallback(), reflect.TypeOf(NoParamReturnFunctionCallbackFunc(nil))).(NoParamReturnFunctionCallbackFunc)
 	return __retVal
 }
@@ -400,10 +400,10 @@ var P_NoParamReturnFunctionCallback = func() NoParamReturnFunctionCallbackFunc {
 // NoParamReturnFunctionCallback
 func NoParamReturnFunctionCallback() NoParamReturnFunctionCallbackFunc {
 	defer plugify.Scope("cross_call_master::NoParamReturnFunctionCallback", ModuleName, 3)()
-	return P_NoParamReturnFunctionCallback()
+	return _NoParamReturnFunctionCallback()
 }
 
-var P_NoParamReturnStringCallback = func() string {
+var _NoParamReturnStringCallback = func() string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	plugify.Block{
@@ -424,10 +424,10 @@ var P_NoParamReturnStringCallback = func() string {
 // NoParamReturnStringCallback
 func NoParamReturnStringCallback() string {
 	defer plugify.Scope("cross_call_master::NoParamReturnStringCallback", ModuleName, 3)()
-	return P_NoParamReturnStringCallback()
+	return _NoParamReturnStringCallback()
 }
 
-var P_NoParamReturnAnyCallback = func() any {
+var _NoParamReturnAnyCallback = func() any {
 	var __retVal any
 	var __retVal_native plugify.PlgVariant
 	plugify.Block{
@@ -448,10 +448,10 @@ var P_NoParamReturnAnyCallback = func() any {
 // NoParamReturnAnyCallback
 func NoParamReturnAnyCallback() any {
 	defer plugify.Scope("cross_call_master::NoParamReturnAnyCallback", ModuleName, 3)()
-	return P_NoParamReturnAnyCallback()
+	return _NoParamReturnAnyCallback()
 }
 
-var P_NoParamReturnArrayBoolCallback = func() []bool {
+var _NoParamReturnArrayBoolCallback = func() []bool {
 	var __retVal []bool
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -472,10 +472,10 @@ var P_NoParamReturnArrayBoolCallback = func() []bool {
 // NoParamReturnArrayBoolCallback
 func NoParamReturnArrayBoolCallback() []bool {
 	defer plugify.Scope("cross_call_master::NoParamReturnArrayBoolCallback", ModuleName, 3)()
-	return P_NoParamReturnArrayBoolCallback()
+	return _NoParamReturnArrayBoolCallback()
 }
 
-var P_NoParamReturnArrayChar8Callback = func() []int8 {
+var _NoParamReturnArrayChar8Callback = func() []int8 {
 	var __retVal []int8
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -496,10 +496,10 @@ var P_NoParamReturnArrayChar8Callback = func() []int8 {
 // NoParamReturnArrayChar8Callback
 func NoParamReturnArrayChar8Callback() []int8 {
 	defer plugify.Scope("cross_call_master::NoParamReturnArrayChar8Callback", ModuleName, 3)()
-	return P_NoParamReturnArrayChar8Callback()
+	return _NoParamReturnArrayChar8Callback()
 }
 
-var P_NoParamReturnArrayChar16Callback = func() []uint16 {
+var _NoParamReturnArrayChar16Callback = func() []uint16 {
 	var __retVal []uint16
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -520,10 +520,10 @@ var P_NoParamReturnArrayChar16Callback = func() []uint16 {
 // NoParamReturnArrayChar16Callback
 func NoParamReturnArrayChar16Callback() []uint16 {
 	defer plugify.Scope("cross_call_master::NoParamReturnArrayChar16Callback", ModuleName, 3)()
-	return P_NoParamReturnArrayChar16Callback()
+	return _NoParamReturnArrayChar16Callback()
 }
 
-var P_NoParamReturnArrayInt8Callback = func() []int8 {
+var _NoParamReturnArrayInt8Callback = func() []int8 {
 	var __retVal []int8
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -544,10 +544,10 @@ var P_NoParamReturnArrayInt8Callback = func() []int8 {
 // NoParamReturnArrayInt8Callback
 func NoParamReturnArrayInt8Callback() []int8 {
 	defer plugify.Scope("cross_call_master::NoParamReturnArrayInt8Callback", ModuleName, 3)()
-	return P_NoParamReturnArrayInt8Callback()
+	return _NoParamReturnArrayInt8Callback()
 }
 
-var P_NoParamReturnArrayInt16Callback = func() []int16 {
+var _NoParamReturnArrayInt16Callback = func() []int16 {
 	var __retVal []int16
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -568,10 +568,10 @@ var P_NoParamReturnArrayInt16Callback = func() []int16 {
 // NoParamReturnArrayInt16Callback
 func NoParamReturnArrayInt16Callback() []int16 {
 	defer plugify.Scope("cross_call_master::NoParamReturnArrayInt16Callback", ModuleName, 3)()
-	return P_NoParamReturnArrayInt16Callback()
+	return _NoParamReturnArrayInt16Callback()
 }
 
-var P_NoParamReturnArrayInt32Callback = func() []int32 {
+var _NoParamReturnArrayInt32Callback = func() []int32 {
 	var __retVal []int32
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -592,10 +592,10 @@ var P_NoParamReturnArrayInt32Callback = func() []int32 {
 // NoParamReturnArrayInt32Callback
 func NoParamReturnArrayInt32Callback() []int32 {
 	defer plugify.Scope("cross_call_master::NoParamReturnArrayInt32Callback", ModuleName, 3)()
-	return P_NoParamReturnArrayInt32Callback()
+	return _NoParamReturnArrayInt32Callback()
 }
 
-var P_NoParamReturnArrayInt64Callback = func() []int64 {
+var _NoParamReturnArrayInt64Callback = func() []int64 {
 	var __retVal []int64
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -616,10 +616,10 @@ var P_NoParamReturnArrayInt64Callback = func() []int64 {
 // NoParamReturnArrayInt64Callback
 func NoParamReturnArrayInt64Callback() []int64 {
 	defer plugify.Scope("cross_call_master::NoParamReturnArrayInt64Callback", ModuleName, 3)()
-	return P_NoParamReturnArrayInt64Callback()
+	return _NoParamReturnArrayInt64Callback()
 }
 
-var P_NoParamReturnArrayUInt8Callback = func() []uint8 {
+var _NoParamReturnArrayUInt8Callback = func() []uint8 {
 	var __retVal []uint8
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -640,10 +640,10 @@ var P_NoParamReturnArrayUInt8Callback = func() []uint8 {
 // NoParamReturnArrayUInt8Callback
 func NoParamReturnArrayUInt8Callback() []uint8 {
 	defer plugify.Scope("cross_call_master::NoParamReturnArrayUInt8Callback", ModuleName, 3)()
-	return P_NoParamReturnArrayUInt8Callback()
+	return _NoParamReturnArrayUInt8Callback()
 }
 
-var P_NoParamReturnArrayUInt16Callback = func() []uint16 {
+var _NoParamReturnArrayUInt16Callback = func() []uint16 {
 	var __retVal []uint16
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -664,10 +664,10 @@ var P_NoParamReturnArrayUInt16Callback = func() []uint16 {
 // NoParamReturnArrayUInt16Callback
 func NoParamReturnArrayUInt16Callback() []uint16 {
 	defer plugify.Scope("cross_call_master::NoParamReturnArrayUInt16Callback", ModuleName, 3)()
-	return P_NoParamReturnArrayUInt16Callback()
+	return _NoParamReturnArrayUInt16Callback()
 }
 
-var P_NoParamReturnArrayUInt32Callback = func() []uint32 {
+var _NoParamReturnArrayUInt32Callback = func() []uint32 {
 	var __retVal []uint32
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -688,10 +688,10 @@ var P_NoParamReturnArrayUInt32Callback = func() []uint32 {
 // NoParamReturnArrayUInt32Callback
 func NoParamReturnArrayUInt32Callback() []uint32 {
 	defer plugify.Scope("cross_call_master::NoParamReturnArrayUInt32Callback", ModuleName, 3)()
-	return P_NoParamReturnArrayUInt32Callback()
+	return _NoParamReturnArrayUInt32Callback()
 }
 
-var P_NoParamReturnArrayUInt64Callback = func() []uint64 {
+var _NoParamReturnArrayUInt64Callback = func() []uint64 {
 	var __retVal []uint64
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -712,10 +712,10 @@ var P_NoParamReturnArrayUInt64Callback = func() []uint64 {
 // NoParamReturnArrayUInt64Callback
 func NoParamReturnArrayUInt64Callback() []uint64 {
 	defer plugify.Scope("cross_call_master::NoParamReturnArrayUInt64Callback", ModuleName, 3)()
-	return P_NoParamReturnArrayUInt64Callback()
+	return _NoParamReturnArrayUInt64Callback()
 }
 
-var P_NoParamReturnArrayPointerCallback = func() []uintptr {
+var _NoParamReturnArrayPointerCallback = func() []uintptr {
 	var __retVal []uintptr
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -736,10 +736,10 @@ var P_NoParamReturnArrayPointerCallback = func() []uintptr {
 // NoParamReturnArrayPointerCallback
 func NoParamReturnArrayPointerCallback() []uintptr {
 	defer plugify.Scope("cross_call_master::NoParamReturnArrayPointerCallback", ModuleName, 3)()
-	return P_NoParamReturnArrayPointerCallback()
+	return _NoParamReturnArrayPointerCallback()
 }
 
-var P_NoParamReturnArrayFloatCallback = func() []float32 {
+var _NoParamReturnArrayFloatCallback = func() []float32 {
 	var __retVal []float32
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -760,10 +760,10 @@ var P_NoParamReturnArrayFloatCallback = func() []float32 {
 // NoParamReturnArrayFloatCallback
 func NoParamReturnArrayFloatCallback() []float32 {
 	defer plugify.Scope("cross_call_master::NoParamReturnArrayFloatCallback", ModuleName, 3)()
-	return P_NoParamReturnArrayFloatCallback()
+	return _NoParamReturnArrayFloatCallback()
 }
 
-var P_NoParamReturnArrayDoubleCallback = func() []float64 {
+var _NoParamReturnArrayDoubleCallback = func() []float64 {
 	var __retVal []float64
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -784,10 +784,10 @@ var P_NoParamReturnArrayDoubleCallback = func() []float64 {
 // NoParamReturnArrayDoubleCallback
 func NoParamReturnArrayDoubleCallback() []float64 {
 	defer plugify.Scope("cross_call_master::NoParamReturnArrayDoubleCallback", ModuleName, 3)()
-	return P_NoParamReturnArrayDoubleCallback()
+	return _NoParamReturnArrayDoubleCallback()
 }
 
-var P_NoParamReturnArrayStringCallback = func() []string {
+var _NoParamReturnArrayStringCallback = func() []string {
 	var __retVal []string
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -808,10 +808,10 @@ var P_NoParamReturnArrayStringCallback = func() []string {
 // NoParamReturnArrayStringCallback
 func NoParamReturnArrayStringCallback() []string {
 	defer plugify.Scope("cross_call_master::NoParamReturnArrayStringCallback", ModuleName, 3)()
-	return P_NoParamReturnArrayStringCallback()
+	return _NoParamReturnArrayStringCallback()
 }
 
-var P_NoParamReturnArrayAnyCallback = func() []any {
+var _NoParamReturnArrayAnyCallback = func() []any {
 	var __retVal []any
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -832,10 +832,10 @@ var P_NoParamReturnArrayAnyCallback = func() []any {
 // NoParamReturnArrayAnyCallback
 func NoParamReturnArrayAnyCallback() []any {
 	defer plugify.Scope("cross_call_master::NoParamReturnArrayAnyCallback", ModuleName, 3)()
-	return P_NoParamReturnArrayAnyCallback()
+	return _NoParamReturnArrayAnyCallback()
 }
 
-var P_NoParamReturnArrayVector2Callback = func() []plugify.Vector2 {
+var _NoParamReturnArrayVector2Callback = func() []plugify.Vector2 {
 	var __retVal []plugify.Vector2
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -856,10 +856,10 @@ var P_NoParamReturnArrayVector2Callback = func() []plugify.Vector2 {
 // NoParamReturnArrayVector2Callback
 func NoParamReturnArrayVector2Callback() []plugify.Vector2 {
 	defer plugify.Scope("cross_call_master::NoParamReturnArrayVector2Callback", ModuleName, 3)()
-	return P_NoParamReturnArrayVector2Callback()
+	return _NoParamReturnArrayVector2Callback()
 }
 
-var P_NoParamReturnArrayVector3Callback = func() []plugify.Vector3 {
+var _NoParamReturnArrayVector3Callback = func() []plugify.Vector3 {
 	var __retVal []plugify.Vector3
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -880,10 +880,10 @@ var P_NoParamReturnArrayVector3Callback = func() []plugify.Vector3 {
 // NoParamReturnArrayVector3Callback
 func NoParamReturnArrayVector3Callback() []plugify.Vector3 {
 	defer plugify.Scope("cross_call_master::NoParamReturnArrayVector3Callback", ModuleName, 3)()
-	return P_NoParamReturnArrayVector3Callback()
+	return _NoParamReturnArrayVector3Callback()
 }
 
-var P_NoParamReturnArrayVector4Callback = func() []plugify.Vector4 {
+var _NoParamReturnArrayVector4Callback = func() []plugify.Vector4 {
 	var __retVal []plugify.Vector4
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -904,10 +904,10 @@ var P_NoParamReturnArrayVector4Callback = func() []plugify.Vector4 {
 // NoParamReturnArrayVector4Callback
 func NoParamReturnArrayVector4Callback() []plugify.Vector4 {
 	defer plugify.Scope("cross_call_master::NoParamReturnArrayVector4Callback", ModuleName, 3)()
-	return P_NoParamReturnArrayVector4Callback()
+	return _NoParamReturnArrayVector4Callback()
 }
 
-var P_NoParamReturnArrayMatrix4x4Callback = func() []plugify.Matrix4x4 {
+var _NoParamReturnArrayMatrix4x4Callback = func() []plugify.Matrix4x4 {
 	var __retVal []plugify.Matrix4x4
 	var __retVal_native plugify.PlgVector
 	plugify.Block{
@@ -928,10 +928,10 @@ var P_NoParamReturnArrayMatrix4x4Callback = func() []plugify.Matrix4x4 {
 // NoParamReturnArrayMatrix4x4Callback
 func NoParamReturnArrayMatrix4x4Callback() []plugify.Matrix4x4 {
 	defer plugify.Scope("cross_call_master::NoParamReturnArrayMatrix4x4Callback", ModuleName, 3)()
-	return P_NoParamReturnArrayMatrix4x4Callback()
+	return _NoParamReturnArrayMatrix4x4Callback()
 }
 
-var P_NoParamReturnVector2Callback = func() plugify.Vector2 {
+var _NoParamReturnVector2Callback = func() plugify.Vector2 {
 	__native := C.NoParamReturnVector2Callback()
 	__retVal := *(*plugify.Vector2)(unsafe.Pointer(&__native))
 	return __retVal
@@ -940,10 +940,10 @@ var P_NoParamReturnVector2Callback = func() plugify.Vector2 {
 // NoParamReturnVector2Callback
 func NoParamReturnVector2Callback() plugify.Vector2 {
 	defer plugify.Scope("cross_call_master::NoParamReturnVector2Callback", ModuleName, 3)()
-	return P_NoParamReturnVector2Callback()
+	return _NoParamReturnVector2Callback()
 }
 
-var P_NoParamReturnVector3Callback = func() plugify.Vector3 {
+var _NoParamReturnVector3Callback = func() plugify.Vector3 {
 	__native := C.NoParamReturnVector3Callback()
 	__retVal := *(*plugify.Vector3)(unsafe.Pointer(&__native))
 	return __retVal
@@ -952,10 +952,10 @@ var P_NoParamReturnVector3Callback = func() plugify.Vector3 {
 // NoParamReturnVector3Callback
 func NoParamReturnVector3Callback() plugify.Vector3 {
 	defer plugify.Scope("cross_call_master::NoParamReturnVector3Callback", ModuleName, 3)()
-	return P_NoParamReturnVector3Callback()
+	return _NoParamReturnVector3Callback()
 }
 
-var P_NoParamReturnVector4Callback = func() plugify.Vector4 {
+var _NoParamReturnVector4Callback = func() plugify.Vector4 {
 	__native := C.NoParamReturnVector4Callback()
 	__retVal := *(*plugify.Vector4)(unsafe.Pointer(&__native))
 	return __retVal
@@ -964,10 +964,10 @@ var P_NoParamReturnVector4Callback = func() plugify.Vector4 {
 // NoParamReturnVector4Callback
 func NoParamReturnVector4Callback() plugify.Vector4 {
 	defer plugify.Scope("cross_call_master::NoParamReturnVector4Callback", ModuleName, 3)()
-	return P_NoParamReturnVector4Callback()
+	return _NoParamReturnVector4Callback()
 }
 
-var P_NoParamReturnMatrix4x4Callback = func() plugify.Matrix4x4 {
+var _NoParamReturnMatrix4x4Callback = func() plugify.Matrix4x4 {
 	__native := C.NoParamReturnMatrix4x4Callback()
 	__retVal := *(*plugify.Matrix4x4)(unsafe.Pointer(&__native))
 	return __retVal
@@ -976,10 +976,10 @@ var P_NoParamReturnMatrix4x4Callback = func() plugify.Matrix4x4 {
 // NoParamReturnMatrix4x4Callback
 func NoParamReturnMatrix4x4Callback() plugify.Matrix4x4 {
 	defer plugify.Scope("cross_call_master::NoParamReturnMatrix4x4Callback", ModuleName, 3)()
-	return P_NoParamReturnMatrix4x4Callback()
+	return _NoParamReturnMatrix4x4Callback()
 }
 
-var P_Param1Callback = func(a int32) {
+var _Param1Callback = func(a int32) {
 	__a := C.int32_t(a)
 	C.Param1Callback(__a)
 }
@@ -987,10 +987,10 @@ var P_Param1Callback = func(a int32) {
 // Param1Callback
 func Param1Callback(a int32) {
 	defer plugify.Scope("cross_call_master::Param1Callback", ModuleName, 3)()
-	P_Param1Callback(a)
+	_Param1Callback(a)
 }
 
-var P_Param2Callback = func(a int32, b float32) {
+var _Param2Callback = func(a int32, b float32) {
 	__a := C.int32_t(a)
 	__b := C.float(b)
 	C.Param2Callback(__a, __b)
@@ -999,10 +999,10 @@ var P_Param2Callback = func(a int32, b float32) {
 // Param2Callback
 func Param2Callback(a int32, b float32) {
 	defer plugify.Scope("cross_call_master::Param2Callback", ModuleName, 3)()
-	P_Param2Callback(a, b)
+	_Param2Callback(a, b)
 }
 
-var P_Param3Callback = func(a int32, b float32, c float64) {
+var _Param3Callback = func(a int32, b float32, c float64) {
 	__a := C.int32_t(a)
 	__b := C.float(b)
 	__c := C.double(c)
@@ -1012,10 +1012,10 @@ var P_Param3Callback = func(a int32, b float32, c float64) {
 // Param3Callback
 func Param3Callback(a int32, b float32, c float64) {
 	defer plugify.Scope("cross_call_master::Param3Callback", ModuleName, 3)()
-	P_Param3Callback(a, b, c)
+	_Param3Callback(a, b, c)
 }
 
-var P_Param4Callback = func(a int32, b float32, c float64, d plugify.Vector4) {
+var _Param4Callback = func(a int32, b float32, c float64, d plugify.Vector4) {
 	__a := C.int32_t(a)
 	__b := C.float(b)
 	__c := C.double(c)
@@ -1026,10 +1026,10 @@ var P_Param4Callback = func(a int32, b float32, c float64, d plugify.Vector4) {
 // Param4Callback
 func Param4Callback(a int32, b float32, c float64, d plugify.Vector4) {
 	defer plugify.Scope("cross_call_master::Param4Callback", ModuleName, 3)()
-	P_Param4Callback(a, b, c, d)
+	_Param4Callback(a, b, c, d)
 }
 
-var P_Param5Callback = func(a int32, b float32, c float64, d plugify.Vector4, e []int64) {
+var _Param5Callback = func(a int32, b float32, c float64, d plugify.Vector4, e []int64) {
 	__a := C.int32_t(a)
 	__b := C.float(b)
 	__c := C.double(c)
@@ -1049,10 +1049,10 @@ var P_Param5Callback = func(a int32, b float32, c float64, d plugify.Vector4, e 
 // Param5Callback
 func Param5Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64) {
 	defer plugify.Scope("cross_call_master::Param5Callback", ModuleName, 3)()
-	P_Param5Callback(a, b, c, d, e)
+	_Param5Callback(a, b, c, d, e)
 }
 
-var P_Param6Callback = func(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8) {
+var _Param6Callback = func(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8) {
 	__a := C.int32_t(a)
 	__b := C.float(b)
 	__c := C.double(c)
@@ -1073,10 +1073,10 @@ var P_Param6Callback = func(a int32, b float32, c float64, d plugify.Vector4, e 
 // Param6Callback
 func Param6Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8) {
 	defer plugify.Scope("cross_call_master::Param6Callback", ModuleName, 3)()
-	P_Param6Callback(a, b, c, d, e, f)
+	_Param6Callback(a, b, c, d, e, f)
 }
 
-var P_Param7Callback = func(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8, g string) {
+var _Param7Callback = func(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8, g string) {
 	__a := C.int32_t(a)
 	__b := C.float(b)
 	__c := C.double(c)
@@ -1099,10 +1099,10 @@ var P_Param7Callback = func(a int32, b float32, c float64, d plugify.Vector4, e 
 // Param7Callback
 func Param7Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8, g string) {
 	defer plugify.Scope("cross_call_master::Param7Callback", ModuleName, 3)()
-	P_Param7Callback(a, b, c, d, e, f, g)
+	_Param7Callback(a, b, c, d, e, f, g)
 }
 
-var P_Param8Callback = func(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8, g string, h uint16) {
+var _Param8Callback = func(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8, g string, h uint16) {
 	__a := C.int32_t(a)
 	__b := C.float(b)
 	__c := C.double(c)
@@ -1126,10 +1126,10 @@ var P_Param8Callback = func(a int32, b float32, c float64, d plugify.Vector4, e 
 // Param8Callback
 func Param8Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8, g string, h uint16) {
 	defer plugify.Scope("cross_call_master::Param8Callback", ModuleName, 3)()
-	P_Param8Callback(a, b, c, d, e, f, g, h)
+	_Param8Callback(a, b, c, d, e, f, g, h)
 }
 
-var P_Param9Callback = func(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8, g string, h uint16, k int16) {
+var _Param9Callback = func(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8, g string, h uint16, k int16) {
 	__a := C.int32_t(a)
 	__b := C.float(b)
 	__c := C.double(c)
@@ -1154,10 +1154,10 @@ var P_Param9Callback = func(a int32, b float32, c float64, d plugify.Vector4, e 
 // Param9Callback
 func Param9Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8, g string, h uint16, k int16) {
 	defer plugify.Scope("cross_call_master::Param9Callback", ModuleName, 3)()
-	P_Param9Callback(a, b, c, d, e, f, g, h, k)
+	_Param9Callback(a, b, c, d, e, f, g, h, k)
 }
 
-var P_Param10Callback = func(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8, g string, h uint16, k int16, l uintptr) {
+var _Param10Callback = func(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8, g string, h uint16, k int16, l uintptr) {
 	__a := C.int32_t(a)
 	__b := C.float(b)
 	__c := C.double(c)
@@ -1183,10 +1183,10 @@ var P_Param10Callback = func(a int32, b float32, c float64, d plugify.Vector4, e
 // Param10Callback
 func Param10Callback(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8, g string, h uint16, k int16, l uintptr) {
 	defer plugify.Scope("cross_call_master::Param10Callback", ModuleName, 3)()
-	P_Param10Callback(a, b, c, d, e, f, g, h, k, l)
+	_Param10Callback(a, b, c, d, e, f, g, h, k, l)
 }
 
-var P_ParamRef1Callback = func(a *int32) {
+var _ParamRef1Callback = func(a *int32) {
 	__a := C.int32_t(*a)
 	C.ParamRef1Callback(&__a)
 	// Unmarshal - Convert native data to managed data.
@@ -1196,10 +1196,10 @@ var P_ParamRef1Callback = func(a *int32) {
 // ParamRef1Callback
 func ParamRef1Callback(a *int32) {
 	defer plugify.Scope("cross_call_master::ParamRef1Callback", ModuleName, 3)()
-	P_ParamRef1Callback(a)
+	_ParamRef1Callback(a)
 }
 
-var P_ParamRef2Callback = func(a *int32, b *float32) {
+var _ParamRef2Callback = func(a *int32, b *float32) {
 	__a := C.int32_t(*a)
 	__b := C.float(*b)
 	C.ParamRef2Callback(&__a, &__b)
@@ -1211,10 +1211,10 @@ var P_ParamRef2Callback = func(a *int32, b *float32) {
 // ParamRef2Callback
 func ParamRef2Callback(a *int32, b *float32) {
 	defer plugify.Scope("cross_call_master::ParamRef2Callback", ModuleName, 3)()
-	P_ParamRef2Callback(a, b)
+	_ParamRef2Callback(a, b)
 }
 
-var P_ParamRef3Callback = func(a *int32, b *float32, c *float64) {
+var _ParamRef3Callback = func(a *int32, b *float32, c *float64) {
 	__a := C.int32_t(*a)
 	__b := C.float(*b)
 	__c := C.double(*c)
@@ -1228,10 +1228,10 @@ var P_ParamRef3Callback = func(a *int32, b *float32, c *float64) {
 // ParamRef3Callback
 func ParamRef3Callback(a *int32, b *float32, c *float64) {
 	defer plugify.Scope("cross_call_master::ParamRef3Callback", ModuleName, 3)()
-	P_ParamRef3Callback(a, b, c)
+	_ParamRef3Callback(a, b, c)
 }
 
-var P_ParamRef4Callback = func(a *int32, b *float32, c *float64, d *plugify.Vector4) {
+var _ParamRef4Callback = func(a *int32, b *float32, c *float64, d *plugify.Vector4) {
 	__a := C.int32_t(*a)
 	__b := C.float(*b)
 	__c := C.double(*c)
@@ -1247,10 +1247,10 @@ var P_ParamRef4Callback = func(a *int32, b *float32, c *float64, d *plugify.Vect
 // ParamRef4Callback
 func ParamRef4Callback(a *int32, b *float32, c *float64, d *plugify.Vector4) {
 	defer plugify.Scope("cross_call_master::ParamRef4Callback", ModuleName, 3)()
-	P_ParamRef4Callback(a, b, c, d)
+	_ParamRef4Callback(a, b, c, d)
 }
 
-var P_ParamRef5Callback = func(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64) {
+var _ParamRef5Callback = func(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64) {
 	__a := C.int32_t(*a)
 	__b := C.float(*b)
 	__c := C.double(*c)
@@ -1276,10 +1276,10 @@ var P_ParamRef5Callback = func(a *int32, b *float32, c *float64, d *plugify.Vect
 // ParamRef5Callback
 func ParamRef5Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64) {
 	defer plugify.Scope("cross_call_master::ParamRef5Callback", ModuleName, 3)()
-	P_ParamRef5Callback(a, b, c, d, e)
+	_ParamRef5Callback(a, b, c, d, e)
 }
 
-var P_ParamRef6Callback = func(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8) {
+var _ParamRef6Callback = func(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8) {
 	__a := C.int32_t(*a)
 	__b := C.float(*b)
 	__c := C.double(*c)
@@ -1307,10 +1307,10 @@ var P_ParamRef6Callback = func(a *int32, b *float32, c *float64, d *plugify.Vect
 // ParamRef6Callback
 func ParamRef6Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8) {
 	defer plugify.Scope("cross_call_master::ParamRef6Callback", ModuleName, 3)()
-	P_ParamRef6Callback(a, b, c, d, e, f)
+	_ParamRef6Callback(a, b, c, d, e, f)
 }
 
-var P_ParamRef7Callback = func(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8, g *string) {
+var _ParamRef7Callback = func(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8, g *string) {
 	__a := C.int32_t(*a)
 	__b := C.float(*b)
 	__c := C.double(*c)
@@ -1341,10 +1341,10 @@ var P_ParamRef7Callback = func(a *int32, b *float32, c *float64, d *plugify.Vect
 // ParamRef7Callback
 func ParamRef7Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8, g *string) {
 	defer plugify.Scope("cross_call_master::ParamRef7Callback", ModuleName, 3)()
-	P_ParamRef7Callback(a, b, c, d, e, f, g)
+	_ParamRef7Callback(a, b, c, d, e, f, g)
 }
 
-var P_ParamRef8Callback = func(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8, g *string, h *uint16) {
+var _ParamRef8Callback = func(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8, g *string, h *uint16) {
 	__a := C.int32_t(*a)
 	__b := C.float(*b)
 	__c := C.double(*c)
@@ -1377,10 +1377,10 @@ var P_ParamRef8Callback = func(a *int32, b *float32, c *float64, d *plugify.Vect
 // ParamRef8Callback
 func ParamRef8Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8, g *string, h *uint16) {
 	defer plugify.Scope("cross_call_master::ParamRef8Callback", ModuleName, 3)()
-	P_ParamRef8Callback(a, b, c, d, e, f, g, h)
+	_ParamRef8Callback(a, b, c, d, e, f, g, h)
 }
 
-var P_ParamRef9Callback = func(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8, g *string, h *uint16, k *int16) {
+var _ParamRef9Callback = func(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8, g *string, h *uint16, k *int16) {
 	__a := C.int32_t(*a)
 	__b := C.float(*b)
 	__c := C.double(*c)
@@ -1415,10 +1415,10 @@ var P_ParamRef9Callback = func(a *int32, b *float32, c *float64, d *plugify.Vect
 // ParamRef9Callback
 func ParamRef9Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8, g *string, h *uint16, k *int16) {
 	defer plugify.Scope("cross_call_master::ParamRef9Callback", ModuleName, 3)()
-	P_ParamRef9Callback(a, b, c, d, e, f, g, h, k)
+	_ParamRef9Callback(a, b, c, d, e, f, g, h, k)
 }
 
-var P_ParamRef10Callback = func(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8, g *string, h *uint16, k *int16, l *uintptr) {
+var _ParamRef10Callback = func(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8, g *string, h *uint16, k *int16, l *uintptr) {
 	__a := C.int32_t(*a)
 	__b := C.float(*b)
 	__c := C.double(*c)
@@ -1455,10 +1455,10 @@ var P_ParamRef10Callback = func(a *int32, b *float32, c *float64, d *plugify.Vec
 // ParamRef10Callback
 func ParamRef10Callback(a *int32, b *float32, c *float64, d *plugify.Vector4, e *[]int64, f *int8, g *string, h *uint16, k *int16, l *uintptr) {
 	defer plugify.Scope("cross_call_master::ParamRef10Callback", ModuleName, 3)()
-	P_ParamRef10Callback(a, b, c, d, e, f, g, h, k, l)
+	_ParamRef10Callback(a, b, c, d, e, f, g, h, k, l)
 }
 
-var P_ParamRefVectorsCallback = func(p1 *[]bool, p2 *[]int8, p3 *[]uint16, p4 *[]int8, p5 *[]int16, p6 *[]int32, p7 *[]int64, p8 *[]uint8, p9 *[]uint16, p10 *[]uint32, p11 *[]uint64, p12 *[]uintptr, p13 *[]float32, p14 *[]float64, p15 *[]string) {
+var _ParamRefVectorsCallback = func(p1 *[]bool, p2 *[]int8, p3 *[]uint16, p4 *[]int8, p5 *[]int16, p6 *[]int32, p7 *[]int64, p8 *[]uint8, p9 *[]uint16, p10 *[]uint32, p11 *[]uint64, p12 *[]uintptr, p13 *[]float32, p14 *[]float64, p15 *[]string) {
 	__p1 := plugify.ConstructVectorBool(*p1)
 	__p2 := plugify.ConstructVectorChar8(*p2)
 	__p3 := plugify.ConstructVectorChar16(*p3)
@@ -1518,10 +1518,10 @@ var P_ParamRefVectorsCallback = func(p1 *[]bool, p2 *[]int8, p3 *[]uint16, p4 *[
 // ParamRefVectorsCallback
 func ParamRefVectorsCallback(p1 *[]bool, p2 *[]int8, p3 *[]uint16, p4 *[]int8, p5 *[]int16, p6 *[]int32, p7 *[]int64, p8 *[]uint8, p9 *[]uint16, p10 *[]uint32, p11 *[]uint64, p12 *[]uintptr, p13 *[]float32, p14 *[]float64, p15 *[]string) {
 	defer plugify.Scope("cross_call_master::ParamRefVectorsCallback", ModuleName, 3)()
-	P_ParamRefVectorsCallback(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15)
+	_ParamRefVectorsCallback(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15)
 }
 
-var P_ParamAllPrimitivesCallback = func(p1 bool, p2 int8, p3 uint16, p4 int8, p5 int16, p6 int32, p7 int64, p8 uint8, p9 uint16, p10 uint32, p11 uint64, p12 uintptr, p13 float32, p14 float64) int64 {
+var _ParamAllPrimitivesCallback = func(p1 bool, p2 int8, p3 uint16, p4 int8, p5 int16, p6 int32, p7 int64, p8 uint8, p9 uint16, p10 uint32, p11 uint64, p12 uintptr, p13 float32, p14 float64) int64 {
 	var __retVal int64
 	__p1 := C.bool(p1)
 	__p2 := C.int8_t(p2)
@@ -1544,10 +1544,10 @@ var P_ParamAllPrimitivesCallback = func(p1 bool, p2 int8, p3 uint16, p4 int8, p5
 // ParamAllPrimitivesCallback
 func ParamAllPrimitivesCallback(p1 bool, p2 int8, p3 uint16, p4 int8, p5 int16, p6 int32, p7 int64, p8 uint8, p9 uint16, p10 uint32, p11 uint64, p12 uintptr, p13 float32, p14 float64) int64 {
 	defer plugify.Scope("cross_call_master::ParamAllPrimitivesCallback", ModuleName, 3)()
-	return P_ParamAllPrimitivesCallback(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14)
+	return _ParamAllPrimitivesCallback(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14)
 }
 
-var P_ParamAllAliasesCallback = func(aBool AliasBool, aChar8 AliasChar8, aChar16 AliasChar16, aInt8 AliasInt8, aInt16 AliasInt16, aInt32 AliasInt32, aInt64 AliasInt64, aPtr AliasPtr, aFloat AliasFloat, aDouble AliasDouble, aString AliasString, aAny AliasAny, aVec2 AliasVec2, aVec3 AliasVec3, aVec4 AliasVec4, aMat4x4 AliasMat4x4, aBoolVec AliasBoolVector, aChar8Vec AliasChar8Vector, aChar16Vec AliasChar16Vector, aInt8Vec AliasInt8Vector, aInt16Vec AliasInt16Vector, aInt32Vec AliasInt32Vector, aInt64Vec AliasInt64Vector, aPtrVec AliasPtrVector, aFloatVec AliasFloatVector, aDoubleVec AliasDoubleVector, aStringVec AliasStringVector, aAnyVec AliasAnyVector, aVec2Vec AliasVec2Vector, aVec3Vec AliasVec3Vector, aVec4Vec AliasVec4Vector) int32 {
+var _ParamAllAliasesCallback = func(aBool AliasBool, aChar8 AliasChar8, aChar16 AliasChar16, aInt8 AliasInt8, aInt16 AliasInt16, aInt32 AliasInt32, aInt64 AliasInt64, aPtr AliasPtr, aFloat AliasFloat, aDouble AliasDouble, aString AliasString, aAny AliasAny, aVec2 AliasVec2, aVec3 AliasVec3, aVec4 AliasVec4, aMat4x4 AliasMat4x4, aBoolVec AliasBoolVector, aChar8Vec AliasChar8Vector, aChar16Vec AliasChar16Vector, aInt8Vec AliasInt8Vector, aInt16Vec AliasInt16Vector, aInt32Vec AliasInt32Vector, aInt64Vec AliasInt64Vector, aPtrVec AliasPtrVector, aFloatVec AliasFloatVector, aDoubleVec AliasDoubleVector, aStringVec AliasStringVector, aAnyVec AliasAnyVector, aVec2Vec AliasVec2Vector, aVec3Vec AliasVec3Vector, aVec4Vec AliasVec4Vector) int32 {
 	var __retVal int32
 	__aBool := C.bool(aBool)
 	__aChar8 := C.int8_t(aChar8)
@@ -1611,10 +1611,10 @@ var P_ParamAllAliasesCallback = func(aBool AliasBool, aChar8 AliasChar8, aChar16
 // ParamAllAliasesCallback
 func ParamAllAliasesCallback(aBool AliasBool, aChar8 AliasChar8, aChar16 AliasChar16, aInt8 AliasInt8, aInt16 AliasInt16, aInt32 AliasInt32, aInt64 AliasInt64, aPtr AliasPtr, aFloat AliasFloat, aDouble AliasDouble, aString AliasString, aAny AliasAny, aVec2 AliasVec2, aVec3 AliasVec3, aVec4 AliasVec4, aMat4x4 AliasMat4x4, aBoolVec AliasBoolVector, aChar8Vec AliasChar8Vector, aChar16Vec AliasChar16Vector, aInt8Vec AliasInt8Vector, aInt16Vec AliasInt16Vector, aInt32Vec AliasInt32Vector, aInt64Vec AliasInt64Vector, aPtrVec AliasPtrVector, aFloatVec AliasFloatVector, aDoubleVec AliasDoubleVector, aStringVec AliasStringVector, aAnyVec AliasAnyVector, aVec2Vec AliasVec2Vector, aVec3Vec AliasVec3Vector, aVec4Vec AliasVec4Vector) int32 {
 	defer plugify.Scope("cross_call_master::ParamAllAliasesCallback", ModuleName, 3)()
-	return P_ParamAllAliasesCallback(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble, aString, aAny, aVec2, aVec3, aVec4, aMat4x4, aBoolVec, aChar8Vec, aChar16Vec, aInt8Vec, aInt16Vec, aInt32Vec, aInt64Vec, aPtrVec, aFloatVec, aDoubleVec, aStringVec, aAnyVec, aVec2Vec, aVec3Vec, aVec4Vec)
+	return _ParamAllAliasesCallback(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble, aString, aAny, aVec2, aVec3, aVec4, aMat4x4, aBoolVec, aChar8Vec, aChar16Vec, aInt8Vec, aInt16Vec, aInt32Vec, aInt64Vec, aPtrVec, aFloatVec, aDoubleVec, aStringVec, aAnyVec, aVec2Vec, aVec3Vec, aVec4Vec)
 }
 
-var P_ParamAllRefAliasesCallback = func(aBool *AliasBool, aChar8 *AliasChar8, aChar16 *AliasChar16, aInt8 *AliasInt8, aInt16 *AliasInt16, aInt32 *AliasInt32, aInt64 *AliasInt64, aPtr *AliasPtr, aFloat *AliasFloat, aDouble *AliasDouble, aString *AliasString, aAny *AliasAny, aVec2 *AliasVec2, aVec3 *AliasVec3, aVec4 *AliasVec4, aMat4x4 *AliasMat4x4, aBoolVec *AliasBoolVector, aChar8Vec *AliasChar8Vector, aChar16Vec *AliasChar16Vector, aInt8Vec *AliasInt8Vector, aInt16Vec *AliasInt16Vector, aInt32Vec *AliasInt32Vector, aInt64Vec *AliasInt64Vector, aPtrVec *AliasPtrVector, aFloatVec *AliasFloatVector, aDoubleVec *AliasDoubleVector, aStringVec *AliasStringVector, aAnyVec *AliasAnyVector, aVec2Vec *AliasVec2Vector, aVec3Vec *AliasVec3Vector, aVec4Vec *AliasVec4Vector) int64 {
+var _ParamAllRefAliasesCallback = func(aBool *AliasBool, aChar8 *AliasChar8, aChar16 *AliasChar16, aInt8 *AliasInt8, aInt16 *AliasInt16, aInt32 *AliasInt32, aInt64 *AliasInt64, aPtr *AliasPtr, aFloat *AliasFloat, aDouble *AliasDouble, aString *AliasString, aAny *AliasAny, aVec2 *AliasVec2, aVec3 *AliasVec3, aVec4 *AliasVec4, aMat4x4 *AliasMat4x4, aBoolVec *AliasBoolVector, aChar8Vec *AliasChar8Vector, aChar16Vec *AliasChar16Vector, aInt8Vec *AliasInt8Vector, aInt16Vec *AliasInt16Vector, aInt32Vec *AliasInt32Vector, aInt64Vec *AliasInt64Vector, aPtrVec *AliasPtrVector, aFloatVec *AliasFloatVector, aDoubleVec *AliasDoubleVector, aStringVec *AliasStringVector, aAnyVec *AliasAnyVector, aVec2Vec *AliasVec2Vector, aVec3Vec *AliasVec3Vector, aVec4Vec *AliasVec4Vector) int64 {
 	var __retVal int64
 	__aBool := C.bool(*aBool)
 	__aChar8 := C.int8_t(*aChar8)
@@ -1710,10 +1710,10 @@ var P_ParamAllRefAliasesCallback = func(aBool *AliasBool, aChar8 *AliasChar8, aC
 // ParamAllRefAliasesCallback
 func ParamAllRefAliasesCallback(aBool *AliasBool, aChar8 *AliasChar8, aChar16 *AliasChar16, aInt8 *AliasInt8, aInt16 *AliasInt16, aInt32 *AliasInt32, aInt64 *AliasInt64, aPtr *AliasPtr, aFloat *AliasFloat, aDouble *AliasDouble, aString *AliasString, aAny *AliasAny, aVec2 *AliasVec2, aVec3 *AliasVec3, aVec4 *AliasVec4, aMat4x4 *AliasMat4x4, aBoolVec *AliasBoolVector, aChar8Vec *AliasChar8Vector, aChar16Vec *AliasChar16Vector, aInt8Vec *AliasInt8Vector, aInt16Vec *AliasInt16Vector, aInt32Vec *AliasInt32Vector, aInt64Vec *AliasInt64Vector, aPtrVec *AliasPtrVector, aFloatVec *AliasFloatVector, aDoubleVec *AliasDoubleVector, aStringVec *AliasStringVector, aAnyVec *AliasAnyVector, aVec2Vec *AliasVec2Vector, aVec3Vec *AliasVec3Vector, aVec4Vec *AliasVec4Vector) int64 {
 	defer plugify.Scope("cross_call_master::ParamAllRefAliasesCallback", ModuleName, 3)()
-	return P_ParamAllRefAliasesCallback(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble, aString, aAny, aVec2, aVec3, aVec4, aMat4x4, aBoolVec, aChar8Vec, aChar16Vec, aInt8Vec, aInt16Vec, aInt32Vec, aInt64Vec, aPtrVec, aFloatVec, aDoubleVec, aStringVec, aAnyVec, aVec2Vec, aVec3Vec, aVec4Vec)
+	return _ParamAllRefAliasesCallback(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble, aString, aAny, aVec2, aVec3, aVec4, aMat4x4, aBoolVec, aChar8Vec, aChar16Vec, aInt8Vec, aInt16Vec, aInt32Vec, aInt64Vec, aPtrVec, aFloatVec, aDoubleVec, aStringVec, aAnyVec, aVec2Vec, aVec3Vec, aVec4Vec)
 }
 
-var P_ParamEnumCallback = func(p1 Example, p2 []Example) int32 {
+var _ParamEnumCallback = func(p1 Example, p2 []Example) int32 {
 	var __retVal int32
 	__p1 := C.int32_t(p1)
 	__p2 := plugify.ConstructVectorInt32(p2)
@@ -1732,10 +1732,10 @@ var P_ParamEnumCallback = func(p1 Example, p2 []Example) int32 {
 // ParamEnumCallback
 func ParamEnumCallback(p1 Example, p2 []Example) int32 {
 	defer plugify.Scope("cross_call_master::ParamEnumCallback", ModuleName, 3)()
-	return P_ParamEnumCallback(p1, p2)
+	return _ParamEnumCallback(p1, p2)
 }
 
-var P_ParamEnumRefCallback = func(p1 *Example, p2 *[]Example) int32 {
+var _ParamEnumRefCallback = func(p1 *Example, p2 *[]Example) int32 {
 	var __retVal int32
 	__p1 := C.int32_t(*p1)
 	__p2 := plugify.ConstructVectorInt32(*p2)
@@ -1757,10 +1757,10 @@ var P_ParamEnumRefCallback = func(p1 *Example, p2 *[]Example) int32 {
 // ParamEnumRefCallback
 func ParamEnumRefCallback(p1 *Example, p2 *[]Example) int32 {
 	defer plugify.Scope("cross_call_master::ParamEnumRefCallback", ModuleName, 3)()
-	return P_ParamEnumRefCallback(p1, p2)
+	return _ParamEnumRefCallback(p1, p2)
 }
 
-var P_ParamVariantCallback = func(p1 any, p2 []any) {
+var _ParamVariantCallback = func(p1 any, p2 []any) {
 	__p1 := plugify.ConstructVariant(p1)
 	__p2 := plugify.ConstructVectorVariant(p2)
 	plugify.Block{
@@ -1778,10 +1778,10 @@ var P_ParamVariantCallback = func(p1 any, p2 []any) {
 // ParamVariantCallback
 func ParamVariantCallback(p1 any, p2 []any) {
 	defer plugify.Scope("cross_call_master::ParamVariantCallback", ModuleName, 3)()
-	P_ParamVariantCallback(p1, p2)
+	_ParamVariantCallback(p1, p2)
 }
 
-var P_ParamVariantRefCallback = func(p1 *any, p2 *[]any) {
+var _ParamVariantRefCallback = func(p1 *any, p2 *[]any) {
 	__p1 := plugify.ConstructVariant(*p1)
 	__p2 := plugify.ConstructVectorVariant(*p2)
 	plugify.Block{
@@ -1802,10 +1802,10 @@ var P_ParamVariantRefCallback = func(p1 *any, p2 *[]any) {
 // ParamVariantRefCallback
 func ParamVariantRefCallback(p1 *any, p2 *[]any) {
 	defer plugify.Scope("cross_call_master::ParamVariantRefCallback", ModuleName, 3)()
-	P_ParamVariantRefCallback(p1, p2)
+	_ParamVariantRefCallback(p1, p2)
 }
 
-var P_CallFuncVoidCallback = func(func_ FuncVoid) {
+var _CallFuncVoidCallback = func(func_ FuncVoid) {
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	C.CallFuncVoidCallback(__func_)
 }
@@ -1813,10 +1813,10 @@ var P_CallFuncVoidCallback = func(func_ FuncVoid) {
 // CallFuncVoidCallback
 func CallFuncVoidCallback(func_ FuncVoid) {
 	defer plugify.Scope("cross_call_master::CallFuncVoidCallback", ModuleName, 3)()
-	P_CallFuncVoidCallback(func_)
+	_CallFuncVoidCallback(func_)
 }
 
-var P_CallFuncBoolCallback = func(func_ FuncBool) bool {
+var _CallFuncBoolCallback = func(func_ FuncBool) bool {
 	var __retVal bool
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = bool(C.CallFuncBoolCallback(__func_))
@@ -1826,10 +1826,10 @@ var P_CallFuncBoolCallback = func(func_ FuncBool) bool {
 // CallFuncBoolCallback
 func CallFuncBoolCallback(func_ FuncBool) bool {
 	defer plugify.Scope("cross_call_master::CallFuncBoolCallback", ModuleName, 3)()
-	return P_CallFuncBoolCallback(func_)
+	return _CallFuncBoolCallback(func_)
 }
 
-var P_CallFuncChar8Callback = func(func_ FuncChar8) int8 {
+var _CallFuncChar8Callback = func(func_ FuncChar8) int8 {
 	var __retVal int8
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = int8(C.CallFuncChar8Callback(__func_))
@@ -1839,10 +1839,10 @@ var P_CallFuncChar8Callback = func(func_ FuncChar8) int8 {
 // CallFuncChar8Callback
 func CallFuncChar8Callback(func_ FuncChar8) int8 {
 	defer plugify.Scope("cross_call_master::CallFuncChar8Callback", ModuleName, 3)()
-	return P_CallFuncChar8Callback(func_)
+	return _CallFuncChar8Callback(func_)
 }
 
-var P_CallFuncChar16Callback = func(func_ FuncChar16) uint16 {
+var _CallFuncChar16Callback = func(func_ FuncChar16) uint16 {
 	var __retVal uint16
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = uint16(C.CallFuncChar16Callback(__func_))
@@ -1852,10 +1852,10 @@ var P_CallFuncChar16Callback = func(func_ FuncChar16) uint16 {
 // CallFuncChar16Callback
 func CallFuncChar16Callback(func_ FuncChar16) uint16 {
 	defer plugify.Scope("cross_call_master::CallFuncChar16Callback", ModuleName, 3)()
-	return P_CallFuncChar16Callback(func_)
+	return _CallFuncChar16Callback(func_)
 }
 
-var P_CallFuncInt8Callback = func(func_ FuncInt8) int8 {
+var _CallFuncInt8Callback = func(func_ FuncInt8) int8 {
 	var __retVal int8
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = int8(C.CallFuncInt8Callback(__func_))
@@ -1865,10 +1865,10 @@ var P_CallFuncInt8Callback = func(func_ FuncInt8) int8 {
 // CallFuncInt8Callback
 func CallFuncInt8Callback(func_ FuncInt8) int8 {
 	defer plugify.Scope("cross_call_master::CallFuncInt8Callback", ModuleName, 3)()
-	return P_CallFuncInt8Callback(func_)
+	return _CallFuncInt8Callback(func_)
 }
 
-var P_CallFuncInt16Callback = func(func_ FuncInt16) int16 {
+var _CallFuncInt16Callback = func(func_ FuncInt16) int16 {
 	var __retVal int16
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = int16(C.CallFuncInt16Callback(__func_))
@@ -1878,10 +1878,10 @@ var P_CallFuncInt16Callback = func(func_ FuncInt16) int16 {
 // CallFuncInt16Callback
 func CallFuncInt16Callback(func_ FuncInt16) int16 {
 	defer plugify.Scope("cross_call_master::CallFuncInt16Callback", ModuleName, 3)()
-	return P_CallFuncInt16Callback(func_)
+	return _CallFuncInt16Callback(func_)
 }
 
-var P_CallFuncInt32Callback = func(func_ FuncInt32) int32 {
+var _CallFuncInt32Callback = func(func_ FuncInt32) int32 {
 	var __retVal int32
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = int32(C.CallFuncInt32Callback(__func_))
@@ -1891,10 +1891,10 @@ var P_CallFuncInt32Callback = func(func_ FuncInt32) int32 {
 // CallFuncInt32Callback
 func CallFuncInt32Callback(func_ FuncInt32) int32 {
 	defer plugify.Scope("cross_call_master::CallFuncInt32Callback", ModuleName, 3)()
-	return P_CallFuncInt32Callback(func_)
+	return _CallFuncInt32Callback(func_)
 }
 
-var P_CallFuncInt64Callback = func(func_ FuncInt64) int64 {
+var _CallFuncInt64Callback = func(func_ FuncInt64) int64 {
 	var __retVal int64
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = int64(C.CallFuncInt64Callback(__func_))
@@ -1904,10 +1904,10 @@ var P_CallFuncInt64Callback = func(func_ FuncInt64) int64 {
 // CallFuncInt64Callback
 func CallFuncInt64Callback(func_ FuncInt64) int64 {
 	defer plugify.Scope("cross_call_master::CallFuncInt64Callback", ModuleName, 3)()
-	return P_CallFuncInt64Callback(func_)
+	return _CallFuncInt64Callback(func_)
 }
 
-var P_CallFuncUInt8Callback = func(func_ FuncUInt8) uint8 {
+var _CallFuncUInt8Callback = func(func_ FuncUInt8) uint8 {
 	var __retVal uint8
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = uint8(C.CallFuncUInt8Callback(__func_))
@@ -1917,10 +1917,10 @@ var P_CallFuncUInt8Callback = func(func_ FuncUInt8) uint8 {
 // CallFuncUInt8Callback
 func CallFuncUInt8Callback(func_ FuncUInt8) uint8 {
 	defer plugify.Scope("cross_call_master::CallFuncUInt8Callback", ModuleName, 3)()
-	return P_CallFuncUInt8Callback(func_)
+	return _CallFuncUInt8Callback(func_)
 }
 
-var P_CallFuncUInt16Callback = func(func_ FuncUInt16) uint16 {
+var _CallFuncUInt16Callback = func(func_ FuncUInt16) uint16 {
 	var __retVal uint16
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = uint16(C.CallFuncUInt16Callback(__func_))
@@ -1930,10 +1930,10 @@ var P_CallFuncUInt16Callback = func(func_ FuncUInt16) uint16 {
 // CallFuncUInt16Callback
 func CallFuncUInt16Callback(func_ FuncUInt16) uint16 {
 	defer plugify.Scope("cross_call_master::CallFuncUInt16Callback", ModuleName, 3)()
-	return P_CallFuncUInt16Callback(func_)
+	return _CallFuncUInt16Callback(func_)
 }
 
-var P_CallFuncUInt32Callback = func(func_ FuncUInt32) uint32 {
+var _CallFuncUInt32Callback = func(func_ FuncUInt32) uint32 {
 	var __retVal uint32
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = uint32(C.CallFuncUInt32Callback(__func_))
@@ -1943,10 +1943,10 @@ var P_CallFuncUInt32Callback = func(func_ FuncUInt32) uint32 {
 // CallFuncUInt32Callback
 func CallFuncUInt32Callback(func_ FuncUInt32) uint32 {
 	defer plugify.Scope("cross_call_master::CallFuncUInt32Callback", ModuleName, 3)()
-	return P_CallFuncUInt32Callback(func_)
+	return _CallFuncUInt32Callback(func_)
 }
 
-var P_CallFuncUInt64Callback = func(func_ FuncUInt64) uint64 {
+var _CallFuncUInt64Callback = func(func_ FuncUInt64) uint64 {
 	var __retVal uint64
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = uint64(C.CallFuncUInt64Callback(__func_))
@@ -1956,10 +1956,10 @@ var P_CallFuncUInt64Callback = func(func_ FuncUInt64) uint64 {
 // CallFuncUInt64Callback
 func CallFuncUInt64Callback(func_ FuncUInt64) uint64 {
 	defer plugify.Scope("cross_call_master::CallFuncUInt64Callback", ModuleName, 3)()
-	return P_CallFuncUInt64Callback(func_)
+	return _CallFuncUInt64Callback(func_)
 }
 
-var P_CallFuncPtrCallback = func(func_ FuncPtr) uintptr {
+var _CallFuncPtrCallback = func(func_ FuncPtr) uintptr {
 	var __retVal uintptr
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = uintptr(C.CallFuncPtrCallback(__func_))
@@ -1969,10 +1969,10 @@ var P_CallFuncPtrCallback = func(func_ FuncPtr) uintptr {
 // CallFuncPtrCallback
 func CallFuncPtrCallback(func_ FuncPtr) uintptr {
 	defer plugify.Scope("cross_call_master::CallFuncPtrCallback", ModuleName, 3)()
-	return P_CallFuncPtrCallback(func_)
+	return _CallFuncPtrCallback(func_)
 }
 
-var P_CallFuncFloatCallback = func(func_ FuncFloat) float32 {
+var _CallFuncFloatCallback = func(func_ FuncFloat) float32 {
 	var __retVal float32
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = float32(C.CallFuncFloatCallback(__func_))
@@ -1982,10 +1982,10 @@ var P_CallFuncFloatCallback = func(func_ FuncFloat) float32 {
 // CallFuncFloatCallback
 func CallFuncFloatCallback(func_ FuncFloat) float32 {
 	defer plugify.Scope("cross_call_master::CallFuncFloatCallback", ModuleName, 3)()
-	return P_CallFuncFloatCallback(func_)
+	return _CallFuncFloatCallback(func_)
 }
 
-var P_CallFuncDoubleCallback = func(func_ FuncDouble) float64 {
+var _CallFuncDoubleCallback = func(func_ FuncDouble) float64 {
 	var __retVal float64
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = float64(C.CallFuncDoubleCallback(__func_))
@@ -1995,10 +1995,10 @@ var P_CallFuncDoubleCallback = func(func_ FuncDouble) float64 {
 // CallFuncDoubleCallback
 func CallFuncDoubleCallback(func_ FuncDouble) float64 {
 	defer plugify.Scope("cross_call_master::CallFuncDoubleCallback", ModuleName, 3)()
-	return P_CallFuncDoubleCallback(func_)
+	return _CallFuncDoubleCallback(func_)
 }
 
-var P_CallFuncStringCallback = func(func_ FuncString) string {
+var _CallFuncStringCallback = func(func_ FuncString) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2020,10 +2020,10 @@ var P_CallFuncStringCallback = func(func_ FuncString) string {
 // CallFuncStringCallback
 func CallFuncStringCallback(func_ FuncString) string {
 	defer plugify.Scope("cross_call_master::CallFuncStringCallback", ModuleName, 3)()
-	return P_CallFuncStringCallback(func_)
+	return _CallFuncStringCallback(func_)
 }
 
-var P_CallFuncAnyCallback = func(func_ FuncAny) any {
+var _CallFuncAnyCallback = func(func_ FuncAny) any {
 	var __retVal any
 	var __retVal_native plugify.PlgVariant
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2045,23 +2045,23 @@ var P_CallFuncAnyCallback = func(func_ FuncAny) any {
 // CallFuncAnyCallback
 func CallFuncAnyCallback(func_ FuncAny) any {
 	defer plugify.Scope("cross_call_master::CallFuncAnyCallback", ModuleName, 3)()
-	return P_CallFuncAnyCallback(func_)
+	return _CallFuncAnyCallback(func_)
 }
 
-var P_CallFuncFunctionCallback = func(func_ FuncFunction) uintptr {
-	var __retVal uintptr
+var _CallFuncFunctionCallback = func(func_ FuncFunction) FuncFunctionInner {
+	var __retVal FuncFunctionInner
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	__retVal = uintptr(C.CallFuncFunctionCallback(__func_))
+	__retVal = plugify.GetDelegateForFunctionPointer(C.CallFuncFunctionCallback(__func_), reflect.TypeOf(FuncFunctionInner(nil))).(FuncFunctionInner)
 	return __retVal
 }
 
 // CallFuncFunctionCallback
-func CallFuncFunctionCallback(func_ FuncFunction) uintptr {
+func CallFuncFunctionCallback(func_ FuncFunction) FuncFunctionInner {
 	defer plugify.Scope("cross_call_master::CallFuncFunctionCallback", ModuleName, 3)()
-	return P_CallFuncFunctionCallback(func_)
+	return _CallFuncFunctionCallback(func_)
 }
 
-var P_CallFuncBoolVectorCallback = func(func_ FuncBoolVector) []bool {
+var _CallFuncBoolVectorCallback = func(func_ FuncBoolVector) []bool {
 	var __retVal []bool
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2083,10 +2083,10 @@ var P_CallFuncBoolVectorCallback = func(func_ FuncBoolVector) []bool {
 // CallFuncBoolVectorCallback
 func CallFuncBoolVectorCallback(func_ FuncBoolVector) []bool {
 	defer plugify.Scope("cross_call_master::CallFuncBoolVectorCallback", ModuleName, 3)()
-	return P_CallFuncBoolVectorCallback(func_)
+	return _CallFuncBoolVectorCallback(func_)
 }
 
-var P_CallFuncChar8VectorCallback = func(func_ FuncChar8Vector) []int8 {
+var _CallFuncChar8VectorCallback = func(func_ FuncChar8Vector) []int8 {
 	var __retVal []int8
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2108,10 +2108,10 @@ var P_CallFuncChar8VectorCallback = func(func_ FuncChar8Vector) []int8 {
 // CallFuncChar8VectorCallback
 func CallFuncChar8VectorCallback(func_ FuncChar8Vector) []int8 {
 	defer plugify.Scope("cross_call_master::CallFuncChar8VectorCallback", ModuleName, 3)()
-	return P_CallFuncChar8VectorCallback(func_)
+	return _CallFuncChar8VectorCallback(func_)
 }
 
-var P_CallFuncChar16VectorCallback = func(func_ FuncChar16Vector) []uint16 {
+var _CallFuncChar16VectorCallback = func(func_ FuncChar16Vector) []uint16 {
 	var __retVal []uint16
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2133,10 +2133,10 @@ var P_CallFuncChar16VectorCallback = func(func_ FuncChar16Vector) []uint16 {
 // CallFuncChar16VectorCallback
 func CallFuncChar16VectorCallback(func_ FuncChar16Vector) []uint16 {
 	defer plugify.Scope("cross_call_master::CallFuncChar16VectorCallback", ModuleName, 3)()
-	return P_CallFuncChar16VectorCallback(func_)
+	return _CallFuncChar16VectorCallback(func_)
 }
 
-var P_CallFuncInt8VectorCallback = func(func_ FuncInt8Vector) []int8 {
+var _CallFuncInt8VectorCallback = func(func_ FuncInt8Vector) []int8 {
 	var __retVal []int8
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2158,10 +2158,10 @@ var P_CallFuncInt8VectorCallback = func(func_ FuncInt8Vector) []int8 {
 // CallFuncInt8VectorCallback
 func CallFuncInt8VectorCallback(func_ FuncInt8Vector) []int8 {
 	defer plugify.Scope("cross_call_master::CallFuncInt8VectorCallback", ModuleName, 3)()
-	return P_CallFuncInt8VectorCallback(func_)
+	return _CallFuncInt8VectorCallback(func_)
 }
 
-var P_CallFuncInt16VectorCallback = func(func_ FuncInt16Vector) []int16 {
+var _CallFuncInt16VectorCallback = func(func_ FuncInt16Vector) []int16 {
 	var __retVal []int16
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2183,10 +2183,10 @@ var P_CallFuncInt16VectorCallback = func(func_ FuncInt16Vector) []int16 {
 // CallFuncInt16VectorCallback
 func CallFuncInt16VectorCallback(func_ FuncInt16Vector) []int16 {
 	defer plugify.Scope("cross_call_master::CallFuncInt16VectorCallback", ModuleName, 3)()
-	return P_CallFuncInt16VectorCallback(func_)
+	return _CallFuncInt16VectorCallback(func_)
 }
 
-var P_CallFuncInt32VectorCallback = func(func_ FuncInt32Vector) []int32 {
+var _CallFuncInt32VectorCallback = func(func_ FuncInt32Vector) []int32 {
 	var __retVal []int32
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2208,10 +2208,10 @@ var P_CallFuncInt32VectorCallback = func(func_ FuncInt32Vector) []int32 {
 // CallFuncInt32VectorCallback
 func CallFuncInt32VectorCallback(func_ FuncInt32Vector) []int32 {
 	defer plugify.Scope("cross_call_master::CallFuncInt32VectorCallback", ModuleName, 3)()
-	return P_CallFuncInt32VectorCallback(func_)
+	return _CallFuncInt32VectorCallback(func_)
 }
 
-var P_CallFuncInt64VectorCallback = func(func_ FuncInt64Vector) []int64 {
+var _CallFuncInt64VectorCallback = func(func_ FuncInt64Vector) []int64 {
 	var __retVal []int64
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2233,10 +2233,10 @@ var P_CallFuncInt64VectorCallback = func(func_ FuncInt64Vector) []int64 {
 // CallFuncInt64VectorCallback
 func CallFuncInt64VectorCallback(func_ FuncInt64Vector) []int64 {
 	defer plugify.Scope("cross_call_master::CallFuncInt64VectorCallback", ModuleName, 3)()
-	return P_CallFuncInt64VectorCallback(func_)
+	return _CallFuncInt64VectorCallback(func_)
 }
 
-var P_CallFuncUInt8VectorCallback = func(func_ FuncUInt8Vector) []uint8 {
+var _CallFuncUInt8VectorCallback = func(func_ FuncUInt8Vector) []uint8 {
 	var __retVal []uint8
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2258,10 +2258,10 @@ var P_CallFuncUInt8VectorCallback = func(func_ FuncUInt8Vector) []uint8 {
 // CallFuncUInt8VectorCallback
 func CallFuncUInt8VectorCallback(func_ FuncUInt8Vector) []uint8 {
 	defer plugify.Scope("cross_call_master::CallFuncUInt8VectorCallback", ModuleName, 3)()
-	return P_CallFuncUInt8VectorCallback(func_)
+	return _CallFuncUInt8VectorCallback(func_)
 }
 
-var P_CallFuncUInt16VectorCallback = func(func_ FuncUInt16Vector) []uint16 {
+var _CallFuncUInt16VectorCallback = func(func_ FuncUInt16Vector) []uint16 {
 	var __retVal []uint16
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2283,10 +2283,10 @@ var P_CallFuncUInt16VectorCallback = func(func_ FuncUInt16Vector) []uint16 {
 // CallFuncUInt16VectorCallback
 func CallFuncUInt16VectorCallback(func_ FuncUInt16Vector) []uint16 {
 	defer plugify.Scope("cross_call_master::CallFuncUInt16VectorCallback", ModuleName, 3)()
-	return P_CallFuncUInt16VectorCallback(func_)
+	return _CallFuncUInt16VectorCallback(func_)
 }
 
-var P_CallFuncUInt32VectorCallback = func(func_ FuncUInt32Vector) []uint32 {
+var _CallFuncUInt32VectorCallback = func(func_ FuncUInt32Vector) []uint32 {
 	var __retVal []uint32
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2308,10 +2308,10 @@ var P_CallFuncUInt32VectorCallback = func(func_ FuncUInt32Vector) []uint32 {
 // CallFuncUInt32VectorCallback
 func CallFuncUInt32VectorCallback(func_ FuncUInt32Vector) []uint32 {
 	defer plugify.Scope("cross_call_master::CallFuncUInt32VectorCallback", ModuleName, 3)()
-	return P_CallFuncUInt32VectorCallback(func_)
+	return _CallFuncUInt32VectorCallback(func_)
 }
 
-var P_CallFuncUInt64VectorCallback = func(func_ FuncUInt64Vector) []uint64 {
+var _CallFuncUInt64VectorCallback = func(func_ FuncUInt64Vector) []uint64 {
 	var __retVal []uint64
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2333,10 +2333,10 @@ var P_CallFuncUInt64VectorCallback = func(func_ FuncUInt64Vector) []uint64 {
 // CallFuncUInt64VectorCallback
 func CallFuncUInt64VectorCallback(func_ FuncUInt64Vector) []uint64 {
 	defer plugify.Scope("cross_call_master::CallFuncUInt64VectorCallback", ModuleName, 3)()
-	return P_CallFuncUInt64VectorCallback(func_)
+	return _CallFuncUInt64VectorCallback(func_)
 }
 
-var P_CallFuncPtrVectorCallback = func(func_ FuncPtrVector) []uintptr {
+var _CallFuncPtrVectorCallback = func(func_ FuncPtrVector) []uintptr {
 	var __retVal []uintptr
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2358,10 +2358,10 @@ var P_CallFuncPtrVectorCallback = func(func_ FuncPtrVector) []uintptr {
 // CallFuncPtrVectorCallback
 func CallFuncPtrVectorCallback(func_ FuncPtrVector) []uintptr {
 	defer plugify.Scope("cross_call_master::CallFuncPtrVectorCallback", ModuleName, 3)()
-	return P_CallFuncPtrVectorCallback(func_)
+	return _CallFuncPtrVectorCallback(func_)
 }
 
-var P_CallFuncFloatVectorCallback = func(func_ FuncFloatVector) []float32 {
+var _CallFuncFloatVectorCallback = func(func_ FuncFloatVector) []float32 {
 	var __retVal []float32
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2383,10 +2383,10 @@ var P_CallFuncFloatVectorCallback = func(func_ FuncFloatVector) []float32 {
 // CallFuncFloatVectorCallback
 func CallFuncFloatVectorCallback(func_ FuncFloatVector) []float32 {
 	defer plugify.Scope("cross_call_master::CallFuncFloatVectorCallback", ModuleName, 3)()
-	return P_CallFuncFloatVectorCallback(func_)
+	return _CallFuncFloatVectorCallback(func_)
 }
 
-var P_CallFuncDoubleVectorCallback = func(func_ FuncDoubleVector) []float64 {
+var _CallFuncDoubleVectorCallback = func(func_ FuncDoubleVector) []float64 {
 	var __retVal []float64
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2408,10 +2408,10 @@ var P_CallFuncDoubleVectorCallback = func(func_ FuncDoubleVector) []float64 {
 // CallFuncDoubleVectorCallback
 func CallFuncDoubleVectorCallback(func_ FuncDoubleVector) []float64 {
 	defer plugify.Scope("cross_call_master::CallFuncDoubleVectorCallback", ModuleName, 3)()
-	return P_CallFuncDoubleVectorCallback(func_)
+	return _CallFuncDoubleVectorCallback(func_)
 }
 
-var P_CallFuncStringVectorCallback = func(func_ FuncStringVector) []string {
+var _CallFuncStringVectorCallback = func(func_ FuncStringVector) []string {
 	var __retVal []string
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2433,10 +2433,10 @@ var P_CallFuncStringVectorCallback = func(func_ FuncStringVector) []string {
 // CallFuncStringVectorCallback
 func CallFuncStringVectorCallback(func_ FuncStringVector) []string {
 	defer plugify.Scope("cross_call_master::CallFuncStringVectorCallback", ModuleName, 3)()
-	return P_CallFuncStringVectorCallback(func_)
+	return _CallFuncStringVectorCallback(func_)
 }
 
-var P_CallFuncAnyVectorCallback = func(func_ FuncAnyVector) []any {
+var _CallFuncAnyVectorCallback = func(func_ FuncAnyVector) []any {
 	var __retVal []any
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2458,10 +2458,10 @@ var P_CallFuncAnyVectorCallback = func(func_ FuncAnyVector) []any {
 // CallFuncAnyVectorCallback
 func CallFuncAnyVectorCallback(func_ FuncAnyVector) []any {
 	defer plugify.Scope("cross_call_master::CallFuncAnyVectorCallback", ModuleName, 3)()
-	return P_CallFuncAnyVectorCallback(func_)
+	return _CallFuncAnyVectorCallback(func_)
 }
 
-var P_CallFuncVec2VectorCallback = func(func_ FuncVec2Vector) []plugify.Vector2 {
+var _CallFuncVec2VectorCallback = func(func_ FuncVec2Vector) []plugify.Vector2 {
 	var __retVal []plugify.Vector2
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2483,10 +2483,10 @@ var P_CallFuncVec2VectorCallback = func(func_ FuncVec2Vector) []plugify.Vector2 
 // CallFuncVec2VectorCallback
 func CallFuncVec2VectorCallback(func_ FuncVec2Vector) []plugify.Vector2 {
 	defer plugify.Scope("cross_call_master::CallFuncVec2VectorCallback", ModuleName, 3)()
-	return P_CallFuncVec2VectorCallback(func_)
+	return _CallFuncVec2VectorCallback(func_)
 }
 
-var P_CallFuncVec3VectorCallback = func(func_ FuncVec3Vector) []plugify.Vector3 {
+var _CallFuncVec3VectorCallback = func(func_ FuncVec3Vector) []plugify.Vector3 {
 	var __retVal []plugify.Vector3
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2508,10 +2508,10 @@ var P_CallFuncVec3VectorCallback = func(func_ FuncVec3Vector) []plugify.Vector3 
 // CallFuncVec3VectorCallback
 func CallFuncVec3VectorCallback(func_ FuncVec3Vector) []plugify.Vector3 {
 	defer plugify.Scope("cross_call_master::CallFuncVec3VectorCallback", ModuleName, 3)()
-	return P_CallFuncVec3VectorCallback(func_)
+	return _CallFuncVec3VectorCallback(func_)
 }
 
-var P_CallFuncVec4VectorCallback = func(func_ FuncVec4Vector) []plugify.Vector4 {
+var _CallFuncVec4VectorCallback = func(func_ FuncVec4Vector) []plugify.Vector4 {
 	var __retVal []plugify.Vector4
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2533,10 +2533,10 @@ var P_CallFuncVec4VectorCallback = func(func_ FuncVec4Vector) []plugify.Vector4 
 // CallFuncVec4VectorCallback
 func CallFuncVec4VectorCallback(func_ FuncVec4Vector) []plugify.Vector4 {
 	defer plugify.Scope("cross_call_master::CallFuncVec4VectorCallback", ModuleName, 3)()
-	return P_CallFuncVec4VectorCallback(func_)
+	return _CallFuncVec4VectorCallback(func_)
 }
 
-var P_CallFuncMat4x4VectorCallback = func(func_ FuncMat4x4Vector) []plugify.Matrix4x4 {
+var _CallFuncMat4x4VectorCallback = func(func_ FuncMat4x4Vector) []plugify.Matrix4x4 {
 	var __retVal []plugify.Matrix4x4
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2558,10 +2558,10 @@ var P_CallFuncMat4x4VectorCallback = func(func_ FuncMat4x4Vector) []plugify.Matr
 // CallFuncMat4x4VectorCallback
 func CallFuncMat4x4VectorCallback(func_ FuncMat4x4Vector) []plugify.Matrix4x4 {
 	defer plugify.Scope("cross_call_master::CallFuncMat4x4VectorCallback", ModuleName, 3)()
-	return P_CallFuncMat4x4VectorCallback(func_)
+	return _CallFuncMat4x4VectorCallback(func_)
 }
 
-var P_CallFuncVec2Callback = func(func_ FuncVec2) plugify.Vector2 {
+var _CallFuncVec2Callback = func(func_ FuncVec2) plugify.Vector2 {
 	var __retVal plugify.Vector2
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__native := C.CallFuncVec2Callback(__func_)
@@ -2572,10 +2572,10 @@ var P_CallFuncVec2Callback = func(func_ FuncVec2) plugify.Vector2 {
 // CallFuncVec2Callback
 func CallFuncVec2Callback(func_ FuncVec2) plugify.Vector2 {
 	defer plugify.Scope("cross_call_master::CallFuncVec2Callback", ModuleName, 3)()
-	return P_CallFuncVec2Callback(func_)
+	return _CallFuncVec2Callback(func_)
 }
 
-var P_CallFuncVec3Callback = func(func_ FuncVec3) plugify.Vector3 {
+var _CallFuncVec3Callback = func(func_ FuncVec3) plugify.Vector3 {
 	var __retVal plugify.Vector3
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__native := C.CallFuncVec3Callback(__func_)
@@ -2586,10 +2586,10 @@ var P_CallFuncVec3Callback = func(func_ FuncVec3) plugify.Vector3 {
 // CallFuncVec3Callback
 func CallFuncVec3Callback(func_ FuncVec3) plugify.Vector3 {
 	defer plugify.Scope("cross_call_master::CallFuncVec3Callback", ModuleName, 3)()
-	return P_CallFuncVec3Callback(func_)
+	return _CallFuncVec3Callback(func_)
 }
 
-var P_CallFuncVec4Callback = func(func_ FuncVec4) plugify.Vector4 {
+var _CallFuncVec4Callback = func(func_ FuncVec4) plugify.Vector4 {
 	var __retVal plugify.Vector4
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__native := C.CallFuncVec4Callback(__func_)
@@ -2600,10 +2600,10 @@ var P_CallFuncVec4Callback = func(func_ FuncVec4) plugify.Vector4 {
 // CallFuncVec4Callback
 func CallFuncVec4Callback(func_ FuncVec4) plugify.Vector4 {
 	defer plugify.Scope("cross_call_master::CallFuncVec4Callback", ModuleName, 3)()
-	return P_CallFuncVec4Callback(func_)
+	return _CallFuncVec4Callback(func_)
 }
 
-var P_CallFuncMat4x4Callback = func(func_ FuncMat4x4) plugify.Matrix4x4 {
+var _CallFuncMat4x4Callback = func(func_ FuncMat4x4) plugify.Matrix4x4 {
 	var __retVal plugify.Matrix4x4
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__native := C.CallFuncMat4x4Callback(__func_)
@@ -2614,10 +2614,10 @@ var P_CallFuncMat4x4Callback = func(func_ FuncMat4x4) plugify.Matrix4x4 {
 // CallFuncMat4x4Callback
 func CallFuncMat4x4Callback(func_ FuncMat4x4) plugify.Matrix4x4 {
 	defer plugify.Scope("cross_call_master::CallFuncMat4x4Callback", ModuleName, 3)()
-	return P_CallFuncMat4x4Callback(func_)
+	return _CallFuncMat4x4Callback(func_)
 }
 
-var P_CallFuncAliasBoolCallback = func(func_ FuncAliasBool) AliasBool {
+var _CallFuncAliasBoolCallback = func(func_ FuncAliasBool) AliasBool {
 	var __retVal AliasBool
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = AliasBool(C.CallFuncAliasBoolCallback(__func_))
@@ -2627,10 +2627,10 @@ var P_CallFuncAliasBoolCallback = func(func_ FuncAliasBool) AliasBool {
 // CallFuncAliasBoolCallback
 func CallFuncAliasBoolCallback(func_ FuncAliasBool) AliasBool {
 	defer plugify.Scope("cross_call_master::CallFuncAliasBoolCallback", ModuleName, 3)()
-	return P_CallFuncAliasBoolCallback(func_)
+	return _CallFuncAliasBoolCallback(func_)
 }
 
-var P_CallFuncAliasChar8Callback = func(func_ FuncAliasChar8) AliasChar8 {
+var _CallFuncAliasChar8Callback = func(func_ FuncAliasChar8) AliasChar8 {
 	var __retVal AliasChar8
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = AliasChar8(C.CallFuncAliasChar8Callback(__func_))
@@ -2640,10 +2640,10 @@ var P_CallFuncAliasChar8Callback = func(func_ FuncAliasChar8) AliasChar8 {
 // CallFuncAliasChar8Callback
 func CallFuncAliasChar8Callback(func_ FuncAliasChar8) AliasChar8 {
 	defer plugify.Scope("cross_call_master::CallFuncAliasChar8Callback", ModuleName, 3)()
-	return P_CallFuncAliasChar8Callback(func_)
+	return _CallFuncAliasChar8Callback(func_)
 }
 
-var P_CallFuncAliasChar16Callback = func(func_ FuncAliasChar16) AliasChar16 {
+var _CallFuncAliasChar16Callback = func(func_ FuncAliasChar16) AliasChar16 {
 	var __retVal AliasChar16
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = AliasChar16(C.CallFuncAliasChar16Callback(__func_))
@@ -2653,10 +2653,10 @@ var P_CallFuncAliasChar16Callback = func(func_ FuncAliasChar16) AliasChar16 {
 // CallFuncAliasChar16Callback
 func CallFuncAliasChar16Callback(func_ FuncAliasChar16) AliasChar16 {
 	defer plugify.Scope("cross_call_master::CallFuncAliasChar16Callback", ModuleName, 3)()
-	return P_CallFuncAliasChar16Callback(func_)
+	return _CallFuncAliasChar16Callback(func_)
 }
 
-var P_CallFuncAliasInt8Callback = func(func_ FuncAliasInt8) AliasInt8 {
+var _CallFuncAliasInt8Callback = func(func_ FuncAliasInt8) AliasInt8 {
 	var __retVal AliasInt8
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = AliasInt8(C.CallFuncAliasInt8Callback(__func_))
@@ -2666,10 +2666,10 @@ var P_CallFuncAliasInt8Callback = func(func_ FuncAliasInt8) AliasInt8 {
 // CallFuncAliasInt8Callback
 func CallFuncAliasInt8Callback(func_ FuncAliasInt8) AliasInt8 {
 	defer plugify.Scope("cross_call_master::CallFuncAliasInt8Callback", ModuleName, 3)()
-	return P_CallFuncAliasInt8Callback(func_)
+	return _CallFuncAliasInt8Callback(func_)
 }
 
-var P_CallFuncAliasInt16Callback = func(func_ FuncAliasInt16) AliasInt16 {
+var _CallFuncAliasInt16Callback = func(func_ FuncAliasInt16) AliasInt16 {
 	var __retVal AliasInt16
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = AliasInt16(C.CallFuncAliasInt16Callback(__func_))
@@ -2679,10 +2679,10 @@ var P_CallFuncAliasInt16Callback = func(func_ FuncAliasInt16) AliasInt16 {
 // CallFuncAliasInt16Callback
 func CallFuncAliasInt16Callback(func_ FuncAliasInt16) AliasInt16 {
 	defer plugify.Scope("cross_call_master::CallFuncAliasInt16Callback", ModuleName, 3)()
-	return P_CallFuncAliasInt16Callback(func_)
+	return _CallFuncAliasInt16Callback(func_)
 }
 
-var P_CallFuncAliasInt32Callback = func(func_ FuncAliasInt32) AliasInt32 {
+var _CallFuncAliasInt32Callback = func(func_ FuncAliasInt32) AliasInt32 {
 	var __retVal AliasInt32
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = AliasInt32(C.CallFuncAliasInt32Callback(__func_))
@@ -2692,10 +2692,10 @@ var P_CallFuncAliasInt32Callback = func(func_ FuncAliasInt32) AliasInt32 {
 // CallFuncAliasInt32Callback
 func CallFuncAliasInt32Callback(func_ FuncAliasInt32) AliasInt32 {
 	defer plugify.Scope("cross_call_master::CallFuncAliasInt32Callback", ModuleName, 3)()
-	return P_CallFuncAliasInt32Callback(func_)
+	return _CallFuncAliasInt32Callback(func_)
 }
 
-var P_CallFuncAliasInt64Callback = func(func_ FuncAliasInt64) AliasInt64 {
+var _CallFuncAliasInt64Callback = func(func_ FuncAliasInt64) AliasInt64 {
 	var __retVal AliasInt64
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = AliasInt64(C.CallFuncAliasInt64Callback(__func_))
@@ -2705,10 +2705,10 @@ var P_CallFuncAliasInt64Callback = func(func_ FuncAliasInt64) AliasInt64 {
 // CallFuncAliasInt64Callback
 func CallFuncAliasInt64Callback(func_ FuncAliasInt64) AliasInt64 {
 	defer plugify.Scope("cross_call_master::CallFuncAliasInt64Callback", ModuleName, 3)()
-	return P_CallFuncAliasInt64Callback(func_)
+	return _CallFuncAliasInt64Callback(func_)
 }
 
-var P_CallFuncAliasUInt8Callback = func(func_ FuncAliasUInt8) AliasUInt8 {
+var _CallFuncAliasUInt8Callback = func(func_ FuncAliasUInt8) AliasUInt8 {
 	var __retVal AliasUInt8
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = AliasUInt8(C.CallFuncAliasUInt8Callback(__func_))
@@ -2718,10 +2718,10 @@ var P_CallFuncAliasUInt8Callback = func(func_ FuncAliasUInt8) AliasUInt8 {
 // CallFuncAliasUInt8Callback
 func CallFuncAliasUInt8Callback(func_ FuncAliasUInt8) AliasUInt8 {
 	defer plugify.Scope("cross_call_master::CallFuncAliasUInt8Callback", ModuleName, 3)()
-	return P_CallFuncAliasUInt8Callback(func_)
+	return _CallFuncAliasUInt8Callback(func_)
 }
 
-var P_CallFuncAliasUInt16Callback = func(func_ FuncAliasUInt16) AliasUInt16 {
+var _CallFuncAliasUInt16Callback = func(func_ FuncAliasUInt16) AliasUInt16 {
 	var __retVal AliasUInt16
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = AliasUInt16(C.CallFuncAliasUInt16Callback(__func_))
@@ -2731,10 +2731,10 @@ var P_CallFuncAliasUInt16Callback = func(func_ FuncAliasUInt16) AliasUInt16 {
 // CallFuncAliasUInt16Callback
 func CallFuncAliasUInt16Callback(func_ FuncAliasUInt16) AliasUInt16 {
 	defer plugify.Scope("cross_call_master::CallFuncAliasUInt16Callback", ModuleName, 3)()
-	return P_CallFuncAliasUInt16Callback(func_)
+	return _CallFuncAliasUInt16Callback(func_)
 }
 
-var P_CallFuncAliasUInt32Callback = func(func_ FuncAliasUInt32) AliasUInt32 {
+var _CallFuncAliasUInt32Callback = func(func_ FuncAliasUInt32) AliasUInt32 {
 	var __retVal AliasUInt32
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = AliasUInt32(C.CallFuncAliasUInt32Callback(__func_))
@@ -2744,10 +2744,10 @@ var P_CallFuncAliasUInt32Callback = func(func_ FuncAliasUInt32) AliasUInt32 {
 // CallFuncAliasUInt32Callback
 func CallFuncAliasUInt32Callback(func_ FuncAliasUInt32) AliasUInt32 {
 	defer plugify.Scope("cross_call_master::CallFuncAliasUInt32Callback", ModuleName, 3)()
-	return P_CallFuncAliasUInt32Callback(func_)
+	return _CallFuncAliasUInt32Callback(func_)
 }
 
-var P_CallFuncAliasUInt64Callback = func(func_ FuncAliasUInt64) AliasUInt64 {
+var _CallFuncAliasUInt64Callback = func(func_ FuncAliasUInt64) AliasUInt64 {
 	var __retVal AliasUInt64
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = AliasUInt64(C.CallFuncAliasUInt64Callback(__func_))
@@ -2757,10 +2757,10 @@ var P_CallFuncAliasUInt64Callback = func(func_ FuncAliasUInt64) AliasUInt64 {
 // CallFuncAliasUInt64Callback
 func CallFuncAliasUInt64Callback(func_ FuncAliasUInt64) AliasUInt64 {
 	defer plugify.Scope("cross_call_master::CallFuncAliasUInt64Callback", ModuleName, 3)()
-	return P_CallFuncAliasUInt64Callback(func_)
+	return _CallFuncAliasUInt64Callback(func_)
 }
 
-var P_CallFuncAliasPtrCallback = func(func_ FuncAliasPtr) AliasPtr {
+var _CallFuncAliasPtrCallback = func(func_ FuncAliasPtr) AliasPtr {
 	var __retVal AliasPtr
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = AliasPtr(C.CallFuncAliasPtrCallback(__func_))
@@ -2770,10 +2770,10 @@ var P_CallFuncAliasPtrCallback = func(func_ FuncAliasPtr) AliasPtr {
 // CallFuncAliasPtrCallback
 func CallFuncAliasPtrCallback(func_ FuncAliasPtr) AliasPtr {
 	defer plugify.Scope("cross_call_master::CallFuncAliasPtrCallback", ModuleName, 3)()
-	return P_CallFuncAliasPtrCallback(func_)
+	return _CallFuncAliasPtrCallback(func_)
 }
 
-var P_CallFuncAliasFloatCallback = func(func_ FuncAliasFloat) AliasFloat {
+var _CallFuncAliasFloatCallback = func(func_ FuncAliasFloat) AliasFloat {
 	var __retVal AliasFloat
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = AliasFloat(C.CallFuncAliasFloatCallback(__func_))
@@ -2783,10 +2783,10 @@ var P_CallFuncAliasFloatCallback = func(func_ FuncAliasFloat) AliasFloat {
 // CallFuncAliasFloatCallback
 func CallFuncAliasFloatCallback(func_ FuncAliasFloat) AliasFloat {
 	defer plugify.Scope("cross_call_master::CallFuncAliasFloatCallback", ModuleName, 3)()
-	return P_CallFuncAliasFloatCallback(func_)
+	return _CallFuncAliasFloatCallback(func_)
 }
 
-var P_CallFuncAliasDoubleCallback = func(func_ FuncAliasDouble) AliasDouble {
+var _CallFuncAliasDoubleCallback = func(func_ FuncAliasDouble) AliasDouble {
 	var __retVal AliasDouble
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = AliasDouble(C.CallFuncAliasDoubleCallback(__func_))
@@ -2796,10 +2796,10 @@ var P_CallFuncAliasDoubleCallback = func(func_ FuncAliasDouble) AliasDouble {
 // CallFuncAliasDoubleCallback
 func CallFuncAliasDoubleCallback(func_ FuncAliasDouble) AliasDouble {
 	defer plugify.Scope("cross_call_master::CallFuncAliasDoubleCallback", ModuleName, 3)()
-	return P_CallFuncAliasDoubleCallback(func_)
+	return _CallFuncAliasDoubleCallback(func_)
 }
 
-var P_CallFuncAliasStringCallback = func(func_ FuncAliasString) AliasString {
+var _CallFuncAliasStringCallback = func(func_ FuncAliasString) AliasString {
 	var __retVal AliasString
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2821,10 +2821,10 @@ var P_CallFuncAliasStringCallback = func(func_ FuncAliasString) AliasString {
 // CallFuncAliasStringCallback
 func CallFuncAliasStringCallback(func_ FuncAliasString) AliasString {
 	defer plugify.Scope("cross_call_master::CallFuncAliasStringCallback", ModuleName, 3)()
-	return P_CallFuncAliasStringCallback(func_)
+	return _CallFuncAliasStringCallback(func_)
 }
 
-var P_CallFuncAliasAnyCallback = func(func_ FuncAliasAny) AliasAny {
+var _CallFuncAliasAnyCallback = func(func_ FuncAliasAny) AliasAny {
 	var __retVal AliasAny
 	var __retVal_native plugify.PlgVariant
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2846,23 +2846,23 @@ var P_CallFuncAliasAnyCallback = func(func_ FuncAliasAny) AliasAny {
 // CallFuncAliasAnyCallback
 func CallFuncAliasAnyCallback(func_ FuncAliasAny) AliasAny {
 	defer plugify.Scope("cross_call_master::CallFuncAliasAnyCallback", ModuleName, 3)()
-	return P_CallFuncAliasAnyCallback(func_)
+	return _CallFuncAliasAnyCallback(func_)
 }
 
-var P_CallFuncAliasFunctionCallback = func(func_ FuncAliasFunction) AliasFunction {
+var _CallFuncAliasFunctionCallback = func(func_ FuncAliasFunction) AliasFunction {
 	var __retVal AliasFunction
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
-	__retVal = AliasFunction(C.CallFuncAliasFunctionCallback(__func_))
+	__retVal = plugify.GetDelegateForFunctionPointer(C.CallFuncAliasFunctionCallback(__func_), reflect.TypeOf(AliasFunction(nil))).(AliasFunction)
 	return __retVal
 }
 
 // CallFuncAliasFunctionCallback
 func CallFuncAliasFunctionCallback(func_ FuncAliasFunction) AliasFunction {
 	defer plugify.Scope("cross_call_master::CallFuncAliasFunctionCallback", ModuleName, 3)()
-	return P_CallFuncAliasFunctionCallback(func_)
+	return _CallFuncAliasFunctionCallback(func_)
 }
 
-var P_CallFuncAliasBoolVectorCallback = func(func_ FuncAliasBoolVector) AliasBoolVector {
+var _CallFuncAliasBoolVectorCallback = func(func_ FuncAliasBoolVector) AliasBoolVector {
 	var __retVal AliasBoolVector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2884,10 +2884,10 @@ var P_CallFuncAliasBoolVectorCallback = func(func_ FuncAliasBoolVector) AliasBoo
 // CallFuncAliasBoolVectorCallback
 func CallFuncAliasBoolVectorCallback(func_ FuncAliasBoolVector) AliasBoolVector {
 	defer plugify.Scope("cross_call_master::CallFuncAliasBoolVectorCallback", ModuleName, 3)()
-	return P_CallFuncAliasBoolVectorCallback(func_)
+	return _CallFuncAliasBoolVectorCallback(func_)
 }
 
-var P_CallFuncAliasChar8VectorCallback = func(func_ FuncAliasChar8Vector) AliasChar8Vector {
+var _CallFuncAliasChar8VectorCallback = func(func_ FuncAliasChar8Vector) AliasChar8Vector {
 	var __retVal AliasChar8Vector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2909,10 +2909,10 @@ var P_CallFuncAliasChar8VectorCallback = func(func_ FuncAliasChar8Vector) AliasC
 // CallFuncAliasChar8VectorCallback
 func CallFuncAliasChar8VectorCallback(func_ FuncAliasChar8Vector) AliasChar8Vector {
 	defer plugify.Scope("cross_call_master::CallFuncAliasChar8VectorCallback", ModuleName, 3)()
-	return P_CallFuncAliasChar8VectorCallback(func_)
+	return _CallFuncAliasChar8VectorCallback(func_)
 }
 
-var P_CallFuncAliasChar16VectorCallback = func(func_ FuncAliasChar16Vector) AliasChar16Vector {
+var _CallFuncAliasChar16VectorCallback = func(func_ FuncAliasChar16Vector) AliasChar16Vector {
 	var __retVal AliasChar16Vector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2934,10 +2934,10 @@ var P_CallFuncAliasChar16VectorCallback = func(func_ FuncAliasChar16Vector) Alia
 // CallFuncAliasChar16VectorCallback
 func CallFuncAliasChar16VectorCallback(func_ FuncAliasChar16Vector) AliasChar16Vector {
 	defer plugify.Scope("cross_call_master::CallFuncAliasChar16VectorCallback", ModuleName, 3)()
-	return P_CallFuncAliasChar16VectorCallback(func_)
+	return _CallFuncAliasChar16VectorCallback(func_)
 }
 
-var P_CallFuncAliasInt8VectorCallback = func(func_ FuncAliasInt8Vector) AliasInt8Vector {
+var _CallFuncAliasInt8VectorCallback = func(func_ FuncAliasInt8Vector) AliasInt8Vector {
 	var __retVal AliasInt8Vector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2959,10 +2959,10 @@ var P_CallFuncAliasInt8VectorCallback = func(func_ FuncAliasInt8Vector) AliasInt
 // CallFuncAliasInt8VectorCallback
 func CallFuncAliasInt8VectorCallback(func_ FuncAliasInt8Vector) AliasInt8Vector {
 	defer plugify.Scope("cross_call_master::CallFuncAliasInt8VectorCallback", ModuleName, 3)()
-	return P_CallFuncAliasInt8VectorCallback(func_)
+	return _CallFuncAliasInt8VectorCallback(func_)
 }
 
-var P_CallFuncAliasInt16VectorCallback = func(func_ FuncAliasInt16Vector) AliasInt16Vector {
+var _CallFuncAliasInt16VectorCallback = func(func_ FuncAliasInt16Vector) AliasInt16Vector {
 	var __retVal AliasInt16Vector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -2984,10 +2984,10 @@ var P_CallFuncAliasInt16VectorCallback = func(func_ FuncAliasInt16Vector) AliasI
 // CallFuncAliasInt16VectorCallback
 func CallFuncAliasInt16VectorCallback(func_ FuncAliasInt16Vector) AliasInt16Vector {
 	defer plugify.Scope("cross_call_master::CallFuncAliasInt16VectorCallback", ModuleName, 3)()
-	return P_CallFuncAliasInt16VectorCallback(func_)
+	return _CallFuncAliasInt16VectorCallback(func_)
 }
 
-var P_CallFuncAliasInt32VectorCallback = func(func_ FuncAliasInt32Vector) AliasInt32Vector {
+var _CallFuncAliasInt32VectorCallback = func(func_ FuncAliasInt32Vector) AliasInt32Vector {
 	var __retVal AliasInt32Vector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3009,10 +3009,10 @@ var P_CallFuncAliasInt32VectorCallback = func(func_ FuncAliasInt32Vector) AliasI
 // CallFuncAliasInt32VectorCallback
 func CallFuncAliasInt32VectorCallback(func_ FuncAliasInt32Vector) AliasInt32Vector {
 	defer plugify.Scope("cross_call_master::CallFuncAliasInt32VectorCallback", ModuleName, 3)()
-	return P_CallFuncAliasInt32VectorCallback(func_)
+	return _CallFuncAliasInt32VectorCallback(func_)
 }
 
-var P_CallFuncAliasInt64VectorCallback = func(func_ FuncAliasInt64Vector) AliasInt64Vector {
+var _CallFuncAliasInt64VectorCallback = func(func_ FuncAliasInt64Vector) AliasInt64Vector {
 	var __retVal AliasInt64Vector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3034,10 +3034,10 @@ var P_CallFuncAliasInt64VectorCallback = func(func_ FuncAliasInt64Vector) AliasI
 // CallFuncAliasInt64VectorCallback
 func CallFuncAliasInt64VectorCallback(func_ FuncAliasInt64Vector) AliasInt64Vector {
 	defer plugify.Scope("cross_call_master::CallFuncAliasInt64VectorCallback", ModuleName, 3)()
-	return P_CallFuncAliasInt64VectorCallback(func_)
+	return _CallFuncAliasInt64VectorCallback(func_)
 }
 
-var P_CallFuncAliasUInt8VectorCallback = func(func_ FuncAliasUInt8Vector) AliasUInt8Vector {
+var _CallFuncAliasUInt8VectorCallback = func(func_ FuncAliasUInt8Vector) AliasUInt8Vector {
 	var __retVal AliasUInt8Vector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3059,10 +3059,10 @@ var P_CallFuncAliasUInt8VectorCallback = func(func_ FuncAliasUInt8Vector) AliasU
 // CallFuncAliasUInt8VectorCallback
 func CallFuncAliasUInt8VectorCallback(func_ FuncAliasUInt8Vector) AliasUInt8Vector {
 	defer plugify.Scope("cross_call_master::CallFuncAliasUInt8VectorCallback", ModuleName, 3)()
-	return P_CallFuncAliasUInt8VectorCallback(func_)
+	return _CallFuncAliasUInt8VectorCallback(func_)
 }
 
-var P_CallFuncAliasUInt16VectorCallback = func(func_ FuncAliasUInt16Vector) AliasUInt16Vector {
+var _CallFuncAliasUInt16VectorCallback = func(func_ FuncAliasUInt16Vector) AliasUInt16Vector {
 	var __retVal AliasUInt16Vector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3084,10 +3084,10 @@ var P_CallFuncAliasUInt16VectorCallback = func(func_ FuncAliasUInt16Vector) Alia
 // CallFuncAliasUInt16VectorCallback
 func CallFuncAliasUInt16VectorCallback(func_ FuncAliasUInt16Vector) AliasUInt16Vector {
 	defer plugify.Scope("cross_call_master::CallFuncAliasUInt16VectorCallback", ModuleName, 3)()
-	return P_CallFuncAliasUInt16VectorCallback(func_)
+	return _CallFuncAliasUInt16VectorCallback(func_)
 }
 
-var P_CallFuncAliasUInt32VectorCallback = func(func_ FuncAliasUInt32Vector) AliasUInt32Vector {
+var _CallFuncAliasUInt32VectorCallback = func(func_ FuncAliasUInt32Vector) AliasUInt32Vector {
 	var __retVal AliasUInt32Vector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3109,10 +3109,10 @@ var P_CallFuncAliasUInt32VectorCallback = func(func_ FuncAliasUInt32Vector) Alia
 // CallFuncAliasUInt32VectorCallback
 func CallFuncAliasUInt32VectorCallback(func_ FuncAliasUInt32Vector) AliasUInt32Vector {
 	defer plugify.Scope("cross_call_master::CallFuncAliasUInt32VectorCallback", ModuleName, 3)()
-	return P_CallFuncAliasUInt32VectorCallback(func_)
+	return _CallFuncAliasUInt32VectorCallback(func_)
 }
 
-var P_CallFuncAliasUInt64VectorCallback = func(func_ FuncAliasUInt64Vector) AliasUInt64Vector {
+var _CallFuncAliasUInt64VectorCallback = func(func_ FuncAliasUInt64Vector) AliasUInt64Vector {
 	var __retVal AliasUInt64Vector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3134,10 +3134,10 @@ var P_CallFuncAliasUInt64VectorCallback = func(func_ FuncAliasUInt64Vector) Alia
 // CallFuncAliasUInt64VectorCallback
 func CallFuncAliasUInt64VectorCallback(func_ FuncAliasUInt64Vector) AliasUInt64Vector {
 	defer plugify.Scope("cross_call_master::CallFuncAliasUInt64VectorCallback", ModuleName, 3)()
-	return P_CallFuncAliasUInt64VectorCallback(func_)
+	return _CallFuncAliasUInt64VectorCallback(func_)
 }
 
-var P_CallFuncAliasPtrVectorCallback = func(func_ FuncAliasPtrVector) AliasPtrVector {
+var _CallFuncAliasPtrVectorCallback = func(func_ FuncAliasPtrVector) AliasPtrVector {
 	var __retVal AliasPtrVector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3159,10 +3159,10 @@ var P_CallFuncAliasPtrVectorCallback = func(func_ FuncAliasPtrVector) AliasPtrVe
 // CallFuncAliasPtrVectorCallback
 func CallFuncAliasPtrVectorCallback(func_ FuncAliasPtrVector) AliasPtrVector {
 	defer plugify.Scope("cross_call_master::CallFuncAliasPtrVectorCallback", ModuleName, 3)()
-	return P_CallFuncAliasPtrVectorCallback(func_)
+	return _CallFuncAliasPtrVectorCallback(func_)
 }
 
-var P_CallFuncAliasFloatVectorCallback = func(func_ FuncAliasFloatVector) AliasFloatVector {
+var _CallFuncAliasFloatVectorCallback = func(func_ FuncAliasFloatVector) AliasFloatVector {
 	var __retVal AliasFloatVector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3184,10 +3184,10 @@ var P_CallFuncAliasFloatVectorCallback = func(func_ FuncAliasFloatVector) AliasF
 // CallFuncAliasFloatVectorCallback
 func CallFuncAliasFloatVectorCallback(func_ FuncAliasFloatVector) AliasFloatVector {
 	defer plugify.Scope("cross_call_master::CallFuncAliasFloatVectorCallback", ModuleName, 3)()
-	return P_CallFuncAliasFloatVectorCallback(func_)
+	return _CallFuncAliasFloatVectorCallback(func_)
 }
 
-var P_CallFuncAliasDoubleVectorCallback = func(func_ FuncAliasDoubleVector) AliasDoubleVector {
+var _CallFuncAliasDoubleVectorCallback = func(func_ FuncAliasDoubleVector) AliasDoubleVector {
 	var __retVal AliasDoubleVector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3209,10 +3209,10 @@ var P_CallFuncAliasDoubleVectorCallback = func(func_ FuncAliasDoubleVector) Alia
 // CallFuncAliasDoubleVectorCallback
 func CallFuncAliasDoubleVectorCallback(func_ FuncAliasDoubleVector) AliasDoubleVector {
 	defer plugify.Scope("cross_call_master::CallFuncAliasDoubleVectorCallback", ModuleName, 3)()
-	return P_CallFuncAliasDoubleVectorCallback(func_)
+	return _CallFuncAliasDoubleVectorCallback(func_)
 }
 
-var P_CallFuncAliasStringVectorCallback = func(func_ FuncAliasStringVector) AliasStringVector {
+var _CallFuncAliasStringVectorCallback = func(func_ FuncAliasStringVector) AliasStringVector {
 	var __retVal AliasStringVector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3234,10 +3234,10 @@ var P_CallFuncAliasStringVectorCallback = func(func_ FuncAliasStringVector) Alia
 // CallFuncAliasStringVectorCallback
 func CallFuncAliasStringVectorCallback(func_ FuncAliasStringVector) AliasStringVector {
 	defer plugify.Scope("cross_call_master::CallFuncAliasStringVectorCallback", ModuleName, 3)()
-	return P_CallFuncAliasStringVectorCallback(func_)
+	return _CallFuncAliasStringVectorCallback(func_)
 }
 
-var P_CallFuncAliasAnyVectorCallback = func(func_ FuncAliasAnyVector) AliasAnyVector {
+var _CallFuncAliasAnyVectorCallback = func(func_ FuncAliasAnyVector) AliasAnyVector {
 	var __retVal AliasAnyVector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3259,10 +3259,10 @@ var P_CallFuncAliasAnyVectorCallback = func(func_ FuncAliasAnyVector) AliasAnyVe
 // CallFuncAliasAnyVectorCallback
 func CallFuncAliasAnyVectorCallback(func_ FuncAliasAnyVector) AliasAnyVector {
 	defer plugify.Scope("cross_call_master::CallFuncAliasAnyVectorCallback", ModuleName, 3)()
-	return P_CallFuncAliasAnyVectorCallback(func_)
+	return _CallFuncAliasAnyVectorCallback(func_)
 }
 
-var P_CallFuncAliasVec2VectorCallback = func(func_ FuncAliasVec2Vector) AliasVec2Vector {
+var _CallFuncAliasVec2VectorCallback = func(func_ FuncAliasVec2Vector) AliasVec2Vector {
 	var __retVal AliasVec2Vector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3284,10 +3284,10 @@ var P_CallFuncAliasVec2VectorCallback = func(func_ FuncAliasVec2Vector) AliasVec
 // CallFuncAliasVec2VectorCallback
 func CallFuncAliasVec2VectorCallback(func_ FuncAliasVec2Vector) AliasVec2Vector {
 	defer plugify.Scope("cross_call_master::CallFuncAliasVec2VectorCallback", ModuleName, 3)()
-	return P_CallFuncAliasVec2VectorCallback(func_)
+	return _CallFuncAliasVec2VectorCallback(func_)
 }
 
-var P_CallFuncAliasVec3VectorCallback = func(func_ FuncAliasVec3Vector) AliasVec3Vector {
+var _CallFuncAliasVec3VectorCallback = func(func_ FuncAliasVec3Vector) AliasVec3Vector {
 	var __retVal AliasVec3Vector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3309,10 +3309,10 @@ var P_CallFuncAliasVec3VectorCallback = func(func_ FuncAliasVec3Vector) AliasVec
 // CallFuncAliasVec3VectorCallback
 func CallFuncAliasVec3VectorCallback(func_ FuncAliasVec3Vector) AliasVec3Vector {
 	defer plugify.Scope("cross_call_master::CallFuncAliasVec3VectorCallback", ModuleName, 3)()
-	return P_CallFuncAliasVec3VectorCallback(func_)
+	return _CallFuncAliasVec3VectorCallback(func_)
 }
 
-var P_CallFuncAliasVec4VectorCallback = func(func_ FuncAliasVec4Vector) AliasVec4Vector {
+var _CallFuncAliasVec4VectorCallback = func(func_ FuncAliasVec4Vector) AliasVec4Vector {
 	var __retVal AliasVec4Vector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3334,10 +3334,10 @@ var P_CallFuncAliasVec4VectorCallback = func(func_ FuncAliasVec4Vector) AliasVec
 // CallFuncAliasVec4VectorCallback
 func CallFuncAliasVec4VectorCallback(func_ FuncAliasVec4Vector) AliasVec4Vector {
 	defer plugify.Scope("cross_call_master::CallFuncAliasVec4VectorCallback", ModuleName, 3)()
-	return P_CallFuncAliasVec4VectorCallback(func_)
+	return _CallFuncAliasVec4VectorCallback(func_)
 }
 
-var P_CallFuncAliasMat4x4VectorCallback = func(func_ FuncAliasMat4x4Vector) AliasMat4x4Vector {
+var _CallFuncAliasMat4x4VectorCallback = func(func_ FuncAliasMat4x4Vector) AliasMat4x4Vector {
 	var __retVal AliasMat4x4Vector
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3359,10 +3359,10 @@ var P_CallFuncAliasMat4x4VectorCallback = func(func_ FuncAliasMat4x4Vector) Alia
 // CallFuncAliasMat4x4VectorCallback
 func CallFuncAliasMat4x4VectorCallback(func_ FuncAliasMat4x4Vector) AliasMat4x4Vector {
 	defer plugify.Scope("cross_call_master::CallFuncAliasMat4x4VectorCallback", ModuleName, 3)()
-	return P_CallFuncAliasMat4x4VectorCallback(func_)
+	return _CallFuncAliasMat4x4VectorCallback(func_)
 }
 
-var P_CallFuncAliasVec2Callback = func(func_ FuncAliasVec2) AliasVec2 {
+var _CallFuncAliasVec2Callback = func(func_ FuncAliasVec2) AliasVec2 {
 	var __retVal AliasVec2
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__native := C.CallFuncAliasVec2Callback(__func_)
@@ -3373,10 +3373,10 @@ var P_CallFuncAliasVec2Callback = func(func_ FuncAliasVec2) AliasVec2 {
 // CallFuncAliasVec2Callback
 func CallFuncAliasVec2Callback(func_ FuncAliasVec2) AliasVec2 {
 	defer plugify.Scope("cross_call_master::CallFuncAliasVec2Callback", ModuleName, 3)()
-	return P_CallFuncAliasVec2Callback(func_)
+	return _CallFuncAliasVec2Callback(func_)
 }
 
-var P_CallFuncAliasVec3Callback = func(func_ FuncAliasVec3) AliasVec3 {
+var _CallFuncAliasVec3Callback = func(func_ FuncAliasVec3) AliasVec3 {
 	var __retVal AliasVec3
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__native := C.CallFuncAliasVec3Callback(__func_)
@@ -3387,10 +3387,10 @@ var P_CallFuncAliasVec3Callback = func(func_ FuncAliasVec3) AliasVec3 {
 // CallFuncAliasVec3Callback
 func CallFuncAliasVec3Callback(func_ FuncAliasVec3) AliasVec3 {
 	defer plugify.Scope("cross_call_master::CallFuncAliasVec3Callback", ModuleName, 3)()
-	return P_CallFuncAliasVec3Callback(func_)
+	return _CallFuncAliasVec3Callback(func_)
 }
 
-var P_CallFuncAliasVec4Callback = func(func_ FuncAliasVec4) AliasVec4 {
+var _CallFuncAliasVec4Callback = func(func_ FuncAliasVec4) AliasVec4 {
 	var __retVal AliasVec4
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__native := C.CallFuncAliasVec4Callback(__func_)
@@ -3401,10 +3401,10 @@ var P_CallFuncAliasVec4Callback = func(func_ FuncAliasVec4) AliasVec4 {
 // CallFuncAliasVec4Callback
 func CallFuncAliasVec4Callback(func_ FuncAliasVec4) AliasVec4 {
 	defer plugify.Scope("cross_call_master::CallFuncAliasVec4Callback", ModuleName, 3)()
-	return P_CallFuncAliasVec4Callback(func_)
+	return _CallFuncAliasVec4Callback(func_)
 }
 
-var P_CallFuncAliasMat4x4Callback = func(func_ FuncAliasMat4x4) AliasMat4x4 {
+var _CallFuncAliasMat4x4Callback = func(func_ FuncAliasMat4x4) AliasMat4x4 {
 	var __retVal AliasMat4x4
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__native := C.CallFuncAliasMat4x4Callback(__func_)
@@ -3415,10 +3415,10 @@ var P_CallFuncAliasMat4x4Callback = func(func_ FuncAliasMat4x4) AliasMat4x4 {
 // CallFuncAliasMat4x4Callback
 func CallFuncAliasMat4x4Callback(func_ FuncAliasMat4x4) AliasMat4x4 {
 	defer plugify.Scope("cross_call_master::CallFuncAliasMat4x4Callback", ModuleName, 3)()
-	return P_CallFuncAliasMat4x4Callback(func_)
+	return _CallFuncAliasMat4x4Callback(func_)
 }
 
-var P_CallFuncAliasAllCallback = func(func_ FuncAliasAll) AliasString {
+var _CallFuncAliasAllCallback = func(func_ FuncAliasAll) AliasString {
 	var __retVal AliasString
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3440,10 +3440,10 @@ var P_CallFuncAliasAllCallback = func(func_ FuncAliasAll) AliasString {
 // CallFuncAliasAllCallback
 func CallFuncAliasAllCallback(func_ FuncAliasAll) AliasString {
 	defer plugify.Scope("cross_call_master::CallFuncAliasAllCallback", ModuleName, 3)()
-	return P_CallFuncAliasAllCallback(func_)
+	return _CallFuncAliasAllCallback(func_)
 }
 
-var P_CallFunc1Callback = func(func_ Func1) int32 {
+var _CallFunc1Callback = func(func_ Func1) int32 {
 	var __retVal int32
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = int32(C.CallFunc1Callback(__func_))
@@ -3453,10 +3453,10 @@ var P_CallFunc1Callback = func(func_ Func1) int32 {
 // CallFunc1Callback
 func CallFunc1Callback(func_ Func1) int32 {
 	defer plugify.Scope("cross_call_master::CallFunc1Callback", ModuleName, 3)()
-	return P_CallFunc1Callback(func_)
+	return _CallFunc1Callback(func_)
 }
 
-var P_CallFunc2Callback = func(func_ Func2) int8 {
+var _CallFunc2Callback = func(func_ Func2) int8 {
 	var __retVal int8
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = int8(C.CallFunc2Callback(__func_))
@@ -3466,10 +3466,10 @@ var P_CallFunc2Callback = func(func_ Func2) int8 {
 // CallFunc2Callback
 func CallFunc2Callback(func_ Func2) int8 {
 	defer plugify.Scope("cross_call_master::CallFunc2Callback", ModuleName, 3)()
-	return P_CallFunc2Callback(func_)
+	return _CallFunc2Callback(func_)
 }
 
-var P_CallFunc3Callback = func(func_ Func3) {
+var _CallFunc3Callback = func(func_ Func3) {
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	C.CallFunc3Callback(__func_)
 }
@@ -3477,10 +3477,10 @@ var P_CallFunc3Callback = func(func_ Func3) {
 // CallFunc3Callback
 func CallFunc3Callback(func_ Func3) {
 	defer plugify.Scope("cross_call_master::CallFunc3Callback", ModuleName, 3)()
-	P_CallFunc3Callback(func_)
+	_CallFunc3Callback(func_)
 }
 
-var P_CallFunc4Callback = func(func_ Func4) plugify.Vector4 {
+var _CallFunc4Callback = func(func_ Func4) plugify.Vector4 {
 	var __retVal plugify.Vector4
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__native := C.CallFunc4Callback(__func_)
@@ -3491,10 +3491,10 @@ var P_CallFunc4Callback = func(func_ Func4) plugify.Vector4 {
 // CallFunc4Callback
 func CallFunc4Callback(func_ Func4) plugify.Vector4 {
 	defer plugify.Scope("cross_call_master::CallFunc4Callback", ModuleName, 3)()
-	return P_CallFunc4Callback(func_)
+	return _CallFunc4Callback(func_)
 }
 
-var P_CallFunc5Callback = func(func_ Func5) bool {
+var _CallFunc5Callback = func(func_ Func5) bool {
 	var __retVal bool
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = bool(C.CallFunc5Callback(__func_))
@@ -3504,10 +3504,10 @@ var P_CallFunc5Callback = func(func_ Func5) bool {
 // CallFunc5Callback
 func CallFunc5Callback(func_ Func5) bool {
 	defer plugify.Scope("cross_call_master::CallFunc5Callback", ModuleName, 3)()
-	return P_CallFunc5Callback(func_)
+	return _CallFunc5Callback(func_)
 }
 
-var P_CallFunc6Callback = func(func_ Func6) int64 {
+var _CallFunc6Callback = func(func_ Func6) int64 {
 	var __retVal int64
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = int64(C.CallFunc6Callback(__func_))
@@ -3517,10 +3517,10 @@ var P_CallFunc6Callback = func(func_ Func6) int64 {
 // CallFunc6Callback
 func CallFunc6Callback(func_ Func6) int64 {
 	defer plugify.Scope("cross_call_master::CallFunc6Callback", ModuleName, 3)()
-	return P_CallFunc6Callback(func_)
+	return _CallFunc6Callback(func_)
 }
 
-var P_CallFunc7Callback = func(func_ Func7) float64 {
+var _CallFunc7Callback = func(func_ Func7) float64 {
 	var __retVal float64
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = float64(C.CallFunc7Callback(__func_))
@@ -3530,10 +3530,10 @@ var P_CallFunc7Callback = func(func_ Func7) float64 {
 // CallFunc7Callback
 func CallFunc7Callback(func_ Func7) float64 {
 	defer plugify.Scope("cross_call_master::CallFunc7Callback", ModuleName, 3)()
-	return P_CallFunc7Callback(func_)
+	return _CallFunc7Callback(func_)
 }
 
-var P_CallFunc8Callback = func(func_ Func8) plugify.Matrix4x4 {
+var _CallFunc8Callback = func(func_ Func8) plugify.Matrix4x4 {
 	var __retVal plugify.Matrix4x4
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__native := C.CallFunc8Callback(__func_)
@@ -3544,10 +3544,10 @@ var P_CallFunc8Callback = func(func_ Func8) plugify.Matrix4x4 {
 // CallFunc8Callback
 func CallFunc8Callback(func_ Func8) plugify.Matrix4x4 {
 	defer plugify.Scope("cross_call_master::CallFunc8Callback", ModuleName, 3)()
-	return P_CallFunc8Callback(func_)
+	return _CallFunc8Callback(func_)
 }
 
-var P_CallFunc9Callback = func(func_ Func9) {
+var _CallFunc9Callback = func(func_ Func9) {
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	C.CallFunc9Callback(__func_)
 }
@@ -3555,10 +3555,10 @@ var P_CallFunc9Callback = func(func_ Func9) {
 // CallFunc9Callback
 func CallFunc9Callback(func_ Func9) {
 	defer plugify.Scope("cross_call_master::CallFunc9Callback", ModuleName, 3)()
-	P_CallFunc9Callback(func_)
+	_CallFunc9Callback(func_)
 }
 
-var P_CallFunc10Callback = func(func_ Func10) uint32 {
+var _CallFunc10Callback = func(func_ Func10) uint32 {
 	var __retVal uint32
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = uint32(C.CallFunc10Callback(__func_))
@@ -3568,10 +3568,10 @@ var P_CallFunc10Callback = func(func_ Func10) uint32 {
 // CallFunc10Callback
 func CallFunc10Callback(func_ Func10) uint32 {
 	defer plugify.Scope("cross_call_master::CallFunc10Callback", ModuleName, 3)()
-	return P_CallFunc10Callback(func_)
+	return _CallFunc10Callback(func_)
 }
 
-var P_CallFunc11Callback = func(func_ Func11) uintptr {
+var _CallFunc11Callback = func(func_ Func11) uintptr {
 	var __retVal uintptr
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = uintptr(C.CallFunc11Callback(__func_))
@@ -3581,10 +3581,10 @@ var P_CallFunc11Callback = func(func_ Func11) uintptr {
 // CallFunc11Callback
 func CallFunc11Callback(func_ Func11) uintptr {
 	defer plugify.Scope("cross_call_master::CallFunc11Callback", ModuleName, 3)()
-	return P_CallFunc11Callback(func_)
+	return _CallFunc11Callback(func_)
 }
 
-var P_CallFunc12Callback = func(func_ Func12) bool {
+var _CallFunc12Callback = func(func_ Func12) bool {
 	var __retVal bool
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = bool(C.CallFunc12Callback(__func_))
@@ -3594,10 +3594,10 @@ var P_CallFunc12Callback = func(func_ Func12) bool {
 // CallFunc12Callback
 func CallFunc12Callback(func_ Func12) bool {
 	defer plugify.Scope("cross_call_master::CallFunc12Callback", ModuleName, 3)()
-	return P_CallFunc12Callback(func_)
+	return _CallFunc12Callback(func_)
 }
 
-var P_CallFunc13Callback = func(func_ Func13) string {
+var _CallFunc13Callback = func(func_ Func13) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3619,10 +3619,10 @@ var P_CallFunc13Callback = func(func_ Func13) string {
 // CallFunc13Callback
 func CallFunc13Callback(func_ Func13) string {
 	defer plugify.Scope("cross_call_master::CallFunc13Callback", ModuleName, 3)()
-	return P_CallFunc13Callback(func_)
+	return _CallFunc13Callback(func_)
 }
 
-var P_CallFunc14Callback = func(func_ Func14) []string {
+var _CallFunc14Callback = func(func_ Func14) []string {
 	var __retVal []string
 	var __retVal_native plugify.PlgVector
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3644,10 +3644,10 @@ var P_CallFunc14Callback = func(func_ Func14) []string {
 // CallFunc14Callback
 func CallFunc14Callback(func_ Func14) []string {
 	defer plugify.Scope("cross_call_master::CallFunc14Callback", ModuleName, 3)()
-	return P_CallFunc14Callback(func_)
+	return _CallFunc14Callback(func_)
 }
 
-var P_CallFunc15Callback = func(func_ Func15) int16 {
+var _CallFunc15Callback = func(func_ Func15) int16 {
 	var __retVal int16
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = int16(C.CallFunc15Callback(__func_))
@@ -3657,10 +3657,10 @@ var P_CallFunc15Callback = func(func_ Func15) int16 {
 // CallFunc15Callback
 func CallFunc15Callback(func_ Func15) int16 {
 	defer plugify.Scope("cross_call_master::CallFunc15Callback", ModuleName, 3)()
-	return P_CallFunc15Callback(func_)
+	return _CallFunc15Callback(func_)
 }
 
-var P_CallFunc16Callback = func(func_ Func16) uintptr {
+var _CallFunc16Callback = func(func_ Func16) uintptr {
 	var __retVal uintptr
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
 	__retVal = uintptr(C.CallFunc16Callback(__func_))
@@ -3670,10 +3670,10 @@ var P_CallFunc16Callback = func(func_ Func16) uintptr {
 // CallFunc16Callback
 func CallFunc16Callback(func_ Func16) uintptr {
 	defer plugify.Scope("cross_call_master::CallFunc16Callback", ModuleName, 3)()
-	return P_CallFunc16Callback(func_)
+	return _CallFunc16Callback(func_)
 }
 
-var P_CallFunc17Callback = func(func_ Func17) string {
+var _CallFunc17Callback = func(func_ Func17) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3695,10 +3695,10 @@ var P_CallFunc17Callback = func(func_ Func17) string {
 // CallFunc17Callback
 func CallFunc17Callback(func_ Func17) string {
 	defer plugify.Scope("cross_call_master::CallFunc17Callback", ModuleName, 3)()
-	return P_CallFunc17Callback(func_)
+	return _CallFunc17Callback(func_)
 }
 
-var P_CallFunc18Callback = func(func_ Func18) string {
+var _CallFunc18Callback = func(func_ Func18) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3720,10 +3720,10 @@ var P_CallFunc18Callback = func(func_ Func18) string {
 // CallFunc18Callback
 func CallFunc18Callback(func_ Func18) string {
 	defer plugify.Scope("cross_call_master::CallFunc18Callback", ModuleName, 3)()
-	return P_CallFunc18Callback(func_)
+	return _CallFunc18Callback(func_)
 }
 
-var P_CallFunc19Callback = func(func_ Func19) string {
+var _CallFunc19Callback = func(func_ Func19) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3745,10 +3745,10 @@ var P_CallFunc19Callback = func(func_ Func19) string {
 // CallFunc19Callback
 func CallFunc19Callback(func_ Func19) string {
 	defer plugify.Scope("cross_call_master::CallFunc19Callback", ModuleName, 3)()
-	return P_CallFunc19Callback(func_)
+	return _CallFunc19Callback(func_)
 }
 
-var P_CallFunc20Callback = func(func_ Func20) string {
+var _CallFunc20Callback = func(func_ Func20) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3770,10 +3770,10 @@ var P_CallFunc20Callback = func(func_ Func20) string {
 // CallFunc20Callback
 func CallFunc20Callback(func_ Func20) string {
 	defer plugify.Scope("cross_call_master::CallFunc20Callback", ModuleName, 3)()
-	return P_CallFunc20Callback(func_)
+	return _CallFunc20Callback(func_)
 }
 
-var P_CallFunc21Callback = func(func_ Func21) string {
+var _CallFunc21Callback = func(func_ Func21) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3795,10 +3795,10 @@ var P_CallFunc21Callback = func(func_ Func21) string {
 // CallFunc21Callback
 func CallFunc21Callback(func_ Func21) string {
 	defer plugify.Scope("cross_call_master::CallFunc21Callback", ModuleName, 3)()
-	return P_CallFunc21Callback(func_)
+	return _CallFunc21Callback(func_)
 }
 
-var P_CallFunc22Callback = func(func_ Func22) string {
+var _CallFunc22Callback = func(func_ Func22) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3820,10 +3820,10 @@ var P_CallFunc22Callback = func(func_ Func22) string {
 // CallFunc22Callback
 func CallFunc22Callback(func_ Func22) string {
 	defer plugify.Scope("cross_call_master::CallFunc22Callback", ModuleName, 3)()
-	return P_CallFunc22Callback(func_)
+	return _CallFunc22Callback(func_)
 }
 
-var P_CallFunc23Callback = func(func_ Func23) string {
+var _CallFunc23Callback = func(func_ Func23) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3845,10 +3845,10 @@ var P_CallFunc23Callback = func(func_ Func23) string {
 // CallFunc23Callback
 func CallFunc23Callback(func_ Func23) string {
 	defer plugify.Scope("cross_call_master::CallFunc23Callback", ModuleName, 3)()
-	return P_CallFunc23Callback(func_)
+	return _CallFunc23Callback(func_)
 }
 
-var P_CallFunc24Callback = func(func_ Func24) string {
+var _CallFunc24Callback = func(func_ Func24) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3870,10 +3870,10 @@ var P_CallFunc24Callback = func(func_ Func24) string {
 // CallFunc24Callback
 func CallFunc24Callback(func_ Func24) string {
 	defer plugify.Scope("cross_call_master::CallFunc24Callback", ModuleName, 3)()
-	return P_CallFunc24Callback(func_)
+	return _CallFunc24Callback(func_)
 }
 
-var P_CallFunc25Callback = func(func_ Func25) string {
+var _CallFunc25Callback = func(func_ Func25) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3895,10 +3895,10 @@ var P_CallFunc25Callback = func(func_ Func25) string {
 // CallFunc25Callback
 func CallFunc25Callback(func_ Func25) string {
 	defer plugify.Scope("cross_call_master::CallFunc25Callback", ModuleName, 3)()
-	return P_CallFunc25Callback(func_)
+	return _CallFunc25Callback(func_)
 }
 
-var P_CallFunc26Callback = func(func_ Func26) string {
+var _CallFunc26Callback = func(func_ Func26) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3920,10 +3920,10 @@ var P_CallFunc26Callback = func(func_ Func26) string {
 // CallFunc26Callback
 func CallFunc26Callback(func_ Func26) string {
 	defer plugify.Scope("cross_call_master::CallFunc26Callback", ModuleName, 3)()
-	return P_CallFunc26Callback(func_)
+	return _CallFunc26Callback(func_)
 }
 
-var P_CallFunc27Callback = func(func_ Func27) string {
+var _CallFunc27Callback = func(func_ Func27) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3945,10 +3945,10 @@ var P_CallFunc27Callback = func(func_ Func27) string {
 // CallFunc27Callback
 func CallFunc27Callback(func_ Func27) string {
 	defer plugify.Scope("cross_call_master::CallFunc27Callback", ModuleName, 3)()
-	return P_CallFunc27Callback(func_)
+	return _CallFunc27Callback(func_)
 }
 
-var P_CallFunc28Callback = func(func_ Func28) string {
+var _CallFunc28Callback = func(func_ Func28) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3970,10 +3970,10 @@ var P_CallFunc28Callback = func(func_ Func28) string {
 // CallFunc28Callback
 func CallFunc28Callback(func_ Func28) string {
 	defer plugify.Scope("cross_call_master::CallFunc28Callback", ModuleName, 3)()
-	return P_CallFunc28Callback(func_)
+	return _CallFunc28Callback(func_)
 }
 
-var P_CallFunc29Callback = func(func_ Func29) string {
+var _CallFunc29Callback = func(func_ Func29) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -3995,10 +3995,10 @@ var P_CallFunc29Callback = func(func_ Func29) string {
 // CallFunc29Callback
 func CallFunc29Callback(func_ Func29) string {
 	defer plugify.Scope("cross_call_master::CallFunc29Callback", ModuleName, 3)()
-	return P_CallFunc29Callback(func_)
+	return _CallFunc29Callback(func_)
 }
 
-var P_CallFunc30Callback = func(func_ Func30) string {
+var _CallFunc30Callback = func(func_ Func30) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -4020,10 +4020,10 @@ var P_CallFunc30Callback = func(func_ Func30) string {
 // CallFunc30Callback
 func CallFunc30Callback(func_ Func30) string {
 	defer plugify.Scope("cross_call_master::CallFunc30Callback", ModuleName, 3)()
-	return P_CallFunc30Callback(func_)
+	return _CallFunc30Callback(func_)
 }
 
-var P_CallFunc31Callback = func(func_ Func31) string {
+var _CallFunc31Callback = func(func_ Func31) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -4045,10 +4045,10 @@ var P_CallFunc31Callback = func(func_ Func31) string {
 // CallFunc31Callback
 func CallFunc31Callback(func_ Func31) string {
 	defer plugify.Scope("cross_call_master::CallFunc31Callback", ModuleName, 3)()
-	return P_CallFunc31Callback(func_)
+	return _CallFunc31Callback(func_)
 }
 
-var P_CallFunc32Callback = func(func_ Func32) string {
+var _CallFunc32Callback = func(func_ Func32) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -4070,10 +4070,10 @@ var P_CallFunc32Callback = func(func_ Func32) string {
 // CallFunc32Callback
 func CallFunc32Callback(func_ Func32) string {
 	defer plugify.Scope("cross_call_master::CallFunc32Callback", ModuleName, 3)()
-	return P_CallFunc32Callback(func_)
+	return _CallFunc32Callback(func_)
 }
 
-var P_CallFunc33Callback = func(func_ Func33) string {
+var _CallFunc33Callback = func(func_ Func33) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -4095,10 +4095,10 @@ var P_CallFunc33Callback = func(func_ Func33) string {
 // CallFunc33Callback
 func CallFunc33Callback(func_ Func33) string {
 	defer plugify.Scope("cross_call_master::CallFunc33Callback", ModuleName, 3)()
-	return P_CallFunc33Callback(func_)
+	return _CallFunc33Callback(func_)
 }
 
-var P_CallFuncEnumCallback = func(func_ FuncEnum) string {
+var _CallFuncEnumCallback = func(func_ FuncEnum) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__func_ := plugify.GetFunctionPointerForDelegate(func_)
@@ -4120,7 +4120,7 @@ var P_CallFuncEnumCallback = func(func_ FuncEnum) string {
 // CallFuncEnumCallback
 func CallFuncEnumCallback(func_ FuncEnum) string {
 	defer plugify.Scope("cross_call_master::CallFuncEnumCallback", ModuleName, 3)()
-	return P_CallFuncEnumCallback(func_)
+	return _CallFuncEnumCallback(func_)
 }
 
 var (
@@ -4397,8 +4397,8 @@ func (w *Counter) Add(amount int64) error {
 	return nil
 }
 
-// Reseting
-func (w *Counter) Reseting() error {
+// Reset
+func (w *Counter) Reset2() error {
 	if w.handle == 0 {
 		return CounterErrEmptyHandle
 	}

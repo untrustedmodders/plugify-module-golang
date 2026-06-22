@@ -22,7 +22,6 @@ import (
 	"reflect"
 	"runtime"
 	"unsafe"
-
 	"github.com/untrustedmodders/go-plugify"
 )
 
@@ -34,11 +33,11 @@ var _ = plugify.ApiVersion
 
 // Generated from cross_call_master (group: resource)
 
-var P_ResourceHandleCreate = func(id int32, name string) uintptr {
+var _ResourceHandleCreate = func(id int32, name string) uintptr {
 	var __retVal uintptr
 	__id := C.int32_t(id)
 	__name := plugify.ConstructString(name)
-	plugify.Block{
+	plugify.Block {
 		Try: func() {
 			__retVal = uintptr(C.ResourceHandleCreate(__id, (*C.String)(unsafe.Pointer(&__name))))
 		},
@@ -50,52 +49,52 @@ var P_ResourceHandleCreate = func(id int32, name string) uintptr {
 	return __retVal
 }
 
-// ResourceHandleCreate
+// ResourceHandleCreate 
 func ResourceHandleCreate(id int32, name string) uintptr {
 	defer plugify.Scope("cross_call_master::ResourceHandleCreate", ModuleName, 3)()
-	return P_ResourceHandleCreate(id, name)
+	return _ResourceHandleCreate(id, name)
 }
 
-var P_ResourceHandleCreateDefault = func() uintptr {
+var _ResourceHandleCreateDefault = func() uintptr {
 	__retVal := uintptr(C.ResourceHandleCreateDefault())
 	return __retVal
 }
 
-// ResourceHandleCreateDefault
+// ResourceHandleCreateDefault 
 func ResourceHandleCreateDefault() uintptr {
 	defer plugify.Scope("cross_call_master::ResourceHandleCreateDefault", ModuleName, 3)()
-	return P_ResourceHandleCreateDefault()
+	return _ResourceHandleCreateDefault()
 }
 
-var P_ResourceHandleDestroy = func(handle uintptr) {
+var _ResourceHandleDestroy = func(handle uintptr) {
 	__handle := C.uintptr_t(handle)
 	C.ResourceHandleDestroy(__handle)
 }
 
-// ResourceHandleDestroy
+// ResourceHandleDestroy 
 func ResourceHandleDestroy(handle uintptr) {
 	defer plugify.Scope("cross_call_master::ResourceHandleDestroy", ModuleName, 3)()
-	P_ResourceHandleDestroy(handle)
+	_ResourceHandleDestroy(handle)
 }
 
-var P_ResourceHandleGetId = func(handle uintptr) int32 {
+var _ResourceHandleGetId = func(handle uintptr) int32 {
 	var __retVal int32
 	__handle := C.uintptr_t(handle)
 	__retVal = int32(C.ResourceHandleGetId(__handle))
 	return __retVal
 }
 
-// ResourceHandleGetId
+// ResourceHandleGetId 
 func ResourceHandleGetId(handle uintptr) int32 {
 	defer plugify.Scope("cross_call_master::ResourceHandleGetId", ModuleName, 3)()
-	return P_ResourceHandleGetId(handle)
+	return _ResourceHandleGetId(handle)
 }
 
-var P_ResourceHandleGetName = func(handle uintptr) string {
+var _ResourceHandleGetName = func(handle uintptr) string {
 	var __retVal string
 	var __retVal_native plugify.PlgString
 	__handle := C.uintptr_t(handle)
-	plugify.Block{
+	plugify.Block {
 		Try: func() {
 			__native := C.ResourceHandleGetName(__handle)
 			__retVal_native = *(*plugify.PlgString)(unsafe.Pointer(&__native))
@@ -110,16 +109,16 @@ var P_ResourceHandleGetName = func(handle uintptr) string {
 	return __retVal
 }
 
-// ResourceHandleGetName
+// ResourceHandleGetName 
 func ResourceHandleGetName(handle uintptr) string {
 	defer plugify.Scope("cross_call_master::ResourceHandleGetName", ModuleName, 3)()
-	return P_ResourceHandleGetName(handle)
+	return _ResourceHandleGetName(handle)
 }
 
-var P_ResourceHandleSetName = func(handle uintptr, name string) {
+var _ResourceHandleSetName = func(handle uintptr, name string) {
 	__handle := C.uintptr_t(handle)
 	__name := plugify.ConstructString(name)
-	plugify.Block{
+	plugify.Block {
 		Try: func() {
 			C.ResourceHandleSetName(__handle, (*C.String)(unsafe.Pointer(&__name)))
 		},
@@ -130,53 +129,53 @@ var P_ResourceHandleSetName = func(handle uintptr, name string) {
 	}.Do()
 }
 
-// ResourceHandleSetName
+// ResourceHandleSetName 
 func ResourceHandleSetName(handle uintptr, name string) {
 	defer plugify.Scope("cross_call_master::ResourceHandleSetName", ModuleName, 3)()
-	P_ResourceHandleSetName(handle, name)
+	_ResourceHandleSetName(handle, name)
 }
 
-var P_ResourceHandleIncrementCounter = func(handle uintptr) {
+var _ResourceHandleIncrementCounter = func(handle uintptr) {
 	__handle := C.uintptr_t(handle)
 	C.ResourceHandleIncrementCounter(__handle)
 }
 
-// ResourceHandleIncrementCounter
+// ResourceHandleIncrementCounter 
 func ResourceHandleIncrementCounter(handle uintptr) {
 	defer plugify.Scope("cross_call_master::ResourceHandleIncrementCounter", ModuleName, 3)()
-	P_ResourceHandleIncrementCounter(handle)
+	_ResourceHandleIncrementCounter(handle)
 }
 
-var P_ResourceHandleGetCounter = func(handle uintptr) int32 {
+var _ResourceHandleGetCounter = func(handle uintptr) int32 {
 	var __retVal int32
 	__handle := C.uintptr_t(handle)
 	__retVal = int32(C.ResourceHandleGetCounter(__handle))
 	return __retVal
 }
 
-// ResourceHandleGetCounter
+// ResourceHandleGetCounter 
 func ResourceHandleGetCounter(handle uintptr) int32 {
 	defer plugify.Scope("cross_call_master::ResourceHandleGetCounter", ModuleName, 3)()
-	return P_ResourceHandleGetCounter(handle)
+	return _ResourceHandleGetCounter(handle)
 }
 
-var P_ResourceHandleAddData = func(handle uintptr, value float32) {
+var _ResourceHandleAddData = func(handle uintptr, value float32) {
 	__handle := C.uintptr_t(handle)
 	__value := C.float(value)
 	C.ResourceHandleAddData(__handle, __value)
 }
 
-// ResourceHandleAddData
+// ResourceHandleAddData 
 func ResourceHandleAddData(handle uintptr, value float32) {
 	defer plugify.Scope("cross_call_master::ResourceHandleAddData", ModuleName, 3)()
-	P_ResourceHandleAddData(handle, value)
+	_ResourceHandleAddData(handle, value)
 }
 
-var P_ResourceHandleGetData = func(handle uintptr) []float32 {
+var _ResourceHandleGetData = func(handle uintptr) []float32 {
 	var __retVal []float32
 	var __retVal_native plugify.PlgVector
 	__handle := C.uintptr_t(handle)
-	plugify.Block{
+	plugify.Block {
 		Try: func() {
 			__native := C.ResourceHandleGetData(__handle)
 			__retVal_native = *(*plugify.PlgVector)(unsafe.Pointer(&__native))
@@ -191,41 +190,42 @@ var P_ResourceHandleGetData = func(handle uintptr) []float32 {
 	return __retVal
 }
 
-// ResourceHandleGetData
+// ResourceHandleGetData 
 func ResourceHandleGetData(handle uintptr) []float32 {
 	defer plugify.Scope("cross_call_master::ResourceHandleGetData", ModuleName, 3)()
-	return P_ResourceHandleGetData(handle)
+	return _ResourceHandleGetData(handle)
 }
 
-var P_ResourceHandleGetAliveCount = func() int32 {
+var _ResourceHandleGetAliveCount = func() int32 {
 	__retVal := int32(C.ResourceHandleGetAliveCount())
 	return __retVal
 }
 
-// ResourceHandleGetAliveCount
+// ResourceHandleGetAliveCount 
 func ResourceHandleGetAliveCount() int32 {
 	defer plugify.Scope("cross_call_master::ResourceHandleGetAliveCount", ModuleName, 3)()
-	return P_ResourceHandleGetAliveCount()
+	return _ResourceHandleGetAliveCount()
 }
 
-var P_ResourceHandleGetTotalCreated = func() int32 {
+var _ResourceHandleGetTotalCreated = func() int32 {
 	__retVal := int32(C.ResourceHandleGetTotalCreated())
 	return __retVal
 }
 
-// ResourceHandleGetTotalCreated
+// ResourceHandleGetTotalCreated 
 func ResourceHandleGetTotalCreated() int32 {
 	defer plugify.Scope("cross_call_master::ResourceHandleGetTotalCreated", ModuleName, 3)()
-	return P_ResourceHandleGetTotalCreated()
+	return _ResourceHandleGetTotalCreated()
 }
 
-var P_ResourceHandleGetTotalDestroyed = func() int32 {
+var _ResourceHandleGetTotalDestroyed = func() int32 {
 	__retVal := int32(C.ResourceHandleGetTotalDestroyed())
 	return __retVal
 }
 
-// ResourceHandleGetTotalDestroyed
+// ResourceHandleGetTotalDestroyed 
 func ResourceHandleGetTotalDestroyed() int32 {
 	defer plugify.Scope("cross_call_master::ResourceHandleGetTotalDestroyed", ModuleName, 3)()
-	return P_ResourceHandleGetTotalDestroyed()
+	return _ResourceHandleGetTotalDestroyed()
 }
+

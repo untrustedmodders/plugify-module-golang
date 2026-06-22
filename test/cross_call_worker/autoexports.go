@@ -6,7 +6,8 @@ import (
 	"reflect"
 	"unsafe"
 
-	"cross_call_worker/cross_call_master"
+	cross_call_master "cross_call_worker/cross_call_master"
+
 	"github.com/untrustedmodders/go-plugify"
 )
 
@@ -496,7 +497,7 @@ func __ParamAllRefAliases(aBool *bool, aChar8 *int8, aChar16 *uint16, aInt8 *int
 
 //export __ParamEnum
 func __ParamEnum(p1 int32, p2 *C.Vector) int32 {
-	__result := ParamEnum(cross_call_master.Example(p1), plugify.GetVectorDataInt32[Example]((*plugify.PlgVector)(unsafe.Pointer(p2))))
+	__result := ParamEnum(cross_call_master.Example(p1), plugify.GetVectorDataInt32[cross_call_master.Example]((*plugify.PlgVector)(unsafe.Pointer(p2))))
 	return __result
 }
 
@@ -1102,9 +1103,9 @@ func __CallFuncAliasDouble(func_ unsafe.Pointer) float64 {
 }
 
 //export __CallFuncAliasFunction
-func __CallFuncAliasFunction(func_ unsafe.Pointer) uintptr {
+func __CallFuncAliasFunction(func_ unsafe.Pointer) unsafe.Pointer {
 	__result := CallFuncAliasFunction(plugify.GetDelegateForFunctionPointer(func_, reflect.TypeOf(cross_call_master.FuncAliasFunction(nil))).(cross_call_master.FuncAliasFunction))
-	return uintptr(__result)
+	return plugify.GetFunctionPointerForDelegate(__result)
 }
 
 //export __CallFuncAliasString
