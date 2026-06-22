@@ -135,7 +135,7 @@ import (
 )
 
 var plugin plugify.Plugin
-vae PluginName string // should match name in manifest
+var PluginName string // should match name in manifest
 
 func OnPluginStart() error {
 	fmt.Println("Go: OnPluginStart")
