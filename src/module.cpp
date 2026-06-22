@@ -186,7 +186,6 @@ bool GoLanguageModule::IsDebugBuild() const noexcept {
 
 Result<void> GoLanguageModule::OnMethodExport(const Extension& plugin) {
     auto* ownerAssembly = FindAssembly(plugin.GetId());
-    bool isGoOwner = ownerAssembly && ownerAssembly->id;
 
     for (const auto& [method, addr] : plugin.GetMethodsData()) {
         auto variableName = std::format("__{}_{}", plugin.GetName(), method.GetName());
@@ -198,7 +197,7 @@ Result<void> GoLanguageModule::OnMethodExport(const Extension& plugin) {
             if (id == plugin.GetId())
                 continue;
 
-            if (isGoOwner && assembly.id) {
+            if (ownerAssembly && ownerAssembly->id && assembly.id) {
                 // Go-to-Go: bind via delegate
                 if (!_symbols.bindFunc(ownerAssembly->id, assembly.id, GoString(method.GetName()), GoString(delegateName))) {
 	                return MakeError(std::string(_symbols.errorFunc()));
@@ -726,9 +725,8 @@ JitCallback* NewCallback(const Extension* plugin, GoString name, void* delegate)
 	if (method == nullptr || delegate == nullptr)
 		return nullptr;
 
-	auto* holder = plugin->GetUserData().As<AssemblyHolder*>();
 	auto* callback = new JitCallback{};
-	callback->GetJitFunc(*method, holder->symbols.callbackFunc, delegate);
+	callback->GetJitFunc(*method, plugin->GetUserData().As<AssemblyHolder*>()->symbols.callbackFunc, delegate);
 	return callback;
 }
 
