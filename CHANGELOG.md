@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.7.0](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.6.1...v2.7.0) (2026-06-22)
+
+
+### Features
+
+* add support of plugin buildmode ([902a05b](https://github.com/untrustedmodders/plugify-module-golang/commit/902a05b7025c2f942092a81b16ccb59ee46b7d34))
+
+
+### Bug Fixes
+
+* add new method binder ([88487fb](https://github.com/untrustedmodders/plugify-module-golang/commit/88487fb13a694496b31d2dd964917af33bed4e2e))
+* improve name extraction from path ([bd95380](https://github.com/untrustedmodders/plugify-module-golang/commit/bd9538004865acd448998577e649de4e3e54c214))
+* update plugify ([19dc5ea](https://github.com/untrustedmodders/plugify-module-golang/commit/19dc5ea605911c11a95ad4ceb89d2ef467975966))
+* update plugify ([fde7f4c](https://github.com/untrustedmodders/plugify-module-golang/commit/fde7f4cc10fafabff38cc3ec18660c2c2ff6c9d2))
+* update tests ([1e49844](https://github.com/untrustedmodders/plugify-module-golang/commit/1e498442fe57cc2096bc5f44472b84d9493880fa))
+* update tests ([1d2a599](https://github.com/untrustedmodders/plugify-module-golang/commit/1d2a59933d1c70fe8e5e7eaec61326f5ca5b2ef0))
+
 ## [2.6.1](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.6.0...v2.6.1) (2026-05-24)
 
 
