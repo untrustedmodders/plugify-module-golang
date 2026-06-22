@@ -10,6 +10,7 @@ The Go Language Module for Plugify enables developers to write plugins in Go for
 - **Automatic Exporting**: Easily export and import methods between plugins and the language module.
 - **Initialization and Cleanup**: Handle plugin initialization, startup, and cleanup with dedicated module events.
 - **Interoperability**: Communicate with plugins written in other languages through auto-generated interfaces.
+- **Single-Runtime Mode**: Optionally run all Go plugins inside one shared Go runtime for lower memory overhead and direct cross-plugin calls (see [managed/README.md](managed/README.md)).
 
 ## Getting Started
 
@@ -78,6 +79,36 @@ mamba install -n your_env_name -c https://untrustedmodders.github.io/plugify-mod
 
    Start the Plugify framework, and it will dynamically load your Go plugins.
 
+## Plugin Modes
+
+The Go Language Module supports two modes for running plugins.
+
+### Default Mode — C Shared Library
+
+Each plugin is compiled as a standalone C shared library. This is the standard mode and works on all supported platforms.
+
+```sh
+go build -buildmode=c-shared -ldflags="-X main.PluginName=example_plugin" -o my_plugin.so ./
+```
+
+### Single-Runtime Mode — Go Native Plugin
+
+All plugins run inside a single shared Go runtime hosted by `libplugify-host-golang.so`. This reduces memory usage and allows Go plugins to call each other directly without going through Plugify's marshalling layer, but comes with important constraints around toolchain compatibility and platform support.
+
+> **You must build the runtime host yourself** to ensure it matches your plugins exactly. See [managed/README.md](managed/README.md) for full details on building, deploying, and the trade-offs involved.
+
+Plugins for this mode are built with:
+
+```sh
+go build -buildmode=plugin -tags=plugin -o my_plugin.so ./
+```
+
+The host binary (`libplugify-host-golang.so`) must be placed in the `bin` folder alongside `libplugify-module-golang.so` and **preloaded via `LD_PRELOAD`** before starting Plugify:
+
+```sh
+LD_PRELOAD=/path/to/bin/libplugify-host-golang.so ./plugify
+```
+
 ## Example
 
 ### Initialize your module
@@ -95,6 +126,7 @@ go get github.com/untrustedmodders/go-plugify
 ```
 
 ```go
+// go build -buildmode="c-shared" -ldflags="-X main.PluginName=example_plugin" ./
 package main
 
 import (
@@ -102,21 +134,26 @@ import (
 	"github.com/untrustedmodders/go-plugify"
 )
 
+var plugin plugify.Plugin
+vae PluginName string // should match name in manifest
+
+func OnPluginStart() error {
+	fmt.Println("Go: OnPluginStart")
+	return nil
+}
+
+func OnPluginUpdate(dt float32) error {
+	fmt.Println("Go: OnPluginUpdate")
+	return nil
+}
+
+func OnPluginEnd() error {
+	fmt.Println("Go: OnPluginEnd")
+	return nil
+}
+
 func init() {
-	plugify.OnPluginStart(func() error {
-		fmt.Println("Go: OnPluginStart")
-		return nil
-	})
-
-	plugify.OnPluginUpdate(func(dt float32) error {
-		fmt.Println("Go: OnPluginUpdate")
-		return nil
-	})
-
-	plugify.OnPluginEnd(func() error {
-		fmt.Println("Go: OnPluginEnd")
-		return nil
-	})
+	plugin = plugify.NewPlugin(PluginName, OnPluginStart, OnPluginUpdate, OnPluginEnd)
 }
 
 func main() {}

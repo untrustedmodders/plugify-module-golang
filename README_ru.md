@@ -10,6 +10,7 @@
 - **Автоматическая экспортируемость**: Легко экспортируйте и импортируйте методы между плагинами и языковым модулем.
 - **Инициализация и завершение**: Обрабатывайте запуск, инициализацию и завершение плагина с помощью событий модуля.
 - **Взаимодействие между языками**: Общение с плагинами на других языках через автоматически сгенерированные интерфейсы.
+- **Режим единого рантайма**: Опционально запускайте все Go-плагины внутри одного общего Go-рантайма для снижения потребления памяти и прямых вызовов между плагинами (см. [managed/README_ru.md](managed/README_ru.md)).
 
 ## Начало работы
 
@@ -78,6 +79,36 @@ mamba install -n your_env_name -c https://untrustedmodders.github.io/plugify-mod
 
    Запустите фреймворк Plugify — он автоматически загрузит ваши Go-плагины.
 
+## Режимы работы плагинов
+
+Модуль языка Go поддерживает два режима запуска плагинов.
+
+### Стандартный режим — C Shared Library
+
+Каждый плагин компилируется как отдельная C-библиотека. Это стандартный режим, который работает на всех поддерживаемых платформах.
+
+```sh
+go build -buildmode=c-shared -ldflags="-X main.PluginName=example_plugin" -o my_plugin.so ./
+```
+
+### Режим единого рантайма — Go Native Plugin
+
+Все плагины работают внутри единого общего Go-рантайма, размещённого в `libplugify-host-golang.so`. Это снижает потребление памяти и позволяет Go-плагинам вызывать друг друга напрямую, минуя слой маршалинга Plugify. Однако этот режим предъявляет жёсткие требования к совместимости версий тулчейна и зависимостей.
+
+> **Рантайм-хост необходимо собрать самостоятельно**, чтобы он точно соответствовал вашим плагинам. Подробности сборки, развёртывания и описание компромиссов смотрите в [managed/README_ru.md](managed/README_ru.md).
+
+Плагины для этого режима собираются с помощью:
+
+```sh
+go build -buildmode=plugin -tags=plugin -o my_plugin.so ./
+```
+
+Бинарный файл хоста (`libplugify-host-golang.so`) должен быть помещён в папку `bin` рядом с `libplugify-module-golang.so` и **предварительно загружен через `LD_PRELOAD`** перед запуском Plugify:
+
+```sh
+LD_PRELOAD=/path/to/bin/libplugify-host-golang.so ./plugify
+```
+
 ## Пример
 
 ### Инициализация модуля
@@ -95,6 +126,7 @@ go get github.com/untrustedmodders/go-plugify
 ```
 
 ```go
+// go build -buildmode="c-shared" -ldflags="-X main.PluginName=example_plugin" ./
 package main
 
 import (
@@ -102,21 +134,26 @@ import (
 	"github.com/untrustedmodders/go-plugify"
 )
 
+var plugin plugify.Plugin
+vae PluginName string // должен соответсвовать имени в манифесте
+
+func OnPluginStart() error {
+	fmt.Println("Go: OnPluginStart")
+	return nil
+}
+
+func OnPluginUpdate(dt float32) error {
+	fmt.Println("Go: OnPluginUpdate")
+	return nil
+}
+
+func OnPluginEnd() error {
+	fmt.Println("Go: OnPluginEnd")
+	return nil
+}
+
 func init() {
-	plugify.OnPluginStart(func() error {
-		fmt.Println("Go: OnPluginStart")
-		return nil
-	})
-
-	plugify.OnPluginUpdate(func(dt float32) error {
-		fmt.Println("Go: OnPluginUpdate")
-		return nil
-	})
-
-	plugify.OnPluginEnd(func() error {
-		fmt.Println("Go: OnPluginEnd")
-		return nil
-	})
+	plugin = plugify.NewPlugin(PluginName, OnPluginStart, OnPluginUpdate, OnPluginEnd)
 }
 
 func main() {}
