@@ -153,7 +153,7 @@ func OnPluginEnd() error {
 }
 
 func init() {
-	plugin = plugify.NewPlugin(PluginName, OnPluginStart, OnPluginUpdate, OnPluginEnd)
+	plugin = plugify.NewPlugin(PluginName, onPluginStart, onPluginUpdate, onPluginEnd)
 }
 
 func main() {}

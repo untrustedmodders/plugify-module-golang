@@ -137,23 +137,23 @@ import (
 var plugin plugify.Plugin
 var PluginName string // должен соответсвовать имени в манифесте
 
-func OnPluginStart() error {
+func onPluginStart() error {
 	fmt.Println("Go: OnPluginStart")
 	return nil
 }
 
-func OnPluginUpdate(dt float32) error {
+func onPluginUpdate(dt float32) error {
 	fmt.Println("Go: OnPluginUpdate")
 	return nil
 }
 
-func OnPluginEnd() error {
+func onPluginEnd() error {
 	fmt.Println("Go: OnPluginEnd")
 	return nil
 }
 
 func init() {
-	plugin = plugify.NewPlugin(PluginName, OnPluginStart, OnPluginUpdate, OnPluginEnd)
+	plugin = plugify.NewPlugin(PluginName, onPluginStart, onPluginUpdate, onPluginEnd)
 }
 
 func main() {}

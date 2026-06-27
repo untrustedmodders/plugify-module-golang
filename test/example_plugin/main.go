@@ -9,7 +9,7 @@ import (
 
 var plugin plugify.Plugin
 
-func OnPluginStart() error {
+func onPluginStart() error {
 	fmt.Println("Example: OnPluginStart")
 
 	strs := cross_call_worker.CallFunc33(func(a *any) {
@@ -36,12 +36,12 @@ func OnPluginStart() error {
 	return nil
 }
 
-/*func OnPluginUpdate() {
+/*func onPluginUpdate() {
 	fmt.Println("Example: OnPluginUpdate")
 	return nil
 }*/
 
-func OnPluginEnd() error {
+func onPluginEnd() error {
 	fmt.Println("Example: OnPluginEnd")
 	return nil
 }
@@ -49,5 +49,5 @@ func OnPluginEnd() error {
 func main() {}
 
 func init() {
-	plugin = plugify.NewPlugin("example_plugin", OnPluginStart, nil, OnPluginEnd)
+	plugin = plugify.NewPlugin("example_plugin", onPluginStart, nil, onPluginEnd)
 }

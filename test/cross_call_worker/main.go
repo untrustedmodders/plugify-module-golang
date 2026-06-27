@@ -8,17 +8,17 @@ import (
 
 var plugin plugify.Plugin
 
-func OnPluginStart() error {
+func onPluginStart() error {
 	fmt.Println("Go: OnPluginStart")
 	return nil
 }
 
-/*func OnPluginUpdate() {
-    fmt.Println("Example: OnPluginUpdate")
+/*func onPluginUpdate() {
+    fmt.Println("Go: OnPluginUpdate")
     return nil
 }*/
 
-func OnPluginEnd() error {
+func onPluginEnd() error {
 	fmt.Println("Go: OnPluginEnd")
 	return nil
 }
@@ -26,5 +26,5 @@ func OnPluginEnd() error {
 func main() {}
 
 func init() {
-	plugin = plugify.NewPlugin("cross_call_worker", OnPluginStart, nil, OnPluginEnd)
+	plugin = plugify.NewPlugin("cross_call_worker", onPluginStart, nil, onPluginEnd)
 }

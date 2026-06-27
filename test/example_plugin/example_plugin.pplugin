@@ -9,7 +9,11 @@
 	"entry": "example_plugin",
 	"platforms": [],
 	"language": "golang",
-	"dependencies": [],
+	"dependencies": [
+		{
+			"name": "cross_call_worker"
+		}
+	],
 	"methods": [
 	]
 }
