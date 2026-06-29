@@ -205,7 +205,7 @@ Result<void> GoLanguageModule::OnMethodExport(const Extension& plugin) {
             } else {
                 // Go-to-C++ or C++-to-any: write function pointer directly
                 if (auto function = assembly.assembly->GetSymbol(variableName)) {
-                    *function->As<MemAddr*>() = addr;
+                    *function->As<Address*>() = addr;
                 }
             }
         }
@@ -436,9 +436,9 @@ bool IsLogging() {
 	return false;
 }
 
-ZoneHandle BeginZone(GoString name, int line, GoString file, GoString function) {
+ZoneHandle BeginZone(GoString name, int line, GoString file, GoString function, GoString module) {
 	if (const auto& profiler = g_golm.GetProfiler()) {
-		return profiler->BeginZone(ZoneInfo{name, function, file, static_cast<size_t>(line), 0});
+		return profiler->BeginZone(name, Location(static_cast<size_t>(line), 0, file, function, module));
 	}
 	return {};
 }
@@ -450,10 +450,7 @@ void EndZone(ZoneHandle handle) {
 }
 
 bool IsProfiling() {
-	if (const auto& profiler = g_golm.GetProfiler()) {
-		return profiler->IsActive();
-	}
-	return false;
+	return g_golm.GetProfiler() != nullptr;
 }
 
 const void* GetPlugin(GoString name) {
