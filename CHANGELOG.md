@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.7.1](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.7.0...v2.7.1) (2026-06-29)
+
+
+### Bug Fixes
+
+* update profiler ([06e2bab](https://github.com/untrustedmodders/plugify-module-golang/commit/06e2bab6cff086ea922a4c17cbe5dc99e5b56957))
+
 ## [2.7.0](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.6.1...v2.7.0) (2026-06-22)
 
 
