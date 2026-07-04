@@ -2,6 +2,8 @@ github.com/untrustedmodders/go-plugify v1.9.0 h1:HzocIYZ5m6BKi0bsc+0Rei1l2396gNV
 github.com/untrustedmodders/go-plugify v1.9.0/go.mod h1:j+sziXkuxB59jnbrwEGt3T4z3mccwmMpxgCUP3VPQ84=
 github.com/untrustedmodders/go-plugify v1.10.0 h1:IDZsjudwY/Hm4V/sRLjjy1Nz84I9pbYe9usknM+lolM=
 github.com/untrustedmodders/go-plugify v1.10.0/go.mod h1:j+sziXkuxB59jnbrwEGt3T4z3mccwmMpxgCUP3VPQ84=
+github.com/untrustedmodders/go-plugify v1.10.3 h1:HobI9jr3j5VYurm+UgqNoYqsku/4oUo6UqkHcC1NgVM=
+github.com/untrustedmodders/go-plugify v1.10.3/go.mod h1:j+sziXkuxB59jnbrwEGt3T4z3mccwmMpxgCUP3VPQ84=
 golang.org/x/mod v0.37.0 h1:vF1DjpVEshcIqoEaauuHebaLk1O1forxjxBaVn884JQ=
 golang.org/x/mod v0.37.0/go.mod h1:m8S8VeM9r4dzDwjrKO0a1sZP3YjeMamRRlD+fmR2Q/0=
 golang.org/x/sync v0.21.0 h1:HLII4xRRTtCRkxYp4HNFF0Js/Og6q2i++KXbg0gHCwM=

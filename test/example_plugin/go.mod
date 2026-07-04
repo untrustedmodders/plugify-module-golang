@@ -2,7 +2,7 @@ module example_plugin
 
 go 1.26
 
-require github.com/untrustedmodders/go-plugify v1.10.0
+require github.com/untrustedmodders/go-plugify v1.10.3
 
 require (
 	golang.org/x/mod v0.37.0 // indirect

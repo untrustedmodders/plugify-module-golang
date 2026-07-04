@@ -246,7 +246,7 @@ extern GoUint64 __CallFuncAliasUInt64(void* func_);
 extern GoUintptr __CallFuncAliasPtr(void* func_);
 extern GoFloat32 __CallFuncAliasFloat(void* func_);
 extern GoFloat64 __CallFuncAliasDouble(void* func_);
-extern GoUintptr __CallFuncAliasFunction(void* func_);
+extern void* __CallFuncAliasFunction(void* func_);
 extern String __CallFuncAliasString(void* func_);
 extern Variant __CallFuncAliasAny(void* func_);
 extern Vector __CallFuncAliasBoolVector(void* func_);

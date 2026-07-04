@@ -1,3 +1,6 @@
 package cross_call_master
 
-var ModuleName string
+import "runtime/debug"
+
+var buildInfo, _ = debug.ReadBuildInfo()
+var ModuleName = buildInfo.Main.Path

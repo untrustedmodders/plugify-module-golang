@@ -195,10 +195,11 @@ package cross_call_master
 import "C"
 import (
 	"errors"
-	"github.com/untrustedmodders/go-plugify"
 	"reflect"
 	"runtime"
 	"unsafe"
+
+	"github.com/untrustedmodders/go-plugify"
 )
 
 var _ = errors.New("")
