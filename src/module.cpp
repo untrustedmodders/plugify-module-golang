@@ -364,8 +364,8 @@ Result<void> GoLanguageModule::OnPluginEnd(const Extension& plugin) {
 std::shared_ptr<Method> GoLanguageModule::FindMethod(std::string_view name) const {
 	if (auto separated = Split(name, "."); separated.size() == 2) {
 		if (auto plugin = _provider->FindExtension(separated[0])) {
-			for (const auto& method : plugin->GetMethods()) {
-				if (auto prototype = method.FindPrototype(separated[1])) {
+			for (const auto& prototype : plugin->GetPrototypes()) {
+				if (prototype->GetName()== separated[1]) {
 					return prototype;
 				}
 			}
@@ -756,7 +756,7 @@ const Method& GetMethodPrototype(const Method& handle, ptrdiff_t index) {
 	}
 }
 
-const EnumObject& GetMethodEnum(const Method& handle, ptrdiff_t index) {
+const Enum& GetMethodEnum(const Method& handle, ptrdiff_t index) {
 	if (index < 0) {
 		return *handle.GetRetType().GetEnumerate();
 	} else {
