@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.7.3](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.7.2...v2.7.3) (2026-08-16)
+
+
+### Bug Fixes
+
+* update plugify ([a5f454d](https://github.com/untrustedmodders/plugify-module-golang/commit/a5f454dd42b70caf2447ceece9292a49dddc0a0e))
+
 ## [2.7.2](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.7.1...v2.7.2) (2026-08-16)
 
 
