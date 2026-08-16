@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.7.2](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.7.1...v2.7.2) (2026-08-16)
+
+
+### Bug Fixes
+
+* change schema path ([c8d0e86](https://github.com/untrustedmodders/plugify-module-golang/commit/c8d0e867e1628f9abed35dcda144489647b0a268))
+* update plugify and manifests ([f69cb4a](https://github.com/untrustedmodders/plugify-module-golang/commit/f69cb4ab6a09036c6120597943a8245186b95495))
+* update tests ([8cb2c44](https://github.com/untrustedmodders/plugify-module-golang/commit/8cb2c443105fdbe5c0616ac39453f7b2ed96634f))
+
 ## [2.7.1](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.7.0...v2.7.1) (2026-06-29)
 
 
