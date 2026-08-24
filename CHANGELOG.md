@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.7.4](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.7.3...v2.7.4) (2026-08-24)
+
+
+### Bug Fixes
+
+* always set C address of function ([3efa34d](https://github.com/untrustedmodders/plugify-module-golang/commit/3efa34d84df8fceef9d7f08d4dc054d7ad877e18))
+
 ## [2.7.3](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.7.2...v2.7.3) (2026-08-16)
 
 
