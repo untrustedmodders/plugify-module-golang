@@ -202,12 +202,12 @@ Result<void> GoLanguageModule::OnMethodExport(const Extension& plugin) {
                 if (!_symbols.bindFunc(ownerAssembly->id, assembly.id, GoString(method.GetName()), GoString(delegateName))) {
 	                return MakeError(std::string(_symbols.errorFunc()));
                 }
-            } else {
-                // Go-to-C++ or C++-to-any: write function pointer directly
-                if (auto function = assembly.assembly->GetSymbol(variableName)) {
-                    *function->As<Address*>() = addr;
-                }
             }
+
+        	// Go-to-C++ or C++-to-any: write function pointer directly
+        	if (auto function = assembly.assembly->GetSymbol(variableName)) {
+        		*function->As<Address*>() = addr;
+        	}
         }
     }
 	return {};
