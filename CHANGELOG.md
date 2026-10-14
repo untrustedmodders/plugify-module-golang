@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.7.5](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.7.4...v2.7.5) (2026-10-14)
+
+
+### Bug Fixes
+
+* migrate conda packaging to rattler-build ([e6bd228](https://github.com/untrustedmodders/plugify-module-golang/commit/e6bd2288ffce16208ace8077e1e290584bf7f0a9))
+
 ## [2.7.4](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.7.3...v2.7.4) (2026-08-24)
 
 
