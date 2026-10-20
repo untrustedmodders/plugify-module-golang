@@ -3,7 +3,6 @@ package main
 import (
 	"cross_call_worker/cross_call_master"
 	"fmt"
-	"unsafe"
 
 	"github.com/untrustedmodders/go-plugify"
 )
@@ -592,13 +591,13 @@ func MockFunc9(f float32, v plugify.Vector2, iVec []int8, l uint64, flag bool, s
 
 // Mock implementation for 10 parameter function
 func MockFunc10(v4 plugify.Vector4, m plugify.Matrix4x4, uVec []uint32, l uint64, cVec []int8, a int32, flag bool, v plugify.Vector2, i int64, d float64) uint32 {
-	_ = fmt.Sprintf("%f%f%f%f%f%d%d%d%d%d%t", v4.X, v4.Y, v4.Z, v4.W, m.M[1][1], len(uVec), l, len(cVec), a, flag)
+	_ = fmt.Sprintf("%f%f%f%f%f%d%d%d%d%t", v4.X, v4.Y, v4.Z, v4.W, m.M[1][1], len(uVec), l, len(cVec), a, flag)
 	return 42
 }
 
 // Mock implementation for 11 parameter function
 func MockFunc11(bVec []bool, c uint16, u uint8, d float64, v3 plugify.Vector3, iVec []int8, i int64, u16 uint16, f float32, v plugify.Vector2, u32 uint32) uintptr {
-	_ = fmt.Sprintf("%d%d%d%f%f%d%d%d%f%f%d%d", len(bVec), c, u, d, v3.X, len(iVec), i, u16, f, v.X, u32)
+	_ = fmt.Sprintf("%d%d%d%f%f%d%d%d%f%f%d", len(bVec), c, u, d, v3.X, len(iVec), i, u16, f, v.X, u32)
 	return uintptr(0)
 }
 
@@ -628,7 +627,7 @@ func MockFunc15(iVec []int16, m plugify.Matrix4x4, v4 plugify.Vector4, p uintptr
 
 // Mock implementation for 16 parameter function
 func MockFunc16(bVec []bool, i16 int16, iVec []int8, v4 plugify.Vector4, m plugify.Matrix4x4, v2 plugify.Vector2, uVec []uint64, cVec []int8, s string, i64 int64, u32Vec []uint32, v3 plugify.Vector3, f float32, d float64, i8 int8, u16 uint16) uintptr {
-	_ = fmt.Sprintf("%d%d%d%f%f%f%f%f%d%d%d%s%d%d%f%f%d%d", len(bVec), i16, len(iVec), v4.X, v4.Y, v4.Z, v4.W, m.M[2][3], v2.X, len(uVec), len(cVec), s, i64, len(u32Vec), v3.X, f, d, i8, u16)
+	_ = fmt.Sprintf("%d%d%d%f%f%f%f%f%f%d%d%s%d%d%f%f%f%d%d", len(bVec), i16, len(iVec), v4.X, v4.Y, v4.Z, v4.W, m.M[2][3], v2.X, len(uVec), len(cVec), s, i64, len(u32Vec), v3.X, f, d, i8, u16)
 	return uintptr(0)
 }
 
@@ -734,14 +733,14 @@ func MockFunc26(c *uint16, v2 *plugify.Vector2, m *plugify.Matrix4x4, fVec *[]fl
 	*u32 = 32
 	*u16Vec = []uint16{100, 200}
 	*i16 = 332
-	*p = uintptr(unsafe.Pointer(uintptr(0xDEADBEAFDEADBEAF)))
+	*p = uintptr(0xDEADBEAFDEADBEAF)
 	return 'A'
 }
 
 func MockFunc27(f *float32, v3 *plugify.Vector3, p *uintptr, v2 *plugify.Vector2, i16Vec *[]int16, m *plugify.Matrix4x4, flag *bool, v4 *plugify.Vector4, i8 *int8, i32 *int32, u8Vec *[]uint8) uint8 {
 	*f = 1.0
 	*v3 = plugify.Vector3{-1.0, -2.0, -3.0}
-	*p = uintptr(unsafe.Pointer(uintptr(0xDEADBEAFDEADBEAF)))
+	*p = uintptr(0xDEADBEAFDEADBEAF)
 	*v2 = plugify.Vector2{-111.0, 111.0}
 	*i16Vec = []int16{1, 2, 3, 4}
 	*m = plugify.Matrix4x4{

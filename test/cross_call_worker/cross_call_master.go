@@ -1,5 +1,5 @@
 //go:build plugin
-// +build plugin
+
 package main
 
 //TODO: replace "__package__" by your package name

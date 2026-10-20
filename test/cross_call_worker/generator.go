@@ -1,4 +1,4 @@
-//go:generate go run generator.go -package=main -output=.
+//go:generate go run generator.go -output=cross_call_worker.pplugin -name=cross_call_worker -version=0.1.0 -author=untrustedmodders "-description=Calls test plugin. Language specific implementation" -license=MIT -website=https://github.com/untrustedmodders/
 //go:build ignore
 
 package main

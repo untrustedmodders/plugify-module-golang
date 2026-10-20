@@ -7,6 +7,7 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
+	"time"
 	"unsafe"
 
 	"github.com/untrustedmodders/go-plugify"
@@ -113,9 +114,7 @@ func NoParamReturnDouble() float64 {
 // plugify:export NoParamReturnFunction
 func NoParamReturnFunction() cross_call_master.FuncFunctionInner {
 	fmt.Println("Go: NoParamReturnFunction")
-	return func() {
-		fmt.Println("Go: FuncFunctionInner")
-	}
+	return nil
 }
 
 // plugify:export NoParamReturnString
@@ -346,12 +345,12 @@ func Param3(a int32, b float32, c float64) {
 
 // plugify:export Param4
 func Param4(a int32, b float32, c float64, d plugify.Vector4) {
-	fmt.Printf("Param4: a = %d, b = %f, c = %f, d = [%f,%f,%f,%f]\n", a, b, c, formatVector4(d))
+	fmt.Printf("Param4: a = %d, b = %f, c = %f, d = %s\n", a, b, c, formatVector4(d))
 }
 
 // plugify:export Param5
 func Param5(a int32, b float32, c float64, d plugify.Vector4, e []int64) {
-	fmt.Printf("Param5: a = %d, b = %f, c = %f, d = [%f,%f,%f,%f], e.size() = %d, e = [", a, b, c, formatVector4(d), len(e))
+	fmt.Printf("Param5: a = %d, b = %f, c = %f, d = %s, e.size() = %d, e = [", a, b, c, formatVector4(d), len(e))
 	for _, elem := range e {
 		fmt.Printf("%d, ", elem)
 	}
@@ -360,7 +359,7 @@ func Param5(a int32, b float32, c float64, d plugify.Vector4, e []int64) {
 
 // plugify:export Param6
 func Param6(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8) {
-	fmt.Printf("Param6: a = %d, b = %f, c = %f, d = [%f,%f,%f,%f], e.size() = %d, e = [", a, b, c, formatVector4(d), len(e))
+	fmt.Printf("Param6: a = %d, b = %f, c = %f, d = %s, e.size() = %d, e = [", a, b, c, formatVector4(d), len(e))
 	for _, elem := range e {
 		fmt.Printf("%d, ", elem)
 	}
@@ -369,7 +368,7 @@ func Param6(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8)
 
 // plugify:export Param7
 func Param7(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8, g string) {
-	fmt.Printf("Param7: a = %d, b = %f, c = %f, d = [%f,%f,%f,%f], e.size() = %d, e = [", a, b, c, formatVector4(d), len(e))
+	fmt.Printf("Param7: a = %d, b = %f, c = %f, d = %s, e.size() = %d, e = [", a, b, c, formatVector4(d), len(e))
 	for _, elem := range e {
 		fmt.Printf("%d, ", elem)
 	}
@@ -378,29 +377,29 @@ func Param7(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8,
 
 // plugify:export Param8
 func Param8(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8, g string, h uint16) {
-	fmt.Printf("Param8: a = %d, b = %f, c = %f, d = [%f,%f,%f,%f], e.size() = %d, e = [", a, b, c, formatVector4(d), len(e))
+	fmt.Printf("Param8: a = %d, b = %f, c = %f, d = %s, e.size() = %d, e = [", a, b, c, formatVector4(d), len(e))
 	for _, elem := range e {
 		fmt.Printf("%d, ", elem)
 	}
-	fmt.Printf("], f = %c, g = %s, h = %f\n", f, g, h)
+	fmt.Printf("], f = %c, g = %s, h = %d\n", f, g, h)
 }
 
 // plugify:export Param9
 func Param9(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8, g string, h uint16, k int16) {
-	fmt.Printf("Param9: a = %d, b = %f, c = %f, d = [%f,%f,%f,%f], e.size() = %d, e = [", a, b, c, formatVector4(d), len(e))
+	fmt.Printf("Param9: a = %d, b = %f, c = %f, d = %s, e.size() = %d, e = [", a, b, c, formatVector4(d), len(e))
 	for _, elem := range e {
 		fmt.Printf("%d, ", elem)
 	}
-	fmt.Printf("], f = %c, g = %s, h = %f, k = %d\n", f, g, h, k)
+	fmt.Printf("], f = %c, g = %s, h = %d, k = %d\n", f, g, h, k)
 }
 
 // plugify:export Param10
 func Param10(a int32, b float32, c float64, d plugify.Vector4, e []int64, f int8, g string, h uint16, k int16, l uintptr) {
-	fmt.Printf("Param10: a = %d, b = %f, c = %f, d = [%f,%f,%f,%f], e.size() = %d, e = [", a, b, c, formatVector4(d), len(e))
+	fmt.Printf("Param10: a = %d, b = %f, c = %f, d = %s, e.size() = %d, e = [", a, b, c, formatVector4(d), len(e))
 	for _, elem := range e {
 		fmt.Printf("%d, ", elem)
 	}
-	fmt.Printf("], f = %c, g = %s, h = %f, k = %d, l = %v\n", f, g, h, k, l)
+	fmt.Printf("], f = %c, g = %s, h = %d, k = %d, l = %v\n", f, g, h, k, l)
 }
 
 // plugify:export ParamRef1
@@ -699,7 +698,7 @@ func ParamVariant(p1 any, p2 []any) {
 
 // plugify:export ParamVariantRef
 func ParamVariantRef(p1 *any, p2 *[]any) {
-	*p1 = int8('Z')
+	*p1 = "Z"
 	*p2 = []any{false, 6.28, []float64{1, 2, 3}, uintptr(unsafe.Pointer(nil)), 123456789}
 }
 
@@ -3214,10 +3213,12 @@ func MemoryLeakDetection() string {
 		leaked = nil
 	}
 
-	runtime.GC()
-	runtime.Gosched()
-
 	afterAlive := cross_call_master.ResourceHandleGetAliveCount()
+	for deadline := time.Now().Add(time.Second); afterAlive != beforeAlive && time.Now().Before(deadline); {
+		runtime.GC()
+		time.Sleep(time.Millisecond)
+		afterAlive = cross_call_master.ResourceHandleGetAliveCount()
+	}
 
 	log(fmt.Sprintf("v Before leak test: %d alive", beforeAlive))
 	log(fmt.Sprintf("v After release: %d alive", afterAlive))
