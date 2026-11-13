@@ -1,7 +1,5 @@
 #pragma once
 
-#include <map>
-
 #include <plugify/assembly.hpp>
 #include <plugify/callback.hpp>
 #include <plugify/language_module.hpp>
@@ -133,7 +131,7 @@ namespace golm {
 		GoInt id; // only valid for -buildmode=plugin
 	};
 
-	using AssemblyMap = std::map<UniqueId, AssemblyHolder>;
+	using AssemblyMap = std::flat_map<UniqueId, AssemblyHolder>;
 
 	class GoLanguageModule final : public ILanguageModule {
 	public:
