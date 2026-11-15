@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.7.6](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.7.5...v2.7.6) (2026-11-15)
+
+
+### Bug Fixes
+
+* add flat_map ([a634888](https://github.com/untrustedmodders/plugify-module-golang/commit/a634888df7136fb5fc7ddfc2bbf343510c4234f3))
+
 ## [2.7.5](https://github.com/untrustedmodders/plugify-module-golang/compare/v2.7.4...v2.7.5) (2026-10-14)
 
 
